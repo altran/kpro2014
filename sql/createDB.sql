@@ -2,32 +2,32 @@
 
 CREATE TABLE LightSample
 (
-SampleID int,
-SensorID int,
-Value double,
-Date date
+SampleID INTEGER,
+SensorID INTEGER,
+Value DOUBLE,
+Date DATETIME
 );
 
 CREATE TABLE TemperatureSample
 (
-SampleID int,
-SensorID int,
-Value double,
-Date date
+SampleID INTEGER,
+SensorID INTEGER,
+Value DOUBLE,
+Date DATETIME
 );
 
 CREATE TABLE AccelerationSample
 (
-SampleID int,
-SensorID int,
-Value double,
-Date date
+SampleID INTEGER,
+SensorID INTEGER,
+Value DOUBLE,
+Date DATETIME
 );
 
 CREATE TABLE HumiditySample
 (
-SampleID int,
-SensorID int,
-Value double,
-Date date
+SampleID INTEGER,
+SensorID INTEGER,
+Value DOUBLE,
+Date DATETIME
 );
