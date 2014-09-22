@@ -1,0 +1,1 @@
+-- script to create the database for the sensor data
