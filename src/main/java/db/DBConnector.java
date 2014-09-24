@@ -17,16 +17,21 @@ public class DBConnector {
     protected Connection connection;
     protected PreparedStatement preparedStatement;
     protected boolean connected;
+
+    // Variables to get connection information from a file
     private Properties properties;
     private FileInputStream inputStream;
     private String url;
     private String user;
     private String password;
+
     public DBConnector() {
         connection = null;
         preparedStatement = null;
-        properties = new Properties();
         connected = false;
+
+        // Get connection information from file
+        properties = new Properties();
         try {
             inputStream = new FileInputStream("database.properties");
             properties.load(inputStream);
@@ -38,18 +43,19 @@ public class DBConnector {
             e.printStackTrace();
         }
     }
+
     /**
      * Connects to the mySQL database server
      * @return true if connection was successful
      */
     public boolean connect() {
         if (connected) {
-            System.out.println("You are already connected!");
+            System.err.println("You are already connected!");
             return false;
         }
 // Check for valid inputs
         if (!validateInput()) {
-            System.out.println("Properties validation not succesful, check your properties!");
+            System.err.println("Properties validation not succesful, check your properties!");
             return false;
         }
         try {
@@ -59,24 +65,24 @@ public class DBConnector {
             System.out.println("Connection to database has been established.");
         }
         catch (ClassNotFoundException e) {
-            System.out.println("Could not find specified JDBC Driver class! ");
+            System.err.println("Could not find specified JDBC Driver class! ");
             e.printStackTrace();
             return false;
         }
 //        catch (CommunicationsException e) {
-//            System.out.println("Cannot connect to database server! Check your connection properties and check that the server is running! ");
+//            System.err.println("Cannot connect to database server! Check your connection properties and check that the server is running! ");
 //            e.printStackTrace();
 //            return false;
 //        }
         catch (SQLException e) {
-            System.out.println("Access denied! Check your username and password! ");
+            System.err.println("Access denied! Check your username and password! ");
             e.printStackTrace();
             return false;
         }
-        catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
         return true;
     }
 
@@ -85,7 +91,7 @@ public class DBConnector {
      */
     public void disconnect() {
         if (!connected) {
-            System.out.println("You are not connected!");
+            System.err.println("You are not connected!");
             return;
         }
         try {
@@ -96,7 +102,7 @@ public class DBConnector {
             connected = false;
         }
         catch (Exception e){
-            System.out.println("Error encountered while disconnecting!");
+            System.err.println("Error encountered while disconnecting!");
             e.printStackTrace();
         }
     }
@@ -114,6 +120,7 @@ public class DBConnector {
         user = properties.getProperty("db.user");
         password = properties.getProperty("db.password");
     }
+
     /**
      * Checks if a connection is active.
      * @return connected
