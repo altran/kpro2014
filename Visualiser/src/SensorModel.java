@@ -44,4 +44,8 @@ public class SensorModel {
 
     public int getSensorNumber(){return sensorNumber;}
 
+    public void setSensorID(int ID){
+        this.sensorID.set(ID);
+    }
+
 }
