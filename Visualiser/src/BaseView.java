@@ -30,6 +30,7 @@ public class BaseView extends  Application{
     private TableColumn humidity;
     private TableColumn pressure;
     private TableColumn sound;
+    private LocalTime time;
 
 
     @Override
@@ -148,10 +149,7 @@ public class BaseView extends  Application{
                 }
             }
         });
-
-        Label time = new Label(LocalTime.now().toString());
-
-
+        
         final HBox hBox = new HBox();
         hBox.setPadding(new Insets(0,10,10,10));
         hBox.setSpacing(10);
@@ -160,7 +158,7 @@ public class BaseView extends  Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5, time);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
