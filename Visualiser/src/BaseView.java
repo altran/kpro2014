@@ -1,18 +1,18 @@
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import sun.util.resources.cldr.mk.TimeZoneNames_mk;
 
-import java.awt.*;
+import java.time.LocalTime;
 
 /**
  * Created by shimin on 9/24/2014.
@@ -76,6 +76,81 @@ public class BaseView extends  Application{
         cBox4.setSelected(true);
         cBox5.setSelected(true);
 
+        final double width = temperature.getWidth();
+        final double units = dataTable.getColumns().size();
+
+        cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox1.isSelected() == false) {
+                    dataTable.setPrefWidth(width*units);
+                    temperature.setVisible(false);
+                }
+                if(cBox1.isSelected()){
+                    dataTable.setPrefWidth(width*units);
+                    temperature.setVisible(true);
+                }
+            }
+        });
+
+        cBox2.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox2.isSelected() == false){
+                    dataTable.setPrefWidth(width*units);
+                    lighting.setVisible(false);
+                }
+                if(cBox2.isSelected()){
+                    dataTable.setPrefWidth(width*units);
+                    lighting.setVisible(true);
+                }
+            }
+        });
+
+        cBox3.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox3.isSelected() == false){
+                    dataTable.setPrefWidth(width*units);
+                    humidity.setVisible(false);
+                }
+                if(cBox3.isSelected()) {
+                    dataTable.setPrefWidth(width * units);
+                    humidity.setVisible(true);
+                }
+            }
+        });
+
+        cBox4.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox4.isSelected() == false){
+                    dataTable.setPrefWidth(width * units);
+                    pressure.setVisible(false);
+                }
+                if(cBox4.isSelected()){
+                    dataTable.setPrefWidth(width*units);
+                    pressure.setVisible(true);
+                }
+            }
+        });
+
+        cBox5.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox5.isSelected() == false){
+                    dataTable.setPrefWidth(width * units);
+                    sound.setVisible(false);
+                }
+                if(cBox5.isSelected()){
+                    dataTable.setPrefWidth(width*units);
+                    sound.setVisible(true);
+                }
+            }
+        });
+
+        Label time = new Label(LocalTime.now().toString());
+
 
         final HBox hBox = new HBox();
         hBox.setPadding(new Insets(0,10,10,10));
@@ -85,7 +160,7 @@ public class BaseView extends  Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5, time);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
@@ -104,5 +179,7 @@ public class BaseView extends  Application{
     public static void main(String[] args) {
         launch(args);
     }
+
+
 }
 
