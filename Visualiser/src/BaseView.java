@@ -1,8 +1,13 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -10,9 +15,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sun.util.resources.cldr.mk.TimeZoneNames_mk;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Calendar;
 
 /**
  * Created by shimin on 9/24/2014.
@@ -30,7 +38,6 @@ public class BaseView extends  Application{
     private TableColumn humidity;
     private TableColumn pressure;
     private TableColumn sound;
-    private LocalTime time;
 
 
     @Override
@@ -149,7 +156,7 @@ public class BaseView extends  Application{
                 }
             }
         });
-        
+
         final HBox hBox = new HBox();
         hBox.setPadding(new Insets(0,10,10,10));
         hBox.setSpacing(10);
@@ -178,6 +185,20 @@ public class BaseView extends  Application{
         launch(args);
     }
 
-
+//    private void bindToTime(){
+//        Timeline timeline = new Timeline(
+//                new KeyFrame(Duration.seconds(0), new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//                        Calendar time = Calendar.getInstance();
+//                        SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:SS");
+//                        timeline.setText(sdf.format(time.getTime()));
+//                    }
+//                }
+//                ),
+//                new KeyFrame(Duration.seconds(1)));
+//        timeline.setCycleCount(Animation.INDEFINITE);
+//        timeline.play();
+//    }
 }
 
