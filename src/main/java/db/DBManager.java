@@ -32,37 +32,31 @@ public class DBManager extends DBConnector {
     public List<SensorSample> getAllNewSamples() {
         List<SensorSample> sampleList = new ArrayList<SensorSample>();
 
-        String[] tableNames = {
-            "TemperatureSample",
-            "LightSample",
-            "PressureSample",
-            "HumiditySample",
-            "SoundSample"
-        };
-        for(String name : tableNames) {
-            sampleList.addAll(getAllNewSamples(name));
+        for(SampleType type : SampleType.values()) {
+            sampleList.addAll(getAllNewSamples(type));
         }
 
         return sampleList;
     }
 
-    public List<SensorSample> getAllNewSamples(String tableName) {
+    public List<SensorSample> getAllNewSamples(SampleType sampleType) {
         List<SensorSample> sampleList = null;
-        ResultSet results;
-
-        String query = "SELECT DISTINCT * FROM ( " +
-                "SELECT MAX(Date) AS MaxDate, SensorID " +
-                "FROM " + tableName + " " +
-                "GROUP BY SensorID " +
+        String tableName = sampleType.getTableName();
+        String query =
+                "SELECT DISTINCT * FROM ( " +
+                    "SELECT MAX(Date) AS MaxDate, SensorID " +
+                    "FROM " + tableName + " " +
+                    "GROUP BY SensorID " +
                 ") AS T1 JOIN " + tableName + " AS T2 " +
                 "ON MaxDate = Date AND T1.SensorID = T2.SensorID;";
-
         PreparedStatement stmt = null;
+        ResultSet results;
+
         try {
             stmt = connection.prepareStatement(query);
             stmt.execute();
             results = stmt.getResultSet();
-            sampleList = getSamplesFromResults(results, tableName);
+            sampleList = getSamplesFromResults(results, sampleType);
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,7 +65,7 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
-    private List<SensorSample> getSamplesFromResults(ResultSet results, String type) {
+    private List<SensorSample> getSamplesFromResults(ResultSet results, SampleType type) {
         List<SensorSample> sampleList = new ArrayList<SensorSample>();
         SensorSample sample;
         int sensorID;
