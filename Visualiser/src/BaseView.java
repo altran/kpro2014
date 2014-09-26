@@ -197,26 +197,5 @@ public class BaseView extends  Application{
         launch(args);
     }
 
-//    private void bindToTime(){
-//        timeProperty = new SimpleStringProperty();
-//        Timeline timeline = new Timeline(
-//                new KeyFrame(Duration.seconds(0), new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent event) {
-//                        Calendar time = Calendar.getInstance();
-//                        SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:SS");
-//                        setText(sdf.format(time.getTime()));
-//                    }
-//                }
-//                ),
-//                new KeyFrame(Duration.seconds(1)));
-//        timeline.setCycleCount(Animation.INDEFINITE);
-//        timeline.play();
-//    }
-//
-//
-//    private void setTimeProperty(){
-//        timeProperty.set();
-//    }
 }
 
