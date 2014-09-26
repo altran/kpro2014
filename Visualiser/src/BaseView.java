@@ -50,17 +50,17 @@ public class BaseView extends  Application{
         sensorID = new TableColumn("ID");
         sensorID.setCellValueFactory(new PropertyValueFactory<SensorModel,Integer>("sensorID"));
         temperature = new TableColumn("Temperature");
-        temperature.setCellValueFactory(new PropertyValueFactory<SensorModel,Integer>("temperature"));
+        temperature.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("temperature"));
         lighting = new TableColumn("Lighting");
-        lighting.setCellValueFactory(new PropertyValueFactory<SensorModel,Integer>("lighting"));
+        lighting.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("lighting"));
         humidity = new TableColumn("Humidity");
-        humidity.setCellValueFactory(new PropertyValueFactory<SensorModel,Integer>("humidity"));
+        humidity.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("humidity"));
         pressure = new TableColumn("Pressure");
-        pressure.setCellValueFactory(new PropertyValueFactory<SensorModel,Integer>("pressure"));
+        pressure.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("pressure"));
         sound = new TableColumn("Sound");
-        sound.setCellValueFactory(new PropertyValueFactory<SensorModel, Integer>("sound"));
+        sound.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("sound"));
 
-        for(int i = 0; i < 10; i++){ //Placeholder
+        for(int i = 0; i < roomModel.getSensorNumber(); i++){
             data.add(roomModel.getSensorModel(i));
         }
 

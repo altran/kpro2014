@@ -16,24 +16,31 @@ public class Controller {
     private DBManager dbManager;
     private List<SensorSample> sampleList;
     private ArrayList<ArrayList> sortedList;
-    private ArrayList<Double> sensorID;
+    private ArrayList<Integer> sensorID;
     private ArrayList<Double> temperatureList;
+    private ArrayList<Double> lightList;
     private ArrayList<Double> humidityList;
     private ArrayList<Double> pressureList;
     private ArrayList<Double> soundList;
 
     public Controller(){
-        try{
-            dbManager = new DBManager();
-        }catch (SQLException e){
-            // TODO: handle exception
-        }
+        sortedList = new ArrayList<ArrayList>();
+        sensorID = new ArrayList<Integer>();
+        temperatureList = new ArrayList<Double>();
+        lightList = new ArrayList<Double>();
+        humidityList = new ArrayList<Double>();
+        pressureList = new ArrayList<Double>();
+        soundList = new ArrayList<Double>();
+
+        dbManager = new DBManager();
         dbManager.connect();
+        getSensorSample();
         sortedList.add(sensorID);
         sortedList.add(temperatureList);
         sortedList.add(humidityList);
         sortedList.add(pressureList);
         sortedList.add(soundList);
+        sortSensorID();
     }
 
     private List<SensorSample> getSensorSample(){
@@ -44,16 +51,87 @@ public class Controller {
         for(int i=0; i<sampleList.size(); i++){
             SensorSample tempSample = sampleList.get(i);
             if(sensorID.contains(tempSample.getSensorID())){
-                addData(tempSample,sensorID,temperatureList,humidityList,pressureList,soundList);
+                addData(tempSample, tempSample.getSensorID(),temperatureList, lightList, humidityList,pressureList,soundList);
+            }
+            if(!sensorID.contains(tempSample.getSensorID())){
+                if(sensorID.size()>tempSample.getSensorID()-1){
+                    sensorID.add(tempSample.getSensorID(), tempSample.getSensorID());
+                }else{
+                    sensorID.add(tempSample.getSensorID());
+                }
+                addData(tempSample, tempSample.getSensorID(),temperatureList, lightList, humidityList,pressureList,soundList);
             }
         }
     }
 
-    private void addData(SensorSample ss, ArrayList sID, ArrayList tList,
+    private void addData(SensorSample ss, int sensorID, ArrayList tList, ArrayList lList,
                          ArrayList hList, ArrayList pList, ArrayList sList){
-        switch (ss.getType()){
-            
+        if(tList.size() <= ss.getSensorID()-1 || hList.size() <= ss.getSensorID()-1 || pList.size() <= ss.getSensorID()-1 ||
+                sList.size() <= ss.getSensorID()-1 || lList.size() <= ss.getSensorID()-1){
+            switch (ss.getType()){
+                case TEMPERATURE_SAMPLE:
+                    tList.add(ss.getValue());
+                    break;
+                case LIGHT_SAMPLE:
+                    lList.add(ss.getValue());
+                    break;
+                case PRESSURE_SAMPLE:
+                    pList.add(ss.getValue());
+                    break;
+                case HUMIDITY_SAMPLE:
+                    hList.add(ss.getValue());
+                    break;
+                case SOUND_SAMPLE:
+                    sList.add(ss.getValue());
+                    break;
+            }
         }
+        else{
+            switch (ss.getType()){
+                case TEMPERATURE_SAMPLE:
+                    tList.set(sensorID, ss.getValue());
+                    break;
+                case LIGHT_SAMPLE:
+                    lList.set(sensorID, ss.getValue());
+                    break;
+                case PRESSURE_SAMPLE:
+                    pList.set(sensorID, ss.getValue());
+                    break;
+                case HUMIDITY_SAMPLE:
+                    hList.set(sensorID, ss.getValue());
+                    break;
+                case SOUND_SAMPLE:
+                    sList.set(sensorID, ss.getValue());
+                    break;
+            }
+        }
+    }
 
+    public int getSensorID(int i){
+        return sensorID.get(i);
+    }
+
+    public double getTemperature(int i){
+        return temperatureList.get(i);
+    }
+
+    public double getPressure(int i){
+        return pressureList.get(i);
+    }
+
+    public double getHumidity(int i){
+        return humidityList.get(i);
+    }
+
+    public double getLighting(int i){
+        return lightList.get(i);
+    }
+
+    public double getSound(int i){
+        return soundList.get(i);
+    }
+
+    public int getNumberOfSensors(){
+        return sensorID.size();
     }
 }

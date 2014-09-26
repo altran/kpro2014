@@ -7,12 +7,19 @@ public class RoomModel {
 
     private ArrayList<SensorModel> sensorList;
     private SensorModel sensorModel;
+    private Controller controller;
 
     public RoomModel(){
         sensorList = new ArrayList<SensorModel>();
-        for(int i=0; i < 10; i++){ //max sensor count comes from the controller
+        controller = new Controller();
+        for(int i=0; i < controller.getNumberOfSensors(); i++){
             sensorModel = new SensorModel();
             sensorModel.setSensorID(i+1);
+            sensorModel.setTemperature(controller.getTemperature(i));
+            sensorModel.setHumidity(controller.getHumidity(i));
+            sensorModel.setLighting(controller.getLighting(i));
+            sensorModel.setPressure(controller.getPressure(i));
+            sensorModel.setSound(controller.getSound(i));
             sensorList.add(sensorModel);
         }
     }

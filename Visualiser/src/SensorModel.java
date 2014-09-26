@@ -1,3 +1,4 @@
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,34 +12,34 @@ import javafx.collections.ObservableList;
 public class SensorModel {
 
     private SimpleIntegerProperty sensorID;
-    private SimpleIntegerProperty temperature;
-    private SimpleIntegerProperty lighting;
-    private SimpleIntegerProperty pressure;
-    private SimpleIntegerProperty humidity;
-    private SimpleIntegerProperty sound;
+    private SimpleDoubleProperty temperature;
+    private SimpleDoubleProperty lighting;
+    private SimpleDoubleProperty pressure;
+    private SimpleDoubleProperty humidity;
+    private SimpleDoubleProperty sound;
     private int sensorNumber;
 
 
     //place holder values
     public SensorModel(){
         sensorID = new SimpleIntegerProperty(1);
-        temperature = new SimpleIntegerProperty(30);
-        lighting = new SimpleIntegerProperty(200);
-        pressure = new SimpleIntegerProperty(20);
-        humidity = new SimpleIntegerProperty(40);
-        sound = new SimpleIntegerProperty(70);
+        temperature = new SimpleDoubleProperty();
+        lighting = new SimpleDoubleProperty();
+        pressure = new SimpleDoubleProperty();
+        humidity = new SimpleDoubleProperty();
+        sound = new SimpleDoubleProperty();
         sensorNumber = 10;
     }
 
-    public int getTemperature(){ return temperature.get();}
+    public double getTemperature(){ return temperature.get();}
 
-    public int getLighting(){ return lighting.get();}
+    public double getLighting(){ return lighting.get();}
 
-    public int getPressure(){return pressure.get();}
+    public double getPressure(){return pressure.get();}
 
-    public int getHumidity(){return humidity.get();}
+    public double getHumidity(){return humidity.get();}
 
-    public int getSound(){return sound.get();}
+    public double getSound(){return sound.get();}
 
     public int getSensorID(){return sensorID.get();}
 
@@ -46,6 +47,26 @@ public class SensorModel {
 
     public void setSensorID(int ID){
         this.sensorID.set(ID);
+    }
+
+    public void setTemperature(double temperature){
+        this.temperature.set(temperature);
+    }
+
+    public void setLighting(double lighting){
+        this.lighting.set(lighting);
+    }
+
+    public void setPressure(double pressure){
+        this.pressure.set(pressure);
+    }
+
+    public void setHumidity(double humidity){
+        this.humidity.set(humidity);
+    }
+
+    public void setSound(double sound){
+        this.sound.set(sound);
     }
 
 }
