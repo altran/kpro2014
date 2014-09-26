@@ -22,15 +22,7 @@ public class DBManager extends DBConnector {
     private PreparedStatement getAllCurrentValuesStmt;
 
     public DBManager() throws SQLException {
-        String query;
 
-        query = "SELECT DISTINCT * FROM (                   " +
-                "   SELECT MAX(Date) AS MaxDate, SensorID   " +
-                "   FROM ?                                  " +
-                "   GROUP BY SensorID                       " +
-                ") AS T1 JOIN ? AS T2                       " +
-                "ON MaxDate = Date AND T1.SensorID = T2.SensorID;";
-        getAllCurrentValuesStmt = connection.prepareStatement(query);
     }
 
     /*
@@ -56,14 +48,22 @@ public class DBManager extends DBConnector {
 
     private List<SensorSample> getAllNewSamples(String tableName) {
         List<SensorSample> sampleList = null;
-        ResultSet results = null;
+        ResultSet results;
 
+        String query = "SELECT DISTINCT * FROM ( " +
+                "SELECT MAX(Date) AS MaxDate, SensorID " +
+                "FROM " + tableName + " " +
+                "GROUP BY SensorID " +
+                ") AS T1 JOIN " + tableName + " AS T2 " +
+                "ON MaxDate = Date AND T1.SensorID = T2.SensorID;";
+
+        PreparedStatement stmt = null;
         try {
-            getAllCurrentValuesStmt.setString(1, tableName);
-            getAllCurrentValuesStmt.setString(2, tableName);
-            getAllCurrentValuesStmt.execute();
-            results = getAllCurrentValuesStmt.getResultSet();
+            stmt = connection.prepareStatement(query);
+            stmt.execute();
+            results = stmt.getResultSet();
             sampleList = getSamplesFromResults(results, tableName);
+            stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
