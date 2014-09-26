@@ -67,6 +67,16 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
+    public List<SensorSample> getAllSamplesInTimeInterval(LocalDateTime from, LocalDateTime to) {
+        List<SensorSample> sampleList = new ArrayList<SensorSample>();
+
+        for(SampleType type : SampleType.values()) {
+            sampleList.addAll(getSamplesInTimeInterval(type, from, to));
+        }
+
+        return sampleList;
+    }
+
     private List<SensorSample> getSamplesInTimeInterval(
             SampleType type,
             LocalDateTime from,
@@ -130,9 +140,9 @@ public class DBManager extends DBConnector {
     public static void main(String[] args) throws SQLException {
         DBManager ctrl = new DBManager();
         ctrl.connect();
-        LocalDateTime from = LocalDateTime.parse("2014-09-26 09:07:00".replace(' ','T'));
-        LocalDateTime to = LocalDateTime.parse("2014-09-26 09:08:00".replace(' ','T'));
-        List<SensorSample> sampleList = ctrl.getSamplesInTimeInterval(SampleType.TEMPERATURE_SAMPLE, from, to);
+        LocalDateTime from = LocalDateTime.parse("2014-09-25 00:00:00".replace(' ','T'));
+        LocalDateTime to = LocalDateTime.parse("2014-09-27 00:00:00".replace(' ','T'));
+        List<SensorSample> sampleList = ctrl.getAllSamplesInTimeInterval(from, to);
         for(SensorSample sample : sampleList) {
             System.out.print(sample);
         }
