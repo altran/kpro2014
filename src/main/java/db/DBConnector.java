@@ -1,7 +1,5 @@
 package db;
 
-import com.mysql.jdbc.CommunicationsException;
-
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -71,11 +69,11 @@ public class DBConnector {
             e.printStackTrace();
             return false;
         }
-        catch (CommunicationsException e) {
-            System.err.println("Cannot connect to database server! Check your connection properties and check that the server is running! ");
-            e.printStackTrace();
-            return false;
-        }
+//        catch (CommunicationsException e) {
+//            System.err.println("Cannot connect to database server! Check your connection properties and check that the server is running! ");
+//            e.printStackTrace();
+//            return false;
+//        }
         catch (SQLException e) {
             System.err.println("Access denied! Check your username and password! ");
             e.printStackTrace();

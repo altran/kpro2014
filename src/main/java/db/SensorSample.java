@@ -12,16 +12,16 @@ public class SensorSample {
     private int sensorID;
     private double value;
     private LocalDateTime dateTime;
-    private String type;
+    private SampleType type;
 
-    public SensorSample(String type, int sensorID, double value, LocalDateTime dateTime) {
+    public SensorSample(SampleType type, int sensorID, double value, LocalDateTime dateTime) {
         this.type = type;
         this.sensorID = sensorID;
         this.value = value;
         this.dateTime = dateTime;
     }
 
-    public String getType() {
+    public SampleType getType() {
         return type;
     }
 
