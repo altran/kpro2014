@@ -16,10 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sun.util.resources.cldr.mk.TimeZoneNames_mk;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
+import java.text.DateFormat;
 import java.util.Calendar;
 
 /**
@@ -28,7 +26,7 @@ import java.util.Calendar;
  */
 public class BaseView extends  Application{
 
-    private final ObservableList<SensorModel> data = FXCollections.observableArrayList();
+    private ObservableList<SensorModel> data = FXCollections.observableArrayList();
 
     private RoomModel roomModel;
     private TableView dataTable;
@@ -157,6 +155,19 @@ public class BaseView extends  Application{
             }
         });
 
+
+        final Label timeLabel = new Label();
+        final DateFormat format = DateFormat.getInstance();
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                final Calendar cal = Calendar.getInstance();
+                timeLabel.setText(format.format(cal.getTime()));
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
         final HBox hBox = new HBox();
         hBox.setPadding(new Insets(0,10,10,10));
         hBox.setSpacing(10);
@@ -165,7 +176,7 @@ public class BaseView extends  Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5, timeLabel);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
@@ -174,6 +185,7 @@ public class BaseView extends  Application{
         gPane.add(dataTable, 0, 0);
         gPane.add(hBox, 0, 1);
         gPane.add(vBox, 1, 0);
+
 
         ((Group) scene.getRoot()).getChildren().addAll(gPane);
         primaryStage.setScene(scene);
@@ -186,19 +198,25 @@ public class BaseView extends  Application{
     }
 
 //    private void bindToTime(){
+//        timeProperty = new SimpleStringProperty();
 //        Timeline timeline = new Timeline(
 //                new KeyFrame(Duration.seconds(0), new EventHandler<ActionEvent>() {
 //                    @Override
 //                    public void handle(ActionEvent event) {
 //                        Calendar time = Calendar.getInstance();
 //                        SimpleDateFormat sdf = new SimpleDateFormat("HH:MM:SS");
-//                        timeline.setText(sdf.format(time.getTime()));
+//                        setText(sdf.format(time.getTime()));
 //                    }
 //                }
 //                ),
 //                new KeyFrame(Duration.seconds(1)));
 //        timeline.setCycleCount(Animation.INDEFINITE);
 //        timeline.play();
+//    }
+//
+//
+//    private void setTimeProperty(){
+//        timeProperty.set();
 //    }
 }
 
