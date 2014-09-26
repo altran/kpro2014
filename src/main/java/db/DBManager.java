@@ -5,30 +5,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by audun on 9/26/14.
+ * A DBManager connects to the database, and executes predefined queries and updates.
+ *
+ * The parent DBConnector connects to the database, and supplies a java.sql.Connection
+ * through the inherited field 'connection'.
+ *
+ * Main responsibility: audun and julie
  */
 public class DBManager extends DBConnector {
-    private double temperature = 0.0;
-    private int lighting;
-    private int pressure;
-    private int humidity;
-    private int sound;
-    private int sensorID;
 
-    private PreparedStatement getAllCurrentValuesStmt;
-
-    public DBManager() throws SQLException {
-
-    }
-
-    /*
-     * A database connection is available through the inherited field 'connection'.
+    /**
+     * Returns a List of SensorSamples. For each sensor and each sample type, the list contains the most current sensor
+     * sample for that sensor of that type, if it exists.
+     *
+     * @return The most current sensor sample for each sensor and each type.
      */
-
     public List<SensorSample> getAllNewSamples() {
         List<SensorSample> sampleList = new ArrayList<SensorSample>();
 
@@ -39,6 +33,13 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
+    /**
+     * Returns a List of SensorSamples. For each sensor, the list contains the most current sensor
+     * sample for the sample type specified by 'sampleType', if it exists.
+     *
+     * @param sampleType the specified sample type.
+     * @return The most current sensor sample of the specified type for each sensor.
+     */
     public List<SensorSample> getAllNewSamples(SampleType sampleType) {
         List<SensorSample> sampleList = null;
         String tableName = sampleType.getTableName();
@@ -65,6 +66,19 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
+    /**
+     * Iterates through a result set of sensor samples, and builds a List of SensorSamples. The SampleType is
+     * specified by 'type'. It is imperative that the result set contains the columns
+     *     SensorID  (INTEGER)
+     *     Value  (DOUBLE)
+     *     Date  (DATETIME)
+     *
+     * In addition, the specified sample type should correspond to the sample type of the actual rows in the ResultSet.
+     *
+     * @param results the result set to take samples from.
+     * @param type the SampleType of the samples.
+     * @return A List of sensor samples taken from the specified ResultSet.
+     */
     private List<SensorSample> getSamplesFromResults(ResultSet results, SampleType type) {
         List<SensorSample> sampleList = new ArrayList<SensorSample>();
         SensorSample sample;
@@ -86,34 +100,11 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
-    public double getTemperature(){
-        String query =  "SELECT Value FROM TemperatureSample JOIN (" +
-                "SELECT MAX(Date) as MaxDate FROM TemperatureSample AS T1" +
-                ") AS T2 WHERE Date = MaxDate";
-
-        try {
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.execute();
-            ResultSet results = preparedStatement.getResultSet();
-            results.next();
-            temperature = results.getDouble(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return temperature;
-    }
-
-    public int getLighting(){ return lighting;}
-
-    public int getPressure(){return pressure;}
-
-    public int getHumidity(){return humidity;}
-
-    public int getSound(){return sound;}
-
-    public int getSensorID(){return sensorID;}
-
+    /*
+     * Test method
+     *
+     * TODO: Remove from final version
+     */
     public static void main(String[] args) throws SQLException {
         DBManager ctrl = new DBManager();
         ctrl.connect();
