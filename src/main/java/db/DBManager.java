@@ -1,5 +1,6 @@
 package db;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,6 +67,27 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
+    private List<SensorSample> getSamplesInTimeInterval(
+            SampleType type,
+            LocalDateTime from,
+            LocalDateTime to) {
+        ResultSet results;
+        List<SensorSample> sampleList = null;
+        String query = "SELECT * FROM " + type.getTableName() + " " +
+                "WHERE Date > \"" + from + "\" AND Date < \"" + to + "\";";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.execute();
+            results = stmt.getResultSet();
+            sampleList = getSamplesFromResults(results, type);
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sampleList;
+    }
+
     /**
      * Iterates through a result set of sensor samples, and builds a List of SensorSamples. The SampleType is
      * specified by 'type'. It is imperative that the result set contains the columns
@@ -108,7 +130,9 @@ public class DBManager extends DBConnector {
     public static void main(String[] args) throws SQLException {
         DBManager ctrl = new DBManager();
         ctrl.connect();
-        List<SensorSample> sampleList = ctrl.getAllNewSamples();
+        LocalDateTime from = LocalDateTime.parse("2014-09-26 09:07:00".replace(' ','T'));
+        LocalDateTime to = LocalDateTime.parse("2014-09-26 09:08:00".replace(' ','T'));
+        List<SensorSample> sampleList = ctrl.getSamplesInTimeInterval(SampleType.TEMPERATURE_SAMPLE, from, to);
         for(SensorSample sample : sampleList) {
             System.out.print(sample);
         }
