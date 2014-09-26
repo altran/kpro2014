@@ -46,7 +46,7 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
-    private List<SensorSample> getAllNewSamples(String tableName) {
+    public List<SensorSample> getAllNewSamples(String tableName) {
         List<SensorSample> sampleList = null;
         ResultSet results;
 
