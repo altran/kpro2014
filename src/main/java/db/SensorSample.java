@@ -44,7 +44,7 @@ public class SensorSample {
         s += "Type = " + getType() + ", ";
         s += "SensorID = " + getSensorID() + ", ";
         s += "Value = " + getValue() + ", ";
-        s += "Time = " + getDateTime()")\n";
+        s += "Time = " + getDateTime() + ")\n";
         return s;
     }
 }
