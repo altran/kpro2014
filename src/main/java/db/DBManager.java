@@ -77,7 +77,7 @@ public class DBManager extends DBConnector {
         return sampleList;
     }
 
-    private List<SensorSample> getSamplesInTimeInterval(
+    public List<SensorSample> getSamplesInTimeInterval(
             SampleType type,
             LocalDateTime from,
             LocalDateTime to) {
