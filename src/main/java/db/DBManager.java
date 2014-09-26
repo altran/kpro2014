@@ -28,7 +28,7 @@ public class DBManager extends DBConnector {
         List<SensorSample> sampleList = new ArrayList<SensorSample>();
 
         for(SampleType type : SampleType.values()) {
-            sampleList.addAll(getAllNewSamples(type));
+            sampleList.addAll(getNewSamples(type));
         }
 
         return sampleList;
