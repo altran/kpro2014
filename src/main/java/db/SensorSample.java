@@ -42,4 +42,16 @@ public class SensorSample {
     public LocalDateTime getDateTime() {
         return dateTime;
     }
+
+    @Override
+    public String toString() {
+        String s = new String();
+        s += "Sample(";
+        s += "Type = " + getType() + ", ";
+        s += "SampleID = " + getSampleID() + ", ";
+        s += "SensorID = " + getSensorID() + ", ";
+        s += "Value = " + getValue() + ", ";
+        s += "Time = " + getDateTime()")\n";
+        return s;
+    }
 }
