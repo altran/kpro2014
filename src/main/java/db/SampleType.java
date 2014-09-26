@@ -3,7 +3,7 @@ package db;
 /**
  * Created by juliejk on 26.09.2014.
  */
-public enum SampleTypes {
+public enum SampleType {
     TEMPERATURE_SAMPLE("TemperatureSample"),
     LIGHT_SAMPLE("LightSample"),
     PRESSURE_SAMPLE("PressureSample"),
@@ -12,7 +12,7 @@ public enum SampleTypes {
 
     private String typeName;
 
-    private SampleTypes(String name){
+    private SampleType(String name){
         typeName = name;
 
     }
