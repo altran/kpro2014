@@ -41,7 +41,7 @@ public class DBManager extends DBConnector {
      * @param sampleType the specified sample type.
      * @return The most current sensor sample of the specified type for each sensor.
      */
-    public List<SensorSample> getAllNewSamples(SampleType sampleType) {
+    public List<SensorSample> getNewSamples(SampleType sampleType) {
         List<SensorSample> sampleList = null;
         String tableName = sampleType.getTableName();
         String query =
