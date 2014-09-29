@@ -37,6 +37,10 @@ public class BaseView extends  Application{
     private TableColumn pressure;
     private TableColumn sound;
 
+    /**
+     * This methods creates all the objects inside the view. Including the primaryStage, table, checkbox, buttons
+     * and so on.
+     */
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -192,7 +196,9 @@ public class BaseView extends  Application{
         primaryStage.show();
     }
 
-
+    /**
+     * The main methode that starts the whole process
+     */
     public static void main(String[] args) {
         launch(args);
     }

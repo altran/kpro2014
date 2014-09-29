@@ -23,6 +23,11 @@ public class Controller {
     private ArrayList<Double> pressureList;
     private ArrayList<Double> soundList;
 
+
+    /**
+     * Make the ArrayLists of all the data that we gather from the database
+     */
+
     public Controller(){
         sortedList = new ArrayList<ArrayList>();
         sensorID = new ArrayList<Integer>();
@@ -64,6 +69,10 @@ public class Controller {
         }
     }
 
+
+    /**
+     * TAdding new data to the lists
+     */
     private void addData(SensorSample ss, int sensorID, ArrayList tList, ArrayList lList,
                          ArrayList hList, ArrayList pList, ArrayList sList){
         if(tList.size() <= ss.getSensorID()-1 || hList.size() <= ss.getSensorID()-1 || pList.size() <= ss.getSensorID()-1 ||

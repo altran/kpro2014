@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 /**
- * Created by shimin on 9/24/2014.
+ * Created by shimin on 9/24/2014.7
+ * RoomModel contains a list with all sensors inside the central hub range
  */
 public class RoomModel {
 
