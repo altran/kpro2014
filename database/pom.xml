@@ -11,34 +11,65 @@
 
     <artifactId>database</artifactId>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.glassfish.jersey</groupId>
-                <artifactId>jersey-bom</artifactId>
-                <!--
-                <version>${jersey.version}</version>
-
-                Changed this line
-                -->
-                <version>2.2</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <properties>
+        <ektorp.version>1.2.2</ektorp.version>
+        <spring.version>3.0.5.RELEASE</spring.version>
+        <slf4j.version>1.6.4</slf4j.version>
+        <junit.version>4.8.1</junit.version>
+    </properties>
 
     <dependencies>
-        <!-- Jersey stuff -->
+        <!-- Compile dependencies -->
         <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
+            <groupId>org.ektorp</groupId>
+            <artifactId>org.ektorp</artifactId>
+            <version>${ektorp.version}</version>
         </dependency>
-        <!-- For JSON support -->
-         <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-moxy</artifactId>
+        <dependency>
+            <groupId>org.ektorp</groupId>
+            <artifactId>org.ektorp.spring</artifactId>
+            <version>${ektorp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- Container-provided dependencies -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>
