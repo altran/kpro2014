@@ -1,4 +1,5 @@
 import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -19,8 +20,6 @@ import javafx.util.Duration;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by shimin on 9/24/2014.
@@ -32,6 +31,12 @@ public class BaseView extends  Application{
 
     private RoomModel roomModel;
     private TableView dataTable;
+    private ColumnInstruction temperatureInstruction;
+    private ColumnInstruction sensorIDInstruction;
+    private ColumnInstruction lightingInstruction;
+    private ColumnInstruction humidityInstruction;
+    private ColumnInstruction pressureInstruction;
+    private ColumnInstruction soundInstruction;
 
     /**
      * This methods creates all the objects inside the view. Including the primaryStage, table, checkbox, buttons
@@ -49,17 +54,17 @@ public class BaseView extends  Application{
         primaryStage.setWidth(650);
         primaryStage.setHeight(roomModel.getSensorNumber()*30 + 400);
 
-        final ColumnInstruction temperatureInstruction = new ColumnInstruction(new TableColumn("Temperature"),
+        temperatureInstruction = new ColumnInstruction(new TableColumn("Temperature"),
                 new PropertyValueFactory<SensorModel,Double>("temperature"));
-        final ColumnInstruction sensorIDInstruction = new ColumnInstruction(new TableColumn("ID"),
+        sensorIDInstruction = new ColumnInstruction(new TableColumn("ID"),
                 new PropertyValueFactory<SensorModel, Double>("sensorID"));
-        final ColumnInstruction lightingInstruction = new ColumnInstruction(new TableColumn("Lighting"),
+        lightingInstruction = new ColumnInstruction(new TableColumn("Lighting"),
                 new PropertyValueFactory<SensorModel, Double>("lighting"));
-        final ColumnInstruction humidityInstruction = new ColumnInstruction(new TableColumn("Humidity"),
+        humidityInstruction = new ColumnInstruction(new TableColumn("Humidity"),
                 new PropertyValueFactory<SensorModel, Double>("humidity"));
-        final ColumnInstruction pressureInstruction = new ColumnInstruction(new TableColumn("Pressure"),
+        pressureInstruction = new ColumnInstruction(new TableColumn("Pressure"),
                 new PropertyValueFactory<SensorModel, Double>("pressure"));
-        final ColumnInstruction soundInstruction = new ColumnInstruction(new TableColumn("Sound"),
+        soundInstruction = new ColumnInstruction(new TableColumn("Sound"),
                 new PropertyValueFactory<SensorModel, Double>("sound"));
 
 
@@ -69,10 +74,12 @@ public class BaseView extends  Application{
         columnRender.notify(humidityInstruction, now);
         columnRender.notify(pressureInstruction, now);
         columnRender.notify(soundInstruction, now);
-        
+
         for(int i = 0; i < roomModel.getSensorNumber(); i++){
             data.add(roomModel.getSensorModel(i));
         }
+
+
 
         dataTable.setItems(data);
         dataTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -80,6 +87,15 @@ public class BaseView extends  Application{
                 temperatureInstruction.getColumn(), lightingInstruction.getColumn(),
                 humidityInstruction.getColumn(), pressureInstruction.getColumn(),
                 soundInstruction.getColumn());
+
+        new AnimationTimer(){
+            @Override
+            public void handle(long now){
+                System.out.println(soundInstruction.getColumn().getCellData(0) + "this is the sound value");
+                soundInstruction.setValue(roomModel.getSensorModel().getSound());
+            }
+        }.start();
+
 
         final Button buttonHistory = new Button("History");
         final Button buttonMV = new Button("Map View");

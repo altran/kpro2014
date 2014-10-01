@@ -160,7 +160,7 @@ public class Controller {
     }
 
     private void passiveUpdate(){
-        timer.scheduleAtFixedRate(timerTask, 1000, 30000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 10000);
     }
 
 }

@@ -22,6 +22,7 @@ public class RoomModel {
             @Override
             public void run() {
                 setValue();
+                System.out.println(sensorModel.getSound());
             }
         };
         passiveUpdate();
@@ -37,7 +38,7 @@ public class RoomModel {
     }
 
     private void passiveUpdate(){
-        timer.scheduleAtFixedRate(timerTask, 1000, 30000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 10000);
     }
 
     private void setValue(){

@@ -6,8 +6,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class ColumnInstruction implements Instruction{
 
-    final TableColumn Column;
-    final PropertyValueFactory value;
+    private TableColumn Column;
+    private PropertyValueFactory value;
 
     public ColumnInstruction(TableColumn column, PropertyValueFactory value){
         this.Column = column;
@@ -20,6 +20,10 @@ public class ColumnInstruction implements Instruction{
 
     public PropertyValueFactory getValue(){
         return value;
+    }
+
+    public void setValue(PropertyValueFactory value){
+        this.value = value;
     }
 
     @Override
