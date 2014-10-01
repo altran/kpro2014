@@ -44,36 +44,36 @@ public class BaseView extends  Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        TableRender tableRender = new TableRender();
+        ColumnRender columnRender = new ColumnRender();
         long now = System.currentTimeMillis();
         roomModel = new RoomModel();
         dataTable = new TableView();
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("TableView test");
         primaryStage.setWidth(650);
-        primaryStage.setHeight(roomModel.getSensorNumber()*30 + 200);
+        primaryStage.setHeight(roomModel.getSensorNumber()*30 + 400);
 
-        ColumnInstruction temperatureInstruction = new ColumnInstruction(new TableColumn("Temperature"),
+        final ColumnInstruction temperatureInstruction = new ColumnInstruction(new TableColumn("Temperature"),
                 new PropertyValueFactory<SensorModel,Double>("temperature"));
         ColumnInstruction sensorIDInstruction = new ColumnInstruction(new TableColumn("ID"),
                 new PropertyValueFactory<SensorModel, Double>("sensorID"));
-        ColumnInstruction lightingInstruction = new ColumnInstruction(new TableColumn("Lighting"),
+        final ColumnInstruction lightingInstruction = new ColumnInstruction(new TableColumn("Lighting"),
                 new PropertyValueFactory<SensorModel, Double>("lighting"));
-        ColumnInstruction humidityInstruction = new ColumnInstruction(new TableColumn("Humidity"),
+        final ColumnInstruction humidityInstruction = new ColumnInstruction(new TableColumn("Humidity"),
                 new PropertyValueFactory<SensorModel, Double>("humidity"));
-        ColumnInstruction pressureInstruction = new ColumnInstruction(new TableColumn("Pressure"),
+        final ColumnInstruction pressureInstruction = new ColumnInstruction(new TableColumn("Pressure"),
                 new PropertyValueFactory<SensorModel, Double>("pressure"));
-        ColumnInstruction soundInstruction = new ColumnInstruction(new TableColumn("Sound"),
+        final ColumnInstruction soundInstruction = new ColumnInstruction(new TableColumn("Sound"),
                 new PropertyValueFactory<SensorModel, Double>("sound"));
 
 
 
-        tableRender.notify(sensorIDInstruction, now);
-        tableRender.notify(temperatureInstruction, now);
-        tableRender.notify(lightingInstruction, now);
-        tableRender.notify(humidityInstruction, now);
-        tableRender.notify(pressureInstruction, now);
-        tableRender.notify(soundInstruction, now);
+        columnRender.notify(sensorIDInstruction, now);
+        columnRender.notify(temperatureInstruction, now);
+        columnRender.notify(lightingInstruction, now);
+        columnRender.notify(humidityInstruction, now);
+        columnRender.notify(pressureInstruction, now);
+        columnRender.notify(soundInstruction, now);
 
         for(int i = 0; i < roomModel.getSensorNumber(); i++){
             data.add(roomModel.getSensorModel(i));
@@ -108,11 +108,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox1.isSelected() == false) {
                     dataTable.setPrefWidth(width*units);
-                    temperature.setVisible(false);
+                    temperatureInstruction.getColumn().setVisible(false);
                 }
                 if(cBox1.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    temperature.setVisible(true);
+                    temperatureInstruction.getColumn().setVisible(true);
                 }
             }
         });
@@ -122,11 +122,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox2.isSelected() == false){
                     dataTable.setPrefWidth(width*units);
-                    lighting.setVisible(false);
+                    lightingInstruction.getColumn().setVisible(false);
                 }
                 if(cBox2.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    lighting.setVisible(true);
+                    lightingInstruction.getColumn().setVisible(true);
                 }
             }
         });
@@ -136,11 +136,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox3.isSelected() == false){
                     dataTable.setPrefWidth(width*units);
-                    humidity.setVisible(false);
+                    humidityInstruction.getColumn().setVisible(false);
                 }
                 if(cBox3.isSelected()) {
                     dataTable.setPrefWidth(width * units);
-                    humidity.setVisible(true);
+                    humidityInstruction.getColumn().setVisible(true);
                 }
             }
         });
@@ -150,11 +150,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox4.isSelected() == false){
                     dataTable.setPrefWidth(width * units);
-                    pressure.setVisible(false);
+                    pressureInstruction.getColumn().setVisible(false);
                 }
                 if(cBox4.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    pressure.setVisible(true);
+                    pressureInstruction.getColumn().setVisible(true);
                 }
             }
         });
@@ -164,11 +164,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox5.isSelected() == false){
                     dataTable.setPrefWidth(width * units);
-                    sound.setVisible(false);
+                    soundInstruction.getColumn().setVisible(false);
                 }
                 if(cBox5.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    sound.setVisible(true);
+                    soundInstruction.getColumn().setVisible(true);
                 }
             }
         });
