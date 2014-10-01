@@ -49,7 +49,6 @@ public class Controller {
             public void run() {
                 getSensorSample();
                 sortSensorID();
-                System.out.println(sortedList);
             }
         };
         passiveUpdate();

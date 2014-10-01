@@ -23,7 +23,6 @@ public class RoomModel {
             public void run() {
                 sensorList.clear();
                 setValue();
-                System.out.println(sensorModel.getSound());
             }
         };
         passiveUpdate();
