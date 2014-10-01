@@ -1,5 +1,3 @@
-package no.lau.vdvil.instruction;
-
 /**
  * V2 interface for instructions
  * @author Stig Lau
