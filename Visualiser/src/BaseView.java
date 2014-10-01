@@ -37,6 +37,8 @@ public class BaseView extends  Application{
     private ColumnInstruction humidityInstruction;
     private ColumnInstruction pressureInstruction;
     private ColumnInstruction soundInstruction;
+    private static Stage stage;
+    private ImageView imageView;
 
     /**
      * This methods creates all the objects inside the view. Including the primaryStage, table, checkbox, buttons
@@ -45,6 +47,7 @@ public class BaseView extends  Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        stage = primaryStage;
         final ColumnRender columnRender = new ColumnRender();
         long now = System.currentTimeMillis();
         roomModel = new RoomModel();
@@ -98,7 +101,19 @@ public class BaseView extends  Application{
 
 
         final Button buttonHistory = new Button("History");
-        final Button buttonMV = new Button("Map View");
+        final Button buttonImage = new Button("Image View");
+
+        buttonImage.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                imageView = new ImageView();
+                try {
+                    imageView.start(stage);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
@@ -200,7 +215,7 @@ public class BaseView extends  Application{
         final HBox hBox = new HBox();
         hBox.setPadding(new Insets(0,10,10,10));
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(buttonHistory, buttonMV);
+        hBox.getChildren().addAll(buttonHistory, buttonImage);
 
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
@@ -219,6 +234,10 @@ public class BaseView extends  Application{
         ((Group) scene.getRoot()).getChildren().addAll(gPane);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public Stage getStage(){
+        return this.stage;
     }
 
     /**
