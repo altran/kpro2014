@@ -44,6 +44,8 @@ public class BaseView extends  Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        TableRender tableRender = new TableRender();
+        long now = System.currentTimeMillis();
         roomModel = new RoomModel();
         dataTable = new TableView();
         Scene scene = new Scene(new Group());
@@ -51,18 +53,27 @@ public class BaseView extends  Application{
         primaryStage.setWidth(650);
         primaryStage.setHeight(roomModel.getSensorNumber()*30 + 200);
 
-        sensorID = new TableColumn("ID");
-        sensorID.setCellValueFactory(new PropertyValueFactory<SensorModel,Integer>("sensorID"));
-        temperature = new TableColumn("Temperature");
-        temperature.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("temperature"));
-        lighting = new TableColumn("Lighting");
-        lighting.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("lighting"));
-        humidity = new TableColumn("Humidity");
-        humidity.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("humidity"));
-        pressure = new TableColumn("Pressure");
-        pressure.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("pressure"));
-        sound = new TableColumn("Sound");
-        sound.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("sound"));
+        ColumnInstruction temperatureInstruction = new ColumnInstruction(new TableColumn("Temperature"),
+                new PropertyValueFactory<SensorModel,Double>("temperature"));
+        ColumnInstruction sensorIDInstruction = new ColumnInstruction(new TableColumn("ID"),
+                new PropertyValueFactory<SensorModel, Double>("sensorID"));
+        ColumnInstruction lightingInstruction = new ColumnInstruction(new TableColumn("Lighting"),
+                new PropertyValueFactory<SensorModel, Double>("lighting"));
+        ColumnInstruction humidityInstruction = new ColumnInstruction(new TableColumn("Humidity"),
+                new PropertyValueFactory<SensorModel, Double>("humidity"));
+        ColumnInstruction pressureInstruction = new ColumnInstruction(new TableColumn("Pressure"),
+                new PropertyValueFactory<SensorModel, Double>("pressure"));
+        ColumnInstruction soundInstruction = new ColumnInstruction(new TableColumn("Sound"),
+                new PropertyValueFactory<SensorModel, Double>("sound"));
+
+
+
+        tableRender.notify(sensorIDInstruction, now);
+        tableRender.notify(temperatureInstruction, now);
+        tableRender.notify(lightingInstruction, now);
+        tableRender.notify(humidityInstruction, now);
+        tableRender.notify(pressureInstruction, now);
+        tableRender.notify(soundInstruction, now);
 
         for(int i = 0; i < roomModel.getSensorNumber(); i++){
             data.add(roomModel.getSensorModel(i));
@@ -70,7 +81,10 @@ public class BaseView extends  Application{
 
         dataTable.setItems(data);
         dataTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        dataTable.getColumns().addAll(sensorID, temperature, lighting, humidity, pressure, sound);
+        dataTable.getColumns().addAll(sensorIDInstruction.getColumn(),
+                temperatureInstruction.getColumn(), lightingInstruction.getColumn(),
+                humidityInstruction.getColumn(), pressureInstruction.getColumn(),
+                soundInstruction.getColumn());
 
         final Button buttonHistory = new Button("History");
         final Button buttonMV = new Button("Map View");
@@ -86,7 +100,7 @@ public class BaseView extends  Application{
         cBox4.setSelected(true);
         cBox5.setSelected(true);
 
-        final double width = temperature.getWidth();
+        final double width = temperatureInstruction.getColumn().getWidth();
         final double units = dataTable.getColumns().size();
 
         cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
