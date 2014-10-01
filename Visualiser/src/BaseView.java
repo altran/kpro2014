@@ -19,6 +19,8 @@ import javafx.util.Duration;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by shimin on 9/24/2014.
@@ -30,12 +32,6 @@ public class BaseView extends  Application{
 
     private RoomModel roomModel;
     private TableView dataTable;
-    private TableColumn sensorID;
-    private TableColumn temperature;
-    private TableColumn lighting;
-    private TableColumn humidity;
-    private TableColumn pressure;
-    private TableColumn sound;
 
     /**
      * This methods creates all the objects inside the view. Including the primaryStage, table, checkbox, buttons
@@ -44,7 +40,7 @@ public class BaseView extends  Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ColumnRender columnRender = new ColumnRender();
+        final ColumnRender columnRender = new ColumnRender();
         long now = System.currentTimeMillis();
         roomModel = new RoomModel();
         dataTable = new TableView();
@@ -55,7 +51,7 @@ public class BaseView extends  Application{
 
         final ColumnInstruction temperatureInstruction = new ColumnInstruction(new TableColumn("Temperature"),
                 new PropertyValueFactory<SensorModel,Double>("temperature"));
-        ColumnInstruction sensorIDInstruction = new ColumnInstruction(new TableColumn("ID"),
+        final ColumnInstruction sensorIDInstruction = new ColumnInstruction(new TableColumn("ID"),
                 new PropertyValueFactory<SensorModel, Double>("sensorID"));
         final ColumnInstruction lightingInstruction = new ColumnInstruction(new TableColumn("Lighting"),
                 new PropertyValueFactory<SensorModel, Double>("lighting"));
@@ -67,14 +63,13 @@ public class BaseView extends  Application{
                 new PropertyValueFactory<SensorModel, Double>("sound"));
 
 
-
         columnRender.notify(sensorIDInstruction, now);
         columnRender.notify(temperatureInstruction, now);
         columnRender.notify(lightingInstruction, now);
         columnRender.notify(humidityInstruction, now);
         columnRender.notify(pressureInstruction, now);
         columnRender.notify(soundInstruction, now);
-
+        
         for(int i = 0; i < roomModel.getSensorNumber(); i++){
             data.add(roomModel.getSensorModel(i));
         }
@@ -216,6 +211,7 @@ public class BaseView extends  Application{
     public static void main(String[] args) {
         launch(args);
     }
+
 
 }
 

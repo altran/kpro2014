@@ -1,5 +1,7 @@
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,10 +19,8 @@ public class SensorModel {
     private SimpleDoubleProperty pressure;
     private SimpleDoubleProperty humidity;
     private SimpleDoubleProperty sound;
-    private int sensorNumber;
 
 
-    //place holder values
     public SensorModel(){
         sensorID = new SimpleIntegerProperty(1);
         temperature = new SimpleDoubleProperty();
@@ -28,7 +28,6 @@ public class SensorModel {
         pressure = new SimpleDoubleProperty();
         humidity = new SimpleDoubleProperty();
         sound = new SimpleDoubleProperty();
-        sensorNumber = 10;
     }
 
     public double getTemperature(){ return temperature.get();}
@@ -43,7 +42,6 @@ public class SensorModel {
 
     public int getSensorID(){return sensorID.get();}
 
-    public int getSensorNumber(){return sensorNumber;}
 
     public void setSensorID(int ID){
         this.sensorID.set(ID);

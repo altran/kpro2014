@@ -2,6 +2,8 @@ import db.DBManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import db.SensorSample;
 
@@ -21,6 +23,8 @@ public class Controller {
     private ArrayList<Double> humidityList;
     private ArrayList<Double> pressureList;
     private ArrayList<Double> soundList;
+    private Timer timer;
+    private TimerTask timerTask;
 
 
     /**
@@ -38,6 +42,18 @@ public class Controller {
 
         dbManager = new DBManager();
         dbManager.connect();
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getSensorSample();
+                sortSensorID();
+                System.out.println(sortedList);
+            }
+        };
+        passiveUpdate();
+
         getSensorSample();
         sortedList.add(sensorID);
         sortedList.add(temperatureList);
@@ -97,19 +113,19 @@ public class Controller {
         else{
             switch (ss.getType()){
                 case TEMPERATURE_SAMPLE:
-                    tList.set(sensorID, ss.getValue());
+                    tList.set(sensorID-1, ss.getValue());
                     break;
                 case LIGHT_SAMPLE:
-                    lList.set(sensorID, ss.getValue());
+                    lList.set(sensorID-1, ss.getValue());
                     break;
                 case PRESSURE_SAMPLE:
-                    pList.set(sensorID, ss.getValue());
+                    pList.set(sensorID-1, ss.getValue());
                     break;
                 case HUMIDITY_SAMPLE:
-                    hList.set(sensorID, ss.getValue());
+                    hList.set(sensorID-1, ss.getValue());
                     break;
                 case SOUND_SAMPLE:
-                    sList.set(sensorID, ss.getValue());
+                    sList.set(sensorID-1, ss.getValue());
                     break;
             }
         }
@@ -142,4 +158,9 @@ public class Controller {
     public int getNumberOfSensors(){
         return sensorID.size();
     }
+
+    private void passiveUpdate(){
+        timer.scheduleAtFixedRate(timerTask, 1000, 30000);
+    }
+
 }
