@@ -80,7 +80,6 @@ public class BaseView extends  Application{
         }
 
 
-
         dataTable.setItems(data);
         dataTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         dataTable.getColumns().addAll(sensorIDInstruction.getColumn(),
@@ -91,8 +90,9 @@ public class BaseView extends  Application{
         new AnimationTimer(){
             @Override
             public void handle(long now){
-                System.out.println(soundInstruction.getColumn().getCellData(0) + "this is the sound value");
-                soundInstruction.setValue(roomModel.getSensorModel().getSound());
+                for(int i = 0; i < roomModel.getSensorNumber(); i++){
+                    data.set(i, roomModel.getSensorModel(i));
+                }
             }
         }.start();
 
