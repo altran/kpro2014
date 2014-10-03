@@ -1,6 +1,7 @@
 package no.altran.kpro2014.database;
 
 import org.ektorp.support.CouchDbDocument;
+import sun.management.Sensor;
 
 import java.util.Date;
 
@@ -11,13 +12,11 @@ import java.util.Date;
  */
 public class SensorData extends CouchDbDocument{
     private int sensorID;
+    private Date timestamp;
     private double value;
     private DataType type;
-    private Date timestamp;
 
-    public SensorData(){
-
-    }
+    public SensorData(){ }
 
     public SensorData(Date time, int sensorID, double value, DataType type){
 
@@ -64,5 +63,18 @@ public class SensorData extends CouchDbDocument{
     @Override
     public String toString(){
         return "sensorID: " + this.sensorID + ", value: " + this.value + ", type: " + this.type + ", time: " + this.timestamp;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof SensorData) {
+            SensorData data = (SensorData) obj;
+            return (this.sensorID == data.sensorID)
+                && (this.timestamp.equals(data.timestamp))
+                && (this.value == data.value)
+                && (this.type == data.type);
+        } else {
+            return false;
+        }
     }
 }

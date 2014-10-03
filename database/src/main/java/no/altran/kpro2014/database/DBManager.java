@@ -9,6 +9,7 @@ import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
 
 import javax.xml.bind.DataBindingException;
+import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,10 +22,14 @@ public class DBManager {
     private CouchDbConnector db;
     private SensorDataRepository sdRepository;
 
-    public DBManager() throws Exception {
-        HttpClient authenticatedHttpClient = new StdHttpClient.Builder().url("http://tdt4290g10.cloudant.com:5984")
-                .username("tdt4290g10")
-                .password("thisisapassword1")
+    public DBManager() throws MalformedURLException {
+        this("http://tdt4290g10.cloudant.com:5984", "tdt4290g10", "thisisapassword1");
+    }
+
+    public DBManager(String url, String username, String password) throws MalformedURLException {
+        HttpClient authenticatedHttpClient = new StdHttpClient.Builder().url(url)
+                .username(username)
+                .password(password)
                 .build();
 
         CouchDbInstance dbInstance = new StdCouchDbInstance(authenticatedHttpClient);
@@ -36,10 +41,18 @@ public class DBManager {
         sdRepository.add(data);
     }
 
+    public boolean containsSensorData(SensorData data) {
+        return sdRepository.contains(data.getId());
+    }
+
     public List<SensorData> getSensorDataFromTo(Date from, Date to) {
         String toString = Long.toString(to.getTime());
         String fromString = Long.toString(from.getTime());
         ViewQuery query = new ViewQuery().allDocs().includeDocs(true).startKey(fromString).endKey(toString);
         return db.queryView(query, SensorData.class);
+    }
+
+    public void shutdown() {
+        db.getConnection().shutdown();
     }
 }
