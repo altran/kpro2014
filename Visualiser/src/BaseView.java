@@ -31,14 +31,13 @@ public class BaseView extends  Application{
 
     private RoomModel roomModel;
     private TableView dataTable;
-    private ColumnInstruction temperatureInstruction;
-    private ColumnInstruction sensorIDInstruction;
-    private ColumnInstruction lightingInstruction;
-    private ColumnInstruction humidityInstruction;
-    private ColumnInstruction pressureInstruction;
-    private ColumnInstruction soundInstruction;
+    private TableColumn temperatureColumn;
+    private TableColumn sensorIDColumn;
+    private TableColumn lightingColumn;
+    private TableColumn humidityColumn;
+    private TableColumn pressureColumn;
+    private TableColumn soundColumn;
     private static Stage stage;
-    private ImageView imageView;
 
     /**
      * This methods creates all the objects inside the view. Including the primaryStage, table, checkbox, buttons
@@ -48,8 +47,6 @@ public class BaseView extends  Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
-        final ColumnRender columnRender = new ColumnRender();
-        long now = System.currentTimeMillis();
         roomModel = new RoomModel();
         dataTable = new TableView();
         Scene scene = new Scene(new Group());
@@ -57,26 +54,24 @@ public class BaseView extends  Application{
         primaryStage.setWidth(650);
         primaryStage.setHeight(roomModel.getSensorNumber()*30 + 400);
 
-        temperatureInstruction = new ColumnInstruction(new TableColumn("Temperature"),
-                new PropertyValueFactory<SensorModel,Double>("temperature"));
-        sensorIDInstruction = new ColumnInstruction(new TableColumn("ID"),
-                new PropertyValueFactory<SensorModel, Double>("sensorID"));
-        lightingInstruction = new ColumnInstruction(new TableColumn("Lighting"),
-                new PropertyValueFactory<SensorModel, Double>("lighting"));
-        humidityInstruction = new ColumnInstruction(new TableColumn("Humidity"),
-                new PropertyValueFactory<SensorModel, Double>("humidity"));
-        pressureInstruction = new ColumnInstruction(new TableColumn("Pressure"),
-                new PropertyValueFactory<SensorModel, Double>("pressure"));
-        soundInstruction = new ColumnInstruction(new TableColumn("Sound"),
-                new PropertyValueFactory<SensorModel, Double>("sound"));
+        temperatureColumn = new TableColumn("Temperature");
+        temperatureColumn.setCellValueFactory(new PropertyValueFactory<SensorModel,Double>("temperature"));
 
+        sensorIDColumn = new TableColumn("ID");
+        sensorIDColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("sensorID"));
 
-        columnRender.notify(sensorIDInstruction, now);
-        columnRender.notify(temperatureInstruction, now);
-        columnRender.notify(lightingInstruction, now);
-        columnRender.notify(humidityInstruction, now);
-        columnRender.notify(pressureInstruction, now);
-        columnRender.notify(soundInstruction, now);
+        lightingColumn = new TableColumn("Lighting");
+        lightingColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("lighting"));
+
+        humidityColumn = new TableColumn("Humidity");
+        humidityColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("humidity"));
+
+        pressureColumn = new TableColumn("Pressure");
+        pressureColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("pressure"));
+
+        soundColumn = new TableColumn("Sound");
+        soundColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("sound"));
+
 
         for(int i = 0; i < roomModel.getSensorNumber(); i++){
             data.add(roomModel.getSensorModel(i));
@@ -85,10 +80,8 @@ public class BaseView extends  Application{
 
         dataTable.setItems(data);
         dataTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        dataTable.getColumns().addAll(sensorIDInstruction.getColumn(),
-                temperatureInstruction.getColumn(), lightingInstruction.getColumn(),
-                humidityInstruction.getColumn(), pressureInstruction.getColumn(),
-                soundInstruction.getColumn());
+        dataTable.getColumns().addAll(sensorIDColumn, temperatureColumn, lightingColumn,
+                humidityColumn, pressureColumn, soundColumn);
 
         new AnimationTimer(){
             @Override
@@ -99,21 +92,6 @@ public class BaseView extends  Application{
             }
         }.start();
 
-
-        final Button buttonHistory = new Button("History");
-        final Button buttonImage = new Button("Image View");
-
-        buttonImage.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                imageView = new ImageView();
-                try {
-                    imageView.start(stage);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
 
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
@@ -126,7 +104,7 @@ public class BaseView extends  Application{
         cBox4.setSelected(true);
         cBox5.setSelected(true);
 
-        final double width = temperatureInstruction.getColumn().getWidth();
+        final double width = temperatureColumn.getColumns().size();
         final double units = dataTable.getColumns().size();
 
         cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -134,11 +112,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox1.isSelected() == false) {
                     dataTable.setPrefWidth(width*units);
-                    temperatureInstruction.getColumn().setVisible(false);
+                    temperatureColumn.setVisible(false);
                 }
                 if(cBox1.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    temperatureInstruction.getColumn().setVisible(true);
+                    temperatureColumn.setVisible(true);
                 }
             }
         });
@@ -148,11 +126,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox2.isSelected() == false){
                     dataTable.setPrefWidth(width*units);
-                    lightingInstruction.getColumn().setVisible(false);
+                    lightingColumn.setVisible(false);
                 }
                 if(cBox2.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    lightingInstruction.getColumn().setVisible(true);
+                    lightingColumn.setVisible(true);
                 }
             }
         });
@@ -162,11 +140,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox3.isSelected() == false){
                     dataTable.setPrefWidth(width*units);
-                    humidityInstruction.getColumn().setVisible(false);
+                    humidityColumn.setVisible(false);
                 }
                 if(cBox3.isSelected()) {
                     dataTable.setPrefWidth(width * units);
-                    humidityInstruction.getColumn().setVisible(true);
+                    humidityColumn.setVisible(true);
                 }
             }
         });
@@ -176,11 +154,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox4.isSelected() == false){
                     dataTable.setPrefWidth(width * units);
-                    pressureInstruction.getColumn().setVisible(false);
+                    pressureColumn.setVisible(false);
                 }
                 if(cBox4.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    pressureInstruction.getColumn().setVisible(true);
+                    pressureColumn.setVisible(true);
                 }
             }
         });
@@ -190,11 +168,11 @@ public class BaseView extends  Application{
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if(cBox5.isSelected() == false){
                     dataTable.setPrefWidth(width * units);
-                    soundInstruction.getColumn().setVisible(false);
+                    soundColumn.setVisible(false);
                 }
                 if(cBox5.isSelected()){
                     dataTable.setPrefWidth(width*units);
-                    soundInstruction.getColumn().setVisible(true);
+                    soundColumn.setVisible(true);
                 }
             }
         });
@@ -212,11 +190,6 @@ public class BaseView extends  Application{
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-        final HBox hBox = new HBox();
-        hBox.setPadding(new Insets(0,10,10,10));
-        hBox.setSpacing(10);
-        hBox.getChildren().addAll(buttonHistory, buttonImage);
-
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
@@ -227,7 +200,6 @@ public class BaseView extends  Application{
         gPane.setVgap(5);
         gPane.setPadding(new Insets(20, 20, 20, 20));
         gPane.add(dataTable, 0, 0);
-        gPane.add(hBox, 0, 1);
         gPane.add(vBox, 1, 0);
 
 
