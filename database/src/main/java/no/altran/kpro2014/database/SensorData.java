@@ -14,7 +14,6 @@ public class SensorData extends CouchDbDocument{
     private double value;
     private DataType type;
     private Date timestamp;
-    public String rev;
 
     public SensorData(){
 
@@ -27,6 +26,10 @@ public class SensorData extends CouchDbDocument{
         this.value = value;
         this.type = type;
         this.timestamp = time;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getSensorID() {
@@ -45,11 +48,9 @@ public class SensorData extends CouchDbDocument{
         this.value = value;
     }
 
-    public void setTimestamp(String timestamp) {
 
-    }
-
-    public void setType(String type) {
+    public void setType(DataType type) {
+        this.type = type;
     }
 
     public DataType getType() {

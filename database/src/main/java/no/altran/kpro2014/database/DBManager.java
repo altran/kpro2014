@@ -39,7 +39,7 @@ public class DBManager {
     public List<SensorData> getSensorDataFromTo(Date from, Date to) {
         String toString = Long.toString(to.getTime());
         String fromString = Long.toString(from.getTime());
-        ViewQuery query = new ViewQuery().allDocs().startKey(fromString).endKey(toString);
+        ViewQuery query = new ViewQuery().allDocs().includeDocs(true).startKey(fromString).endKey(toString);
         return db.queryView(query, SensorData.class);
     }
 
