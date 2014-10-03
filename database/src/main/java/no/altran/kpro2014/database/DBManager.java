@@ -8,7 +8,6 @@ import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
 
 import java.io.File;
-import java.util.HashMap;
 
 /**
  * Created by audun on 10/1/14.
@@ -25,7 +24,7 @@ public class DBManager {
         CouchDbInstance dbInstance = new StdCouchDbInstance(authenticatedHttpClient);
         CouchDbConnector db = dbInstance.createConnector("sensor_data", true);
 
-        SensorData sensor = new SensorData(12, 24);
+        DBSensorData sensor = new DBSensorData(12, 24);
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(new File("c:\\sensor.json"), sensor);
 //        System.out.println();
