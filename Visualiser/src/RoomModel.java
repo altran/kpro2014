@@ -21,8 +21,8 @@ public class RoomModel {
         timerTask = new TimerTask() {
             @Override
             public void run() {
+                sensorList.clear();
                 setValue();
-                System.out.println(sensorModel.getSound());
             }
         };
         passiveUpdate();
