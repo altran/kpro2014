@@ -36,5 +36,6 @@ public class SensorDataDocument extends CouchDbDocument {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+        this.setId(Long.toString(timestamp.getTime()));
     }
 }
