@@ -6,14 +6,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -29,7 +31,6 @@ import java.util.Calendar;
 public class ImageView extends Application{
 
     private RoomModel roomModel;
-    private BaseView baseView;
 
     public void start(Stage stage) {
         Scene scene = new Scene(new Group());
@@ -38,21 +39,9 @@ public class ImageView extends Application{
         stage.setWidth(650);
         stage.setHeight(roomModel.getSensorNumber() * 30 + 400);
 
-        final Button buttonHistory = new Button("History");
-        final Button buttonTable = new Button("Table View");
-
-        buttonTable.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                baseView = new BaseView();
-                Stage stage = baseView.getStage();
-                try {
-                    baseView.start(stage);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
+        Canvas canvas = new Canvas(475, 250);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        drawShapes(gc);
 
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
@@ -77,11 +66,6 @@ public class ImageView extends Application{
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-        final HBox hBox = new HBox();
-        hBox.setPadding(new Insets(0,10,10,10));
-        hBox.setSpacing(10);
-        hBox.getChildren().addAll(buttonHistory, buttonTable);
-
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
@@ -91,12 +75,21 @@ public class ImageView extends Application{
         gPane.setHgap(5);
         gPane.setVgap(5);
         gPane.setPadding(new Insets(20, 20, 20, 20));
-        gPane.add(hBox, 0, 1);
         gPane.add(vBox, 1, 0);
+        gPane.add(canvas, 0, 0);
 
         ((Group) scene.getRoot()).getChildren().addAll(gPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void drawShapes(GraphicsContext gc) {
+        gc.setFill(Color.WHITESMOKE);
+
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }
