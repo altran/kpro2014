@@ -19,9 +19,6 @@ import javafx.scene.image.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -57,13 +54,18 @@ public class MapView extends Application{
         System.out.println(canvas.getHeight());
         System.out.println(canvas.getWidth());
 
-
+        /*
+        Creates the central hub. This object is static.
+         */
         centralHubInstruction = new CentralHubInstruction(circleImage, now, Long.MAX_VALUE,
                 canvas.getWidth()/2-circleImage.getWidth()/2,
                 canvas.getHeight()/2-circleImage.getWidth()/2 , canvas);
         centralHubRenderer = new CentralHubRenderer();
         centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
 
+        /*
+        Temporary animation timer for updating values. If we want better animation this is the place to improve it.
+         */
         new AnimationTimer(){
             @Override
             public void handle(long now){
@@ -78,6 +80,9 @@ public class MapView extends Application{
                 }
         }.start();
 
+        /*
+        Checkboxes and other stuff.
+         */
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
         final CheckBox cBox3 = new CheckBox("Humidity");
