@@ -15,9 +15,9 @@ public class SensorInstruction implements Instruction{
     final double y;
     final Canvas canvas;
     final Color color;
-    final int lighting;
+    final double lighting;
 
-    public SensorInstruction(String text, Color color, int lighting, long start, long length, double x, double y, Canvas canvas){
+    public SensorInstruction(String text, Color color, double lighting, long start, long length, double x, double y, Canvas canvas){
         this.start = start;
         this.length = length;
         this.text = text;
@@ -32,7 +32,7 @@ public class SensorInstruction implements Instruction{
 
     public Color getColor() { return color; }
 
-    public int getLighting() { return lighting; }
+    public double getLighting() { return lighting; }
 
     public double getX(){
         return x;

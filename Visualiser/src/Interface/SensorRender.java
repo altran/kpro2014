@@ -17,7 +17,8 @@ public class SensorRender implements Renderer{
             graphicsContext.setStroke(Color.BLACK);
             graphicsContext.strokeOval(((SensorInstruction) instruction).getX(), ((SensorInstruction) instruction).getY(), 50, 50);
 
-            graphicsContext.setFill(Color.rgb(((SensorInstruction) instruction).getLighting(), ((SensorInstruction) instruction).getLighting(), ((SensorInstruction) instruction).getLighting()));
+            int temp = (int)((SensorInstruction) instruction).getLighting();
+            graphicsContext.setFill(Color.rgb(temp, temp, temp));
             //the grey color is hard coded at the moment. Change when we know the lighting stuff.
             graphicsContext.fillOval(((SensorInstruction) instruction).getX(), ((SensorInstruction) instruction).getY(), 50, 50);
 

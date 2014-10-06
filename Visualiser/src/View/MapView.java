@@ -1,9 +1,6 @@
 package View;
 
-import Interface.CentralHubInstruction;
-import Interface.CentralHubRenderer;
-import Interface.SensorInstruction;
-import Interface.SensorRender;
+import Interface.*;
 import Model.RoomModel;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -44,7 +41,9 @@ public class MapView extends Application{
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
     private SensorInstruction sensorInstruction;
+    private TemperatureInstruction temperatureInstruction;
     private SensorRender sensorRender;
+    private TemperatureRender temperatureRender;
 
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
@@ -65,9 +64,11 @@ public class MapView extends Application{
         centralHubRenderer = new CentralHubRenderer();
         centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
 
-
         for(int i = 0; i<roomModel.getSensorNumber(); i++){
-            sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, 100, now, Long.MAX_VALUE, i*100, i*100, canvas);
+            temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), now, Long.MAX_VALUE, i*100+5, i*100+5, canvas);
+            temperatureRender = new TemperatureRender();
+            temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+            sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, roomModel.getSensorModel(i).getLighting(), now, Long.MAX_VALUE, i*100+30, i*100+30, canvas);
             sensorRender = new SensorRender();
             sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
         }
