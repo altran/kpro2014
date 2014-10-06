@@ -3,6 +3,7 @@ package Interface;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -13,32 +14,29 @@ public class SensorInstruction implements Instruction{
 
     final long start;
     final long length;
-    final Image image;
-    final Text text;
+    final String text;
     final double x;
     final double y;
     final Canvas canvas;
-    final Scene scene;
+    final Color color;
+    final int lighting;
 
-    public SensorInstruction(Image image, Text text, long start, long length, double x, double y, Canvas canvas, Scene scene){
-        this.image = image;
+    public SensorInstruction(String text, Color color, int lighting, long start, long length, double x, double y, Canvas canvas){
         this.start = start;
         this.length = length;
         this.text = text;
         this.x = x;
         this.y = y;
         this.canvas = canvas;
-        this.scene = scene;
+        this.color = color;
+        this.lighting = lighting;
     }
 
+    public String getText() { return text; }
 
-    public Image getimage() {
-        return image;
-    }
+    public Color getColor() { return color; }
 
-    public Text getText() { return text; }
-
-    public Scene getScene() { return scene; }
+    public int getLighting() { return lighting; }
 
     public double getX(){
         return x;

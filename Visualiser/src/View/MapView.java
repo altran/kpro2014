@@ -22,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -39,7 +40,7 @@ public class MapView extends Application{
     private RoomModel roomModel;
     private Image circleImage = new Image("Resources/circle.jpg");
     private Image sensorImage;
-    private Text text;
+    private String text;
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
     private SensorInstruction sensorInstruction;
@@ -64,11 +65,12 @@ public class MapView extends Application{
         centralHubRenderer = new CentralHubRenderer();
         centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
 
-        text = new Text("S");
-        text.setFill(Color.ORANGE);
-        sensorInstruction = new SensorInstruction(circleImage, text, now, Long.MAX_VALUE, 0, 0, canvas, scene);
-        sensorRender = new SensorRender();
-        sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+
+        for(int i = 0; i<roomModel.getSensorNumber(); i++){
+            sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, 100, now, Long.MAX_VALUE, i*100, i*100, canvas);
+            sensorRender = new SensorRender();
+            sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+        }
 
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
@@ -104,6 +106,7 @@ public class MapView extends Application{
         gPane.setPadding(new Insets(20, 20, 20, 20));
         gPane.add(vBox, 1, 0);
         gPane.add(canvas, 0, 0);
+
 
         ((Group) scene.getRoot()).getChildren().addAll(gPane);
         stage.setScene(scene);
