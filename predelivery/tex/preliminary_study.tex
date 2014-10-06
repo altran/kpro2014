@@ -29,7 +29,7 @@ This is a fairly young field of study and application, but it is growing fast. A
 \subsection*{Initial Ideas Table}
 Here we will present the ideas discussed above in a more concrete way, in the form of a table:
 
-\begin{table}[ht]
+\begin{table}[H]
 \caption{Initial Ideas Table}
 \centering
 \begin{tabularx}{\textwidth}{ |X|X|X|}
@@ -115,22 +115,22 @@ The Internet of Things is about connecting devices in our everyday environments 
 \subsubsection*{Products and Projects}
 While there are similar projects that deal with the concept of “Internet of Things”, typically these projects are not limited to the visualization stage. They become a concrete project that uses data to achieve some effect besides visualization. Therefore, most of the products are internal projects that become full fledged projects or products later. It is difficult to find any products that match what we are trying to achieve and most visualizations of data are well out of our field of study, such as weather systems that create cloud or wind patterns and predict their movement.
 
-\subsubsection*{Different possible architectural models for the prototype:}
+\subsubsection*{Different possible architectural models for the prototype}
 While working on the initial stages of the project, we had to prepare countermeasures to counteract risk 1, which was the possibility of us not getting the hardware necessary to complete our prototype. In order to make the prototype work without any hardware from the customer, he suggested that we could substitute the sensors with android phones. With this in mind we had to prepare for both situations and we found out that the architecture in both cases actually differs. In both cases we would be using a client-server architecture, however, the roles of the client and the server would be reversed.
 
-When using the sensors, we would have a raspberry pi acting as a server. In this case our client requests information from the server, and stores it in a database of some sort. Then our visualizer uses this data to show it in a visual way.{\color{red} The image of the architecture can be seen below.}
+When using the sensors, we would have a raspberry pi acting as a server. In this case our client requests information from the server, and stores it in a database of some sort. Then our visualizer uses this data to show it in a visual way. The image of the architecture can be seen below.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\centering
-		\includegraphics[width=\textwidth]{../img/Architecture_1.png}
+		\includegraphics[width=\textwidth]{Architecture_1.png}
 	\caption{Architecture 1}
 \end{figure}
 
-The architecture that deals with the android phones is the opposite. The phones are sensors, but also servers at the same time, and we have only one client, that requests information from the phones, or servers. This information is stored in some sort of a database, and the same process is repeated as above with the visualizer. {\color{red} The image of the architecture can be seen below.}
+The architecture that deals with the android phones is the opposite. The phones are sensors, but also servers at the same time, and we have only one client, that requests information from the phones, or servers. This information is stored in some sort of a database, and the same process is repeated as above with the visualizer. The image of the architecture can be seen below.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\centering
-		\includegraphics[width=\textwidth]{../img/Architecture_2.png}
+		\includegraphics[width=\textwidth]{Architecture_2.png}
 	\caption{Architecture 2}
 \end{figure}
 
