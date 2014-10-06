@@ -56,7 +56,7 @@ public class BaseView extends  Application{
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("TableView test");
         primaryStage.setWidth(650);
-        primaryStage.setHeight(roomModel.getSensorNumber()*30 + 400);
+        primaryStage.setHeight(500);
 
         temperatureColumn = new TableColumn("Temperature");
         temperatureColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("temperature"));
@@ -108,8 +108,10 @@ public class BaseView extends  Application{
         cBox4.setSelected(true);
         cBox5.setSelected(true);
 
-        final double width = temperatureColumn.getColumns().size();
+        final double width = lightingColumn.getWidth();
+        System.out.println(width);
         final double units = dataTable.getColumns().size();
+        System.out.println(units);
 
         cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
