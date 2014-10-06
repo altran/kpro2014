@@ -23,6 +23,7 @@
 \usepackage{float}
 
 \begin{document}
+\renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
 
 \subfile{tex/abstract}
@@ -31,6 +32,8 @@
 \subfile{tex/contents}
 \newpage
 
+\setcounter{page}{1}
+\renewcommand{\thepage}{\arabic{page}}
 \subfile{tex/introduction}
 
 \subfile{tex/project_plan}
