@@ -1,0 +1,12 @@
+\documentclass[../document.tex]{subfiles}
+\begin{document}
+\section*{Abstract}
+This project take the idea of “Internet of Things”, a concept in which all devices are interconnected in some way, and fulfills this idea by using cheap sensors that can measure temperature, light and perhaps more attributes, depending on the sensor. Our main task is not to create a huge project, but rather create a base on which other projects can be built upon. In fact, our main task is to visualize the data that is collected by the sensors. As the sensors and the field is fairly new to our customer, Altran AS, we are in a way helping the customer test out the full potential of these sensors and display the data collected in some interesting and presentable way. The implementation itself will be done in Java, as the system as a whole is quite object-oriented, and java is a good choice for any kind of portable system.
+
+Our architecture is REST based; the client, which is a central hub, collects data from the sensors. Our database server asks the client for this data frequently and our implementation or visualization reads the data and displays it on the screen in a visually interesting fashion.
+
+We have chosen to use image manipulation in our implementation. What is meant by image manipulation is that we will use basic colours and shapes to visualize the data on a blank canvas. The data presented should be intuitive and we will use colours and shapes that should be somewhat intuitive.
+
+We have also chosen to work with the Scrum model. Agile methodology is very efficient in this project; it is quite a conceptual project where the customer is not giving the development team a clear answer, but rather, we need to come up with an answer and improve it over time, or over the different sprints. While we do not follow our methodology fully when it comes to the documentation, the implementation will use the Scrum model fully. In addition, we will use pair programming to insure better quality and an equal spread of work experience amongst the group members.
+
+\end{document}
