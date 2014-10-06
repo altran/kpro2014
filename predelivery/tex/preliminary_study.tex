@@ -34,7 +34,12 @@ Here we will present the ideas discussed above in a more concrete way, in the fo
 \centering
 \begin{tabularx}{\textwidth}{ |X|X|X|}
 \hline
-Initial Idea			&	Pros					&	Cons \\ \hline
+\textbf{Initial Idea}
+&
+\textbf{Pros}
+&
+\textbf{Cons}
+\\ \hline
 Elder health system
 &
 Health tracking on the fly 
@@ -105,10 +110,57 @@ The problem with this approach is that it becomes less intuitive and more clutte
 \subsection*{Visualization Ideas Table}
 Here we will present the ideas discussed above in the form of a table:
 
-{\color{red}------------------------------- Placeholder------------------}
+\begin{table}[H]
+\caption{Visualization Ideas Table}
+\centering
+\begin{tabularx}{\textwidth}{ |X|X|X|}
+\hline
+\textbf{Visualization idea}
+&
+\textbf{Pros}
+&
+\textbf{Cons}
+\\ \hline
+Simple Image Manipulation
+&
+Very simple to implement.
+&
+Not enough data per sensor is shown.
+\newline \ \newline
+No overarching image of what sensors senses what attribute and the value of the attribute.
+\\ \hline
+Simple Image Manipulation in a grid
+&
+Simple to implement.
+\newline \ \newline
+Shows each sensor (or small groups of sensors) and shows their specific attributes.
+&
+Requires accurate motion tracking to represent the sensors in a 2D environment.
+\\ \hline
+Manipulation of sprites
+&
+Adds intuitiveness.
+\newline \ \newline
+Shows each sensor as a sprite and animates the sprite according to the data.
+&
+The need to animate and draw sprites may be costly in the long run.
+\newline \ \newline
+Some attributes, such as temperature, might not be that intuitive, as they will change very slowly.
+\\ \hline
+Combination of sprites and shapes
+&
+Shows each sensors data clearly and well.
+&
+Complex implementation.
+\newline \ \newline
+Need to animate and draw sprites may be costly in the long run.
+\newline \ \newline
+Too many sprites and shapes might cause clutter on the screen and actually make it harder to understand.
+\\ \hline
+\end{tabularx}
+\end{table}
 
 \subsection*{Similar Products and Projects}
-
 \subsubsection*{Internet of Things}
 The Internet of Things is about connecting devices in our everyday environments to the internet. Many novel uses of internet-connected devices have already been demonstrated, and the future looks promising. It is expected that we will have 100 billion internet-connected objects by 2020. The possibilities might seem limitless. Moreover, the cheap sensor technology supplied by Altran is highly applicable in this area, and such sensors opens up many interesting opportunities.
 
