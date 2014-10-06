@@ -1,11 +1,7 @@
 package Interface;
 
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 /**
  * Created by shimin on 10/3/2014.
