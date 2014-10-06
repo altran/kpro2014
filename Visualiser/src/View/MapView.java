@@ -3,6 +3,7 @@ package View;
 import Interface.*;
 import Model.RoomModel;
 import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -36,14 +37,13 @@ public class MapView extends Application{
 
     private RoomModel roomModel;
     private Image circleImage = new Image("Resources/circle.jpg");
-    private Image sensorImage;
-    private String text;
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
     private SensorInstruction sensorInstruction;
     private TemperatureInstruction temperatureInstruction;
     private SensorRender sensorRender;
     private TemperatureRender temperatureRender;
+    private Canvas canvas;
 
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
@@ -53,7 +53,7 @@ public class MapView extends Application{
         stage.setWidth(800);
         stage.setHeight(650);
 
-        Canvas canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
+        canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
         System.out.println(canvas.getHeight());
         System.out.println(canvas.getWidth());
 
@@ -64,14 +64,19 @@ public class MapView extends Application{
         centralHubRenderer = new CentralHubRenderer();
         centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
 
-        for(int i = 0; i<roomModel.getSensorNumber(); i++){
-            temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), now, Long.MAX_VALUE, i*100+5, i*100+5, canvas);
-            temperatureRender = new TemperatureRender();
-            temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
-            sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, roomModel.getSensorModel(i).getLighting(), now, Long.MAX_VALUE, i*100+30, i*100+30, canvas);
-            sensorRender = new SensorRender();
-            sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
-        }
+        new AnimationTimer(){
+            @Override
+            public void handle(long now){
+                for(int i = 0; i < roomModel.getSensorNumber(); i++){
+                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), now, Long.MAX_VALUE, i*100+5, i*100+5, canvas);
+                        temperatureRender = new TemperatureRender();
+                        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, roomModel.getSensorModel(i).getLighting(), now, Long.MAX_VALUE, i*100+30, i*100+30, canvas);
+                        sensorRender = new SensorRender();
+                        sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+                    }
+                }
+        }.start();
 
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
