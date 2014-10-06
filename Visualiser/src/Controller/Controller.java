@@ -64,10 +64,16 @@ public class Controller {
         sortSensorID();
     }
 
+    /*
+    This method returns a list of sensors from the database.
+     */
     private List<SensorSample> getSensorSample(){
         return sampleList = dbManager.getAllNewSamples();
     }
 
+    /*
+    This method sorts the list from the database into a manageable format.
+     */
     private void sortSensorID(){
         for(int i=0; i<sampleList.size(); i++){
             SensorSample tempSample = sampleList.get(i);

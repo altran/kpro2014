@@ -2,16 +2,12 @@ package Model;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * Created by shimin on 9/24/2014.
  *
- * This class contain the model for our room, it has temperature, pressure, lighting, humidity and sound.
- * Also here you'll have the getters for all of them
+ * This class contain the model for a specific sensor, it has temperature, pressure, lighting, humidity and sound.
+ * Also here you'll find the getters for all of them.
  */
 public class SensorModel {
 

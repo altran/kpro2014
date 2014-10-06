@@ -27,7 +27,7 @@ import java.util.Calendar;
 
 /**
  * Created by shimin on 9/24/2014.
- *
+ * This is the Table View. It is the view part of the model (room) and controller (controller).
  */
 public class BaseView extends  Application{
 
@@ -183,7 +183,9 @@ public class BaseView extends  Application{
             }
         });
 
-
+        /*
+        This is the clock.
+         */
         final Label timeLabel = new Label();
         final DateFormat format = DateFormat.getInstance();
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
