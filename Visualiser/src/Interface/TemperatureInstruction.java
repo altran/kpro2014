@@ -13,17 +13,21 @@ public class TemperatureInstruction implements Instruction{
     final double y;
     final Canvas canvas;
     final double temperature;
+    final double pressure;
 
-    public TemperatureInstruction(double temperature, long start, long length, double x, double y, Canvas canvas){
+    public TemperatureInstruction(double temperature, double pressure, long start, long length, double x, double y, Canvas canvas){
         this.start = start;
         this.length = length;
         this.x = x;
         this.y = y;
         this.canvas = canvas;
         this.temperature = temperature;
+        this.pressure = pressure;
     }
 
     public double getTemperature() { return temperature; }
+
+    public double getPressure() { return pressure; }
 
     public double getX(){ return x; }
 

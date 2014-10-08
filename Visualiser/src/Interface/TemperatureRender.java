@@ -13,12 +13,16 @@ public class TemperatureRender implements Renderer{
     public void notify(Instruction instruction, long beat) {
         if(instruction instanceof TemperatureInstruction){
 
+            double x = ((TemperatureInstruction) instruction).getX(); //X location
+            double y = ((TemperatureInstruction) instruction).getY(); //Y location
+            double size = ((TemperatureInstruction) instruction).getPressure() / 1; //Size depends on the pressure. Insert pleasing formula.
+
             /*
             Render a circle.
              */
             GraphicsContext graphicsContext = ((TemperatureInstruction) instruction).getCanvas().getGraphicsContext2D();
             graphicsContext.setStroke(Color.BLACK);
-            graphicsContext.strokeOval(((TemperatureInstruction) instruction).getX(), ((TemperatureInstruction) instruction).getY(), 100, 100);
+            graphicsContext.strokeOval(x, y, size, size);
 
             /*
             Fill a circle with a specific color. Color depends on the temperature.
@@ -29,9 +33,9 @@ public class TemperatureRender implements Renderer{
             if (temp < 40 && temp >= 20){graphicsContext.setFill(Color.rgb(255,255,0));}
             if (temp < 20 && temp >= 0){graphicsContext.setFill(Color.rgb(0,255,0));}
             if (temp < 0 && temp >= -20){graphicsContext.setFill(Color.rgb(0,255,255));}
-            if (temp <= -20){graphicsContext.setFill(Color.rgb(0,0,255));}
+            if (temp < -20){graphicsContext.setFill(Color.rgb(0,0,255));}
 
-            graphicsContext.fillOval(((TemperatureInstruction) instruction).getX(), ((TemperatureInstruction) instruction).getY(), 100, 100);
+            graphicsContext.fillOval(x, y, size, size);
 
         }
     }
