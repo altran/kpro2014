@@ -71,11 +71,15 @@ public class MapView extends Application{
         new AnimationTimer(){
             @Override
             public void handle(long now){
+                canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
-                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), now, Long.MAX_VALUE, i*100+5, i*100+5, canvas);
+                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), roomModel.getSensorModel(i).getPressure(), now, 10, i*100+5, i*100+5, canvas);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
-                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, roomModel.getSensorModel(i).getLighting(), now, Long.MAX_VALUE, i*100+30, i*100+30, canvas);
+                        double offset = roomModel.getSensorModel(i).getPressure()/33 + (roomModel.getSensorModel(i).getPressure() - 1000) / 3;
+                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, roomModel.getSensorModel(i).getLighting(), roomModel.getSensorModel(i).getPressure(),
+                                                                  now, 10, (i*100)+offset, (i*100)+offset, canvas);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
                         humidityInstruction = new HumidityInstruction(roomModel.getSensorModel(i).getHumidity(), now, Long.MAX_VALUE, i*100+0, i*100+40, canvas);
