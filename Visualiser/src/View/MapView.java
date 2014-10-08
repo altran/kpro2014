@@ -41,6 +41,8 @@ public class MapView extends Application{
     private SensorRender sensorRender;
     private TemperatureRender temperatureRender;
     private Canvas canvas;
+    private HumidityInstruction humidityInstruction;
+    private HumidityRender humidityRender;
 
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
@@ -76,6 +78,9 @@ public class MapView extends Application{
                         sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, roomModel.getSensorModel(i).getLighting(), now, Long.MAX_VALUE, i*100+30, i*100+30, canvas);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+                        humidityInstruction = new HumidityInstruction(roomModel.getSensorModel(i).getHumidity(), now, Long.MAX_VALUE, i*100+0, i*100+40, canvas);
+                        humidityRender = new HumidityRender();
+                        humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
                     }
                 }
         }.start();
