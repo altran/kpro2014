@@ -13,9 +13,11 @@ public class TemperatureRender implements Renderer{
     public void notify(Instruction instruction, long beat) {
         if(instruction instanceof TemperatureInstruction){
 
-            double x = ((TemperatureInstruction) instruction).getX(); //X location
-            double y = ((TemperatureInstruction) instruction).getY(); //Y location
-            double size = ((TemperatureInstruction) instruction).getPressure() / 1; //Size depends on the pressure. Insert pleasing formula.
+            final double x = ((TemperatureInstruction) instruction).getX(); //X location
+            final double y = ((TemperatureInstruction) instruction).getY(); //Y location
+            final double size1 = ((TemperatureInstruction) instruction).getPressure() / 10;
+            final double size2 = ((TemperatureInstruction) instruction).getPressure() - 1000;
+            final double size = size1+size2;
 
             /*
             Render a circle.
@@ -36,7 +38,6 @@ public class TemperatureRender implements Renderer{
             if (temp < -20){graphicsContext.setFill(Color.rgb(0,0,255));}
 
             graphicsContext.fillOval(x, y, size, size);
-
         }
     }
 }
