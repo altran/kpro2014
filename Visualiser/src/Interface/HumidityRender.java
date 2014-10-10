@@ -21,11 +21,19 @@ public class HumidityRender implements Renderer {
             graphicsContext.bezierCurveTo(x+30, y+35, x-30, y+35, x, y);
             double white;
             double blue;
-            if (humidity < 50){
+            if (humidity < 50 && humidity >= 25){
+                white = 0.75;
+                blue = 1;
+            }
+            else if(humidity > 50 && humidity < 75){
+                white = 0.25;
+                blue = 1;
+            }
+            else if (humidity < 25){
                 white = 1;
                 blue = 1;
             }
-            else if(humidity > 50){
+            else if(humidity >= 75){
                 white = 0;
                 blue = 0;
             }
