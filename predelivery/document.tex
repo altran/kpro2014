@@ -1,0 +1,57 @@
+\documentclass{article}
+% This is the main document.
+%
+% The different document parts are loaded using the 'subfiles' package.
+
+
+% For compiling subdocuments separately.
+\usepackage{subfiles}
+
+% To get automatic line breaks in tables.
+\usepackage{tabularx}
+
+% Colors, mainly red
+\usepackage{color}
+
+% To include figures
+\usepackage{graphicx}
+
+% graphics path
+\graphicspath{{img/}{../img/}}
+
+% force figure placment
+\usepackage{float}
+
+\begin{document}
+\renewcommand{\thepage}{\roman{page}}
+\subfile{tex/titlepage}
+
+\subfile{tex/abstract}
+\newpage
+
+\subfile{tex/contents}
+\newpage
+
+\setcounter{page}{1}
+\renewcommand{\thepage}{\arabic{page}}
+\subfile{tex/introduction}
+
+\subfile{tex/project_plan}
+
+\subfile{tex/preliminary_study}
+
+\subfile{tex/lifecycle_model}
+
+\subfile{tex/requirements}
+
+\subfile{tex/sprint1}
+
+\subfile{tex/sprint2}
+
+\subfile{tex/sprint3}
+
+\subfile{tex/conclusion}
+
+\subfile{tex/appendices}
+
+\end{document}
