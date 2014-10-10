@@ -1,9 +1,12 @@
+package Controller;
+
 import db.DBManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import java.sql.SQLException;
 import db.SensorSample;
 
 /**
@@ -22,6 +25,13 @@ public class Controller {
     private ArrayList<Double> humidityList;
     private ArrayList<Double> pressureList;
     private ArrayList<Double> soundList;
+    private Timer timer;
+    private TimerTask timerTask;
+
+
+    /**
+     * Make the ArrayLists of all the data that we gather from the database
+     */
 
     public Controller(){
         sortedList = new ArrayList<ArrayList>();
@@ -34,6 +44,17 @@ public class Controller {
 
         dbManager = new DBManager();
         dbManager.connect();
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getSensorSample();
+                sortSensorID();
+            }
+        };
+        passiveUpdate();
+
         getSensorSample();
         sortedList.add(sensorID);
         sortedList.add(temperatureList);
@@ -43,10 +64,16 @@ public class Controller {
         sortSensorID();
     }
 
+    /*
+    This method returns a list of sensors from the database.
+     */
     private List<SensorSample> getSensorSample(){
         return sampleList = dbManager.getAllNewSamples();
     }
 
+    /*
+    This method sorts the list from the database into a manageable format.
+     */
     private void sortSensorID(){
         for(int i=0; i<sampleList.size(); i++){
             SensorSample tempSample = sampleList.get(i);
@@ -64,6 +91,10 @@ public class Controller {
         }
     }
 
+
+    /**
+     * TAdding new data to the lists
+     */
     private void addData(SensorSample ss, int sensorID, ArrayList tList, ArrayList lList,
                          ArrayList hList, ArrayList pList, ArrayList sList){
         if(tList.size() <= ss.getSensorID()-1 || hList.size() <= ss.getSensorID()-1 || pList.size() <= ss.getSensorID()-1 ||
@@ -89,19 +120,19 @@ public class Controller {
         else{
             switch (ss.getType()){
                 case TEMPERATURE_SAMPLE:
-                    tList.set(sensorID, ss.getValue());
+                    tList.set(sensorID-1, ss.getValue());
                     break;
                 case LIGHT_SAMPLE:
-                    lList.set(sensorID, ss.getValue());
+                    lList.set(sensorID-1, ss.getValue());
                     break;
                 case PRESSURE_SAMPLE:
-                    pList.set(sensorID, ss.getValue());
+                    pList.set(sensorID-1, ss.getValue());
                     break;
                 case HUMIDITY_SAMPLE:
-                    hList.set(sensorID, ss.getValue());
+                    hList.set(sensorID-1, ss.getValue());
                     break;
                 case SOUND_SAMPLE:
-                    sList.set(sensorID, ss.getValue());
+                    sList.set(sensorID-1, ss.getValue());
                     break;
             }
         }
@@ -134,4 +165,9 @@ public class Controller {
     public int getNumberOfSensors(){
         return sensorID.size();
     }
+
+    private void passiveUpdate(){
+        timer.scheduleAtFixedRate(timerTask, 1000, 10000);
+    }
+
 }
