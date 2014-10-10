@@ -109,7 +109,6 @@ public class MapView extends Application{
                         } else {
                             oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
                             oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
-                            System.out.println(oldHumidity.get(i));
                             counter++;
                         }
 
