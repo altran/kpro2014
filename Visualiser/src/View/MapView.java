@@ -82,8 +82,7 @@ public class MapView extends Application{
                                                                   now, 10, (i*100)+offset, (i*100)+offset, canvas);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
-                        double offset2 = roomModel.getSensorModel(i).getPressure()/10 + (roomModel.getSensorModel(i).getPressure() - 1000)+5;
-                        humidityInstruction = new HumidityInstruction(roomModel.getSensorModel(i).getHumidity(), now, Long.MAX_VALUE, (i*100+5)+offset2+8, (i*100+5)+70, canvas);
+                        humidityInstruction = new HumidityInstruction(roomModel.getSensorModel(i).getHumidity(), now, Long.MAX_VALUE, (i*100+5)+130, (i*100+5)+70, canvas);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
                     }
