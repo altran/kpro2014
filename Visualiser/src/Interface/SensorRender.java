@@ -13,12 +13,12 @@ public class SensorRender implements Renderer{
 
     @Override
     public void notify(Instruction instruction, long beat) {
-        if(instruction instanceof SensorInstruction){
+        if(instruction instanceof SensorInstruction) {
 
             final double x = ((SensorInstruction) instruction).getX(); //X location.
             final double y = ((SensorInstruction) instruction).getY(); //Y location.
-            final double size1 = ((SensorInstruction) instruction).getPressure()/20;
-            final double size2 = (((SensorInstruction) instruction).getPressure() - 1000)/2;
+            final double size1 = ((SensorInstruction) instruction).getPressure() / 20;
+            final double size2 = (((SensorInstruction) instruction).getPressure() - 1000) / 2;
             final double size = size1 + size2;
             final String text = ((SensorInstruction) instruction).getText();
 
@@ -29,7 +29,8 @@ public class SensorRender implements Renderer{
             graphicsContext.setStroke(Color.BLACK);
             graphicsContext.strokeOval(x, y, size, size);
 
-            int temp = (int)((SensorInstruction) instruction).getLighting();
+            int lighting = (int) ((SensorInstruction) instruction).getLighting();
+            int temp = lighting/16;
             graphicsContext.setFill(Color.rgb(temp, temp, temp)); //the grey color is hard coded at the moment. Change when we know the lighting stuff.
             graphicsContext.fillOval(x, y, size, size);
 

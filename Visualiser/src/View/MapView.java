@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,8 +46,10 @@ public class MapView extends Application{
     private HumidityInstruction humidityInstruction;
     private HumidityRender humidityRender;
     private int ColorLighting;
-    private ArrayList<Double> oldLighting;
-    private ArrayList<Double> newLighting;
+    private ArrayList<Double> oldLighting = new ArrayList<Double>();
+    private ArrayList<Double> newLighting = new ArrayList<Double>();
+    private ArrayList<Double> diffLighting = new ArrayList<Double>();
+    private int counter = 0;
 
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
@@ -78,20 +81,40 @@ public class MapView extends Application{
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
-                        newLightingCheck(newLighting, i, roomModel);
+
+
                         temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), roomModel.getSensorModel(i).getPressure(), now, 10, i*100+5, i*100+5, canvas);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+
                         double offset = roomModel.getSensorModel(i).getPressure()/33 + (roomModel.getSensorModel(i).getPressure() - 1000) / 3;
+                        newLightingCheck(newLighting, i, roomModel);
+                        oldLightingCheck(oldLighting, i, roomModel);
+                        diffLightingCheck(diffLighting, i);
+                        if (counter >= 300) {
+                            counter = 0;
+                        }
+                        else if (counter == 0){
+                            if(newLighting.get(i) != oldLighting.get(i)) {
+                                diffLighting.set(i, (newLighting.get(i) - oldLighting.get(i))/300);
+                                counter++;
+                            }
+                        }
+                        else {
+                            oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
+                            counter++;
+
+                        }
                         sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), roomModel.getSensorModel(i).getPressure(),
                                                                   now, 10, (i*100)+offset, (i*100)+offset, canvas);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+
                         double offset2 = roomModel.getSensorModel(i).getPressure()/10 + (roomModel.getSensorModel(i).getPressure() - 1000)+5;
                         humidityInstruction = new HumidityInstruction(roomModel.getSensorModel(i).getHumidity(), now, Long.MAX_VALUE, (i*100+5)+offset2+8, (i*100+5)+70, canvas);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
-                        oldLightingCheck(oldLighting, i, roomModel);
+
                     }
                 }
         }.start();
@@ -142,57 +165,26 @@ public class MapView extends Application{
 
 
     private void newLightingCheck(ArrayList list, int i, RoomModel roomModel){
-        if(list.size() < i){
+        if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
         }
-        if(list.size() >= i){
+        if(list.size() > i){
             list.set(i,roomModel.getSensorModel(i).getLighting());
         }
     }
 
     private void oldLightingCheck(ArrayList list, int i, RoomModel roomModel){
-        if(list.size() < i){
+        if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
         }
-        if(list.size() >= i){
-            if(oldLighting.get(i) < newLighting.get(i)){
-                double temp = newLighting.get(i) - oldLighting.get(i);
-                if(temp <= 20){
-                    oldLighting.set(i,newLighting.get(i));
-                }
-                else if(temp <= 1000){
-                    oldLighting.set(i, oldLighting.get(i) + 3.3);
-                }
-                else if(temp <= 2000){
-                    oldLighting.set(i, oldLighting.get(i) + 6.6);
-                }
-                else if(temp <= 3000){
-                    oldLighting.set(i, oldLighting.get(i) + 9.9);
-                }
-                else if(temp <= 4000){
-                    oldLighting.set(i, oldLighting.get(i) + 13.2);
-                }
-            }
-            if(oldLighting.get(i) > newLighting.get(i)){
-                double temp = oldLighting.get(i) - newLighting.get(i);
-                if(temp <= 20){
-                    oldLighting.set(i,newLighting.get(i));
-                }
-                else if(temp <= 1000){
-                    oldLighting.set(i, oldLighting.get(i) - 3.3);
-                }
-                else if(temp <= 2000){
-                    oldLighting.set(i, oldLighting.get(i) - 6.6);
-                }
-                else if(temp <= 3000){
-                    oldLighting.set(i, oldLighting.get(i) - 9.9);
-                }
-                else if(temp <= 4000){
-                    oldLighting.set(i, oldLighting.get(i) - 13.2);
-                }
-            }
+    }
+
+    private void diffLightingCheck(ArrayList list, int i){
+        if(list.size() <= i){
+            list.add(0.0);
         }
     }
+
 
 
 
