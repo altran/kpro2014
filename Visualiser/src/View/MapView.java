@@ -45,10 +45,12 @@ public class MapView extends Application{
     private Canvas canvas;
     private HumidityInstruction humidityInstruction;
     private HumidityRender humidityRender;
-    private int ColorLighting;
     private ArrayList<Double> oldLighting = new ArrayList<Double>();
     private ArrayList<Double> newLighting = new ArrayList<Double>();
     private ArrayList<Double> diffLighting = new ArrayList<Double>();
+    private ArrayList<Double> oldHumidity = new ArrayList<Double>();
+    private ArrayList<Double> newHumidity = new ArrayList<Double>();
+    private ArrayList<Double> diffHumidity = new ArrayList<Double>();
     private int counter = 0;
 
     public void start(Stage stage) {
@@ -60,8 +62,6 @@ public class MapView extends Application{
         stage.setHeight(650);
 
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
-        System.out.println(canvas.getHeight());
-        System.out.println(canvas.getWidth());
 
         /*
         Creates the central hub. This object is static.
@@ -91,27 +91,35 @@ public class MapView extends Application{
                         newLightingCheck(newLighting, i, roomModel);
                         oldLightingCheck(oldLighting, i, roomModel);
                         diffLightingCheck(diffLighting, i);
+
+                        newHumidityCheck(newHumidity, i, roomModel);
+                        oldHumidityCheck(oldHumidity, i, roomModel);
+                        diffHumidityCheck(diffHumidity, i);
+
                         if (counter >= 300) {
                             counter = 0;
-                        }
-                        else if (counter == 0){
-                            if(newLighting.get(i) != oldLighting.get(i)) {
-                                diffLighting.set(i, (newLighting.get(i) - oldLighting.get(i))/300);
-                                counter++;
+                        } else if (counter == 0) {
+                            if (newLighting.get(i) != oldLighting.get(i)) {
+                                diffLighting.set(i, (newLighting.get(i) - oldLighting.get(i)) / 300);
                             }
-                        }
-                        else {
-                            oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
+                            if (newHumidity.get(i) != oldHumidity.get(i)) {
+                                diffHumidity.set(i, (newHumidity.get(i) - oldHumidity.get(i)) / 300);
+                            }
                             counter++;
-
+                        } else {
+                            oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
+                            oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
+                            System.out.println(oldHumidity.get(i));
+                            counter++;
                         }
+
                         sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), roomModel.getSensorModel(i).getPressure(),
                                                                   now, 10, (i*100)+offset, (i*100)+offset, canvas);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                         double offset2 = roomModel.getSensorModel(i).getPressure()/10 + (roomModel.getSensorModel(i).getPressure() - 1000)+5;
-                        humidityInstruction = new HumidityInstruction(roomModel.getSensorModel(i).getHumidity(), now, Long.MAX_VALUE, (i*100+5)+offset2+8, (i*100+5)+70, canvas);
+                        humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE, (i*100+5)+offset2+8, (i*100+5)+70, canvas);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
@@ -185,6 +193,26 @@ public class MapView extends Application{
         }
     }
 
+    private void newHumidityCheck(ArrayList list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getHumidity());
+        }
+        if(list.size() > i){
+            list.set(i,roomModel.getSensorModel(i).getHumidity());
+        }
+    }
+
+    private void oldHumidityCheck(ArrayList list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getHumidity());
+        }
+    }
+
+    private void diffHumidityCheck(ArrayList list, int i){
+        if(list.size() <= i){
+            list.add(0.0);
+        }
+    }
 
 
 
