@@ -11,12 +11,13 @@ public class HumidityRender implements Renderer {
 
     public void notify(Instruction instruction, long beat) {
         if (instruction instanceof HumidityInstruction) {
-
+            double x = ((HumidityInstruction) instruction).getX();
+            double y = ((HumidityInstruction) instruction).getY();
             GraphicsContext graphicsContext = ((HumidityInstruction) instruction).getCanvas().getGraphicsContext2D();
             graphicsContext.setStroke(Color.BLUE);
             graphicsContext.beginPath();
-            graphicsContext.moveTo(100, 95);
-            graphicsContext.bezierCurveTo(130, 130, 70, 130, 100, 95);
+            graphicsContext.moveTo(x, y);
+            graphicsContext.bezierCurveTo(x+30, y+35, x-30, y+35, x, y);
             graphicsContext.setFill(new LinearGradient(0, 0, 1, 1, true,
                     CycleMethod.NO_CYCLE,
                     new Stop(0.0, Color.WHITE),
