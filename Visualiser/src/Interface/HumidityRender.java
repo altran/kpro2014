@@ -18,10 +18,12 @@ public class HumidityRender implements Renderer {
             graphicsContext.beginPath();
             graphicsContext.moveTo(x, y);
             graphicsContext.bezierCurveTo(x+30, y+35, x-30, y+35, x, y);
-            graphicsContext.setFill(new LinearGradient(0, 0, 1, 1, true,
+            double white = 0.5;
+            double blue = 1;
+            graphicsContext.setFill(new LinearGradient(1, 0, 1, 1, true,
                     CycleMethod.NO_CYCLE,
-                    new Stop(0.0, Color.WHITE),
-                    new Stop(1.0, Color.BLUE)));
+                    new Stop(white, Color.WHITE),
+                    new Stop(blue, Color.BLUE)));
             graphicsContext.fill();
             graphicsContext.stroke();
             graphicsContext.closePath();
