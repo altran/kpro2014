@@ -2,11 +2,11 @@
 .idea/
 /*.iml
 *.iws
-workspace.xml
-.idea/workspace.xml
+**/*.xml
 out/
 *.class
 
 # Maven
 log/
 target/
+!pom.xml
