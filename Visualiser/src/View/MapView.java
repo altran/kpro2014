@@ -37,7 +37,7 @@ import java.util.Calendar;
 public class MapView extends Application{
 
     private RoomModel roomModel;
-    private Image circleImage = new Image("Resources/circle.jpg");
+    private Image circleImage = new Image("Resources/CentralHub.jpg");
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
     private SensorInstruction sensorInstruction;
@@ -73,8 +73,8 @@ public class MapView extends Application{
         Scene scene = new Scene(new Group());
         roomModel = new RoomModel();
         stage.setTitle("Map View");
-        stage.setWidth(800);
-        stage.setHeight(650);
+        stage.setWidth(1240);
+        stage.setHeight(768);
 
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
 
