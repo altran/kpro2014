@@ -103,8 +103,6 @@ public class MapView extends Application{
                         newTemperatureCheck(newTemperature, i, roomModel);
                         oldTemperatureCheck(oldTemperature, i, roomModel);
                         diffTemperatureCheck(diffTemperature, i);
-                        System.out.println(oldTemperature);
-                        System.out.println(newTemperature);
 
                         if (counter >= 300) {
                             counter = 0;
@@ -194,7 +192,7 @@ public class MapView extends Application{
     }
 
     //The data som the sensors is taking in in the wrong order #TODO
-    
+
     private void newLightingCheck(ArrayList list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
