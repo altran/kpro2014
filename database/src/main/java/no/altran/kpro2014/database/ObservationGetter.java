@@ -18,17 +18,20 @@ import java.util.List;
  * Created by audun on 10/1/14.
  */
 public class ObservationGetter {
-    String domain;
-    String path;
-    WebTarget queryResource;
-    Client client;
+    private String domain;
+    private String path;
+    private Client client;
+    private WebTarget queryResource;
+
 
     public ObservationGetter(String domain, String path){
-        this.path = path;
         this.domain = domain;
+        this.path = path;
         client = ClientBuilder.newClient();
         queryResource = client.target(domain);
     }
+
+
 
     public static List<Observation> toObservationList(String jsondata) {
         List<Observation> result = new ArrayList<Observation>();
