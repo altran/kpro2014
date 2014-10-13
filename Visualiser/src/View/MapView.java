@@ -54,6 +54,9 @@ public class MapView extends Application{
     private ArrayList<Double> oldPressure = new ArrayList<Double>();
     private ArrayList<Double> newPressure = new ArrayList<Double>();
     private ArrayList<Double> diffPressure = new ArrayList<Double>();
+    private ArrayList<Double> oldTemperature = new ArrayList<Double>();
+    private ArrayList<Double> newTemperature = new ArrayList<Double>();
+    private ArrayList<Double> diffTemperature = new ArrayList<Double>();
     private int counter = 0;
 
     public void start(Stage stage) {
@@ -97,6 +100,10 @@ public class MapView extends Application{
                         oldPressureCheck(oldPressure, i, roomModel);
                         diffPressureCheck(diffPressure, i);
 
+                        newTemperatureCheck(newTemperature, i, roomModel);
+                        oldTemperatureCheck(oldTemperature, i, roomModel);
+                        diffTemperatureCheck(diffTemperature, i);
+
                         if (counter >= 300) {
                             counter = 0;
                         } else if (counter == 0) {
@@ -109,15 +116,19 @@ public class MapView extends Application{
                             if (newPressure.get(i) != oldPressure.get(i)) {
                                 diffPressure.set(i, (newPressure.get(i) - oldPressure.get(i)) / 300);
                             }
+                            if (newTemperature.get(i) != oldTemperature.get(i)) {
+                                diffTemperature.set(i, (newTemperature.get(i) - oldTemperature.get(i)) / 300);
+                            }
                             counter++;
                         } else {
                             oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
                             oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
                             oldPressure.set(i, oldPressure.get(i) + diffPressure.get(i));
+                            oldTemperature.set(i, oldTemperature.get(i) + diffTemperature.get(i));
                             counter++;
                         }
 
-                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(),oldPressure.get(i), now, 10, i*100+5, i*100+5, canvas);
+                        temperatureInstruction = new TemperatureInstruction(oldTemperature.get(i),oldPressure.get(i), now, 10, i*100+5, i*100+5, canvas);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
@@ -180,6 +191,7 @@ public class MapView extends Application{
         stage.show();
     }
 
+    //The data som the sensors is taking in in the wrong order #TODO
 
     private void newLightingCheck(ArrayList list, int i, RoomModel roomModel){
         if(list.size() <= i){
@@ -239,6 +251,26 @@ public class MapView extends Application{
     }
 
     private void diffPressureCheck(ArrayList list, int i){
+        if(list.size() <= i){
+            list.add(0.0);
+        }
+    }
+    private void newTemperatureCheck(ArrayList list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getTemperature());
+        }
+        if(list.size() > i){
+            list.set(i,roomModel.getSensorModel(i).getTemperature());
+        }
+    }
+
+    private void oldTemperatureCheck(ArrayList list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getTemperature());
+        }
+    }
+
+    private void diffTemperatureCheck(ArrayList list, int i){
         if(list.size() <= i){
             list.add(0.0);
         }

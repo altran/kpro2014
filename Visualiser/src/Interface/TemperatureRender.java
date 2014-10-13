@@ -18,6 +18,7 @@ public class TemperatureRender implements Renderer{
             final double size1 = ((TemperatureInstruction) instruction).getPressure() / 10;
             final double size2 = ((TemperatureInstruction) instruction).getPressure() - 1000;
             final double size = size1+size2;
+            final int temperature = (int)((TemperatureInstruction) instruction).getTemperature();
 
             /*
             Render a circle.
@@ -29,13 +30,12 @@ public class TemperatureRender implements Renderer{
             /*
             Fill a circle with a specific color. Color depends on the temperature.
              */
-            int temp = (int)((TemperatureInstruction) instruction).getTemperature();
 
-            if (temp >= 40){graphicsContext.setFill(Color.rgb(255,0,0));}
-            if (temp < 40 && temp >= 20){graphicsContext.setFill(Color.rgb(255,255,0));}
-            if (temp < 20 && temp >= 0){graphicsContext.setFill(Color.rgb(0,255,0));}
-            if (temp < 0 && temp >= -20){graphicsContext.setFill(Color.rgb(0,255,255));}
-            if (temp < -20){graphicsContext.setFill(Color.rgb(0,0,255));}
+            if (temperature <= 50 && temperature > 0){graphicsContext.setFill(Color.rgb(250,5*(50-temperature),0));}
+
+            if (temperature == 0){graphicsContext.setFill(Color.rgb(0,250,0));}
+
+            if (temperature >= -50 && temperature < 0){graphicsContext.setFill(Color.rgb(0,5*(50-Math.abs(temperature)),Math.abs(5*temperature)));}
 
             graphicsContext.fillOval(x, y, size, size);
         }
