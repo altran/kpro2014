@@ -47,6 +47,15 @@ public class ObservationGetter {
         };
     }
 
+    public List<Integer> getAllSensorIDs() {
+        String response = queryResource
+                .path(path).path("radiogateways")
+                .request(MediaType.APPLICATION_JSON)
+                .get(String.class);
+        System.out.println(response);
+        return null;
+    }
+
     public Observation getMostRecentObservation(String sensorID) {
         String response = queryResource
                 .path(path).path("tail")

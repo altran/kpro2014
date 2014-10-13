@@ -14,9 +14,9 @@ public class TestClient {
 
     public static void main(String[] args){
 
-        ObservationGetter getter = new ObservationGetter("http://localhost:4901", "iot/observe/radiosensor");
-        System.out.println("1 " + getter.getRecentObservations());
-        System.out.println("2 " + getter.getRecentObservations());
+        ObservationGetter getter = new ObservationGetter("http://localhost:4901", "iot/observe");
+        getter.getAllSensorIDs();
+
 
         //curl -X POST -d @radiosensor1.txt http://localhost:4901/iot/observe/radiosensor
     }
