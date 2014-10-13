@@ -14,12 +14,9 @@ public class TestClient {
 
     public static void main(String[] args){
 
-        Client client = ClientBuilder.newClient();
-        String response = client.target("http://localhost:4901/iot/observe/radiosensor/tail")
-                .request(MediaType.APPLICATION_JSON)
-                .get(String.class);
-        List<Observation> obsList = ObservationGetter.toObservationList(response);
-        System.out.println(obsList);
+        ObservationGetter getter = new ObservationGetter("http://localhost:4901", "iot/observe/radiosensor");
+        System.out.println("1 " + getter.getRecentObservations());
+        System.out.println("2 " + getter.getRecentObservations());
 
         //curl -X POST -d @radiosensor1.txt http://localhost:4901/iot/observe/radiosensor
     }
