@@ -31,7 +31,9 @@ public class TemperatureRender implements Renderer{
             Fill a circle with a specific color. Color depends on the temperature.
              */
 
-            if (temperature <= 50 && temperature > 0){graphicsContext.setFill(Color.rgb(250,5*(50-temperature),0));}
+            if (temperature <= 50 && temperature > 15){graphicsContext.setFill(Color.rgb(225,5*(50-temperature),0));}
+
+            if (temperature <= 15 && temperature > 0){graphicsContext.setFill(Color.rgb(15*temperature,5*(50-temperature),0));}
 
             if (temperature == 0){graphicsContext.setFill(Color.rgb(0,250,0));}
 

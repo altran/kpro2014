@@ -42,7 +42,7 @@ public class RoomModel {
     }
 
     private void passiveUpdate(){
-        timer.scheduleAtFixedRate(timerTask, 1000, 10000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 5000);
     }
 
     private void setValue(){
