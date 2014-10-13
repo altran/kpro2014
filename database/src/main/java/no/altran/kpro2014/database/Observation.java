@@ -1,4 +1,4 @@
-package com.altran.iot.observation;
+package no.altran.kpro2014.database;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
