@@ -1,10 +1,10 @@
 # Intellij
 .idea/
-/*.iml
-*.iws
-**/*.xml
 out/
-*.class
+**.iml
+**.xml
+**.iws
+**.class
 
 # Maven
 log/
