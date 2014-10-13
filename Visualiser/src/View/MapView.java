@@ -7,6 +7,8 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -45,13 +47,26 @@ public class MapView extends Application{
     private Canvas canvas;
     private HumidityInstruction humidityInstruction;
     private HumidityRender humidityRender;
+
+    //These are the lists that control the animation.
     private ArrayList<Double> oldLighting = new ArrayList<Double>();
     private ArrayList<Double> newLighting = new ArrayList<Double>();
     private ArrayList<Double> diffLighting = new ArrayList<Double>();
     private ArrayList<Double> oldHumidity = new ArrayList<Double>();
     private ArrayList<Double> newHumidity = new ArrayList<Double>();
     private ArrayList<Double> diffHumidity = new ArrayList<Double>();
+    private ArrayList<Double> oldPressure = new ArrayList<Double>();
+    private ArrayList<Double> newPressure = new ArrayList<Double>();
+    private ArrayList<Double> diffPressure = new ArrayList<Double>();
+    private ArrayList<Double> oldTemperature = new ArrayList<Double>();
+    private ArrayList<Double> newTemperature = new ArrayList<Double>();
+    private ArrayList<Double> diffTemperature = new ArrayList<Double>();
     private int counter = 0;
+
+    //Checkbox control
+    private boolean checkTemperature = true;
+    private boolean checkLighting = true;
+    private boolean checkHumidity = true;
 
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
@@ -82,12 +97,6 @@ public class MapView extends Application{
                 centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
 
-
-                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), roomModel.getSensorModel(i).getPressure(), now, 10, i*100+5, i*100+5, canvas);
-                        temperatureRender = new TemperatureRender();
-                        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
-
-                        double offset = roomModel.getSensorModel(i).getPressure()/33 + (roomModel.getSensorModel(i).getPressure() - 1000) / 3;
                         newLightingCheck(newLighting, i, roomModel);
                         oldLightingCheck(oldLighting, i, roomModel);
                         diffLightingCheck(diffLighting, i);
@@ -95,6 +104,14 @@ public class MapView extends Application{
                         newHumidityCheck(newHumidity, i, roomModel);
                         oldHumidityCheck(oldHumidity, i, roomModel);
                         diffHumidityCheck(diffHumidity, i);
+
+                        newPressureCheck(newPressure, i, roomModel);
+                        oldPressureCheck(oldPressure, i, roomModel);
+                        diffPressureCheck(diffPressure, i);
+
+                        newTemperatureCheck(newTemperature, i, roomModel);
+                        oldTemperatureCheck(oldTemperature, i, roomModel);
+                        diffTemperatureCheck(diffTemperature, i);
 
                         if (counter >= 300) {
                             counter = 0;
@@ -105,20 +122,35 @@ public class MapView extends Application{
                             if (newHumidity.get(i) != oldHumidity.get(i)) {
                                 diffHumidity.set(i, (newHumidity.get(i) - oldHumidity.get(i)) / 300);
                             }
+                            if (newPressure.get(i) != oldPressure.get(i)) {
+                                diffPressure.set(i, (newPressure.get(i) - oldPressure.get(i)) / 300);
+                            }
+                            if (newTemperature.get(i) != oldTemperature.get(i)) {
+                                diffTemperature.set(i, (newTemperature.get(i) - oldTemperature.get(i)) / 300);
+                            }
                             counter++;
                         } else {
                             oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
                             oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
+                            oldPressure.set(i, oldPressure.get(i) + diffPressure.get(i));
+                            oldTemperature.set(i, oldTemperature.get(i) + diffTemperature.get(i));
                             counter++;
                         }
 
-                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), roomModel.getSensorModel(i).getPressure(),
-                                                                  now, 10, (i*100)+offset, (i*100)+offset, canvas);
+                        temperatureInstruction = new TemperatureInstruction(oldTemperature.get(i),oldPressure.get(i),
+                                                                            now, 10, i*100+5, i*100+5, canvas, checkTemperature);
+                        temperatureRender = new TemperatureRender();
+                        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+
+                        double offset = oldPressure.get(i)/33 + (oldPressure.get(i) - 1000) / 3;
+                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), oldPressure.get(i),
+                                                                  now, 10, (i*100)+offset, (i*100)+offset, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
-                        double offset2 = roomModel.getSensorModel(i).getPressure()/10 + (roomModel.getSensorModel(i).getPressure() - 1000)+5;
-                        humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE, (i*100+5)+offset2+8, (i*100+5)+70, canvas);
+                        double offset2 = oldPressure.get(i)/10 + (oldPressure.get(i) - 1000)+5;
+                        humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
+                                                                      (i*100+5)+offset2+8, (i*100+5)+70, canvas, checkHumidity);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
@@ -132,13 +164,45 @@ public class MapView extends Application{
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
         final CheckBox cBox3 = new CheckBox("Humidity");
-        final CheckBox cBox4 = new CheckBox("Pressure");
-        final CheckBox cBox5 = new CheckBox("Sound");
         cBox1.setSelected(true);
         cBox2.setSelected(true);
         cBox3.setSelected(true);
-        cBox4.setSelected(true);
-        cBox5.setSelected(true);
+
+        cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox1.isSelected() == false) {
+                    checkTemperature = false;
+                }
+                if(cBox1.isSelected()){
+                    checkTemperature = true;
+                }
+            }
+        });
+
+        cBox2.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox2.isSelected() == false){
+                    checkLighting = false;
+                }
+                if(cBox2.isSelected()){
+                    checkLighting = true;
+                }
+            }
+        });
+
+        cBox3.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox3.isSelected() == false){
+                    checkHumidity = false;
+                }
+                if(cBox3.isSelected()) {
+                    checkHumidity = true;
+                }
+            }
+        });
 
         final Label timeLabel = new Label();
         final DateFormat format = DateFormat.getInstance();
@@ -155,7 +219,7 @@ public class MapView extends Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5, timeLabel);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, timeLabel);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
@@ -170,29 +234,30 @@ public class MapView extends Application{
         stage.show();
     }
 
+    //The data som the sensors is taking in in the wrong order #TODO
 
-    private void newLightingCheck(ArrayList list, int i, RoomModel roomModel){
+    private void newLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
         }
         if(list.size() > i){
-            list.set(i,roomModel.getSensorModel(i).getLighting());
+            list.set(i, roomModel.getSensorModel(i).getLighting());
         }
     }
 
-    private void oldLightingCheck(ArrayList list, int i, RoomModel roomModel){
+    private void oldLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
         }
     }
 
-    private void diffLightingCheck(ArrayList list, int i){
+    private void diffLightingCheck(ArrayList<Double> list, int i){
         if(list.size() <= i){
             list.add(0.0);
         }
     }
 
-    private void newHumidityCheck(ArrayList list, int i, RoomModel roomModel){
+    private void newHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getHumidity());
         }
@@ -201,13 +266,54 @@ public class MapView extends Application{
         }
     }
 
-    private void oldHumidityCheck(ArrayList list, int i, RoomModel roomModel){
+    private void oldHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getHumidity());
         }
     }
 
-    private void diffHumidityCheck(ArrayList list, int i){
+    private void diffHumidityCheck(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            list.add(0.0);
+        }
+    }
+
+    private void newPressureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getPressure());
+        }
+        if(list.size() > i){
+            list.set(i,roomModel.getSensorModel(i).getPressure());
+        }
+    }
+
+    private void oldPressureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getPressure());
+        }
+    }
+
+    private void diffPressureCheck(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            list.add(0.0);
+        }
+    }
+    private void newTemperatureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getTemperature());
+        }
+        if(list.size() > i){
+            list.set(i,roomModel.getSensorModel(i).getTemperature());
+        }
+    }
+
+    private void oldTemperatureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getTemperature());
+        }
+    }
+
+    private void diffTemperatureCheck(ArrayList<Double> list, int i){
         if(list.size() <= i){
             list.add(0.0);
         }
