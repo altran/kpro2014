@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
@@ -36,15 +37,19 @@ public class MapView extends Application{
 
     private RoomModel roomModel;
     private Image circleImage = new Image("Resources/CentralHub.jpg");
+    private Canvas canvas;
+
+    //Instructions and Renderers
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
     private SensorInstruction sensorInstruction;
-    private TemperatureInstruction temperatureInstruction;
     private SensorRender sensorRender;
+    private TemperatureInstruction temperatureInstruction;
     private TemperatureRender temperatureRender;
-    private Canvas canvas;
     private HumidityInstruction humidityInstruction;
     private HumidityRender humidityRender;
+    private PressureInstruction pressureInstruction;
+    private PressureRender pressureRender;
 
     //These are the lists that control the animation.
     private ArrayList<Double> oldLighting = new ArrayList<Double>();
@@ -149,6 +154,10 @@ public class MapView extends Application{
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
+                        pressureInstruction = new PressureInstruction(roomModel.getSensorModel(i).getPressure(), now, Long.MAX_VALUE, (i*100+5)+offset2+6, (i*100+5)+40, canvas, true);
+                        pressureRender = new PressureRender();
+                        pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
+
                     }
                 }
         }.start();
@@ -229,7 +238,7 @@ public class MapView extends Application{
         stage.show();
     }
 
-    //The data som the sensors is taking in in the wrong order #TODO
+    //The data the sensors are taking in is in the wrong order #TODO
 
     private void newLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
@@ -308,8 +317,6 @@ public class MapView extends Application{
             pres.add(0.0);
         }
     }
-
-
 
     public static void main(String[] args) {
         launch(args);
