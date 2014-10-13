@@ -51,6 +51,9 @@ public class MapView extends Application{
     private ArrayList<Double> oldHumidity = new ArrayList<Double>();
     private ArrayList<Double> newHumidity = new ArrayList<Double>();
     private ArrayList<Double> diffHumidity = new ArrayList<Double>();
+    private ArrayList<Double> oldPressure = new ArrayList<Double>();
+    private ArrayList<Double> newPressure = new ArrayList<Double>();
+    private ArrayList<Double> diffPressure = new ArrayList<Double>();
     private int counter = 0;
 
     public void start(Stage stage) {
@@ -82,12 +85,6 @@ public class MapView extends Application{
                 centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
 
-
-                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(), roomModel.getSensorModel(i).getPressure(), now, 10, i*100+5, i*100+5, canvas);
-                        temperatureRender = new TemperatureRender();
-                        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
-
-                        double offset = roomModel.getSensorModel(i).getPressure()/33 + (roomModel.getSensorModel(i).getPressure() - 1000) / 3;
                         newLightingCheck(newLighting, i, roomModel);
                         oldLightingCheck(oldLighting, i, roomModel);
                         diffLightingCheck(diffLighting, i);
@@ -95,6 +92,10 @@ public class MapView extends Application{
                         newHumidityCheck(newHumidity, i, roomModel);
                         oldHumidityCheck(oldHumidity, i, roomModel);
                         diffHumidityCheck(diffHumidity, i);
+
+                        newPressureCheck(newPressure, i, roomModel);
+                        oldPressureCheck(oldPressure, i, roomModel);
+                        diffPressureCheck(diffPressure, i);
 
                         if (counter >= 300) {
                             counter = 0;
@@ -105,19 +106,28 @@ public class MapView extends Application{
                             if (newHumidity.get(i) != oldHumidity.get(i)) {
                                 diffHumidity.set(i, (newHumidity.get(i) - oldHumidity.get(i)) / 300);
                             }
+                            if (newPressure.get(i) != oldPressure.get(i)) {
+                                diffPressure.set(i, (newPressure.get(i) - oldPressure.get(i)) / 300);
+                            }
                             counter++;
                         } else {
                             oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
                             oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
+                            oldPressure.set(i, oldPressure.get(i) + diffPressure.get(i));
                             counter++;
                         }
 
-                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), roomModel.getSensorModel(i).getPressure(),
+                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(),oldPressure.get(i), now, 10, i*100+5, i*100+5, canvas);
+                        temperatureRender = new TemperatureRender();
+                        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+
+                        double offset = oldPressure.get(i)/33 + (oldPressure.get(i) - 1000) / 3;
+                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), oldPressure.get(i),
                                                                   now, 10, (i*100)+offset, (i*100)+offset, canvas);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
-                        double offset2 = roomModel.getSensorModel(i).getPressure()/10 + (roomModel.getSensorModel(i).getPressure() - 1000)+5;
+                        double offset2 = oldPressure.get(i)/10 + (oldPressure.get(i) - 1000)+5;
                         humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE, (i*100+5)+offset2+8, (i*100+5)+70, canvas);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
@@ -208,6 +218,27 @@ public class MapView extends Application{
     }
 
     private void diffHumidityCheck(ArrayList list, int i){
+        if(list.size() <= i){
+            list.add(0.0);
+        }
+    }
+
+    private void newPressureCheck(ArrayList list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getPressure());
+        }
+        if(list.size() > i){
+            list.set(i,roomModel.getSensorModel(i).getPressure());
+        }
+    }
+
+    private void oldPressureCheck(ArrayList list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getPressure());
+        }
+    }
+
+    private void diffPressureCheck(ArrayList list, int i){
         if(list.size() <= i){
             list.add(0.0);
         }
