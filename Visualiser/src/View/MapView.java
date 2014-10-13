@@ -70,6 +70,7 @@ public class MapView extends Application{
     private boolean checkTemperature = true;
     private boolean checkLighting = true;
     private boolean checkHumidity = true;
+    private boolean checkPressure = true;
 
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
@@ -137,24 +138,23 @@ public class MapView extends Application{
                             counter++;
                         }
 
-                        temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),oldPressure.get(i),
-                                                                            now, 10, i*100+5, i*100+5, canvas, checkTemperature);
+                        temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
+                                now, 10, i*100+5, i*100+5, canvas, checkTemperature);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
-                        double offset = oldPressure.get(i)/33 + (oldPressure.get(i) - 1000) / 3;
-                        sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), oldPressure.get(i), now, 10,
-                                                                 (i*100)+offset, (i*100)+offset, canvas, checkLighting);
+                        sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
+                                                                 (i*100)+30, (i*100)+30, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
-                        double offset2 = oldPressure.get(i)/10 + (oldPressure.get(i) - 1000)+5;
                         humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                                                      (i*100+5)+offset2+8, (i*100+5)+70, canvas, checkHumidity);
+                                                                      i*100+114, i*100+75, canvas, checkHumidity);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                        pressureInstruction = new PressureInstruction(roomModel.getSensorModel(i).getPressure(), now, Long.MAX_VALUE, (i*100+5)+offset2+6, (i*100+5)+40, canvas, true);
+                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, i*100+115,
+                                i*100+45, canvas, checkPressure);
                         pressureRender = new PressureRender();
                         pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
 
@@ -168,9 +168,11 @@ public class MapView extends Application{
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
         final CheckBox cBox3 = new CheckBox("Humidity");
+        final CheckBox cBox4 = new CheckBox("Pressure");
         cBox1.setSelected(true);
         cBox2.setSelected(true);
         cBox3.setSelected(true);
+        cBox4.setSelected(true);
 
         cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -208,6 +210,18 @@ public class MapView extends Application{
             }
         });
 
+        cBox4.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox4.isSelected() == false){
+                    checkPressure = false;
+                }
+                if(cBox4.isSelected()) {
+                    checkPressure = true;
+                }
+            }
+        });
+
         final Label timeLabel = new Label();
         final DateFormat format = DateFormat.getInstance();
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
@@ -223,7 +237,7 @@ public class MapView extends Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, timeLabel);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);

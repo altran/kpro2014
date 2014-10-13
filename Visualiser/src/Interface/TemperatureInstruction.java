@@ -13,11 +13,10 @@ public class TemperatureInstruction implements Instruction{
     final double y;
     final Canvas canvas;
     final double temperature;
-    final double pressure;
     final boolean check;
     final String text;
 
-    public TemperatureInstruction(String text, double temperature, double pressure, long start, long length,
+    public TemperatureInstruction(String text, double temperature, long start, long length,
                                   double x, double y, Canvas canvas, boolean check){
         this.start = start;
         this.length = length;
@@ -25,14 +24,11 @@ public class TemperatureInstruction implements Instruction{
         this.y = y;
         this.canvas = canvas;
         this.temperature = temperature;
-        this.pressure = pressure;
         this.check = check;
         this.text = text;
     }
 
     public double getTemperature() { return temperature; }
-
-    public double getPressure() { return pressure; }
 
     public double getX(){ return x; }
 
