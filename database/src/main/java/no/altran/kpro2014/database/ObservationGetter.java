@@ -47,6 +47,25 @@ public class ObservationGetter {
         };
     }
 
+    public Observation getMostRecentObservation(String sensorID) {
+        String response = queryResource
+                .path(path).path("tail")
+                .queryParam("query", "radiosensor:" + sensorID)
+                .request(MediaType.APPLICATION_JSON)
+                .get(String.class);
+        List<Observation> observationList = toObservationList(response);
+        if(observationList.isEmpty()) {
+            return null;
+        }
+        Observation newestObservation = observationList.get(0);
+        for(Observation obs : observationList) {
+            if(observationDateComparator.compare(obs, newestObservation) > 0) {
+                newestObservation = obs;
+            }
+        }
+        return newestObservation;
+    }
+
     // TODO: This method uses tail. It should instead query for observations by specifying time.
     public List<Observation> getRecentObservations() {
 
