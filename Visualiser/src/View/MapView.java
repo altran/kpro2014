@@ -24,7 +24,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +31,6 @@ import java.util.Calendar;
 /**
  * Created by shimin on 9/29/2014.
  */
-
 
 public class MapView extends Application{
 
@@ -99,19 +97,16 @@ public class MapView extends Application{
 
                         newLightingCheck(newLighting, i, roomModel);
                         oldLightingCheck(oldLighting, i, roomModel);
-                        diffLightingCheck(diffLighting, i);
 
                         newHumidityCheck(newHumidity, i, roomModel);
                         oldHumidityCheck(oldHumidity, i, roomModel);
-                        diffHumidityCheck(diffHumidity, i);
 
                         newPressureCheck(newPressure, i, roomModel);
                         oldPressureCheck(oldPressure, i, roomModel);
-                        diffPressureCheck(diffPressure, i);
 
                         newTemperatureCheck(newTemperature, i, roomModel);
                         oldTemperatureCheck(oldTemperature, i, roomModel);
-                        diffTemperatureCheck(diffTemperature, i);
+                        diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure, i);
 
                         if (counter >= 300) {
                             counter = 0;
@@ -137,14 +132,14 @@ public class MapView extends Application{
                             counter++;
                         }
 
-                        temperatureInstruction = new TemperatureInstruction(oldTemperature.get(i),oldPressure.get(i),
+                        temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),oldPressure.get(i),
                                                                             now, 10, i*100+5, i*100+5, canvas, checkTemperature);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                         double offset = oldPressure.get(i)/33 + (oldPressure.get(i) - 1000) / 3;
-                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), oldPressure.get(i),
-                                                                  now, 10, (i*100)+offset, (i*100)+offset, canvas, checkLighting);
+                        sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), oldPressure.get(i), now, 10,
+                                                                 (i*100)+offset, (i*100)+offset, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
@@ -251,12 +246,6 @@ public class MapView extends Application{
         }
     }
 
-    private void diffLightingCheck(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(0.0);
-        }
-    }
-
     private void newHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getHumidity());
@@ -269,12 +258,6 @@ public class MapView extends Application{
     private void oldHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getHumidity());
-        }
-    }
-
-    private void diffHumidityCheck(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(0.0);
         }
     }
 
@@ -293,11 +276,6 @@ public class MapView extends Application{
         }
     }
 
-    private void diffPressureCheck(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(0.0);
-        }
-    }
     private void newTemperatureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getTemperature());
@@ -313,9 +291,21 @@ public class MapView extends Application{
         }
     }
 
-    private void diffTemperatureCheck(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(0.0);
+    /**
+        Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, i (loop));
+     */
+    private void diffInit(ArrayList<Double> temp, ArrayList<Double> light, ArrayList<Double> humi, ArrayList<Double> pres, int i){
+        if(temp.size() <= i){
+            temp.add(0.0);
+        }
+        if(light.size() <= i){
+            light.add(0.0);
+        }
+        if(humi.size() <= i){
+            humi.add(0.0);
+        }
+        if(pres.size() <= i){
+            pres.add(0.0);
         }
     }
 

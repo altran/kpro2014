@@ -14,12 +14,11 @@ public class SensorInstruction implements Instruction{
     final double x;
     final double y;
     final Canvas canvas;
-    final Color color;
     final double lighting;
     final double pressure;
     final boolean check;
 
-    public SensorInstruction(String text, Color color, double lighting, double pressure,
+    public SensorInstruction(String text, double lighting, double pressure,
                              long start, long length, double x, double y, Canvas canvas, boolean check){
         this.start = start;
         this.length = length;
@@ -27,15 +26,12 @@ public class SensorInstruction implements Instruction{
         this.x = x;
         this.y = y;
         this.canvas = canvas;
-        this.color = color;
         this.lighting = lighting;
         this.pressure = pressure;
         this.check = check;
     }
 
     public String getText() { return text; }
-
-    public Color getColor() { return color; }
 
     public double getLighting() { return lighting; }
 

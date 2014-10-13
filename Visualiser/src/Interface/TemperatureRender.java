@@ -13,13 +13,14 @@ public class TemperatureRender implements Renderer{
     public void notify(Instruction instruction, long beat) {
         if(instruction instanceof TemperatureInstruction){
 
-            if (((TemperatureInstruction) instruction).getCheck() == true) {
+            if (((TemperatureInstruction) instruction).getCheck()) {
                 final double x = ((TemperatureInstruction) instruction).getX(); //X location
                 final double y = ((TemperatureInstruction) instruction).getY(); //Y location
                 final double size1 = ((TemperatureInstruction) instruction).getPressure() / 10;
                 final double size2 = ((TemperatureInstruction) instruction).getPressure() - 1000;
                 final double size = size1 + size2;
                 final int temperature = (int) ((TemperatureInstruction) instruction).getTemperature();
+                final String text = ((TemperatureInstruction) instruction).getText();
 
             /*
             Render a circle.
@@ -49,6 +50,8 @@ public class TemperatureRender implements Renderer{
                 }
 
                 graphicsContext.fillOval(x, y, size, size);
+                graphicsContext.setStroke(Color.BLACK);
+                graphicsContext.strokeText(text, x + 0.45 * size, y + 0.55 * size);
             }
         }
     }
