@@ -2,7 +2,6 @@ package Interface;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.*;
-import javafx.scene.shape.ArcType;
 
 /**
  * Created by juliejk on 08.10.2014.
@@ -12,7 +11,7 @@ public class HumidityRender implements Renderer {
     public void notify(Instruction instruction, long beat) {
         if (instruction instanceof HumidityInstruction) {
 
-            if (((HumidityInstruction) instruction).getCheck() == true) {
+            if (((HumidityInstruction) instruction).getCheck()) {
                 double x = ((HumidityInstruction) instruction).getX();
                 double y = ((HumidityInstruction) instruction).getY();
                 double humidity = ((HumidityInstruction) instruction).getHumidity();
