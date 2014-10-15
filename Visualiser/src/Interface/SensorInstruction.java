@@ -1,7 +1,6 @@
 package Interface;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
 
 /**
  * Created by shimin on 10/3/2014.
