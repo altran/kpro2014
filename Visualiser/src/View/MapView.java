@@ -15,13 +15,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -66,9 +64,8 @@ public class MapView extends Application{
     private ArrayList<Double> diffTemperature = new ArrayList<Double>();
     private ArrayList<Double> positionX = new ArrayList<Double>();
     private ArrayList<Double> positionY = new ArrayList<Double>();
-    private int counter = 0;
-    private double t = 0.0;
     private ArrayList<Double> tList = new ArrayList<Double>();
+    private int counter = 0;
 
     //Checkbox control
     private boolean checkTemperature = true;
@@ -106,14 +103,10 @@ public class MapView extends Application{
             public void handle(long now){
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
-                t += 0.006972/2;
-                if(t > 6.28){
-                    t = 0;
-                }
+
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
 
                         updateTList(tList, i);
-                    System.out.println(tList);
 
                         initialXPosition(positionX, i);
                         initialYPosition(positionY, i);

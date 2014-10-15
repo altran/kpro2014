@@ -11,18 +11,20 @@ public class SensorRender implements Renderer{
     @Override
     public void notify(Instruction instruction, long beat) {
         if(instruction instanceof SensorInstruction) {
+            final GraphicsContext graphicsContext = ((SensorInstruction) instruction).getCanvas().getGraphicsContext2D();
+            final double x = ((SensorInstruction) instruction).getX(); //X location.
+            final double y = ((SensorInstruction) instruction).getY(); //Y location.
+            final double size = 35;
+            final String text = ((SensorInstruction) instruction).getText();
 
             if (((SensorInstruction) instruction).getCheck()) {
-                final double x = ((SensorInstruction) instruction).getX(); //X location.
-                final double y = ((SensorInstruction) instruction).getY(); //Y location.
-                final double size = 35;
-                final String text = ((SensorInstruction) instruction).getText();
+
                 Color color;
 
             /*
             Draw a circle for the sensor.
              */
-                final GraphicsContext graphicsContext = ((SensorInstruction) instruction).getCanvas().getGraphicsContext2D();
+
                 graphicsContext.setStroke(Color.BLACK);
                 graphicsContext.strokeOval(x, y, size, size);
 
@@ -40,8 +42,9 @@ public class SensorRender implements Renderer{
                 else color = Color.BLACK;
 
                 graphicsContext.setStroke(color);
-                graphicsContext.strokeText(text, x + 0.40 * size, y + 0.60 * size);
+
             }
+            graphicsContext.strokeText(text, x + 0.40 * size, y + 0.60 * size);
         }
     }
 }
