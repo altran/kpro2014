@@ -4,9 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.tdt4290g10.vsens</groupId>
-    <artifactId>vsens</artifactId>
-    <version>4.0.0</version>
-
+    <groupId>no.altran.kpro2014</groupId>
+    <artifactId>kpro2014</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>database</module>
+        <module>Visualiser</module>
+    </modules>
 
 </project>
