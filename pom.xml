@@ -10,6 +10,7 @@
     <version>4.0.0</version>
     <modules>
         <module>database</module>
+        <module>Visualiser</module>
     </modules>
 
 </project>
