@@ -1,19 +1,12 @@
-# Eclipse
-.classpath
-.project
-.settings/
-
 # Intellij
 .idea/
-/*.iml
-*.iws
-workspace.xml
-.idea/workspace.xml
 out/
-
-# Mac
-.DS_Store
+**.iml
+**.xml
+**.iws
+**.class
 
 # Maven
 log/
 target/
+!pom.xml
