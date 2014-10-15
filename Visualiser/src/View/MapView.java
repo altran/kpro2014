@@ -8,6 +8,8 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,11 +21,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,21 +32,26 @@ import java.util.Calendar;
  * Created by shimin on 9/29/2014.
  */
 
-
 public class MapView extends Application{
 
     private RoomModel roomModel;
     private Controller controller;
-    private Image circleImage = new Image("Resources/circle.jpg");
+    private Image circleImage = new Image("Resources/CentralHub.jpg");
+    private Canvas canvas;
+
+    //Instructions and Renderers
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
     private SensorInstruction sensorInstruction;
-    private TemperatureInstruction temperatureInstruction;
     private SensorRender sensorRender;
+    private TemperatureInstruction temperatureInstruction;
     private TemperatureRender temperatureRender;
-    private Canvas canvas;
     private HumidityInstruction humidityInstruction;
     private HumidityRender humidityRender;
+    private PressureInstruction pressureInstruction;
+    private PressureRender pressureRender;
+
+    //These are the lists that control the animation.
     private ArrayList<Double> oldLighting = new ArrayList<Double>();
     private ArrayList<Double> newLighting = new ArrayList<Double>();
     private ArrayList<Double> diffLighting = new ArrayList<Double>();
@@ -56,7 +61,19 @@ public class MapView extends Application{
     private ArrayList<Double> oldPressure = new ArrayList<Double>();
     private ArrayList<Double> newPressure = new ArrayList<Double>();
     private ArrayList<Double> diffPressure = new ArrayList<Double>();
+    private ArrayList<Double> oldTemperature = new ArrayList<Double>();
+    private ArrayList<Double> newTemperature = new ArrayList<Double>();
+    private ArrayList<Double> diffTemperature = new ArrayList<Double>();
+    private ArrayList<Double> positionX = new ArrayList<Double>();
+    private ArrayList<Double> positionY = new ArrayList<Double>();
+    private ArrayList<Double> tList = new ArrayList<Double>();
     private int counter = 0;
+
+    //Checkbox control
+    private boolean checkTemperature = true;
+    private boolean checkLighting = true;
+    private boolean checkHumidity = true;
+    private boolean checkPressure = true;
 
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
@@ -64,11 +81,10 @@ public class MapView extends Application{
         controller = new Controller();
         roomModel = controller.getRoomModel();
         stage.setTitle("Map View");
-        stage.setWidth(800);
-        stage.setHeight(650);
+        stage.setWidth(1240);
+        stage.setHeight(768);
 
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
-
         /*
         Creates the central hub. This object is static.
          */
@@ -78,6 +94,10 @@ public class MapView extends Application{
         centralHubRenderer = new CentralHubRenderer();
         centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
 
+        for(int i = 0; i < roomModel.getSensorNumber(); i++){
+            makeTList(tList, i);
+        }
+
         /*
         Temporary animation timer for updating values. If we want better animation this is the place to improve it.
          */
@@ -86,19 +106,26 @@ public class MapView extends Application{
             public void handle(long now){
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
+
+                        updateTList(tList, i);
+
+                        initialXPosition(positionX, i);
+                        initialYPosition(positionY, i);
 
                         newLightingCheck(newLighting, i, roomModel);
                         oldLightingCheck(oldLighting, i, roomModel);
-                        diffLightingCheck(diffLighting, i);
 
                         newHumidityCheck(newHumidity, i, roomModel);
                         oldHumidityCheck(oldHumidity, i, roomModel);
-                        diffHumidityCheck(diffHumidity, i);
 
                         newPressureCheck(newPressure, i, roomModel);
                         oldPressureCheck(oldPressure, i, roomModel);
-                        diffPressureCheck(diffPressure, i);
+
+                        newTemperatureCheck(newTemperature, i, roomModel);
+                        oldTemperatureCheck(oldTemperature, i, roomModel);
+                        diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure, i);
 
                         if (counter >= 300) {
                             counter = 0;
@@ -112,28 +139,39 @@ public class MapView extends Application{
                             if (newPressure.get(i) != oldPressure.get(i)) {
                                 diffPressure.set(i, (newPressure.get(i) - oldPressure.get(i)) / 300);
                             }
+                            if (newTemperature.get(i) != oldTemperature.get(i)) {
+                                diffTemperature.set(i, (newTemperature.get(i) - oldTemperature.get(i)) / 300);
+                            }
                             counter++;
                         } else {
                             oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
                             oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
                             oldPressure.set(i, oldPressure.get(i) + diffPressure.get(i));
+                            oldTemperature.set(i, oldTemperature.get(i) + diffTemperature.get(i));
                             counter++;
                         }
 
-                        temperatureInstruction = new TemperatureInstruction(roomModel.getSensorModel(i).getTemperature(),oldPressure.get(i), now, 10, i*100+5, i*100+5, canvas);
+                    //System.out.println(positionX.get(i));
+                    //System.out.println(positionY.get(i));
+                        temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
+                                now, 10, getPositionX(i, tList.get(i)), getPositionY(i, tList.get(i)), canvas, checkTemperature);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
-                        double offset = oldPressure.get(i)/33 + (oldPressure.get(i) - 1000) / 3;
-                        sensorInstruction = new SensorInstruction("S"+(i+1), Color.BLACK, oldLighting.get(i), oldPressure.get(i),
-                                                                  now, 10, (i*100)+offset, (i*100)+offset, canvas);
+                        sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
+                                getPositionX(i, tList.get(i))+20, getPositionY(i, tList.get(i))+20, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
-                        double offset2 = oldPressure.get(i)/10 + (oldPressure.get(i) - 1000)+5;
-                        humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE, (i*100+5)+offset2+8, (i*100+5)+70, canvas);
+                        humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
+                                getPositionX(i, tList.get(i))+79, getPositionY(i, tList.get(i))+50, canvas, checkHumidity);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
+
+                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, tList.get(i))+79,
+                                getPositionY(i, tList.get(i))+25, canvas, checkPressure);
+                        pressureRender = new PressureRender();
+                        pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
 
                     }
                 }
@@ -146,12 +184,58 @@ public class MapView extends Application{
         final CheckBox cBox2 = new CheckBox("Lighting");
         final CheckBox cBox3 = new CheckBox("Humidity");
         final CheckBox cBox4 = new CheckBox("Pressure");
-        final CheckBox cBox5 = new CheckBox("Sound");
         cBox1.setSelected(true);
         cBox2.setSelected(true);
         cBox3.setSelected(true);
         cBox4.setSelected(true);
-        cBox5.setSelected(true);
+
+        cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox1.isSelected() == false) {
+                    checkTemperature = false;
+                }
+                if(cBox1.isSelected()){
+                    checkTemperature = true;
+                }
+            }
+        });
+
+        cBox2.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox2.isSelected() == false){
+                    checkLighting = false;
+                }
+                if(cBox2.isSelected()){
+                    checkLighting = true;
+                }
+            }
+        });
+
+        cBox3.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox3.isSelected() == false){
+                    checkHumidity = false;
+                }
+                if(cBox3.isSelected()) {
+                    checkHumidity = true;
+                }
+            }
+        });
+
+        cBox4.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if(cBox4.isSelected() == false){
+                    checkPressure = false;
+                }
+                if(cBox4.isSelected()) {
+                    checkPressure = true;
+                }
+            }
+        });
 
         final Label timeLabel = new Label();
         final DateFormat format = DateFormat.getInstance();
@@ -168,7 +252,7 @@ public class MapView extends Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5, timeLabel);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
@@ -183,29 +267,24 @@ public class MapView extends Application{
         stage.show();
     }
 
+    //The data the sensors are taking in is in the wrong order #TODO
 
-    private void newLightingCheck(ArrayList list, int i, RoomModel roomModel){
+    private void newLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
         }
         if(list.size() > i){
-            list.set(i,roomModel.getSensorModel(i).getLighting());
+            list.set(i, roomModel.getSensorModel(i).getLighting());
         }
     }
 
-    private void oldLightingCheck(ArrayList list, int i, RoomModel roomModel){
+    private void oldLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
         }
     }
 
-    private void diffLightingCheck(ArrayList list, int i){
-        if(list.size() <= i){
-            list.add(0.0);
-        }
-    }
-
-    private void newHumidityCheck(ArrayList list, int i, RoomModel roomModel){
+    private void newHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getHumidity());
         }
@@ -214,19 +293,13 @@ public class MapView extends Application{
         }
     }
 
-    private void oldHumidityCheck(ArrayList list, int i, RoomModel roomModel){
+    private void oldHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getHumidity());
         }
     }
 
-    private void diffHumidityCheck(ArrayList list, int i){
-        if(list.size() <= i){
-            list.add(0.0);
-        }
-    }
-
-    private void newPressureCheck(ArrayList list, int i, RoomModel roomModel){
+    private void newPressureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getPressure());
         }
@@ -235,16 +308,93 @@ public class MapView extends Application{
         }
     }
 
-    private void oldPressureCheck(ArrayList list, int i, RoomModel roomModel){
+    private void oldPressureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getPressure());
         }
     }
 
-    private void diffPressureCheck(ArrayList list, int i){
+    private void newTemperatureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
-            list.add(0.0);
+            list.add(roomModel.getSensorModel(i).getTemperature());
         }
+        if(list.size() > i){
+            list.set(i,roomModel.getSensorModel(i).getTemperature());
+        }
+    }
+
+    private void oldTemperatureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+        if(list.size() <= i){
+            list.add(roomModel.getSensorModel(i).getTemperature());
+        }
+    }
+
+    private void initialXPosition(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            list.add(canvas.getWidth() / 2 - circleImage.getWidth() / 2 + i * 150 + 100);
+        }
+    }
+
+    private void initialYPosition(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            list.add(canvas.getHeight()/2-circleImage.getWidth()/2);
+        }
+    }
+
+    private void makeTList(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            if(i % 2 == 0){
+                list.add(-1*0.006978/i);
+            }else{
+                list.add(0.006978/i);
+            }
+        }
+    }
+
+    private void updateTList(ArrayList<Double> list, int i){
+        double temp = list.get(i);
+        if(i % 2 == 0){
+            temp += -1*(0.008-0.006978*(i*0.3));
+        }
+        else{
+            temp += 0.008-0.006978*(i*0.3);
+        }
+        list.set(i, temp);
+        if(temp > 6.28 || temp < -6.28){
+            list.set(i, 0.0);
+        }
+    }
+
+    /**
+        Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, i (loop));
+     */
+    private void diffInit(ArrayList<Double> temp, ArrayList<Double> light, ArrayList<Double> humi, ArrayList<Double> pres, int i){
+        if(temp.size() <= i){
+            temp.add(0.0);
+        }
+        if(light.size() <= i){
+            light.add(0.0);
+        }
+        if(humi.size() <= i){
+            humi.add(0.0);
+        }
+        if(pres.size() <= i){
+            pres.add(0.0);
+        }
+    }
+
+    private double getPositionX(int i, double t){
+        double a =i*100 + 150 ;
+        double temp = a*Math.cos(t) +canvas.getWidth() / 2 - circleImage.getWidth() / 2;
+        positionX.set(i, temp);
+        return positionX.get(i);
+    }
+
+    private double getPositionY(int i, double t){
+        double b = 100 + i*100;
+        double temp = b*Math.sin(t) + canvas.getHeight() / 2 - circleImage.getWidth() / 2;
+        positionY.set(i, temp);
+        return positionY.get(i);
     }
 
 

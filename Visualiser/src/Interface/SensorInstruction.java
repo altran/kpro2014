@@ -1,7 +1,6 @@
 package Interface;
 
 import javafx.scene.canvas.Canvas;
-import javafx.scene.paint.Color;
 
 /**
  * Created by shimin on 10/3/2014.
@@ -14,29 +13,24 @@ public class SensorInstruction implements Instruction{
     final double x;
     final double y;
     final Canvas canvas;
-    final Color color;
     final double lighting;
-    final double pressure;
+    final boolean check;
 
-    public SensorInstruction(String text, Color color, double lighting, double pressure, long start, long length, double x, double y, Canvas canvas){
+    public SensorInstruction(String text, double lighting,
+                             long start, long length, double x, double y, Canvas canvas, boolean check){
         this.start = start;
         this.length = length;
         this.text = text;
         this.x = x;
         this.y = y;
         this.canvas = canvas;
-        this.color = color;
         this.lighting = lighting;
-        this.pressure = pressure;
+        this.check = check;
     }
 
     public String getText() { return text; }
 
-    public Color getColor() { return color; }
-
     public double getLighting() { return lighting; }
-
-    public double getPressure() { return pressure; }
 
     public double getX(){
         return x;
@@ -49,6 +43,8 @@ public class SensorInstruction implements Instruction{
     public Canvas getCanvas(){
         return canvas;
     }
+
+    public boolean getCheck() { return check; }
 
     public long start() { return start; }
 
