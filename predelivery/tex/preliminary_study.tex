@@ -2,39 +2,39 @@
 \begin{document}
 \section*{Preliminary Study}
 \addcontentsline{toc}{section}{Preliminary Study}
-The project, internet of things, is quite abstract. We did not have a clear goal at first, but rather we were asked by the customer to come up with a solution that fits the customer needs. This chapter outlines these ideas and also why we chose to utilize the scrum model as well as which tools we will use, both hardware and software, for this project.
+The project, internet of things, is quite abstract. We did not have a clear goal at first, but rather we were asked by the customer to come up with a solution that fits the customer needs. This chapter gives an outline of these ideas. It also details the reasons for choosing to utilize the scrum development model, and for selecting hardware and software tools to use in the project.
 
 \subsection*{Initial Ideas}
 \addcontentsline{toc}{subsection}{Initial Ideas}
-Early in the project, we explored a wide range of ideas and application areas for the cheap sensor technology supplied by Altran. These ideas were then further developed into more concrete designs, with pros and cons listed. The outcome of this process is summarized below. These ideas are also presented in a table at the bottom of this section.
+Early in the project, we explored a wide range of ideas and application areas for the cheap sensor technology supplied by Altran. These ideas were then further developed into more concrete designs, with pros and cons listed. The outcome of this process is summarized below. These ideas are also presented in a table at the end of this section.
 
 \subsection*{Elder health system}
 \addcontentsline{toc}{subsection}{Elder health system}
-Elderly people are often subject to poor health. For this reason it is important to detect and avoid any harm that may come to them in their homes. In many cases, the application of sensors may achieve this goal. Sound or pressure sensors may be installed into walls, floor and stairs to register a fall accident. Even better, sensor devices placed on the body of the person could register abnormal heart rate, blood pressure or body temperature. Moreover, sensors can also be used to create a panic button. Sensor data would be collected at a central hub, and then transmitted to a standby team that would react to the event. Microphones placed in the room or on the person might be used to create a communication channel directly to the standby team.
+Elderly people are often subject to poor health. For this reason it is important to detect and avoid any harm that may come to them in their homes. In many cases, the application of sensors may achieve this goal. Sound or pressure sensors may be installed into walls, floors and stairs to register a fall accident. Even better, sensor devices placed on the body of the person could register abnormal heart rate, blood pressure or body temperature. Moreover, sensors can also be used to create a panic button. Sensor data would then be collected and transmitted to a standby team that would react to the event. Microphones placed in the room or on the person might be used to create a communication channel directly to the standby team.
 
-Panic buttons are already widely used. There are also systems for both video monitoring and sound monitoring of your home. More advanced systems actually include motion sensors, contact sensors for doors and windows, and pressure sensors with a user-friendly web service for presenting data.
+This application area is already well explored. There are systems for both video monitoring and sound monitoring of your home. More advanced systems actually include motion sensors, contact sensors for doors and windows, and pressure sensors with a user-friendly web service for presenting data. Panic buttons are also widely used.
 
 \subsection*{High risk work environment}
 \addcontentsline{toc}{subsection}{High risk work environment}
-Oil platforms, construction sites, or mines are high risk work environments. These rely on strict security routines to keep workers safe. There are various applications for sensors in such an environment. A small device carried by the workers or attached to their helmets could emit a sound whenever the worker enters a ``hazard area''. When an area needs to be cleared of workers, such sensors could signal if a person enters the area, preventing incidents. The sensors would need to have a large range, and be noise resistant.
+Oil platforms, construction sites, or ore mines are high risk work environments. These rely on strict security routines to keep workers safe. There are various applications for sensors in such an environment. A small device carried by the workers or attached to their helmets could emit a sound whenever the worker would enter a ``hazard area''. When an area needs to be cleared of workers, such sensors could be used to signal if a person enters the area, preventing incidents. The sensors would need to have a large range, and be noise resistant.
 
-There are currently no electronic systems in place in high risk work environments. However, the systems that are in place use statistics, training and safer work practices. While our system would enable the workers to feel safer, it would only add another layer of safety. It is debatable whether or not the customer would pay for the extra layer when training still is mandatory, and many security measures are already in effect. The other constraint of this system is its accuracy. We may not be able to guarantee the consistent up-time and accuracy the high risk work environment needs.
+There are currently no electronic systems in place in high risk work environments. However, the systems that are in place use statistics, training and safer work practices. While our system would enable the workers to feel safer, it would only add another layer of safety. It is debatable whether or not the customer would pay for the extra layer when training still is mandatory, and many security measures are already in effect. Another important system constraint here is accuracy: it may actually be impossible to guarantee the consistent up-time and accuracy required by a high risk work environment.
 
 \subsection*{Exploring}
 \addcontentsline{toc}{subsection}{Exploring}
-Cheap sensors can be an aid when exploring unknown or hazardous environments. The sensors can be spread over an area to provide data on temperature, humidity, and similar before human explorers go in. The area of exploration could be deep sea, caverns, or even space.
+Cheap dispensable sensors can be an aid when exploring unknown or hazardous environments. The sensors would then be spread over an area to provide data on temperature, humidity, and similar before human explorers go in. The area of exploration could be deep sea, dark and inaccessible caverns, or even space.
 
-Robots are already widely used in exploration. In deep sea ROVs are used. NASA has also conducted research on robots for space exploration.
+Robots are already widely used in exploration. In deep sea, ROVs are used. NASA has also conducted research on robots for space exploration.
 
 \subsection*{Smart Home/Office, or the smart room}
 \addcontentsline{toc}{subsection}{Smart Home/Office, or the smart room}
-Our original idea for the project, and one of the ways that this concept can be applied in real world situations, is through a smart room. A smart room would have a panel where one would be able to adjust settings, such as temperature and humidity in the room. The system would then adjust this by interacting with other devices in the room, such as air conditioning and humidifiers. Sunlight could be blocked by automatic curtains, or the curtains could open in the morning letting the sunlight in.
+Our original idea for the project, and one of the ways that the Internet of Things project can be applied in real world situations, is through a \emph{smart room}. A smart room would have a panel where one would be able to adjust settings, such as temperature and humidity in the room. The system would then adjust this by interacting with other devices in the room, such as air conditioning and humidifiers. Sunlight could be blocked by automatic curtains, or the curtains could open in the morning letting the sunlight in.
 
 This is a fairly young field of study and application, but it is growing fast. Already there are solutions for smart home systems on the market, but they cost quite a lot in comparison to what our system would cost. Most of these systems also handle only one part of the house automation, such as the security system or entertainment system. Our system would include all of the systems of the house. However, it would be difficult to implement and it would require universal plugins from all the other devices, such as air conditioning, which severely limits its modifiability.
 
 \subsection*{Initial Ideas Table}
 \addcontentsline{toc}{subsection}{Initial Ideas Table}
-Here we will present the ideas discussed above in a more concrete way, in the form of a table:
+This section presents the ideas discussed above in a more concrete way, in the form of a table:
 
 \begin{table}[H]
 \caption{Initial Ideas Table}
@@ -51,9 +51,9 @@ Elder health system
 &
 Health tracking on the fly 
 \newline \ \newline
-Fast response in case of an emergency.newline 
+Fast response in case of an emergency
 \newline \ \newline
-Cheap.
+Cheap
 &
 More advanced systems already exist, including motion sensors and more detailed and advanced statistics tracking.
 \newline \ \newline
@@ -182,7 +182,7 @@ The Internet of Things is about connecting devices in our everyday environments 
 While there are similar projects that deal with the concept of ``Internet of Things'', typically these projects are not limited to the visualization stage. They become a concrete project that uses data to achieve some effect besides visualization. Therefore, most of the products are internal projects that become full fledged projects or products later. It is difficult to find any products that match what we are trying to achieve and most visualizations of data are well out of our field of study, such as weather systems that create cloud or wind patterns and predict their movement.
 
 \subsubsection*{Different possible architectural models for the prototype}
-While working on the initial stages of the project, we had to prepare countermeasures to counteract risk 1, which was the possibility of us not getting the hardware necessary to complete our prototype. In order to make the prototype work without any hardware from the customer, he suggested that we could substitute the sensors with android phones. With this in mind we had to prepare for both situations and we found out that the architecture in both cases actually differs. In both cases we would be using a client-server architecture, however, the roles of the client and the server would be reversed.
+While working on the initial stages of the project, we had to prepare countermeasures to counteract risk 1, which was the possibility of us not getting the hardware necessary to complete our prototype. In order to make the prototype work without any hardware from the customer, he suggested that we could substitute the sensors with android phones. With this in mind we had to prepare for both situations. What we found out was that the architecture in both cases actually differs. In both cases we would be using a client-server architecture, however, the roles of the client and the server would be reversed.
 
 When using the sensors, we would have a raspberry pi acting as a server. In this case our client requests information from the server, and stores it in a database of some sort. Then our visualizer uses this data to show it in a visual way. The image of the architecture can be seen below.
 
