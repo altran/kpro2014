@@ -64,7 +64,10 @@ public class MapView extends Application{
     private ArrayList<Double> oldTemperature = new ArrayList<Double>();
     private ArrayList<Double> newTemperature = new ArrayList<Double>();
     private ArrayList<Double> diffTemperature = new ArrayList<Double>();
+    private ArrayList<Double> positionX = new ArrayList<Double>();
+    private ArrayList<Double> positionY = new ArrayList<Double>();
     private int counter = 0;
+    private double t = 0.0;
 
     //Checkbox control
     private boolean checkTemperature = true;
@@ -81,7 +84,6 @@ public class MapView extends Application{
         stage.setHeight(768);
 
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
-
         /*
         Creates the central hub. This object is static.
          */
@@ -99,7 +101,14 @@ public class MapView extends Application{
             public void handle(long now){
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+                t += 0.006978 /2;
+                if(t > 6.28){
+                    t = 0;
+                }
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
+
+                        initialXPosition(positionX, i);
+                        initialYPosition(positionY, i);
 
                         newLightingCheck(newLighting, i, roomModel);
                         oldLightingCheck(oldLighting, i, roomModel);
@@ -138,23 +147,25 @@ public class MapView extends Application{
                             counter++;
                         }
 
+                    //System.out.println(positionX.get(i));
+                    //System.out.println(positionY.get(i));
                         temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
-                                now, 10, i*100+5, i*100+5, canvas, checkTemperature);
+                                now, 10, getPositionX(i, t), getPositionY(i, t), canvas, checkTemperature);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                         sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
-                                                                 (i*100)+30, (i*100)+30, canvas, checkLighting);
+                                getPositionX(i, t)+30, getPositionY(i, t)+30, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                         humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                                                      i*100+114, i*100+75, canvas, checkHumidity);
+                                getPositionX(i, t)+114, getPositionY(i, t)+75, canvas, checkHumidity);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, i*100+115,
-                                i*100+45, canvas, checkPressure);
+                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, t)+115,
+                                getPositionY(i, t)+45, canvas, checkPressure);
                         pressureRender = new PressureRender();
                         pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
 
@@ -314,6 +325,18 @@ public class MapView extends Application{
         }
     }
 
+    private void initialXPosition(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            list.add(canvas.getWidth() / 2 - circleImage.getWidth() / 2 + i * 150 + 100);
+        }
+    }
+
+    private void initialYPosition(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            list.add(canvas.getHeight()/2-circleImage.getWidth()/2);
+        }
+    }
+
     /**
         Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, i (loop));
      */
@@ -330,6 +353,20 @@ public class MapView extends Application{
         if(pres.size() <= i){
             pres.add(0.0);
         }
+    }
+
+    private double getPositionX(int i, double t){
+        double a =i*150 + 150 ;
+        double temp = a*Math.cos(t) +canvas.getWidth() / 2 - circleImage.getWidth() / 2;
+        positionX.set(i, temp);
+        return positionX.get(i);
+    }
+
+    private double getPositionY(int i, double t){
+        double b = 100 + i* 150;
+        double temp = b*Math.sin(t) + canvas.getHeight() / 2 - circleImage.getWidth() / 2;
+        positionY.set(i, temp);
+        return positionY.get(i);
     }
 
     public static void main(String[] args) {
