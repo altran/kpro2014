@@ -351,10 +351,10 @@ public class MapView extends Application{
     private void updateTList(ArrayList<Double> list, int i){
         double temp = list.get(i);
         if(i % 2 == 0){
-            temp += -1*(0.006978*(i*0.3)+0.008);
+            temp += -1*(0.008-0.006978*(i*0.3));
         }
         else{
-            temp += 0.006978*(i*0.3)+0.008;
+            temp += 0.008-0.006978*(i*0.3);
         }
         list.set(i, temp);
         if(temp > 6.28 || temp < -6.28){
