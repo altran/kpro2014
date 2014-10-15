@@ -1,8 +1,5 @@
-package View;
+package no.altran.kpro2014.View;
 
-import Controller.Controller;
-import Interface.*;
-import Model.RoomModel;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -18,11 +15,14 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import no.altran.kpro2014.Controller.Controller;
+import no.altran.kpro2014.Interface.*;
+import no.altran.kpro2014.Model.RoomModel;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ import java.util.Calendar;
 
 public class MapView extends Application{
 
-    private RoomModel roomModel;
     private Controller controller;
+    private RoomModel roomModel;
     private Image circleImage = new Image("Resources/CentralHub.jpg");
     private Canvas canvas;
 

@@ -1,4 +1,4 @@
-package Interface;
+package no.altran.kpro2014.Interface;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.*;

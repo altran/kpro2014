@@ -1,7 +1,6 @@
-package Model;
+package no.altran.kpro2014.Model;
 
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * Created by shimin on 9/24/2014.

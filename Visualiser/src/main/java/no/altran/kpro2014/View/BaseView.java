@@ -1,8 +1,8 @@
-package View;
+package no.altran.kpro2014.View;
 
-import Controller.Controller;
-import Model.RoomModel;
-import Model.SensorModel;
+import no.altran.kpro2014.Controller.Controller;
+import no.altran.kpro2014.Model.RoomModel;
+import no.altran.kpro2014.Model.SensorModel;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;

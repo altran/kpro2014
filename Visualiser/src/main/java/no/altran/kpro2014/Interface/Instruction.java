@@ -1,4 +1,4 @@
-package Interface;
+package no.altran.kpro2014.Interface;
 
 /**
  * V2 interface for instructions

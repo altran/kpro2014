@@ -1,15 +1,14 @@
-package Controller;
+package no.altran.kpro2014.Controller;
 
-import Model.RoomModel;
-import Model.SensorModel;
 
-import java.util.ArrayList;
+import no.altran.kpro2014.Model.RoomModel;
+import no.altran.kpro2014.Model.SensorModel;
+import no.altran.kpro2014.database.Observation;
+import no.altran.kpro2014.database.ObservationGetter;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import no.altran.kpro2014.database.Observation;
-import no.altran.kpro2014.database.ObservationGetter;
 
 /**
  * Created by shimin on 9/24/2014.

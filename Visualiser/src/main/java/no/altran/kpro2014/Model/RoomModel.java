@@ -1,10 +1,9 @@
-package Model;
+package no.altran.kpro2014.Model;
 
+
+import no.altran.kpro2014.Controller.Controller;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import Controller.Controller;
 
 /**
  * Created by shimin on 9/24/2014.7

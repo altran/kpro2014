@@ -1,32 +1,33 @@
-package Interface;
+package no.altran.kpro2014.Interface;
 
 import javafx.scene.canvas.Canvas;
 
 /**
- * Created by maria on 13/10/14.
+ * Created by juliejk on 08.10.2014.
  */
-public class PressureInstruction implements Instruction {
+public class HumidityInstruction implements Instruction {
+
 
     final long start;
     final long length;
     final double x;
     final double y;
     final Canvas canvas;
-    final double pressure;
+    final double humidity;
     final boolean check;
 
-    public PressureInstruction(double pressure, long start, long length, double x, double y, Canvas canvas, boolean check) {
+    public HumidityInstruction(double humidity, long start, long length, double x, double y, Canvas canvas, boolean check) {
         this.start = start;
         this.length = length;
         this.x = x;
         this.y = y;
         this.canvas = canvas;
-        this.pressure = pressure;
+        this.humidity = humidity;
         this.check = check;
     }
 
-    public double getPressure() {
-        return pressure;
+    public double getHumidity() {
+        return humidity;
     }
 
     public double getX() {
