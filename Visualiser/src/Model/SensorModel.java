@@ -11,7 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public class SensorModel {
 
-    private SimpleIntegerProperty sensorID;
+    private String sensorID;
     private SimpleDoubleProperty temperature;
     private SimpleDoubleProperty lighting;
     private SimpleDoubleProperty pressure;
@@ -20,7 +20,7 @@ public class SensorModel {
 
 
     public SensorModel(){
-        sensorID = new SimpleIntegerProperty(1);
+        sensorID = "";
         temperature = new SimpleDoubleProperty();
         lighting = new SimpleDoubleProperty();
         pressure = new SimpleDoubleProperty();
@@ -38,11 +38,11 @@ public class SensorModel {
 
     public double getSound(){return sound.get();}
 
-    public int getSensorID(){return sensorID.get();}
+    public String getSensorID(){return sensorID;}
 
 
-    public void setSensorID(int ID){
-        this.sensorID.set(ID);
+    public void setSensorID(String ID){
+        this.sensorID = sensorID;
     }
 
     public void setTemperature(double temperature){

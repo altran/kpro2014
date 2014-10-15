@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Model.RoomModel;
 import Model.SensorModel;
 import javafx.animation.Animation;
@@ -34,6 +35,7 @@ public class BaseView extends  Application{
     private ObservableList<SensorModel> data = FXCollections.observableArrayList();
 
     private RoomModel roomModel;
+    private Controller controller;
     private TableView dataTable;
     private TableColumn temperatureColumn;
     private TableColumn sensorIDColumn;
@@ -43,6 +45,7 @@ public class BaseView extends  Application{
     private TableColumn soundColumn;
     private static Stage stage;
 
+
     /**
      * This methods creates all the objects inside the view. Including the primaryStage, table, checkbox, buttons
      * and so on.
@@ -51,7 +54,9 @@ public class BaseView extends  Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
-        roomModel = new RoomModel();
+
+        controller = new Controller();
+        roomModel = controller.getRoomModel();
         dataTable = new TableView();
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("TableView test");

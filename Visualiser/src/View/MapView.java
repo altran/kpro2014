@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Interface.*;
 import Model.RoomModel;
 import javafx.animation.Animation;
@@ -35,6 +36,7 @@ import java.util.Calendar;
 public class MapView extends Application{
 
     private RoomModel roomModel;
+    private Controller controller;
     private Image circleImage = new Image("Resources/circle.jpg");
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
@@ -59,7 +61,8 @@ public class MapView extends Application{
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
         Scene scene = new Scene(new Group());
-        roomModel = new RoomModel();
+        controller = new Controller();
+        roomModel = controller.getRoomModel();
         stage.setTitle("Map View");
         stage.setWidth(800);
         stage.setHeight(650);

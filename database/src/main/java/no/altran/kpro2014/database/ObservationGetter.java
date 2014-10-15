@@ -47,7 +47,8 @@ public class ObservationGetter {
         };
     }
 
-    public List<Integer> getAllSensorIDs() {
+    //TODO fix this, and take in gateway
+    public List<String> getAllSensorIDs() {
         String response = queryResource
                 .path(path).path("radiogateways")
                 .request(MediaType.APPLICATION_JSON)

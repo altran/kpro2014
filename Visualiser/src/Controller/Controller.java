@@ -1,13 +1,15 @@
 package Controller;
 
-import db.DBManager;
+import Model.RoomModel;
+import Model.SensorModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import db.SensorSample;
+import no.altran.kpro2014.database.Observation;
+import no.altran.kpro2014.database.ObservationGetter;
 
 /**
  * Created by shimin on 9/24/2014.
@@ -16,17 +18,12 @@ import db.SensorSample;
 
 public class Controller {
 
-    private DBManager dbManager;
-    private List<SensorSample> sampleList;
-    private ArrayList<ArrayList> sortedList;
-    private ArrayList<Integer> sensorID;
-    private ArrayList<Double> temperatureList;
-    private ArrayList<Double> lightList;
-    private ArrayList<Double> humidityList;
-    private ArrayList<Double> pressureList;
-    private ArrayList<Double> soundList;
+    private ObservationGetter getter;
+    private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
+    private final String domain = "iot.altrancloud.com";
+    private final String path = "iot/observe";
 
 
     /**
@@ -34,136 +31,47 @@ public class Controller {
      */
 
     public Controller(){
-        sortedList = new ArrayList<ArrayList>();
-        sensorID = new ArrayList<Integer>();
-        temperatureList = new ArrayList<Double>();
-        lightList = new ArrayList<Double>();
-        humidityList = new ArrayList<Double>();
-        pressureList = new ArrayList<Double>();
-        soundList = new ArrayList<Double>();
+        roomModel = new RoomModel();
+        getter = new ObservationGetter(domain, path);
 
-        dbManager = new DBManager();
-        dbManager.connect();
 
+        addSensors();
+        updateSensors();
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                getSensorSample();
-                sortSensorID();
+                updateSensors();
             }
         };
-        passiveUpdate();
-
-        getSensorSample();
-        sortedList.add(sensorID);
-        sortedList.add(temperatureList);
-        sortedList.add(humidityList);
-        sortedList.add(pressureList);
-        sortedList.add(soundList);
-        sortSensorID();
     }
 
-    /*
-    This method returns a list of sensors from the database.
-     */
-    private List<SensorSample> getSensorSample(){
-        return sampleList = dbManager.getAllNewSamples();
-    }
-
-    /*
-    This method sorts the list from the database into a manageable format.
-     */
-    private void sortSensorID(){
-        for(int i=0; i<sampleList.size(); i++){
-            SensorSample tempSample = sampleList.get(i);
-            if(sensorID.contains(tempSample.getSensorID())){
-                addData(tempSample, tempSample.getSensorID(),temperatureList, lightList, humidityList,pressureList,soundList);
-            }
-            if(!sensorID.contains(tempSample.getSensorID())){
-                if(sensorID.size()>tempSample.getSensorID()-1){
-                    sensorID.add(tempSample.getSensorID(), tempSample.getSensorID());
-                }else{
-                    sensorID.add(tempSample.getSensorID());
-                }
-                addData(tempSample, tempSample.getSensorID(),temperatureList, lightList, humidityList,pressureList,soundList);
-            }
+    private void addSensors() {
+        List<String> sensorIdList = getter.getAllSensorIDs();
+        List<SensorModel> sensorList = roomModel.getSensorList();
+        for (String sensorId : sensorIdList){
+            SensorModel sensor = new SensorModel();
+            sensorList.add(sensor);
+            //TODO add 0 data, or checks in views, disabling null data
         }
     }
 
-
-    /**
-     * TAdding new data to the lists
-     */
-    private void addData(SensorSample ss, int sensorID, ArrayList tList, ArrayList lList,
-                         ArrayList hList, ArrayList pList, ArrayList sList){
-        if(tList.size() <= ss.getSensorID()-1 || hList.size() <= ss.getSensorID()-1 || pList.size() <= ss.getSensorID()-1 ||
-                sList.size() <= ss.getSensorID()-1 || lList.size() <= ss.getSensorID()-1){
-            switch (ss.getType()){
-                case TEMPERATURE_SAMPLE:
-                    tList.add(ss.getValue());
-                    break;
-                case LIGHT_SAMPLE:
-                    lList.add(ss.getValue());
-                    break;
-                case PRESSURE_SAMPLE:
-                    pList.add(ss.getValue());
-                    break;
-                case HUMIDITY_SAMPLE:
-                    hList.add(ss.getValue());
-                    break;
-                case SOUND_SAMPLE:
-                    sList.add(ss.getValue());
-                    break;
-            }
+    private  void updateSensors(){
+        List<SensorModel> sensorList = roomModel.getSensorList();
+        for (SensorModel sensor : sensorList){
+            Observation obs = getter.getMostRecentObservation(sensor.getSensorID());
+            sensor.setHumidity(Double.parseDouble(obs.getMeasurements().get("hum")));
+            sensor.setLighting(Double.parseDouble(obs.getMeasurements().get("lig")));
+            sensor.setPressure(Double.parseDouble(obs.getMeasurements().get("pre")));
+            sensor.setSound(Double.parseDouble(obs.getMeasurements().get("sn")));
+            sensor.setTemperature(Double.parseDouble(obs.getMeasurements().get("tmp")));
         }
-        else{
-            switch (ss.getType()){
-                case TEMPERATURE_SAMPLE:
-                    tList.set(sensorID-1, ss.getValue());
-                    break;
-                case LIGHT_SAMPLE:
-                    lList.set(sensorID-1, ss.getValue());
-                    break;
-                case PRESSURE_SAMPLE:
-                    pList.set(sensorID-1, ss.getValue());
-                    break;
-                case HUMIDITY_SAMPLE:
-                    hList.set(sensorID-1, ss.getValue());
-                    break;
-                case SOUND_SAMPLE:
-                    sList.set(sensorID-1, ss.getValue());
-                    break;
-            }
-        }
+
     }
 
-    public int getSensorID(int i){
-        return sensorID.get(i);
-    }
 
-    public double getTemperature(int i){
-        return temperatureList.get(i);
-    }
-
-    public double getPressure(int i){
-        return pressureList.get(i);
-    }
-
-    public double getHumidity(int i){
-        return humidityList.get(i);
-    }
-
-    public double getLighting(int i){
-        return lightList.get(i);
-    }
-
-    public double getSound(int i){
-        return soundList.get(i);
-    }
-
-    public int getNumberOfSensors(){
-        return sensorID.size();
+    public RoomModel getRoomModel(){
+        return roomModel;
     }
 
     private void passiveUpdate(){
