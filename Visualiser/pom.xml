@@ -7,19 +7,19 @@
     <parent>
         <artifactId>kpro2014</artifactId>
         <groupId>no.altran.kpro2014</groupId>
-        <version>4.0.0</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>no.altran.kpro2014</groupId>
     <artifactId>Visualiser</artifactId>
-    <version>4.0.0</version>
+    <version>1.0-SNAPSHOT</version>
 
     <dependencies>
     <!-- Sister module -->
     <dependency>
         <groupId>no.altran.kpro2014</groupId>
         <artifactId>database</artifactId>
-        <version>4.0.0</version>
+        <version>1.0-SNAPSHOT</version>
     </dependency>
     </dependencies>
 
