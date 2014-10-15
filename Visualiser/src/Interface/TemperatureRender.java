@@ -16,7 +16,7 @@ public class TemperatureRender implements Renderer{
             if (((TemperatureInstruction) instruction).getCheck()) {
                 final double x = ((TemperatureInstruction) instruction).getX(); //X location
                 final double y = ((TemperatureInstruction) instruction).getY(); //Y location
-                final double size = 100;
+                final double size = 75;
                 final int temperature = (int) ((TemperatureInstruction) instruction).getTemperature();
                 final String text = ((TemperatureInstruction) instruction).getText();
 

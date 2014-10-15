@@ -155,17 +155,17 @@ public class MapView extends Application{
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                         sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
-                                getPositionX(i, t)+30, getPositionY(i, t)+30, canvas, checkLighting);
+                                getPositionX(i, t)+20, getPositionY(i, t)+20, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                         humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                getPositionX(i, t)+114, getPositionY(i, t)+75, canvas, checkHumidity);
+                                getPositionX(i, t)+79, getPositionY(i, t)+50, canvas, checkHumidity);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, t)+115,
-                                getPositionY(i, t)+45, canvas, checkPressure);
+                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, t)+79,
+                                getPositionY(i, t)+25, canvas, checkPressure);
                         pressureRender = new PressureRender();
                         pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
 
@@ -356,14 +356,14 @@ public class MapView extends Application{
     }
 
     private double getPositionX(int i, double t){
-        double a =i*150 + 150 ;
+        double a =i*100 + 150 ;
         double temp = a*Math.cos(t) +canvas.getWidth() / 2 - circleImage.getWidth() / 2;
         positionX.set(i, temp);
         return positionX.get(i);
     }
 
     private double getPositionY(int i, double t){
-        double b = 100 + i* 150;
+        double b = 100 + i*100;
         double temp = b*Math.sin(t) + canvas.getHeight() / 2 - circleImage.getWidth() / 2;
         positionY.set(i, temp);
         return positionY.get(i);

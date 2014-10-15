@@ -15,7 +15,7 @@ public class SensorRender implements Renderer{
             if (((SensorInstruction) instruction).getCheck()) {
                 final double x = ((SensorInstruction) instruction).getX(); //X location.
                 final double y = ((SensorInstruction) instruction).getY(); //Y location.
-                final double size = 50;
+                final double size = 35;
                 final String text = ((SensorInstruction) instruction).getText();
                 Color color;
 
