@@ -11,10 +11,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by audun on 10/1/14.
@@ -47,14 +44,17 @@ public class ObservationGetter {
         };
     }
 
-    //TODO fix this, and take in gateway
+    //TODO take in gateway
     public List<String> getAllSensorIDs() {
         String response = queryResource
                 .path(path).path("radiogateways")
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
-        System.out.println(response);
-        return null;
+        Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
+        Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioSensorIds");
+        List<String> idList = new ArrayList<String>();
+        idList.addAll(idObjectList.keySet());
+        return idList;
     }
 
     public Observation getMostRecentObservation(String sensorID) {
