@@ -68,6 +68,7 @@ public class MapView extends Application{
     private ArrayList<Double> positionY = new ArrayList<Double>();
     private int counter = 0;
     private double t = 0.0;
+    private ArrayList<Double> tList = new ArrayList<Double>();
 
     //Checkbox control
     private boolean checkTemperature = true;
@@ -93,6 +94,10 @@ public class MapView extends Application{
         centralHubRenderer = new CentralHubRenderer();
         centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
 
+        for(int i = 0; i < roomModel.getSensorNumber(); i++){
+            makeTList(tList, i);
+        }
+
         /*
         Temporary animation timer for updating values. If we want better animation this is the place to improve it.
          */
@@ -101,11 +106,14 @@ public class MapView extends Application{
             public void handle(long now){
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
-                t += 0.006978 /2;
+                t += 0.006972/2;
                 if(t > 6.28){
                     t = 0;
                 }
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
+
+                        updateTList(tList, i);
+                    System.out.println(tList);
 
                         initialXPosition(positionX, i);
                         initialYPosition(positionY, i);
@@ -150,22 +158,22 @@ public class MapView extends Application{
                     //System.out.println(positionX.get(i));
                     //System.out.println(positionY.get(i));
                         temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
-                                now, 10, getPositionX(i, t), getPositionY(i, t), canvas, checkTemperature);
+                                now, 10, getPositionX(i, tList.get(i)), getPositionY(i, tList.get(i)), canvas, checkTemperature);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                         sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
-                                getPositionX(i, t)+20, getPositionY(i, t)+20, canvas, checkLighting);
+                                getPositionX(i, tList.get(i))+20, getPositionY(i, tList.get(i))+20, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                         humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                getPositionX(i, t)+79, getPositionY(i, t)+50, canvas, checkHumidity);
+                                getPositionX(i, tList.get(i))+79, getPositionY(i, tList.get(i))+50, canvas, checkHumidity);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, t)+79,
-                                getPositionY(i, t)+25, canvas, checkPressure);
+                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, tList.get(i))+79,
+                                getPositionY(i, tList.get(i))+25, canvas, checkPressure);
                         pressureRender = new PressureRender();
                         pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
 
@@ -337,6 +345,30 @@ public class MapView extends Application{
         }
     }
 
+    private void makeTList(ArrayList<Double> list, int i){
+        if(list.size() <= i){
+            if(i % 2 == 0){
+                list.add(-1*0.006978/i);
+            }else{
+                list.add(0.006978/i);
+            }
+        }
+    }
+
+    private void updateTList(ArrayList<Double> list, int i){
+        double temp = list.get(i);
+        if(i % 2 == 0){
+            temp += -1*(0.006978*(i*0.3)+0.008);
+        }
+        else{
+            temp += 0.006978*(i*0.3)+0.008;
+        }
+        list.set(i, temp);
+        if(temp > 6.28 || temp < -6.28){
+            list.set(i, 0.0);
+        }
+    }
+
     /**
         Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, i (loop));
      */
@@ -368,6 +400,8 @@ public class MapView extends Application{
         positionY.set(i, temp);
         return positionY.get(i);
     }
+
+
 
     public static void main(String[] args) {
         launch(args);
