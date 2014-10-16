@@ -44,7 +44,7 @@ public class SensorRender implements Renderer{
                 graphicsContext.setStroke(color);
 
             }
-            graphicsContext.strokeText(text, x + 0.40 * size, y + 0.60 * size);
+            graphicsContext.strokeText(text, x + 0.30 * size, y + 0.60 * size);
         }
     }
 }
