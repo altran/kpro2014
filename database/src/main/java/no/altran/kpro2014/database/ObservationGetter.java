@@ -1,9 +1,11 @@
 package no.altran.kpro2014.database;
 
 import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.InvalidJsonException;
 import com.jayway.jsonpath.JsonPath;
 import org.json.simple.JSONValue;
 
+import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -46,14 +48,19 @@ public class ObservationGetter {
 
     //TODO take in gateway
     public List<String> getAllSensorIDs() {
-        String response = queryResource
-                .path(path).path("radiogateways")
-                .request(MediaType.APPLICATION_JSON)
-                .get(String.class);
-        Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
-        Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioSensorIds");
-        List<String> idList = new ArrayList<String>();
-        idList.addAll(idObjectList.keySet());
+        List<String> idList = null;
+        try {
+            String response = queryResource
+                    .path(path).path("radiogateways")
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(String.class);
+            Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
+            Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioSensorIds");
+            idList = new ArrayList<String>();
+            idList.addAll(idObjectList.keySet());
+        } catch (ServiceUnavailableException e) {
+            return null;
+        }
         return idList;
     }
 

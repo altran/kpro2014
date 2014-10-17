@@ -36,7 +36,7 @@ public class MapView extends Application{
 
     private Controller controller;
     private RoomModel roomModel;
-    private Image circleImage = new Image("Resources/CentralHub.jpg");
+    private Image circleImage = new Image("images/CentralHub.jpg");
     private Canvas canvas;
 
     //Instructions and Renderers

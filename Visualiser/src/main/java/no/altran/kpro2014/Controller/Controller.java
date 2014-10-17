@@ -21,7 +21,7 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "iot.altrancloud.com";
+    private final String domain = "http://iot.altrancloud.com";
     private final String path = "iot/observe";
 
 
@@ -37,12 +37,12 @@ public class Controller {
         addSensors();
         updateSensors();
         timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                updateSensors();
-            }
-        };
+//        timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                updateSensors();
+//            }
+//        };
     }
 
     private void addSensors() {
@@ -75,6 +75,10 @@ public class Controller {
 
     private void passiveUpdate(){
         timer.scheduleAtFixedRate(timerTask, 1000, 5000);
+    }
+
+    public static void main(String[] args){
+        new Controller();
     }
 
 }
