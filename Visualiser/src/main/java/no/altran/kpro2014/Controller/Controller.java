@@ -36,15 +36,14 @@ public class Controller {
 
         addSensors();
         updateSensors();
-//        timer = new Timer();
-//        passiveUpdate();
-//        timerTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                updateSensors();
-//                System.out.println("updated");
-//            }
-//        };
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                updateSensors();
+            }
+        };
+        passiveUpdate();
     }
 
     private void addSensors() {
@@ -98,7 +97,7 @@ public class Controller {
     }
 
     private void passiveUpdate(){
-        timer.scheduleAtFixedRate(timerTask, 1000, 5000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 
     public static void main(String[] args){
