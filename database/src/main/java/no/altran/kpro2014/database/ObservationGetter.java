@@ -3,13 +3,12 @@ package no.altran.kpro2014.database;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.InvalidJsonException;
 import com.jayway.jsonpath.JsonPath;
+import org.glassfish.jersey.client.ClientResponse;
+import org.glassfish.jersey.server.spi.ResponseErrorMapper;
 import org.json.simple.JSONValue;
 
 import javax.ws.rs.ServiceUnavailableException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
@@ -64,9 +63,19 @@ public class ObservationGetter {
         return idList;
     }
 
+    public String postD7data(String data){
+        Response response;
+        response = queryResource
+                .path(path)
+                .path("radiosensor")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(data, MediaType.APPLICATION_JSON));
+        return  response.toString();
+    }
+
     public Observation getMostRecentObservation(String sensorID) {
         String response = queryResource
-                .path(path).path("tail")
+                .path(path).path("radiosensor/tail")
                 .queryParam("query", "radiosensor:" + sensorID)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
@@ -88,7 +97,7 @@ public class ObservationGetter {
 
         // Get observations from the server.
         String response = queryResource
-                .path(path).path("tail")
+                .path(path).path("radiosensor/tail")
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
         List<Observation> result = toObservationList(response);
