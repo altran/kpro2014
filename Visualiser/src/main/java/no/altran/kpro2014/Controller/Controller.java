@@ -25,13 +25,9 @@ public class Controller {
     private final String path = "iot/observe";
 
 
-    /**
-     * Make the ArrayLists of all the data that we gather from the database
-     */
-
     public Controller(){
         this.roomModel = new RoomModel();
-        this.getter = new ObservationGetter("http://localhost:4901", "iot/observe");
+        this.getter = new ObservationGetter(domain, path);
 
 
         addSensors();
@@ -53,8 +49,6 @@ public class Controller {
             SensorModel sensor = new SensorModel();
             sensor.setSensorID(sensorId);
             sensorList.add(sensor);
-
-            //TODO add 0 data, or checks in views, disabling null data
         }
     }
 
@@ -82,11 +76,6 @@ public class Controller {
             if (tempMeasure != null){
                 sensor.setTemperature(Double.parseDouble(tempMeasure));
             }
-//            tempMeasure = obs.getMeasurements().get("lig");
-//            sensor.setLighting(Double.parseDouble(tempMeasure));
-//            sensor.setPressure(Double.parseDouble(obs.getMeasurements().get("pre")));
-//            sensor.setSound(Double.parseDouble(obs.getMeasurements().get("sn")));
-//            sensor.setTemperature(Double.parseDouble(obs.getMeasurements().get("tmp")));
         }
 
     }
