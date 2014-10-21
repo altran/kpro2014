@@ -21,7 +21,8 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "http://localhost:4901";
+//    private final String domain = "http://localhost:4901";
+    private final String domain = "http://iot.altrancloud.com//";
     private final String path = "iot/observe";
 
 
@@ -76,6 +77,7 @@ public class Controller {
             if (tempMeasure != null){
                 sensor.setTemperature(Double.parseDouble(tempMeasure));
             }
+            System.out.println(sensor.toString());
         }
 
     }
@@ -86,7 +88,7 @@ public class Controller {
     }
 
     private void passiveUpdate(){
-        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 5000);
     }
 
     public static void main(String[] args){
