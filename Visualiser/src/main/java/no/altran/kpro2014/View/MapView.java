@@ -96,10 +96,10 @@ public class MapView extends Application{
 
         MotionBlur mb = new MotionBlur();
         mb.setAngle(60.0f);
-        mb.setRadius(1.0f);
+        mb.setRadius(1.5f);
 
+        mainFX.setInput(mb);
         canvas.setEffect(mainFX);
-        canvas.setEffect(mb);
         canvasHist = new Canvas(150, 400);
 
         /*
