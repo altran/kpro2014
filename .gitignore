@@ -10,3 +10,8 @@ out/
 log/
 target/
 !pom.xml
+
+# latex
+**.pdf
+**.log
+**.aux
