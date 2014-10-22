@@ -74,7 +74,7 @@ public class ObservationGetter {
 
     public Observation getMostRecentObservation(String sensorID) {
         String response = queryResource
-                .path(path).path("radiosensor/tail")
+                .path(path).path("radiosensor")
                 .queryParam("query", "radiosensor:" + sensorID)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);

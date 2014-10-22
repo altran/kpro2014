@@ -77,7 +77,6 @@ public class Controller {
             if (tempMeasure != null){
                 sensor.setTemperature(Double.parseDouble(tempMeasure));
             }
-            System.out.println(sensor.toString());
         }
 
     }
@@ -91,12 +90,12 @@ public class Controller {
         timer.scheduleAtFixedRate(timerTask, 1000, 5000);
     }
 
-    public static void main(String[] args){
-
-        Controller temp = new Controller();
-        for (SensorModel model : temp.getRoomModel().getSensorList()){
-            System.out.println(model.toString());
-        }
-    }
+//    public static void main(String[] args){
+//
+//        Controller temp = new Controller();
+//        for (SensorModel model : temp.getRoomModel().getSensorList()){
+//            System.out.println(model.toString());
+//        }
+//    }
 
 }
