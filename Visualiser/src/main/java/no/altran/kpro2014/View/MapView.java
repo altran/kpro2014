@@ -17,13 +17,16 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import no.altran.kpro2014.Controller.Controller;
 import no.altran.kpro2014.Interface.*;
 import no.altran.kpro2014.Model.RoomModel;
 
+import java.awt.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +41,7 @@ public class MapView extends Application{
     private RoomModel roomModel;
     private Image circleImage = new Image("images/CentralHub.jpg");
     private Canvas canvas;
+    private Canvas canvasHist;
 
     //Instructions and Renderers
     private CentralHubInstruction centralHubInstruction;
@@ -81,10 +85,12 @@ public class MapView extends Application{
         controller = new Controller();
         roomModel = controller.getRoomModel();
         stage.setTitle("Map View");
-        stage.setWidth(1240);
-        stage.setHeight(768);
+        stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+        stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
+        canvasHist = new Canvas(150, 400);
+
         /*
         Creates the central hub. This object is static.
          */
@@ -184,6 +190,10 @@ public class MapView extends Application{
         final CheckBox cBox2 = new CheckBox("Lighting");
         final CheckBox cBox3 = new CheckBox("Humidity");
         final CheckBox cBox4 = new CheckBox("Pressure");
+        cBox1.setTextFill(Color.WHITE);
+        cBox2.setTextFill(Color.WHITE);
+        cBox3.setTextFill(Color.WHITE);
+        cBox4.setTextFill(Color.WHITE);
         cBox1.setSelected(true);
         cBox2.setSelected(true);
         cBox3.setSelected(true);
@@ -238,6 +248,7 @@ public class MapView extends Application{
         });
 
         final Label timeLabel = new Label();
+        timeLabel.setTextFill(Color.WHITE);
         final DateFormat format = DateFormat.getInstance();
         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
@@ -249,18 +260,43 @@ public class MapView extends Application{
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
+        //Legendary Canvas
+        temperatureInstruction = new TemperatureInstruction("S#", -25, now, 10, 0, 0, canvasHist, true);
+        temperatureRender = new TemperatureRender();
+        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+        canvasHist.getGraphicsContext2D().setStroke(Color.WHITE);
+        canvasHist.getGraphicsContext2D().strokeText("Temperature", 5, 92);
+
+        sensorInstruction = new SensorInstruction("S#", 3800, now, 10, 20, 100, canvasHist, true);
+        sensorRender = new SensorRender();
+        sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+        canvasHist.getGraphicsContext2D().setStroke(Color.WHITE);
+        canvasHist.getGraphicsContext2D().strokeText("Lighting", 15, 148);
+
+        humidityInstruction = new HumidityInstruction(30, now, Long.MAX_VALUE, 37, 160, canvasHist, true);
+        humidityRender = new HumidityRender();
+        humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
+        canvasHist.getGraphicsContext2D().setStroke(Color.WHITE);
+        canvasHist.getGraphicsContext2D().strokeText("Humidity", 12, 200);
+
+        pressureInstruction = new PressureInstruction(1010, now, Long.MAX_VALUE, 37, 240, canvasHist, true);
+        pressureRender = new PressureRender();
+        pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
+        canvasHist.getGraphicsContext2D().setStroke(Color.WHITE);
+        canvasHist.getGraphicsContext2D().strokeText("Pressure", 12, 255);
+
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel, canvasHist);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
-        gPane.setVgap(5);
+        gPane.setVgap(0);
         gPane.setPadding(new Insets(20, 20, 20, 20));
         gPane.add(vBox, 1, 0);
         gPane.add(canvas, 0, 0);
-
+        gPane.setStyle("-fx-background-color: black");
 
         ((Group) scene.getRoot()).getChildren().addAll(gPane);
         stage.setScene(scene);
@@ -354,10 +390,10 @@ public class MapView extends Application{
     private void updateTList(ArrayList<Double> list, int i){
         double temp = list.get(i);
         if(i % 2 == 0){
-            temp += -1*(0.008-0.006978*(i*0.3));
+            temp += -1*(0.008-0.006978*(i*0.23));
         }
         else{
-            temp += 0.008-0.006978*(i*0.3);
+            temp += 0.008-0.006978*(i*0.23);
         }
         list.set(i, temp);
         if(temp > 6.28 || temp < -6.28){
