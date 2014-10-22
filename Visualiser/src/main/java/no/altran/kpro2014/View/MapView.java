@@ -15,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -88,6 +90,9 @@ public class MapView extends Application{
         stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
+        Bloom mainFX = new Bloom();
+        mainFX.setThreshold(0.95);
+        canvas.setEffect(mainFX);
         canvasHist = new Canvas(150, 400);
 
         /*
