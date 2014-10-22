@@ -1,10 +1,5 @@
 package no.altran.kpro2014.database;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
-
 /**
  * Created by audun on 10/10/14.
  */
@@ -35,10 +30,12 @@ public class TestClient {
     }
 
     public static void main(String[] args){
-        TestClient test = new TestClient();
-        ObservationGetter getter = new ObservationGetter("http://localhost:4901", "iot/observe");
-        test.postDummyData(getter);
-        System.out.println(getter.getMostRecentObservation("001BC50C7100001b"));
+//        TestClient test = new TestClient();
+        ObservationGetter getter = new ObservationGetter("http://iot.altrancloud.com", "iot/observe");
+//        test.postDummyData(getter);
+        System.out.println(getter.getAllSensorIDs());
+        System.out.println(getter.getMostRecentObservation("001BC50C71000017"));
+        System.out.println(getter.getMostRecentObservation("001BC50C7100001F"));
         //curl -X POST -d @radiosensor1.txt http://localhost:4901/iot/observe/radiosensor
     }
 }
