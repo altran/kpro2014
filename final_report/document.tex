@@ -25,6 +25,9 @@
 % solutio for ``''''
 \usepackage[utf8]{inputenc}
 
+% hyperlink
+\usepackage{hyperref}
+
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
@@ -37,7 +40,8 @@
 
 \subfile{tex/Introduction_ProjectDirective}
 
-\newpage{tex/project_planning}
+\newpage
+\subfile{tex/project_planning}
 
 
 \end{document}
