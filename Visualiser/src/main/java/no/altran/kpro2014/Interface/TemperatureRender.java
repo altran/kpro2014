@@ -1,6 +1,7 @@
 package no.altran.kpro2014.Interface;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.paint.Color;
 
 /**
