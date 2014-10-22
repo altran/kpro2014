@@ -41,7 +41,7 @@ public class SensorModel {
 
 
     public void setSensorID(String ID){
-        this.sensorID = sensorID;
+        this.sensorID = ID;
     }
 
     public void setTemperature(double temperature){
@@ -64,4 +64,15 @@ public class SensorModel {
         this.sound.set(sound);
     }
 
+    @Override
+    public String toString() {
+        return "SensorModel{" +
+                "sensorID='" + sensorID + '\'' +
+                ", temperature=" + temperature +
+                ", lighting=" + lighting +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                ", sound=" + sound +
+                '}';
+    }
 }

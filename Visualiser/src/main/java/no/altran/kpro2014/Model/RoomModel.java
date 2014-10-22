@@ -1,7 +1,6 @@
 package no.altran.kpro2014.Model;
 
 
-import no.altran.kpro2014.Controller.Controller;
 
 import java.util.ArrayList;
 
@@ -12,8 +11,6 @@ import java.util.ArrayList;
 public class RoomModel {
 
     private ArrayList<SensorModel> sensorList;
-    private SensorModel sensorModel;
-    private Controller controller;
 
     public RoomModel(){
         sensorList = new ArrayList<SensorModel>();
@@ -29,6 +26,15 @@ public class RoomModel {
 
     public ArrayList<SensorModel> getSensorList(){
         return sensorList;
+    }
+
+    public SensorModel getSensorById(String id){
+        for (SensorModel sensor : sensorList){
+            if (sensor.getSensorID().equals(id)){
+                return sensor;
+            }
+        }
+        return null;
     }
 
 }
