@@ -33,18 +33,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Created by shimin on 9/29/2014.
+ * The main class for the application, this is the map view where the data will be animated and such.
  */
 
 public class MapView extends Application{
 
+    /**controller and roomModel will gather the data we need, and updating data in time.*/
     private Controller controller;
     private RoomModel roomModel;
+
+    /**the central hub in the middle is a static image*/
     private Image circleImage = new Image("images/CentralHub.png");
     private Canvas canvas;
     private Canvas canvasHist;
 
-    //Instructions and Renderers
+    /**Instructions and Renderers, look over to interface folder for more info*/
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
     private SensorInstruction sensorInstruction;
@@ -56,7 +59,10 @@ public class MapView extends Application{
     private PressureInstruction pressureInstruction;
     private PressureRender pressureRender;
 
-    //These are the lists that control the animation.
+    /**These are the lists that control the animation. We store both the new data, the old data and the difference
+     * between them. We use it to calculate the difference in between the old and new lighting divided by the
+     * frames we have, so that it changes by diffLighting every frame, thus making it smooth (pleasing to the eyes)
+    */
     private ArrayList<Double> oldLighting = new ArrayList<Double>();
     private ArrayList<Double> newLighting = new ArrayList<Double>();
     private ArrayList<Double> diffLighting = new ArrayList<Double>();
@@ -74,12 +80,13 @@ public class MapView extends Application{
     private ArrayList<Double> tList = new ArrayList<Double>();
     private int counter = 0;
 
-    //Checkbox control
+    /**these are the checkboxs the user can interract with, this will turn off/on certain types of data  */
     private boolean checkTemperature = true;
     private boolean checkLighting = true;
     private boolean checkHumidity = true;
     private boolean checkPressure = true;
 
+    /**start method for the system, it requires a stage which we set to the size of the computer window the user have*/
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
         Scene scene = new Scene(new Group());
@@ -89,8 +96,10 @@ public class MapView extends Application{
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
+        /**canvas is set a little smaller than the acctual stage in order for the checkboxs to fit*/
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
 
+        /**we also added some bloo and motionBlur to make the anmation looks better*/
         Bloom mainFX = new Bloom();
         mainFX.setThreshold(0.95);
 
@@ -102,7 +111,7 @@ public class MapView extends Application{
         canvas.setEffect(mainFX);
         canvasHist = new Canvas(150, 400);
 
-        /*
+        /**
         Creates the central hub. This object is static.
          */
         centralHubInstruction = new CentralHubInstruction(circleImage, now, Long.MAX_VALUE,
@@ -115,8 +124,10 @@ public class MapView extends Application{
             makeTList(tList, i);
         }
 
-        /*
-        Temporary animation timer for updating values. If we want better animation this is the place to improve it.
+        /**
+         *Animation timer for updating values. whenever a new update in the data is called, we'll set the arraylists to
+         * the new value, calculate how many frames we need. Then send it as instruction, and notify the rendere a new
+         * instruction has been given.
          */
         new AnimationTimer(){
             @Override
@@ -167,9 +178,6 @@ public class MapView extends Application{
                             oldTemperature.set(i, oldTemperature.get(i) + diffTemperature.get(i));
                             counter++;
                         }
-
-                    //System.out.println(positionX.get(i));
-                    //System.out.println(positionY.get(i));
                         temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
                                 now, 10, getPositionX(i, tList.get(i)), getPositionY(i, tList.get(i)), canvas, checkTemperature);
                         temperatureRender = new TemperatureRender();
@@ -194,8 +202,8 @@ public class MapView extends Application{
                 }
         }.start();
 
-        /*
-        Checkboxes and other stuff.
+        /**
+         * This part is considering checkbox and how we hide the data if the box is not selected
          */
         final CheckBox cBox1 = new CheckBox("Temperature");
         final CheckBox cBox2 = new CheckBox("Lighting");
@@ -258,6 +266,7 @@ public class MapView extends Application{
             }
         });
 
+        /**A time is also added on the side*/
         final Label timeLabel = new Label();
         timeLabel.setTextFill(Color.WHITE);
         final DateFormat format = DateFormat.getInstance();
@@ -271,7 +280,7 @@ public class MapView extends Application{
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-        //Legendary Canvas
+        /**Here we make the static picture on the side to help new user understanding what the different display means*/
         temperatureInstruction = new TemperatureInstruction("S#", -25, now, 10, 0, 0, canvasHist, true);
         temperatureRender = new TemperatureRender();
         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
@@ -296,6 +305,7 @@ public class MapView extends Application{
         canvasHist.getGraphicsContext2D().setStroke(Color.WHITE);
         canvasHist.getGraphicsContext2D().strokeText("Pressure", 12, 255);
 
+        /**Here we add all the different thing into the VBox*/
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
@@ -314,7 +324,7 @@ public class MapView extends Application{
         stage.show();
     }
 
-    //The data the sensors are taking in is in the wrong order #TODO
+    /**Here is the methods we use to put datas into the array and so on*/
 
     private void newLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
