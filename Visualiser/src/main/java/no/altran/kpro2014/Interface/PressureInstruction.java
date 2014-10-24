@@ -3,7 +3,9 @@ package no.altran.kpro2014.Interface;
 import javafx.scene.canvas.Canvas;
 
 /**
- * Created by maria on 13/10/14.
+ * This class extends Instruction interface to make a PressureInstruction that contains all information of pressure data,
+ * which is the data it self, when it should start and how long the animation gonna last, where the image is gonna
+ * be rendered, in which canvas and if the checkbox is unchecked to hide it or not.
  */
 public class PressureInstruction implements Instruction {
 

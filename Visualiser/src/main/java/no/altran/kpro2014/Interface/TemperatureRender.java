@@ -4,7 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
- * Created by Nenad on 10/6/2014.
+ * This class extends renderer interface and takes an instruction and using information from the instruction to paint a
+ * single image with those data.
  */
 public class TemperatureRender implements Renderer{
 

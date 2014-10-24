@@ -3,7 +3,8 @@ package no.altran.kpro2014.Interface;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * Created by shimin on 10/3/2014.
+ * This class extends renderer interface and takes an instruction and using information from the instruction to paint a
+ * single image with those data.
  */
 public class CentralHubRenderer implements Renderer{
 

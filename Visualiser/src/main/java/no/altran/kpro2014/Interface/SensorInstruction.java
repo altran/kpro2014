@@ -3,7 +3,9 @@ package no.altran.kpro2014.Interface;
 import javafx.scene.canvas.Canvas;
 
 /**
- * Created by shimin on 10/3/2014.
+ * This class extends Instruction interface to make a SensorInstruction that has information of sensorID, lighting data,
+ * ,when it should start to be rendered how long the animation gonna last, where the image is gonna
+ * be rendered, in which canvas and if the checkbox is unchecked to hide it or not.
  */
 public class SensorInstruction implements Instruction{
 
