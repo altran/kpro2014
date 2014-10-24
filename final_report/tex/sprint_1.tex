@@ -7,10 +7,10 @@
 \subsection{Introduction}
 The following chapter includes all the documentation regarding the first sprint. The sprint will take place from September 22 and conclude October 3. This gives the team two working weeks to create the initial implementation and prototype.
 
-\subsubsection{Sprint Planning}
+\subsection{Sprint Planning}
 We plan on spending 200 hours for this sprint on implementation and 150 hours on documentation, which includes pre-study if any, meetings and actual sprint documentation. With this, we have a total of 350 working hours over two working weeks and 7 members. Therefore the expected workload for each member is 25 hours per week. Our plan is to create a working prototype within the first sprint and then as agile development continues the cycle improve on it. The team will split into three units, one unit will work on the client, another will work on the database and the last will work on the visualization. We plan on utilizing the pair programming technique and to split 6 people into three teams of two. The last person will be in charge of overviewing documentation and joining any of the teams if they need help.
 
-\subsubsection{Sprint Goal}
+\subsection{Sprint Goal}
 The goal of the first sprint is to create a client, database and a simple visualization method that can be used to test our implementation. Therefore we have three goals:
 \begin{enumerate}
 \item
@@ -22,7 +22,7 @@ Create a Table View, which will enable us to fetch data from the database and vi
 \end{enumerate}
 These three goals also coincide with our functionalities and it is vital that these are implemented first. The entire process is described in the architecture, while the table view is described in the requirements part.
 
-\subsubsection{Sprint Backlog}
+\subsection{Sprint Backlog}
 Below is the sprint backlog in the form of a table, listing all of the tasks we plan on working on in this sprint. We also include the estimated working hours for each task as well as the actual amount of work spent on each task, as we complete the tasks in the sprint. The tasks also include priority, which will help the group direct their focus on the most important sub-tasks first.
 
 
@@ -134,12 +134,12 @@ Item
 \end{tabularx}
 \end{table}
 
-\subsubsection{Sprint Backlog Evaluation}
+\subsection{Sprint Backlog Evaluation}
 From the backlog above we can see that, on average, the team took more time to complete the tasks then estimated. This is a direct result of the changes introduced in the middle of the sprint, when the customer wanted a different kind of database. The specific tasks that took longer were 2.4, 3.1 and 3.3 and all of them involve the database in some fashion. Both task 4.3 and tasks 1.2 and 1.3 took longer time because we needed to spend time on learning the said tasks, which is why the usage of time in this case was deemed acceptable.
 
 As a whole, the backlog had 117 total hours planned and we used 157 hours to complete the first sprint. This was still within our 200 hours estimate and thus we have not lost extra time on planning. In later sprints we will try to not underestimate our work by this much and have a more concrete work plan, in regards to time. We believe that this will help us plan out our work better.
 
-\subsubsection{Sprint Testing}
+\subsection{Sprint Testing}
 
 This section covers the tests done on our system in this sprint.
 
@@ -273,10 +273,10 @@ Test nr:
 \end{tabularx}
 \end{table}
 
-\paragraph{Test Results} \ \\
+\subsubsection{Test Results} \ \\
 Of the five tests, only test four was not a success. When another sensor is added, our implementation will create all table columns for it. If it happens that the column value is a NULL, that is if it is non-existent, the program crashes. We will make sure to correct this problem in the next sprint, by either insuring that no NULL values can be passed, or being able to accept NULL values. All other tests that we executed were above the accept level and therefore correct.
 
-\subsubsection{Sprint Results}
+\subsection{Sprint Results}
 At the end of the sprint we have achieved two out of three goals. However, the customer had the wish to work with a different kind of database, and as it is the central part of the goals of this sprint, we have not actually achieved any goals.
 
 We have successfully implemented a table view and connected it to an SQL database. The table view can be seen below. It should be noted that the reason all of the values are the same is because we used very simple SQL statements to change all of the values at once when testing the update function.
@@ -291,12 +291,12 @@ The table view is a very simple table of data. In this case we use made-up value
 
 Since we did not receive any hardware (sensors and the central hub) before the sprint was over, we needed to use mock-up values in the database. The table view reads these values and updates itself correctly. These values need to be inputted into the database by hand, since we do not have a client. The last goal, the implementation of the client, was quite difficult without the hardware. It was also made more difficult by the customers request to change the database, resulting in no actual goals achieved in this sprint period.
 
-\subsubsection{Customer Review}
+\subsection{Customer Review}
 We have had many meetings with the customer during this sprint. Because the customer is located in Oslo, all of the meetings were held via Skype. On every meeting we showed our progress and explained what we had done so far and what we planned to do next. To do this we used the built in function for sharing screens. 
 
 The customer liked our main idea for the project, but not really the way we wanted to implement it. This led to a lot of changes in our implementation during the sprint. The customer did not want an SQL database, but rather to use an online repository and JSON files. Furthermore, he did not enjoy the table view, marking it as uninteresting and asking us to remove it. This leaves only one view for the visualization. 
 
-\subsubsection{Sprint Evaluation}
+\subsection{Sprint Evaluation}
 As stated previously in the results, we have not achieved any goals during this sprint. The customer requested that we should use a different database and this pushed back our work by an entire week. In the end, since we needed to read and learn much about the new technology, we did not manage to implement a fully functioning database and integrate it with the visualizing table. Furthermore, the lack of hardware as well as the database change made it impossible to finish the client on time.
 
 For the future, we will most likely prepare more by listening to the customer and taking his implementation requests before the sprint starts, instead of starting on implementation in a way that suits us. We will also accept no changes after the requests have been placed; while the customers satisfaction is our aim, we also have a very limited time during this project and this will be voiced on our further customer meetings.
@@ -304,27 +304,6 @@ For the future, we will most likely prepare more by listening to the customer an
 We do not feel this sprint was a total failure, even if we have not achieved any of our goals. In reality, most of the implementation will stay the same and once the database is integrated it will change very little, just enough to accompany the integration. Furthermore we have made great strides in the visualization part, by finishing the table view and starting on a prototype for our final visualization, the map view. While the customer did ask us not to show the table view at all during the final presentation, it is still a necessity to have it. Without it we can not be completely sure if all of the values are correctly acquired and updated from the database. We will remove it for the final presentation, but it will remain in internal use until we are done with our implementation.
 
 We have also learned a lot about the architecture and the online database repository (in this specific case, cloudant). We will continue our work in the second sprint to integrate this database correctly into our system.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 \end{document}
