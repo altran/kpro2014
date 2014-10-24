@@ -129,4 +129,175 @@ The hardware suppliers are the makers for the components used in this project.
 \\ \hline
 \end{tabularx}
 \end{table}
+
+\paragraph{End user:} The end user is the future clients who will use the system. They can watch the visualization form the data gathered from a room on a web page or similar. 
+
+\paragraph{Developers:} The developers in this project is us in group 10. Our job is to plan, implement and test the wanted product. We will start with planning, and then write requirement and architecture documents. When the documentation is done, we will implement the system in Scrum-style sprints. During implementation, we will follow our test plan until the customer is satisfied and the product is finished. We might add test results, changes and issues we had along the way and finish the report and deliver it to the customer.
+
+\paragraph{Customer:} The customer is Stig Lau representing Altran AS. He specify the product to be developed, and will meet with the developers to agree on details and clear out discrepancies around the product implementation. He has the final word when it comes to what functions the system should and should not have. He is also the developers guide on how the sensors and central hub supplied by Altran works, and what can be done with them.
+
+\paragraph{Adviser:} The groups advisor is Mohsen Anvaari. He will give feedback and guide the developers on all areas. This will be done by giving feedback and help us create a good documentation, and help us with any issues we might have that does not concern the client.
+
+\paragraph{Course staff:} The course staff for subject TDT4290 will be a part of the prestudy as they hold lectures needed for the course, and guidelines and tips for the project. 
+
+\paragraph{Hardware suppliers:} The hardware suppliers in this project are the developers of the components used in this project. They are delivering all of the parts needed for the sensors and the central hub.
+
+\subsection{Architectural views}
+\subsubsection{Introduction}
+In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture. We chose this view model because it allows us to handle the functional and nonfunctional requirements separately, and also address the different concerns of the various stakeholders separately. 
+
+\subsubsection{Logical view}		
+The logical view is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the client, the database, the gui, the gatherer, the server, and the sensors. 
+
+\begin{figure}[H]
+\centering
+\caption{Logical View}
+\includegraphics[width=\textwidth]{Architecture/LogicalView.png}
+\end{figure}
+
+\subsubsection{Development view}
+The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualizer get this information from the database.
+
+\begin{figure}[H]
+\centering
+\caption{Development View}
+\includegraphics[width=\textwidth]{Architecture/DevelopmentView.png}
+\end{figure}
+
+\subsubsection{Process view}
+The process view considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
+
+\begin{figure}[H]
+\centering
+\caption{Process View}
+\includegraphics[width=\textwidth]{Architecture/ProcessviewNew.png}
+\end{figure}
+
+\subsubsection{Physical view}
+The physical view, also known as the deployment view, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from a data collector mock. The user interface gets information from the database.
+
+\begin{figure}[H]
+\centering
+\caption{System Diagram}
+\includegraphics[width=\textwidth]{Architecture/System_Diagram.png}
+\end{figure}
+
+\subsubsection{Scenarios and use cases}
+
+\paragraph{Scenarios} \ \\
+The scenarios view, also known as the use case view, describe sequences of interactions between objects, and between processes. They are used to identify architectural elements and to illustrate and validate the architecture design. They also serve as a starting point for tests of an architecture prototype.
+
+\begin{table}[H]
+\caption{Scenario P1}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+ID
+&
+P1
+\\ \hline
+Source
+&
+System
+\\ \hline
+Stimulus
+&
+The light gets turned off
+\\ \hline
+Environment
+&
+Runtime
+\\ \hline
+Artifact
+&
+Light sensors
+\\ \hline
+Response
+&
+Update the new info, and add it to the database
+\\ \hline
+Response Measure
+&
+Time \newline
+Should be less than 30 seconds
+\\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Scenario P2}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+ID
+&
+P2
+\\ \hline
+Source
+&
+System
+\\ \hline
+Stimulus
+&
+The temperature gets higher
+\\ \hline
+Environment
+&
+Runtime
+\\ \hline
+Artifact
+&
+Temperature sensors
+\\ \hline
+Response
+&
+The animation in the visualizer should start after it pulls new data from the database
+\\ \hline
+Response Measure
+&
+Time\newline
+Should be less than 30 seconds
+\\ \hline
+\end{tabularx}
+\end{table}
+
+\paragraph{Use cases} \ \\
+The use cases shows two ways a user can interact with the system. The first shows how a user can uncheck elements it does not want to see on the screen and second shows how the user can check them back if the user wants to see them again.
+
+\begin{figure}[H]
+\centering
+\caption{Use Case Uncheck}
+\includegraphics[width=\textwidth]{Architecture/usecaseUncheck.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\caption{Use Case Check}
+\includegraphics[width=\textwidth]{Architecture/usecaseUncheck.png}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
