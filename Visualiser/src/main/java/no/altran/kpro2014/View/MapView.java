@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * The main class for the application, this is the map view where the data will be animated and such.
+ * The main class for the application, this is the map view where the data will be animated.
  */
 
 public class MapView extends Application{
@@ -44,6 +44,8 @@ public class MapView extends Application{
 
     /**the central hub in the middle is a static image*/
     private Image circleImage = new Image("images/CentralHub.png");
+
+    /**the canvases we use for the visualization*/
     private Canvas canvas;
     private Canvas canvasHist;
 
@@ -61,7 +63,7 @@ public class MapView extends Application{
 
     /**These are the lists that control the animation. We store both the new data, the old data and the difference
      * between them. We use it to calculate the difference in between the old and new lighting divided by the
-     * frames we have, so that it changes by diffLighting every frame, thus making it smooth (pleasing to the eyes)
+     * frames we have, so that it changes by diffLighting every frame, thus making it smooth (pleasing for the eyes)
     */
     private ArrayList<Double> oldLighting = new ArrayList<Double>();
     private ArrayList<Double> newLighting = new ArrayList<Double>();
@@ -96,10 +98,10 @@ public class MapView extends Application{
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
-        /**canvas is set a little smaller than the acctual stage in order for the checkboxs to fit*/
+        /**canvas is set a little smaller than the actual stage in order for the checkboxes to fit*/
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
 
-        /**we also added some bloo and motionBlur to make the anmation looks better*/
+        /**we also added some bloom and motionBlur to make the animation looks better*/
         Bloom mainFX = new Bloom();
         mainFX.setThreshold(0.95);
 
@@ -125,8 +127,8 @@ public class MapView extends Application{
         }
 
         /**
-         *Animation timer for updating values. whenever a new update in the data is called, we'll set the arraylists to
-         * the new value, calculate how many frames we need. Then send it as instruction, and notify the rendere a new
+         *Animation timer for updating values. Whenever a new update in the data is called, we'll set the array lists to
+         * the new value, calculating how many frames we need. Then send it as instruction, and notify the renderer a new
          * instruction has been given.
          */
         new AnimationTimer(){
@@ -305,7 +307,7 @@ public class MapView extends Application{
         canvasHist.getGraphicsContext2D().setStroke(Color.WHITE);
         canvasHist.getGraphicsContext2D().strokeText("Pressure", 12, 255);
 
-        /**Here we add all the different thing into the VBox*/
+        /**Here we add the checkboxes, the clock and the historyCanvas into the VBox*/
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
@@ -324,7 +326,7 @@ public class MapView extends Application{
         stage.show();
     }
 
-    /**Here is the methods we use to put datas into the array and so on*/
+    /**Here is the methods we use to put data into the arrays*/
 
     private void newLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
