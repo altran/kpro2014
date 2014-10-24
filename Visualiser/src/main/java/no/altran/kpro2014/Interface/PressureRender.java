@@ -7,8 +7,8 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
 /**
- * This class extends renderer interface and takes an instruction and using information from the instruction to paint a
- * single image with those data.
+ * This class extends the renderer interface by taking an instruction and using information from the instruction to
+ * paint a single image with those data.
  */
 public class PressureRender implements Renderer {
 

@@ -4,9 +4,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
 /**
- * This class extends Instruction interface to make a centralHubInstruction that contains all information of central hub,
- * which is an image, when it should start and how long the animation gonna last, where the image is gonna be rendered
- * and in which canvas.
+ * This class extends the Instruction interface to make a centralHubInstruction that contains all the information of the
+ * central hub. Which image it is, when it should start and how long the animation gonna last, where the image is gonna
+ * be rendered, and in which canvas is should be shown.
  */
 public class CentralHubInstruction implements Instruction{
 
