@@ -44,6 +44,8 @@ public class MapView extends Application{
 
     /**the central hub in the middle is a static image*/
     private Image circleImage = new Image("images/CentralHub.png");
+
+    /**the canvases we use for the visualization*/
     private Canvas canvas;
     private Canvas canvasHist;
 
@@ -305,7 +307,7 @@ public class MapView extends Application{
         canvasHist.getGraphicsContext2D().setStroke(Color.WHITE);
         canvasHist.getGraphicsContext2D().strokeText("Pressure", 12, 255);
 
-        /**Here we add all the different thing into the VBox*/
+        /**Here we add the checkboxes, the clock and the historyCanvas into the VBox*/
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
@@ -324,7 +326,7 @@ public class MapView extends Application{
         stage.show();
     }
 
-    /**Here is the methods we use to put datas into the array and so on*/
+    /**Here is the methods we use to put data into the arrays*/
 
     private void newLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
         if(list.size() <= i){
