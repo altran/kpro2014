@@ -28,6 +28,11 @@
 % hyperlink
 \usepackage{hyperref}
 
+% section numbering of figures and tables
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
