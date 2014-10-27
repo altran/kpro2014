@@ -33,6 +33,9 @@
 \counterwithin{table}{section}
 \counterwithin{figure}{section}
 
+% to make it possible to do 1.1 style enumerate
+\usepackage{enumitem}
+
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
@@ -64,6 +67,10 @@
 
 % start of appendixes
 \appendix
+
 \newpage
 \subfile{tex/test_plan}
+
+\newpage
+\subfile{tex/meeting_templates}
 \end{document}
