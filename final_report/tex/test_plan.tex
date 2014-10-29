@@ -2,8 +2,8 @@
 
 \begin{document}
 
-\section{Test Plan}
-\subsection{Unit Testing}
+\subsection{Test Plan}
+\subsubsection{Unit Testing}
 We are planning to use JUnit to do the unit testing. Every single test is done by the developer, which means that the tests for a module are written by the developer who made the module. 
 
 \begin{table}[H]
@@ -35,10 +35,10 @@ We are planning to use JUnit to do the unit testing. Every single test is done b
 \end{tabularx}
 \end{table}
 
-\subsection{Itegraption Testing}
+\subsubsection{Integration Testing}
 In this section we will collect the different modules of our prototype together and test if they are able to correctly work.
 
-\subsubsection{Modules that need to be integrated}
+\paragraph{Modules that need to be integrated} \ \\
 \begin{itemize}
 	\item
 	Visualiser from database
@@ -48,7 +48,7 @@ In this section we will collect the different modules of our prototype together 
 	Central hub from sensors
 \end{itemize}
 
-\subsubsection{Test that need to be done to each integration}
+\paragraph{Test that need to be done to each integration} \ \\
 \begin{itemize}
 	\item
 	Visualiser from database:
@@ -117,7 +117,7 @@ In this section we will collect the different modules of our prototype together 
 \end{tabularx}
 \end{table}
 
-\subsection{System Test}
+\subsubsection{System Test}
 
 \begin{table}[H]
 \caption{Test Scenario 1}
@@ -219,28 +219,28 @@ In this section we will collect the different modules of our prototype together 
 \end{tabularx}
 \end{table}
 
-\subsection{Short System Test Table}
+\subsubsection{Short System Test Table}
 \begin{table}[H]
 \caption{Test Table}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|X|}
-\hline
-Scenario nr
-&Acceptance
-&Result
-\\ \hline 1
-&The data stored is correct and in the format we wanted.
-&
-\\ \hline 2
-&When the new sensor set is updated correctly with correct data. And if we remove any sensors, the database will not update anything random and the whole system should not crash.
-&
-\\ \hline 3
-&The data is correctly shown both on the table and in the animation. The animation needs to be smooth (meaning at least 24 fps). The user interaction will not have any impact other than hiding or showing a certain data type.
-&
-\\ \hline 4
-&Same as in test scenario 3, just that the system has to be able to run over the whole period of time without any failure that shuts down the system, in other words failure handling is a concern in this case.
-&
-\\ \hline 
+	\hline
+	Scenario nr
+	&Acceptance
+	&Result
+	\\ \hline 1
+	&The data stored is correct and in the format we wanted.
+	&
+	\\ \hline 2
+	&When the new sensor set is updated correctly with correct data. And if we remove any sensors, the database will not update anything random and the whole system should not crash.
+	&
+	\\ \hline 3
+	&The data is correctly shown both on the table and in the animation. The animation needs to be smooth (meaning at least 24 fps). The user interaction will not have any impact other than hiding or showing a certain data type.
+	&
+	\\ \hline 4
+	&Same as in test scenario 3, just that the system has to be able to run over the whole period of time without any failure that shuts down the system, in other words failure handling is a concern in this case.
+	&
+	\\ \hline 
 \end{tabularx}
 \end{table}
 
