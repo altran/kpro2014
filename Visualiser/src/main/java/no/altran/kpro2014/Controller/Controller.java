@@ -21,7 +21,7 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "http://78.91.29.223:4901";
+    private final String domain = "http://78.91.28.38:4901";
  //   private final String domain = "http://iot.altrancloud.com//";
     private final String path = "iot/observe";
 
@@ -37,7 +37,8 @@ public class Controller {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                updateSensors();
+            addSensors();
+            updateSensors();
             }
         };
         passiveUpdate();
@@ -46,10 +47,20 @@ public class Controller {
     private void addSensors() {
         List<String> sensorIdList = getter.getAllSensorIDs();
         List<SensorModel> sensorList = roomModel.getSensorList();
-        for (String sensorId : sensorIdList){
-            SensorModel sensor = new SensorModel();
-            sensor.setSensorID(sensorId);
-            sensorList.add(sensor);
+        int listSizeDiff = sensorIdList.size() - sensorList.size();
+        if (listSizeDiff > 0){
+            List<String> sensorsToAdd;
+            if (sensorList.size() > 0){
+                sensorsToAdd = sensorIdList.subList(listSizeDiff-1,sensorList.size()-1);
+            }
+            else{
+                sensorsToAdd = sensorIdList;
+            }
+            for (String sensorId : sensorsToAdd){
+                SensorModel sensor = new SensorModel();
+                sensor.setSensorID(sensorId);
+                sensorList.add(sensor);
+            }
         }
     }
 
