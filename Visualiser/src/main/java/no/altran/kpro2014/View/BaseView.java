@@ -43,7 +43,6 @@ public class BaseView extends  Application{
     private TableColumn humidityColumn;
     private TableColumn pressureColumn;
     private TableColumn soundColumn;
-    private static Stage stage;
 
 
     /**
@@ -53,7 +52,6 @@ public class BaseView extends  Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        stage = primaryStage;
 
         controller = new Controller();
         roomModel = controller.getRoomModel();
@@ -219,10 +217,6 @@ public class BaseView extends  Application{
         ((Group) scene.getRoot()).getChildren().addAll(gPane);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public Stage getStage(){
-        return this.stage;
     }
 
     /**
