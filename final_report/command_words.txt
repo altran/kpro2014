@@ -1,0 +1,10 @@
+This file contains a list of words that probably should be replaced with commands:
+ntnu
+sql
+json
+cloudant
+altran
+api
+http
+restful
+java
