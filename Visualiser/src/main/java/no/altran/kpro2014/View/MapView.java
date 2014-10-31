@@ -145,17 +145,10 @@ public class MapView extends Application{
                         initialXPosition(positionX, i);
                         initialYPosition(positionY, i);
 
-                        newLightingCheck(newLighting, i, roomModel);
-                        oldLightingCheck(oldLighting, i, roomModel);
-
-                        newHumidityCheck(newHumidity, i, roomModel);
-                        oldHumidityCheck(oldHumidity, i, roomModel);
-
-                        newPressureCheck(newPressure, i, roomModel);
-                        oldPressureCheck(oldPressure, i, roomModel);
-
-                        newTemperatureCheck(newTemperature, i, roomModel);
-                        oldTemperatureCheck(oldTemperature, i, roomModel);
+                        LightingCheck(newLighting, oldLighting, i, roomModel);
+                        HumidityCheck(newHumidity, oldHumidity, i, roomModel);
+                        PressureCheck(newPressure, oldPressure, i, roomModel);
+                        TemperatureCheck(newTemperature, oldTemperature, i, roomModel);
                         diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure,inactiveSensor, i);
 
                         if (counter >= 300) {
@@ -360,63 +353,50 @@ public class MapView extends Application{
 
     /**Here is the methods we use to put data into the arrays*/
 
-    private void newLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+    private void LightingCheck(ArrayList<Double> list, ArrayList<Double> oldList, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getLighting());
+        }
+        if(oldList.size() <= i){
+            oldList.add(roomModel.getSensorModel(i).getLighting());
         }
         if(list.size() > i){
             list.set(i, roomModel.getSensorModel(i).getLighting());
         }
     }
 
-    private void oldLightingCheck(ArrayList<Double> list, int i, RoomModel roomModel){
-        if(list.size() <= i){
-            list.add(roomModel.getSensorModel(i).getLighting());
-        }
-    }
-
-    private void newHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+    private void HumidityCheck(ArrayList<Double> list, ArrayList<Double> oldList, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getHumidity());
+        }
+        if(oldList.size() <= i){
+            oldList.add(roomModel.getSensorModel(i).getHumidity());
         }
         if(list.size() > i){
             list.set(i,roomModel.getSensorModel(i).getHumidity());
         }
     }
-
-    private void oldHumidityCheck(ArrayList<Double> list, int i, RoomModel roomModel){
-        if(list.size() <= i){
-            list.add(roomModel.getSensorModel(i).getHumidity());
-        }
-    }
-
-    private void newPressureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+    private void PressureCheck(ArrayList<Double> list, ArrayList<Double> oldList, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getPressure());
+        }
+        if(oldList.size() <= i){
+            oldList.add(roomModel.getSensorModel(i).getPressure());
         }
         if(list.size() > i){
             list.set(i,roomModel.getSensorModel(i).getPressure());
         }
     }
 
-    private void oldPressureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
-        if(list.size() <= i){
-            list.add(roomModel.getSensorModel(i).getPressure());
-        }
-    }
-
-    private void newTemperatureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
+    private void TemperatureCheck(ArrayList<Double> list, ArrayList<Double> oldList, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getTemperature());
+        }
+        if(oldList.size() <= i){
+            oldList.add(roomModel.getSensorModel(i).getTemperature());
         }
         if(list.size() > i){
             list.set(i,roomModel.getSensorModel(i).getTemperature());
-        }
-    }
-
-    private void oldTemperatureCheck(ArrayList<Double> list, int i, RoomModel roomModel){
-        if(list.size() <= i){
-            list.add(roomModel.getSensorModel(i).getTemperature());
         }
     }
 
