@@ -2,6 +2,7 @@ package no.altran.kpro2014.database;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import javax.ws.rs.ServiceUnavailableException;
@@ -11,6 +12,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -21,6 +26,7 @@ public class ObservationGetter {
     private String path;
     private Client client;
     private WebTarget queryResource;
+    private boolean writeToFile;
 
     // Variables for comparing new observation to the last observation received.
     private Observation lastObservation;
@@ -42,6 +48,10 @@ public class ObservationGetter {
                 return time1.compareTo(time2);
             }
         };
+    }
+
+    public void setWriteToFile(boolean writeToFile) {
+        this.writeToFile = writeToFile;
     }
 
     //TODO take in gateway
@@ -88,7 +98,21 @@ public class ObservationGetter {
                 newestObservation = obs;
             }
         }
+        if (writeToFile){
+            doWriteToFile(newestObservation);
+        }
         return newestObservation;
+    }
+
+    private void doWriteToFile(Observation obs) {
+        JSONObject obj = new JSONObject();
+        obj.put("RadioSensorId", obs.getRadioSensorId());
+        obj.putAll(obs.getMeasurements());
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("database/src/main/Resources/observations.txt", true)))) {
+            out.println(obj);
+        }catch (IOException e) {
+            //exception handling left as an exercise for the reader
+        }
     }
 
     // TODO: This method uses tail. It should instead query for observations by specifying time.
