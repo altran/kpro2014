@@ -51,7 +51,7 @@ public class Controller {
         if (listSizeDiff > 0){
             List<String> sensorsToAdd;
             if (sensorList.size() > 0){
-                sensorsToAdd = sensorIdList.subList(listSizeDiff-1,sensorList.size()-1);
+                sensorsToAdd = sensorIdList.subList(sensorList.size(),sensorIdList.size());
             }
             else{
                 sensorsToAdd = sensorIdList;

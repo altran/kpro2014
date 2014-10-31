@@ -123,10 +123,6 @@ public class MapView extends Application{
         centralHubRenderer = new CentralHubRenderer();
         centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
 
-        for(int i = 0; i < roomModel.getSensorNumber(); i++){
-            makeTList(tList, i);
-        }
-
         /**
          *Animation timer for updating values. Whenever a new update in the data is called, we'll set the array lists to
          * the new value, calculating how many frames we need. Then send it as instruction, and notify the renderer a new
@@ -140,6 +136,7 @@ public class MapView extends Application{
 
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
 
+                        makeTList(tList, i);
                         updateTList(tList, i);
 
                         initialXPosition(positionX, i);
