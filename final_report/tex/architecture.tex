@@ -25,25 +25,16 @@ The program code for both the central hub and the sensors is portable, making th
 
 \subsection{Architectural styles}
 \subsubsection{Representational state transfer (REST)}
-We plan to make a system with a RESTful similarity between the collector and the central hub.The architectural style REST focus on how components, connectors and data elements works together within a distributed hypermedia system. REST will accomplish that by having a set of architectural constraints that applies to all modules and their relations. The individual module is not concerned in REST architecture, meaning that the implementation is not that important. The architectural constraints applied by REST can be found under architectural constraints. REST is used as a description of the wanted web architecture. We use it to find and identify problems in our system architecture and make sure our system should follow the constraint we find to be more important. As in any software architecture the components, the connectors and the data elements are used to find what architectural properties are most needed in the system. Our components, connectors and data elements are as listed:
+We plan to make a system with a RESTful similarity between the collector and the central hub. The architectural style REST focus on how components, connectors and data elements works together within a distributed hypermedia system. REST will accomplish that by having a set of architectural constraints that applies to all modules and their relations. The individual module is not concerned in REST architecture, meaning that the implementation is not that important. The architectural constraints applied by REST can be found under architectural constraints. REST is used as a description of the wanted web architecture. We use it to find and identify problems in our system architecture and make sure our system should follow the constraint we find to be more important. As in any software architecture the components, the connectors and the data elements are used to find what architectural properties are most needed in the system. Our components, connectors and data elements are as listed:
 
 \begin{table}[H]
-\caption{Identified REST elements}
-\begin{tabularx}{\textwidth}{|X|X|}
-\hline
-\textbf{Components}
-&
-The sensors, the central hub, the database and the UI.
-\\ \hline
-\textbf{Connectors}
-&
-The collector who ask on-demand for the data the central hub receives from the sensors.
-\\ \hline
-\textbf{Data elements}
-&
-The information sent from the sensors through every component in the system until it reaches  the visualization. 
-\\ \hline
-\end{tabularx}
+	\caption{Identified REST elements}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		\textbf{Components}		& The sensors, the central hub, the database and the UI.  \\ \hline
+		\textbf{Connectors}		& The collector who ask on-demand for the data the central hub receives from the sensors.  \\ \hline
+		\textbf{Data elements}	& The information sent from the sensors through every component in the system until it reaches  the visualization.  \\ \hline
+	\end{tabularx}
 \end{table}
 
 We are using the REST style as guidelines, and therefore it may be some inconsistencies between our system and a RESTful system. 
@@ -96,38 +87,17 @@ To improve the portability we will only let the client ask for data from the ser
 
 \subsection{Stakeholders and concerns}
 \begin{table}[H]
-\caption{Stakeholders}
-\begin{tabularx}{\textwidth}{|X|X|}
-\hline
-\textbf{Stakeholders}
-&
-\textbf{Descriptions}
-\\ \hline
-End user
-&
-The end user is the future clients who will use our system.
-\\ \hline
-Developers
-&
-The developer are us in group 10 and our job is to develop the product and document the project.
-\\ \hline
-Customer
-&
-The customer is Stig Lau representing Altran AS. He will specify the product to be developed.
-\\ \hline
-Advisor
-&
-The advisor is Mohsen Anvaari. His job is to act as a project management.
-\\ \hline
-Course staff
-&
-The course staff for subject TDT4290 will provide information and prestudy for the course.
-\\ \hline
-Hardware suppliers
-&
-The hardware suppliers are the makers for the components used in this project. 
-\\ \hline
-\end{tabularx}
+	\caption{Stakeholders}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		\textbf{Stakeholders}	& \textbf{Descriptions} \\ \hline
+		End user				& The end user is the future clients who will use our system.  \\ \hline
+		Developers				& The developer are us in group 10 and our job is to develop the product and document the project.  \\ \hline
+		Customer				& The customer is Stig Lau representing Altran AS. He will specify the product to be developed.  \\ \hline
+		Advisor					& The advisor is Mohsen Anvaari. His job is to act as a project management.  \\ \hline
+		Course staff			& The course staff for subject TDT4290 will provide information and prestudy for the course.  \\ \hline
+		Hardware suppliers		& The hardware suppliers are the makers for the components used in this project.  \\ \hline
+	\end{tabularx}
 \end{table}
 
 \paragraph{End user:} The end user is the future clients who will use the system. They can watch the visualization form the data gathered from a room on a web page or similar. 
@@ -150,36 +120,36 @@ In this section we will show the different views of our architecture. We will fo
 The logical view is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the client, the database, the gui, the gatherer, the server, and the sensors. 
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Architecture/LogicalView.png}
-\caption{Logical View}
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/LogicalView.png}
+	\caption{Logical View}
 \end{figure}
 
 \subsubsection{Development view}
 The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualizer get this information from the database.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Architecture/DevelopmentView.png}
-\caption{Development View}
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/DevelopmentView.png}
+	\caption{Development View}
 \end{figure}
 
 \subsubsection{Process view}
 The process view considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Architecture/ProcessviewNew.png}
-\caption{Process View}
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/ProcessviewNew.png}
+	\caption{Process View}
 \end{figure}
 
 \subsubsection{Physical view}
 The physical view, also known as the deployment view, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from a data collector mock. The user interface gets information from the database.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Architecture/System_Diagram.png}
-\caption{System Diagram}
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/System_Diagram.png}
+	\caption{System Diagram}
 \end{figure}
 
 \subsubsection{Scenarios and use cases}
@@ -187,90 +157,48 @@ The physical view, also known as the deployment view, is concerned with the topo
 The scenarios view, also known as the use case view, describe sequences of interactions between objects, and between processes. They are used to identify architectural elements and to illustrate and validate the architecture design. They also serve as a starting point for tests of an architecture prototype.
 
 \begin{table}[H]
-\caption{Scenario P1}
-\begin{tabularx}{\textwidth}{|X|X|}
-\hline
-ID
-&
-P1
-\\ \hline
-Source
-&
-System
-\\ \hline
-Stimulus
-&
-The light gets turned off
-\\ \hline
-Environment
-&
-Runtime
-\\ \hline
-Artifact
-&
-Light sensors
-\\ \hline
-Response
-&
-Update the new info, and add it to the database
-\\ \hline
-Response Measure
-&
-Time \newline
-Should be less than 30 seconds
-\\ \hline
-\end{tabularx}
+	\caption{Scenario P1}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P1 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& The light gets turned off \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& Light sensors \\ \hline
+		Response			& Update the new info, and add it to the database \\ \hline
+		Response Measure	& Time \newline Should be less than 30 seconds
+		\\ \hline
+	\end{tabularx}
 \end{table}
 
 \begin{table}[H]
-\caption{Scenario P2}
-\begin{tabularx}{\textwidth}{|X|X|}
-\hline
-ID
-&
-P2
-\\ \hline
-Source
-&
-System
-\\ \hline
-Stimulus
-&
-The temperature gets higher
-\\ \hline
-Environment
-&
-Runtime
-\\ \hline
-Artifact
-&
-Temperature sensors
-\\ \hline
-Response
-&
-The animation in the visualizer should start after it pulls new data from the database
-\\ \hline
-Response Measure
-&
-Time\newline
-Should be less than 30 seconds
-\\ \hline
-\end{tabularx}
+	\caption{Scenario P2}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P2 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& The temperature gets higher \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& Temperature sensors \\ \hline
+		Response			& The animation in the visualizer should start after it pulls new data from the database \\ \hline
+		Response Measure	& Time\newline Should be less than 30 seconds
+		\\ \hline
+	\end{tabularx}
 \end{table}
 
 \paragraph{Use cases} \ \\
 The use cases shows two ways a user can interact with the system. The first shows how a user can uncheck elements it does not want to see on the screen and second shows how the user can check them back if the user wants to see them again.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Architecture/usecaseUncheck.png}
-\caption{Use Case Uncheck}
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/usecaseUncheck.png}
+	\caption{Use Case Uncheck}
 \end{figure}
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Architecture/usecaseCheck.png}
-\caption{Use Case Check}
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/usecaseCheck.png}
+	\caption{Use Case Check}
 \end{figure}
 
 \end{document}
