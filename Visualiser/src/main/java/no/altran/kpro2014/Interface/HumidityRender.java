@@ -21,11 +21,19 @@ public class HumidityRender implements Renderer {
                 graphicsContext.beginPath();
                 graphicsContext.moveTo(x, y);
                 graphicsContext.bezierCurveTo(x + 30, y + 35, x - 30, y + 35, x, y);
-                double white = 1 - (humidity / 100);
-                double blue;
-                if (humidity == 100) {
-                    blue = 0;
-                } else {
+                double white = 0.01;
+                double blue = 1;
+
+                if (humidity >= 0 && humidity <= 100) {
+                    white = 1 - (humidity / 100);
+                    if (humidity == 100) {
+                        blue = 0;
+                    } else {
+                        blue = 1;
+                    }
+                }
+                else if (humidity < 0){
+                    white = 1;
                     blue = 1;
                 }
                 graphicsContext.setFill(new LinearGradient(1, 0, 1, 1, true,

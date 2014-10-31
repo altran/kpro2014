@@ -37,7 +37,7 @@ public class SensorRender implements Renderer{
             /*
             Set the colour of the text and the text position.
              */
-                if (temp < 70){
+                if (temp < 65){
                     color = Color.WHITE;
                 }
                 else color = Color.BLACK;
