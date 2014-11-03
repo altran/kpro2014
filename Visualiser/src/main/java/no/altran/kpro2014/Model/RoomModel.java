@@ -15,6 +15,7 @@ public class RoomModel {
 
     public RoomModel(){
         sensorList = new ArrayList<SensorModel>();
+        gatewayList = new ArrayList<String>();
     }
 
     public SensorModel getSensorModel(int id){

@@ -22,7 +22,7 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "http://78.91.28.38:4901";
+    private final String domain = "http://localhost:4901";
  //   private final String domain = "http://iot.altrancloud.com//";
     private final String path = "iot/observe";
 
@@ -31,7 +31,7 @@ public class Controller {
         this.roomModel = new RoomModel();
         this.getter = new ObservationGetter(domain, path);
 
-
+        addGateways();
         addSensors();
         updateSensors();
         timer = new Timer();
@@ -64,6 +64,12 @@ public class Controller {
             }
         }
     }
+
+    private void addGateways() {
+        roomModel.getGatewayList().addAll(getter.getAllGatewaysIDs());
+    }
+
+
 
     private  void updateSensors(){
         List<SensorModel> sensorList = roomModel.getSensorList();
@@ -107,12 +113,10 @@ public class Controller {
         timer.scheduleAtFixedRate(timerTask, 1000, 5000);
     }
 
-//    public static void main(String[] args){
-//
-//        Controller temp = new Controller();
-//        for (SensorModel model : temp.getRoomModel().getSensorList()){
-//            System.out.println(model.toString());
-//        }
-//    }
+    public static void main(String[] args){
+
+        Controller temp = new Controller();
+        System.out.println(temp.getRoomModel().getGatewayList());
+    }
 
 }
