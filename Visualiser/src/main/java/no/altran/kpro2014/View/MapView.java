@@ -413,8 +413,11 @@ public class MapView extends Application{
         }
     }
     private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
-        double linkBudget1 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get(),2);
-        double linkBudget2 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(1)).get(),2);
+        System.out.println(roomModel.getSensorList().get(0).getLinkbudget().get("192.168.1.1"));
+        double linkBudget1 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get(), 2);
+        System.out.println(linkBudget1);
+        double linkBudget2 = Math.pow(roomModel.getSensorList().get(sensorNumber)
+                .getLinkbudget().get(roomModel.getGatewayList().get(1)).get(),2);
         double X = (linkBudget1 - linkBudget2 + Math.pow(canvas.getWidth(),2))/canvas.getWidth();
         if(list.size() <= sensorNumber){
             list.add(X);
@@ -491,26 +494,26 @@ public class MapView extends Application{
     }
 
     private double gateWayPositionX(int CHNumber){
-        if(CHNumber == 1){
+        if(CHNumber == 0){
             return 0;
         }
-        if(CHNumber == 2){
-            return canvas.getWidth()-circleImage.getWidth()/2;
+        if(CHNumber == 1){
+            return canvas.getWidth();
         }
-        if(CHNumber == 3){
-            return (canvas.getWidth()-circleImage.getWidth()/2)/2;
+        if(CHNumber == 2){
+            return (canvas.getWidth())/2;
         }
         return 90;
     }
 
     private double gateWayPositionsY(int CHNumber){
+        if(CHNumber == 0){
+            return 0;
+        }
         if(CHNumber == 1){
             return 0;
         }
         if(CHNumber == 2){
-            return 0;
-        }
-        if(CHNumber == 3){
             return canvas.getHeight()-circleImage.getHeight();
         }
         return 90;
