@@ -128,7 +128,7 @@ public class MapView extends Application{
         /**
         Creates the central hub. This object is static.
          */
-        int TotalCHCount = roomModel.getGatewayList().size();
+        final int TotalCHCount = roomModel.getGatewayList().size();
 
         /**
          *Animation timer for updating values. Whenever a new update in the data is called, we'll set the array lists to
