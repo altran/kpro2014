@@ -9,13 +9,11 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -92,6 +90,7 @@ public class ManualAddDash7Data {
         int light = 0;
         int humidity = 0;
         int pressure = 0;
+        String gatewayID = "temp";
 
         for (JSONObject json : objList){
             if (manualPost){
@@ -125,7 +124,7 @@ public class ManualAddDash7Data {
             }
 
 
-            String tempString = buildDash7String(sensorID, temp, light, humidity);
+            String tempString = buildDash7String(sensorID, temp, light, humidity, gatewayID);
             postData(tempString);
 
         }
@@ -139,11 +138,18 @@ public class ManualAddDash7Data {
         int light = 0;
         int humidity = 0;
         int pressure = 0;
+        String gatewayID = "temp";
         while(true) {
             System.out.print("Sensor ID (" + sensorID + "): ");
             input = new Scanner(System.in).nextLine();
             if(!input.equals("")) {
                 sensorID = Integer.parseInt(input);
+            }
+
+            System.out.print("Gateway ID (" + gatewayID + "): ");
+            input = new Scanner(System.in).nextLine();
+            if(!input.equals("")) {
+                gatewayID = input;
             }
 
             System.out.print("Temperature (" + temp + "): ");
@@ -170,12 +176,14 @@ public class ManualAddDash7Data {
                 pressure = Integer.parseInt(input);
             }
 
+
+
             System.out.print("<Press enter to POST>");
             new Scanner(System.in).nextLine();
 
 
             // Post data
-            String data = buildDash7String(sensorID, temp, light, humidity);
+            String data = buildDash7String(sensorID, temp, light, humidity, gatewayID);
             ManualAddDash7Data.postData(data);
         }
 
@@ -191,11 +199,11 @@ public class ManualAddDash7Data {
             System.out.println(response);
     }
 
-    public static String buildDash7String(int sensorId, int temp, int light, int humidity) {
+    public static String buildDash7String(int sensorId, int temp, int light, int humidity, String gateway) {
         long now = System.currentTimeMillis();
         String result = "{\"ts\":" + now + ",\"data\":{\"" + sensorId + "\":{\"uid\":\"001" +
                 "BC50C71000019\",\"ts\":" + now + ",\"tmp\":" + temp + ",\"sn\":190,\"lb\":90,\"lig\":" + light + ",\"rt\":0" +
-                ",\"hum\":" + humidity + "}},\"now\":" + now + "}192.168.1.1";
+                ",\"hum\":" + humidity + "}},\"now\":" + now + "}" + gateway;
         return result;
     }
 }
