@@ -18,3 +18,5 @@ target/
 **.synctex.*
 **.out
 **.toc
+**.lof
+**.lot

@@ -1,0 +1,207 @@
+\documentclass[../document]{subfiles}
+
+\begin{document}
+
+\section{Sprint 3}
+
+\subsection{Introduction}
+The following chapter includes all the documentation regarding the third sprint. This sprint will last 10 days and will take place from October 22 to October 31. The team will spend most of the time on integrating all the modules. testing and improving current code.
+
+\subsection{Sprint planning}
+Our main goals in this sprint has been focused on integration of modules, testing, and improving the visualizer. We plan on using a total of 124 hours for this sprint for implementation and 150 hours for documentation. We have a total of five work days planned for this sprint, which translates to 40 hours per person and with 7 group members it totals to 280 hours of possible work time during the sprint. Just like in the past sprints, we will most likely overestimate the time to work. We feel that it is better to overestimate than underestimate the time taken, as we are able to have a time buffer, in case we encounter any problems.
+
+Most of the sprint workload will be split equally in between improving and documenting the visualizer, finishing the working prototype by integrating the database and sensors fully, and doing testing. Most of the tests in this sprint will be taken from the test plan document that can be found in appendix C, and therefore some tests may be repeated from previous sprints. We will also use substantial time to work on documentation during this sprint.
+
+\subsection{Sprint goal}
+The goal of this sprint is to make the visualiser look better, complete the prototype by integrating all the modules, and finish the system tests. Therefore we have three main goals this sprint:
+\begin{enumerate}
+	\item
+	Improve the look of the visualizer.
+	\item
+	Finish integrating the system, from sensors to visualizer.
+	\item
+	Complete the tests as seen in our test plan.
+\end{enumerate}
+
+\subsection{Sprint backlog}
+
+Below is the sprint backlog in the form of a table, listing all the tasks we plan on working on in this sprint. We also include the estimated working hours for each task as well as the actual amount of work spent on each task, as we complete the tasks in the sprint. The tasks also include priority, which will help the group direct their focus on the most important sub-tasks first.
+
+\begin{table}[H]
+\caption{Sprint Backlog}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|l|l|l|}
+\hline
+	Item
+	&Task
+	&Priority
+	&Estimated hours
+	&Actual Hours
+	\\ \hline 1.1
+	&Improve animation figures
+	&M
+	&8
+	&6
+	\\ \hline 1.2
+	&Improve UI
+	&H
+	&8
+	&7
+	\\ \hline 2.1
+	&Integration of Sensors and Central Hub
+	&H
+	&10
+	&4
+	\\ \hline 2.2
+	&Integration of Central hub and the Database
+	&H
+	&10
+	&5
+	\\ \hline 2.3
+	&Integration of the Database and the Visualiser
+	&H
+	&10
+	&4.5
+	\\ \hline 2.4
+	&Full prototype integration
+	&H
+	&15
+	&10
+	\\ \hline 2.5
+	&Prototype optimization
+	&H
+	&15
+	&8
+	\\ \hline 3.1
+	&Testing scenario test 1 from test plan
+	&H
+	&8
+	&3
+	\\ \hline 3.2
+	&Testing scenario test 2 from test plan
+	&H
+	&8
+	&6
+	\\ \hline 3.3
+	&Testing scenario test 3 from test plan
+	&H
+	&8
+	&4
+	\\ \hline 3.4
+	&Testing scenario test 4 from test plan
+	&M
+	&24\footnotemark[1]
+	&24
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\footnotetext[1]{Normally we would avoid estimating a case point for more than 16 hours, as it is uncommon to do so. However, this point is an exception as the test needs to run for 24 hours with consistent alert from the development team.}
+
+\subsection{Sprint backlog evaluation}
+As we can see from the backlog, we are lacking some hours of work in this sprint. We had planned for a total of a 124 hours, and we have worked for a total of 77.5 hours. As there are three goals, we will go through all three individually to see why we worked for less than the estimated hours.
+
+For the first goal, improving the visualiser, we can see that we were quite close to the estimated hours. We planned to work for 16 hours and have worked for 13 hours with the visualiser. The visualiser was fully finished in this time and we were quite satisfied with it.
+
+For the second goal, the integration, we can see that we have planned for 60 hours of work and we have worked for 31.5 hours. The main reason for this is the modular way we have approached the implementation. With the visualiser being quite modular, we were able to quickly integrate the database with it. Furthermore the sensor integration to the central hub and further to the database also took less time as we had been working on that even before the sprint had started. Finally, we had done some optimization but it took less time to do higher level optimization as Java does a lot of optimization itself, such as garbage collection, which saves us a lot of manual work.
+
+For the last goal this sprint, the testing, we had planned on working for 48 hours and have worked for 37 hours. The main reason for overestimating is our experience with testing in previous courses and projects, where testing usually took up a large portion of the project. Here, however, we were able to test quite quickly.
+
+As we had not planned for that many hours of implementation, half of the group was free to work on documentation and the report. We had done documentation pertaining to sprint 3, as well as documentation that is not pertaining to sprint 3.
+
+\subsection{Sprint Testing}
+This section covers the tests executed in this sprint, also including tests from the test plan, Appendix C.
+
+\begin{table}[H]
+\caption{Test 1}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+
+Test nr
+&1
+\\ \hline Requirements
+&1.1, 2.1, 2.2, 2.3
+\\ \hline Test name
+&Store sensor data in database
+\\ \hline Environment
+&Runtime
+\\ \hline Description
+&Data gathered from the sensors is stored correctly and in the correct format into the database.
+\\ \hline Input:
+&Environmental data
+\\ \hline Output
+&Data in the database
+\\ \hline Acceptance
+&Correct data is stored into the database
+\\ \hline Result
+&Data is stored correctly and in the correct format, except for the data caused by a hardware malfunction.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Test 2}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+	\hline
+	Test nr
+	&2
+	\\ \hline Requirements
+	&2.4
+	\\ \hline Test name
+	&Hotjoin
+	\\ \hline Environment
+	&Runtime
+	\\ \hline Description
+	&Turning a sensor on or off. In other words, removing or adding a sensor from the system should not disrupt the system.
+	\\ \hline Input
+	&Environmental data
+	\\ \hline Output
+	&Data in the database
+	\\ \hline Acceptance
+	&When turning off a sensor the animation should just show the last data pulled. When turning on the sensor, the animation should update regularly.
+	\\ \hline Result
+	&When a sensor is turned off, nothing happens in the visualiser. When it is turned on it works correctly with animation. From the visualisers point of view the system is not disrupted. Furthermore if a sensor does not send any data for a total of 1 hour, the sensor will be considered “dead” and it’s data will henceforth be hidden in the visualiser. Should the sensor “wake up” and send data, the sensor will once again be shown in the visualiser.
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Test 3}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+Test nr:
+&3
+\\ \hline Requirements
+&1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 4.1, 4.2.1, 4.2.2, 4.2.3
+\\ \hline Test name
+&Visualizing data
+\\ \hline Environment
+&Runtime
+\\ \hline Description
+&The data is correctly gathered from the sensors, stored in the database and shown in the visualiser in the form we intended to show it in. The framerate should also be stable to the naked eye.
+\\ \hline Input
+&Environmental data
+\\ \hline Output
+&GUI animation
+\\ \hline Acceptance
+&When the data is correct and the framerate is acceptable
+\\ \hline Result
+&Everything was correct and the framerate was stable.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsection{Test Results}
+The tests have provided us with positive results. As can be seen from the first test, our database and server connection is working as expected. There were some problems regarding sensors, specifically on the hardware side, as one of the sensors could not read the temperature at all. As we have no direct control over the hardware, this may be a problem in the final showing of the prototype. The latter two tests were, however, quite positive and we are now able to show a full, final working version of the visualiser, without any mock up data.
+
+\subsection{Sprint result}
+During this sprint we finished all of our requirements (refer to requirement document) and most of our test scenarios (refer to test plan). We made the system work from the sensors to the visualiser and the system is believed to be mostly bug free as no bugs were encountered during tests. Because most of the program is easy to modify, we managed to finish this quickly, and any future development upon the system should be easier to implement.
+
+A screenshot of our system working can be seen in image xx. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualiser more pleasing to look at. Also, we are pulling data directly from the database using an ip connection. The data is displayed in the same way as before. 
+
+
+
+\end{document}
