@@ -72,6 +72,23 @@ public class ObservationGetter {
         return idList;
     }
 
+    public List<String> getAllGatewaysIDs() {
+        List<String> idList = null;
+        try {
+            String response = queryResource
+                    .path(path).path("radiogateways")
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(String.class);
+            Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
+            Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioGatewayIds");
+            idList = new ArrayList<String>();
+            idList.addAll(idObjectList.keySet());
+        } catch (ServiceUnavailableException e) {
+            return null;
+        }
+        return idList;
+    }
+
     public String postD7data(String data){
         Response response;
         response = queryResource
