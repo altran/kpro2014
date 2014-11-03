@@ -116,27 +116,26 @@ This section covers the tests executed in this sprint, also including tests from
 \caption{Test 1}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
-\hline
-
-Test nr
-&1
-\\ \hline Requirements
-&1.1, 2.1, 2.2, 2.3
-\\ \hline Test name
-&Store sensor data in database
-\\ \hline Environment
-&Runtime
-\\ \hline Description
-&Data gathered from the sensors is stored correctly and in the correct format into the database.
-\\ \hline Input:
-&Environmental data
-\\ \hline Output
-&Data in the database
-\\ \hline Acceptance
-&Correct data is stored into the database
-\\ \hline Result
-&Data is stored correctly and in the correct format, except for the data caused by a hardware malfunction.
-\\ \hline 
+	\hline
+	Test nr
+	&1
+	\\ \hline Requirements
+	&1.1, 2.1, 2.2, 2.3
+	\\ \hline Test name
+	&Store sensor data in database
+	\\ \hline Environment
+	&Runtime
+	\\ \hline Description
+	&Data gathered from the sensors is stored correctly and in the correct format into the database.
+	\\ \hline Input:
+	&Environmental data
+	\\ \hline Output
+	&Data in the database
+	\\ \hline Acceptance
+	&Correct data is stored into the database
+	\\ \hline Result
+	&Data is stored correctly and in the correct format, except for the data caused by a hardware malfunction.
+	\\ \hline 
 \end{tabularx}
 \end{table}
 
@@ -171,26 +170,26 @@ Test nr
 \caption{Test 3}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
-\hline
-Test nr:
-&3
-\\ \hline Requirements
-&1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 4.1, 4.2.1, 4.2.2, 4.2.3
-\\ \hline Test name
-&Visualizing data
-\\ \hline Environment
-&Runtime
-\\ \hline Description
-&The data is correctly gathered from the sensors, stored in the database and shown in the visualiser in the form we intended to show it in. The framerate should also be stable to the naked eye.
-\\ \hline Input
-&Environmental data
-\\ \hline Output
-&GUI animation
-\\ \hline Acceptance
-&When the data is correct and the framerate is acceptable
-\\ \hline Result
-&Everything was correct and the framerate was stable.
-\\ \hline 
+	\hline
+	Test nr:
+	&3
+	\\ \hline Requirements
+	&1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 4.1, 4.2.1, 4.2.2, 4.2.3
+	\\ \hline Test name
+	&Visualizing data
+	\\ \hline Environment
+	&Runtime
+	\\ \hline Description
+	&The data is correctly gathered from the sensors, stored in the database and shown in the visualiser in the form we intended to show it in. The framerate should also be stable to the naked eye.
+	\\ \hline Input
+	&Environmental data
+	\\ \hline Output
+	&GUI animation
+	\\ \hline Acceptance
+	&When the data is correct and the framerate is acceptable
+	\\ \hline Result
+	&Everything was correct and the framerate was stable.
+	\\ \hline 
 \end{tabularx}
 \end{table}
 
@@ -202,6 +201,28 @@ During this sprint we finished all of our requirements (refer to requirement doc
 
 A screenshot of our system working can be seen in image xx. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualiser more pleasing to look at. Also, we are pulling data directly from the database using an ip connection. The data is displayed in the same way as before. 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{sprint_3/Sprint3Visualiser.png}
+	\caption{Map View}
+\end{figure}
 
+\subsection{Customer Review}
+The customer is happy about our progress, but he suggested that we implement some additional features if have enough time. The customer is interested in adding more gateways and sensors and hopes we could add as many as ten sensors and five gateways. Unfortunately we do not have time for a workload that is this big, this far in the project, so we might have to reduce the scope or maybe even drop the changes suggested all together.
+
+The biggest problem we have is that we lack the hardware. The customer recommends that we use mock up data, but we felt that using mock up data in the final presentation is a step back, as we have done mock up data in sprint 1. While normally we would not have a problem with stepping back to progress forward, we feel that we might not have enough time to progress forward after the step back.
+
+The customer also introduced us to a new function that the sensor has called link budget, which works like ping to calculate the position of the sensor from the central hub. During this meeting we did some basic tests and we found that the link budget increases drastically by walls or any kind of signal deterrent material, but did not increase as much by distance alone. A five metre walk changes the link budget by three or four units, while going behind a wall increased it by as many as twelve units. Going down a floor increased it by as many as fifteen units. The group concluded that under ideal conditions we can make positional triangulation work, but if there are any walls or link deterring materials, such as metal, the data will be completely different and quite unpredictable. The customer also mentioned the motion we have right now (we are using orbital movement to signify where the sensor might be) is wrong for the presentation, because the motion is not correct. 
+
+To satisfy the customer needs, we will continue outside of our original plan and create a sprint 4. We may not have enough time to finish the implementation of sprint 4, but we will most likely be able to create something on a smaller scale. Still, with mock up data such an implementation will most likely only be there for the sake of presentation.
+
+\subsection{Sprint Evaluation}
+We have completed all of the goals of the sprint. We have fully integrated the system and we do not need any mock up data to run it. The system still retains the ability to connect to any database, with just a change in one line of code. By changing the IP or the address in the controller, we can connect to any database, containing real or mock up data.
+
+We have also improved the look of the visualiser as well as added some new functionality. Besides adding a legend, representing what we are displaying on the screen, we have also added some subtle effects to make the visualiser look better. The response to these was positive. Finally, we have added a function that hides a sensor deemed “dead”. A sensor is deemed “dead” when it has not sent any data in the last hour. The visualiser then hides the sensor from display, but retain its previous data. Should the sensor “wake up” the visualiser will animate it once again without any disruption.
+
+Finally, we have managed to complete all the tests successfully for this sprint. There are still some hardware difficulties and the sensors often do not register any data, which we can not fix, unfortunately. Still, besides the hardware failures we have managed to complete the overarching goal of the project, which is to visualise data gathered by the sensors. 
+
+Our customer, however, wanted a much larger system without providing any additional hardware. To this end, we will attempt to create a final sprint with mock up data. We feel that this is a step backwards, since we used mock up data in earlier sprints, however, we will still attempt to complete as much as possible from the new request.
 
 \end{document}
