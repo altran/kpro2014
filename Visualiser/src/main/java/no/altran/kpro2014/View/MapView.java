@@ -28,6 +28,7 @@ import no.altran.kpro2014.Interface.*;
 import no.altran.kpro2014.Model.RoomModel;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +49,10 @@ public class MapView extends Application{
     /**the canvases we use for the visualization*/
     private Canvas canvas;
     private Canvas canvasHist;
+
+    /**the scale for positioning*/
+    double xScale = canvas.getWidth()/60;
+    double yScale = canvas.getHeight()/60;
 
     /**Instructions and Renderers, look over to interface folder for more info*/
     private CentralHubInstruction centralHubInstruction;
@@ -77,8 +82,14 @@ public class MapView extends Application{
     private ArrayList<Double> oldTemperature = new ArrayList<Double>();
     private ArrayList<Double> newTemperature = new ArrayList<Double>();
     private ArrayList<Double> diffTemperature = new ArrayList<Double>();
-    private ArrayList<Double> positionX = new ArrayList<Double>();
-    private ArrayList<Double> positionY = new ArrayList<Double>();
+    private ArrayList<Double> positionX  = new ArrayList<>();
+    private ArrayList<Double> positionY = new ArrayList<>();
+    private ArrayList<Double> oldPositionX = new ArrayList<Double>();
+    private ArrayList<Double> newPositionX = new ArrayList<Double>();
+    private ArrayList<Double> diffPositionX = new ArrayList<Double>();
+    private ArrayList<Double> oldPositionY = new ArrayList<Double>();
+    private ArrayList<Double> newPositionY = new ArrayList<Double>();
+    private ArrayList<Double> diffPositionY = new ArrayList<Double>();
     private ArrayList<Double> tList = new ArrayList<Double>();
     private ArrayList<Double> inactiveSensor = new ArrayList<Double>();
     private int counter = 0;
@@ -117,11 +128,7 @@ public class MapView extends Application{
         /**
         Creates the central hub. This object is static.
          */
-        centralHubInstruction = new CentralHubInstruction(circleImage, now, Long.MAX_VALUE,
-                canvas.getWidth()/2-circleImage.getWidth()/2,
-                canvas.getHeight()/2-circleImage.getWidth()/2 , canvas);
-        centralHubRenderer = new CentralHubRenderer();
-        centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+        int TotalCHCount = roomModel.getGatewayList().size();
 
         /**
          *Animation timer for updating values. Whenever a new update in the data is called, we'll set the array lists to
@@ -132,21 +139,23 @@ public class MapView extends Application{
             @Override
             public void handle(long now){
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+                for(int i = 0; i < TotalCHCount; i++){
+                    centralHubInstruction = new CentralHubInstruction(circleImage, now, Long.MAX_VALUE,
+                            gateWayPositionX(i),
+                            gateWayPositionsY(i), canvas);
+                    centralHubRenderer = new CentralHubRenderer();
+                    centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+
+                }
 
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
 
-                        makeTList(tList, i);
-                        updateTList(tList, i);
-
-                        initialXPosition(positionX, i);
-                        initialYPosition(positionY, i);
 
                         LightingCheck(newLighting, oldLighting, i, roomModel);
                         HumidityCheck(newHumidity, oldHumidity, i, roomModel);
                         PressureCheck(newPressure, oldPressure, i, roomModel);
                         TemperatureCheck(newTemperature, oldTemperature, i, roomModel);
-                        diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure,inactiveSensor, i);
+                        diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure,inactiveSensor, diffPositionX, diffPositionY, i);
 
                         if (counter >= 300) {
                             counter = 0;
@@ -396,47 +405,38 @@ public class MapView extends Application{
             list.set(i,roomModel.getSensorModel(i).getTemperature());
         }
     }
-
-    private void initialXPosition(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(canvas.getWidth() / 2 - circleImage.getWidth() / 2 + i * 150 + 100);
+    private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, int gateWayNumber, RoomModel roomModel){
+        double X = roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(gateWayNumber)).get();
+        //TODO fix the double X and Y value
+        if(list.size() <= sensorNumber){
+            list.add(X);
+        }
+        if(oldList.size() <= sensorNumber){
+            oldList.add(X);
+        }
+        if(list.size() > sensorNumber){
+            list.set(sensorNumber,X);
         }
     }
 
-    private void initialYPosition(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(canvas.getHeight()/2-circleImage.getWidth()/2);
+    private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, int gateWayNumber, RoomModel roomModel){
+        double Y = roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(gateWayNumber)).get();
+        if(list.size() <= sensorNumber){
+            list.add(Y);
         }
-    }
-
-    private void makeTList(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            if(i % 2 == 0){
-                list.add(-1*0.006978/i);
-            }else{
-                list.add(0.006978/i);
-            }
+        if(oldList.size() <= sensorNumber){
+            oldList.add(Y);
         }
-    }
-
-    private void updateTList(ArrayList<Double> list, int i){
-        double temp = list.get(i);
-        if(i % 2 == 0){
-            temp += -1*(0.008-0.006978*(i*0.23));
-        }
-        else{
-            temp += 0.008-0.006978*(i*0.23);
-        }
-        list.set(i, temp);
-        if(temp > 6.28 || temp < -6.28){
-            list.set(i, 0.0);
+        if(list.size() > sensorNumber){
+            list.set(sensorNumber,Y);
         }
     }
 
     /**
         Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, inactive, i (loop));
      */
-    private void diffInit(ArrayList<Double> temp, ArrayList<Double> light, ArrayList<Double> humi, ArrayList<Double> pres, ArrayList<Double> inact, int i){
+    private void diffInit(ArrayList<Double> temp, ArrayList<Double> light, ArrayList<Double> humi, ArrayList<Double> pres,
+                          ArrayList<Double> inact, ArrayList<Double> x, ArrayList<Double> y, int i){
         if(temp.size() <= i){
             temp.add(0.0);
         }
@@ -451,6 +451,12 @@ public class MapView extends Application{
         }
         if(inact.size() <= i){
             inact.add(0.0);
+        }
+        if(x.size() <= i){
+            x.add(0.0);
+        }
+        if(y.size() <= i){
+            y.add(0.0);
         }
     }
 
@@ -471,6 +477,29 @@ public class MapView extends Application{
     private boolean inactiveS(ArrayList<Double> temp, ArrayList<Double> pres, ArrayList<Double> humi, ArrayList<Double> light, int i){
         return (temp.get(i) < 0.001 && temp.get(i) > -0.001 && light.get(i) < 0.001 && light.get(i) > -0.001
                 && pres.get(i) < 0.001 && pres.get(i) > -0.001 && humi.get(i) < 0.001 && humi.get(i) > -0.001);
+    }
+
+    private double gateWayPositionX(int CHNumber){
+        if(CHNumber == 1){
+            return canvas.getWidth()/2-circleImage.getWidth()/2;
+        }
+        if(CHNumber == 2){
+            return 0;
+        }
+        if(CHNumber == 3){
+            return canvas.getWidth()-circleImage.getWidth();
+        }
+        return 90;
+    }
+
+    private double gateWayPositionsY(int CHNumber){
+        if(CHNumber == 1){
+            return 0;
+        }
+        if(CHNumber == 2 || CHNumber == 3){
+            return canvas.getHeight()-circleImage.getHeight();
+        }
+        return 90;
     }
 
     public static void main(String[] args) {
