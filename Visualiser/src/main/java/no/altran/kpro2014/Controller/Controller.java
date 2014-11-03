@@ -1,6 +1,7 @@
 package no.altran.kpro2014.Controller;
 
 
+import javafx.beans.property.SimpleDoubleProperty;
 import no.altran.kpro2014.Model.RoomModel;
 import no.altran.kpro2014.Model.SensorModel;
 import no.altran.kpro2014.database.Observation;
@@ -69,6 +70,7 @@ public class Controller {
         for (SensorModel sensor : sensorList){
             Observation obs = getter.getMostRecentObservation(sensor.getSensorID());
             String tempMeasure = obs.getMeasurements().get("hum");
+            String gateway = obs.getRadioGatewayId();
             if (tempMeasure != null){
                 sensor.setHumidity(Double.parseDouble(tempMeasure));
             }
@@ -87,6 +89,10 @@ public class Controller {
             tempMeasure = obs.getMeasurements().get("tmp");
             if (tempMeasure != null){
                 sensor.setTemperature(Double.parseDouble(tempMeasure));
+            }
+            tempMeasure = obs.getMeasurements().get("lb");
+            if (tempMeasure != null){
+                sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(Double.parseDouble(tempMeasure)));
             }
         }
 
