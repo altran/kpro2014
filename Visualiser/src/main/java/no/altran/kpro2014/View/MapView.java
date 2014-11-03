@@ -50,10 +50,6 @@ public class MapView extends Application{
     private Canvas canvas;
     private Canvas canvasHist;
 
-    /**the scale for positioning*/
-    double xScale = canvas.getWidth()/60;
-    double yScale = canvas.getHeight()/60;
-
     /**Instructions and Renderers, look over to interface folder for more info*/
     private CentralHubInstruction centralHubInstruction;
     private CentralHubRenderer centralHubRenderer;
