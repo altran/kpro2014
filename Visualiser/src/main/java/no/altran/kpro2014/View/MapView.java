@@ -82,15 +82,15 @@ public class MapView extends Application{
     private ArrayList<Double> oldTemperature = new ArrayList<Double>();
     private ArrayList<Double> newTemperature = new ArrayList<Double>();
     private ArrayList<Double> diffTemperature = new ArrayList<Double>();
-    private ArrayList<Double> positionX  = new ArrayList<>();
-    private ArrayList<Double> positionY = new ArrayList<>();
+//    private ArrayList<Double> positionX  = new ArrayList<>();
+//    private ArrayList<Double> positionY = new ArrayList<>();
     private ArrayList<Double> oldPositionX = new ArrayList<Double>();
     private ArrayList<Double> newPositionX = new ArrayList<Double>();
     private ArrayList<Double> diffPositionX = new ArrayList<Double>();
     private ArrayList<Double> oldPositionY = new ArrayList<Double>();
     private ArrayList<Double> newPositionY = new ArrayList<Double>();
     private ArrayList<Double> diffPositionY = new ArrayList<Double>();
-    private ArrayList<Double> tList = new ArrayList<Double>();
+//    private ArrayList<Double> tList = new ArrayList<Double>();
     private ArrayList<Double> inactiveSensor = new ArrayList<Double>();
     private int counter = 0;
 
@@ -155,7 +155,10 @@ public class MapView extends Application{
                         HumidityCheck(newHumidity, oldHumidity, i, roomModel);
                         PressureCheck(newPressure, oldPressure, i, roomModel);
                         TemperatureCheck(newTemperature, oldTemperature, i, roomModel);
-                        diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure,inactiveSensor, diffPositionX, diffPositionY, i);
+                        diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure, inactiveSensor, diffPositionX, diffPositionY, i);
+
+                        PositionXCheck(newPositionX, oldPositionX, i, roomModel);
+                        PositionYCheck(newPositionY, oldPositionY, i, newPositionX.get(i), roomModel);
 
                         if (counter >= 300) {
                             counter = 0;
@@ -172,12 +175,20 @@ public class MapView extends Application{
                             if (newTemperature.get(i) != oldTemperature.get(i)) {
                                 diffTemperature.set(i, (newTemperature.get(i) - oldTemperature.get(i)) / 300);
                             }
+                            if (newPositionX.get(i) != oldPositionX.get(i)) {
+                                diffPositionX.set(i, (newPositionX.get(i) - oldPositionX.get(i)) / 300);
+                            }
+                            if (newPositionY.get(i) != oldPositionY.get(i)) {
+                                diffPositionY.set(i, (newPositionY.get(i) - oldPositionY.get(i)) / 300);
+                            }
                             counter++;
                         } else {
                             oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
                             oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
                             oldPressure.set(i, oldPressure.get(i) + diffPressure.get(i));
                             oldTemperature.set(i, oldTemperature.get(i) + diffTemperature.get(i));
+                            oldPositionX.set(i, oldPositionX.get(i) + diffPositionX.get(i));
+                            oldPositionY.set(i, oldPositionY.get(i) + diffPositionY.get(i));
                             counter++;
                         }
 
@@ -189,45 +200,45 @@ public class MapView extends Application{
                             inactiveSensor.set(i, 0.0);
                         }
 
-                        if (inactiveSensor.get(i) > 216000){
+                        if (inactiveSensor.get(i) > 216000){ //TODO might need to fix the oldPositionX() function
                             temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
-                                    now, 10, getPositionX(i, tList.get(i)), getPositionY(i, tList.get(i)), canvas, false);
+                                    now, 10, getPositionX(i, oldPositionX.get(i)), getPositionY(i, oldPositionY.get(i)), canvas, false);
                             temperatureRender = new TemperatureRender();
                             temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                             sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
-                                    getPositionX(i, tList.get(i))+20, getPositionY(i, tList.get(i))+20, canvas, false);
+                                    getPositionX(i, oldPositionX.get(i))+20, getPositionY(i, oldPositionY.get(i))+20, canvas, false);
                             sensorRender = new SensorRender();
                             sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                             humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                    getPositionX(i, tList.get(i))+79, getPositionY(i, tList.get(i))+50, canvas, false);
+                                    getPositionX(i, oldPositionX.get(i))+79, getPositionY(i, oldPositionY.get(i))+50, canvas, false);
                             humidityRender = new HumidityRender();
                             humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, tList.get(i))+79,
-                                    getPositionY(i, tList.get(i))+25, canvas, false);
+                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, oldPositionX.get(i))+79,
+                                    getPositionY(i, oldPositionY.get(i))+25, canvas, false);
                             pressureRender = new PressureRender();
                             pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                         }
                         else {
                             temperatureInstruction = new TemperatureInstruction("S" + (i + 1), oldTemperature.get(i),
-                                    now, 10, getPositionX(i, tList.get(i)), getPositionY(i, tList.get(i)), canvas, checkTemperature);
+                                    now, 10, getPositionX(i, oldPositionX.get(i)), getPositionY(i, oldPositionY.get(i)), canvas, checkTemperature);
                             temperatureRender = new TemperatureRender();
                             temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                             sensorInstruction = new SensorInstruction("S" + (i + 1), oldLighting.get(i), now, 10,
-                                    getPositionX(i, tList.get(i)) + 20, getPositionY(i, tList.get(i)) + 20, canvas, checkLighting);
+                                    getPositionX(i, oldPositionX.get(i)) + 20, getPositionY(i, oldPositionY.get(i)) + 20, canvas, checkLighting);
                             sensorRender = new SensorRender();
                             sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                             humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                    getPositionX(i, tList.get(i)) + 79, getPositionY(i, tList.get(i)) + 50, canvas, checkHumidity);
+                                    getPositionX(i, oldPositionX.get(i)) + 79, getPositionY(i, oldPositionY.get(i)) + 50, canvas, checkHumidity);
                             humidityRender = new HumidityRender();
                             humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, tList.get(i)) + 79,
-                                    getPositionY(i, tList.get(i)) + 25, canvas, checkPressure);
+                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, oldPositionX.get(i)) + 79,
+                                    getPositionY(i, oldPositionY.get(i)) + 25, canvas, checkPressure);
                             pressureRender = new PressureRender();
                             pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                         }
@@ -405,9 +416,10 @@ public class MapView extends Application{
             list.set(i,roomModel.getSensorModel(i).getTemperature());
         }
     }
-    private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, int gateWayNumber, RoomModel roomModel){
-        double X = roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(gateWayNumber)).get();
-        //TODO fix the double X and Y value
+    private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
+        double linkBudget1 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get(),2);
+        double linkBudget2 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(1)).get(),2);
+        double X = (linkBudget1 - linkBudget2 + Math.pow(canvas.getWidth(),2))/canvas.getWidth();
         if(list.size() <= sensorNumber){
             list.add(X);
         }
@@ -419,8 +431,11 @@ public class MapView extends Application{
         }
     }
 
-    private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, int gateWayNumber, RoomModel roomModel){
-        double Y = roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(gateWayNumber)).get();
+    private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
+        double linkBudget1 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get(),2);
+        double linkBudget3 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(2)).get(),2);
+        double Y = ((linkBudget1 - linkBudget3 + Math.pow(canvas.getWidth()/2,2) + Math.pow(canvas.getHeight()/2, 2))/canvas.getHeight())-
+                (canvas.getWidth()/2)/(canvas.getHeight()/2)*X;
         if(list.size() <= sensorNumber){
             list.add(Y);
         }
@@ -463,15 +478,15 @@ public class MapView extends Application{
     private double getPositionX(int i, double t){
         double a =i*100 + 150 ;
         double temp = a*Math.cos(t) +canvas.getWidth() / 2 - circleImage.getWidth() / 2;
-        positionX.set(i, temp);
-        return positionX.get(i);
+        newPositionX.set(i, temp);
+        return newPositionX.get(i);
     }
 
     private double getPositionY(int i, double t){
         double b = 100 + i*100;
         double temp = b*Math.sin(t) + canvas.getHeight() / 2 - circleImage.getWidth() / 2;
-        positionY.set(i, temp);
-        return positionY.get(i);
+        newPositionY.set(i, temp);
+        return newPositionY.get(i);
     }
 
     private boolean inactiveS(ArrayList<Double> temp, ArrayList<Double> pres, ArrayList<Double> humi, ArrayList<Double> light, int i){
@@ -481,13 +496,13 @@ public class MapView extends Application{
 
     private double gateWayPositionX(int CHNumber){
         if(CHNumber == 1){
-            return canvas.getWidth()/2-circleImage.getWidth()/2;
-        }
-        if(CHNumber == 2){
             return 0;
         }
+        if(CHNumber == 2){
+            return canvas.getWidth()-circleImage.getWidth()/2;
+        }
         if(CHNumber == 3){
-            return canvas.getWidth()-circleImage.getWidth();
+            return (canvas.getWidth()-circleImage.getWidth()/2)/2;
         }
         return 90;
     }
@@ -496,7 +511,10 @@ public class MapView extends Application{
         if(CHNumber == 1){
             return 0;
         }
-        if(CHNumber == 2 || CHNumber == 3){
+        if(CHNumber == 2){
+            return 0;
+        }
+        if(CHNumber == 3){
             return canvas.getHeight()-circleImage.getHeight();
         }
         return 90;
