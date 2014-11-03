@@ -8,3 +8,4 @@ api
 http
 restful
 java
+Raspberry Pi (<- wording correct)
