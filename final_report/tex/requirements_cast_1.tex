@@ -3,13 +3,13 @@
 \begin{document}
 
 
-\section{Requirements Cast 1}
-\subsection{Introduction}
+\subsection{Requirements Cast 1}
+\subsubsection{Introduction}
 We are using goal driven requirement development methods to gather our requirements. The first part will be a top down goal level view, with a main goal and sub goals. After that there will be a more detailed text description for some of the important requirements followed by a table with a short description for each functional requirement and its priority. The last part will be a text about non-functional requirements with a description to each one of them and its priority.
 
 In our brainstorming session for possible use cases we concluded that the best use for our system will be in a smart room implementation. By smart room we mean a room where all of the environmental details are recorded and the system will interact with other equipment such as an air conditioner to manipulate the environment.
 
-\subsection{Top goal of the system}
+\subsubsection{Top goal of the system}
 \begin{itemize}
 	\item
 	Keep stable temperature, lighting, humidity, noise, pressure and tracking
@@ -113,7 +113,7 @@ In our brainstorming session for possible use cases we concluded that the best u
 	\end{itemize}
 \end{itemize}
 
-\subsection{Temperature functional requirements}
+\subsubsection{Temperature functional requirements}
 We will make a UI for the whole system, one of the windows will be temperature exclusively. That window will display information about average temperature in the room, both current and from the log. The system will also be capable of showing individual sensor data.
 
 From the UI one can change the desired temperature. We will provide a default profile at 25 degrees in the room, but it will be changeable from the UI to any reasonable (15-35) temperature. The system then will use this data to control all temperature adjustment units like air conditioning or heaters to reach that specific temperature.
@@ -172,7 +172,7 @@ From the UI one can change the desired temperature. We will provide a default pr
 \end{tabularx}
 \end{table}
 
-\subsection{Lighting Functional Requirements}
+\subsubsection{Lighting Functional Requirements}
 
 The requirement for lighting is much like the requirement for temperature. It will use the same template with different data. If we have enough time, we are planning to expand lighting UI with possibility to show each light with percent scale and half closed curtains, depending on the users preference.
 
@@ -233,7 +233,7 @@ The system should wire itself to the light control of the room (this will requir
 \end{tabularx}
 \end{table}
 
-\subsection{Humidity Functional Requirements}
+\subsubsection{Humidity Functional Requirements}
 Humidity does not change drastically in a room, and theres not many offices with humidity changing units built in, therefore we do not think humidity will be a big factor. Still humidity does affect working performance and one can find humidifiers, which is why we put a log to show case if anything needs to be changed. 
 
 \begin{table}[H]
@@ -265,7 +265,7 @@ Humidity does not change drastically in a room, and theres not many offices with
 	\end{tabularx}
 	\end{table}
 
-	\subsection{Noise Functional Requirements}
+	\subsubsection{Noise Functional Requirements}
 	In an ideal situation our system should be able to have control over doors and windows as well, which makes it possible to control noise level. In our prototype we are probably not going to implement that function. However, the system will be able to record the noise level over the room and then save it in the database. If the noise level is above a certain level, there will be a warning on the UI and it will be marked in the log.
 
 	\begin{table}[H]
@@ -312,7 +312,7 @@ Humidity does not change drastically in a room, and theres not many offices with
 \end{tabularx}
 \end{table}
 
-\subsection{Pressure Functional Requirements}
+\subsubsection{Pressure Functional Requirements}
 Pressure in a room should stay stable all the time, but under rare conditions it might change and those changes are often unnoticeable. If we change the environment to some dangerous areas then the pressure might be a factor to be worried about, and in such area the pressure needs to be monitored and the data should be saved and shown later.
 
 \begin{table}[H]
@@ -344,7 +344,7 @@ Pressure in a room should stay stable all the time, but under rare conditions it
 \end{tabularx}
 \end{table}
 
-\subsection{Tracking Functional Requirement}
+\subsubsection{Tracking Functional Requirement}
 The sensors contain some possibility to track in a 2D or 3D environment. The system might use this information in different ways. It may warn people closing in on a restricted area, or do specific actions when people enter or leave a room.
 
 From what we know from the devices, this capability may be limited, or not useful at all, so we have given it a low priority.
@@ -405,7 +405,7 @@ If we do implement tracking for future use, the system should contain a UI with 
 \end{tabularx}
 \end{table}
 
-\subsection{Database interaction requirement}
+\subsubsection{Database interaction requirement}
 There will be a database where the data collected from the sensors is stored. The data will include time of recording, temperature, lighting, humidity, noise, pressure, tracking and maybe more. The user can later retrieve this data and see the log for any unusual events or just to get a general idea of the room they are in. If the user does not specify the time interval it will be chosen automatically.  
 
 \begin{table}[H]
@@ -447,7 +447,7 @@ There will be a database where the data collected from the sensors is stored. Th
 \end{tabularx}
 \end{table}
 
-\subsection{Self Maintenance Requirements}
+\subsubsection{Self Maintenance Requirements}
 From our first experience with the sensors we found that they are not really reliable without any external protection. Therefore it is a possibility that they might be broken during the deployment time. To counter that we are adding a self maintenance function, which will find and report any unusual activities of the sensor that might indicate a failure in the hardware. We also think that if there are many sensors in a room, then one single faulty device does not really matter and should therefore be ignored to reduce the overall maintenance from the user side.
 
 \begin{table}[H]
@@ -494,7 +494,7 @@ From our first experience with the sensors we found that they are not really rel
 \end{tabularx}
 \end{table}
 
-\subsection{Ad-hoc Requirements}
+\subsubsection{Ad-hoc Requirements}
 Ad-hoc is a possibility when there are no base stations accessible to the sensors. Instead of relying on the base station, the sensors need to be able to relay data between themselves and get it to a location where it is possible to relay it to the database. Some calculations will be needed to be done one the sensors and this may greatly affect battery life.
 
 In a smart room environment a base station is the best choice, so we have given this solution a low priority. 
