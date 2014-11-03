@@ -121,6 +121,21 @@ public class ObservationGetter {
         return newestObservation;
     }
 
+    public List<Observation> getBacklogForSensor(String sensorID) {
+        String response = queryResource
+                .path(path).path("radiosensor")
+                .queryParam("query", "radiosensor:" + sensorID)
+                .request(MediaType.APPLICATION_JSON)
+                .get(String.class);
+        List<Observation> observationList = toObservationList(response);
+        if(observationList.isEmpty()) {
+            return null;
+        }
+        else{
+            return observationList;
+        }
+    }
+
     private void doWriteToFile(Observation obs) {
         JSONObject obj = new JSONObject();
         obj.put("RadioSensorId", obs.getRadioSensorId());
