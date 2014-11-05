@@ -22,7 +22,7 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "http://78.91.29.174:4901";
+    private final String domain = "http://78.91.29.87:4901";
  //   private final String domain = "http://iot.altrancloud.com//";
     private final String path = "iot/observe";
 
