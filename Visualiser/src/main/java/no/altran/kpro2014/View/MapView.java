@@ -78,15 +78,12 @@ public class MapView extends Application{
     private ArrayList<Double> oldTemperature = new ArrayList<Double>();
     private ArrayList<Double> newTemperature = new ArrayList<Double>();
     private ArrayList<Double> diffTemperature = new ArrayList<Double>();
-//    private ArrayList<Double> positionX  = new ArrayList<>();
-//    private ArrayList<Double> positionY = new ArrayList<>();
     private ArrayList<Double> oldPositionX = new ArrayList<Double>();
     private ArrayList<Double> newPositionX = new ArrayList<Double>();
     private ArrayList<Double> diffPositionX = new ArrayList<Double>();
     private ArrayList<Double> oldPositionY = new ArrayList<Double>();
     private ArrayList<Double> newPositionY = new ArrayList<Double>();
     private ArrayList<Double> diffPositionY = new ArrayList<Double>();
-//    private ArrayList<Double> tList = new ArrayList<Double>();
     private ArrayList<Double> inactiveSensor = new ArrayList<Double>();
     private int counter = 0;
 
@@ -413,9 +410,7 @@ public class MapView extends Application{
         }
     }
     private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
-        System.out.println(roomModel.getSensorList().get(0).getLinkbudget().get("192.168.1.1"));
         double linkBudget1 = Math.pow(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get(), 2);
-        System.out.println(linkBudget1);
         double linkBudget2 = Math.pow(roomModel.getSensorList().get(sensorNumber)
                 .getLinkbudget().get(roomModel.getGatewayList().get(1)).get(),2);
         double X = (linkBudget1 - linkBudget2 + Math.pow(canvas.getWidth(),2))/canvas.getWidth();
@@ -498,10 +493,10 @@ public class MapView extends Application{
             return 0;
         }
         if(CHNumber == 1){
-            return canvas.getWidth();
+            return canvas.getWidth() - circleImage.getWidth();
         }
         if(CHNumber == 2){
-            return (canvas.getWidth())/2;
+            return (canvas.getWidth() - circleImage.getWidth()/2)/2;
         }
         return 90;
     }
@@ -514,7 +509,7 @@ public class MapView extends Application{
             return 0;
         }
         if(CHNumber == 2){
-            return canvas.getHeight()-circleImage.getHeight();
+            return canvas.getHeight()-1.5*circleImage.getHeight();
         }
         return 90;
     }
