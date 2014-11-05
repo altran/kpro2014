@@ -75,16 +75,18 @@ Here we will present the ideas discussed above in a more concrete way, in the fo
 While the above ideas deal with what we can make of the project, our customer has clearly stated that what they want is visualization of data and a basic product that can be portable and modifiable for the future. Therefore our second main goal was to think of ideas on how to visualize the data we receive from the sensors. On this topic we have thought of a few ideas that are listed below. This is the actual overarching goal of the project. Moreover, the ideas above are representations of the possible future of the project. A table at the end of this section is also included as a summary of these ideas, including their pros and cons.
 
 \subsubsection{Simple Image Manipulation}
-Our first and simplest idea for visualization would include a simple screen representation of all the data combined and averaged out. The background would be the temperature, which would change colour depending on how hot or cold it is in the room. The intensity of the colour would change with the amount of light in the room. And transparent layers would be added in the form of simple geometrical shapes to represent other factors, such as sound, humidity, and pressure.
+Our first and simplest idea for visualization would include a simple screen representation of all the data combined and averaged out. The background would be the temperature, which would change colour depending on how hot or cold it is in the room. The intensity of the colour would change with the amount of light in the room. And transparent layers would be added in the form of simple geometrical shapes to represent other factors, such as sound, humidity, and pressure. The ideas are illustrated in  \figref{fig:visualizer_idea1} and in \figref{fig:visualizer_idea2}.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{preliminary/visualizer_idea1.png}
 	\caption{A warm, light room with a high level of humidity}
+	\label{fig:visualizer_idea1}
 \end{figure}
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{preliminary/visualizer_idea2.png}
 	\caption{A cold, dry and dark room with a high sound level}
+	\label{fig:visualizer_idea2}
 \end{figure}
 
 This idea is very simple to implement, however, it does not show data per sensor. It shows data as an average, which while it is good for some environments is unacceptable for others. Therefore this idea was quickly abandoned in favour of the next idea.
@@ -92,42 +94,47 @@ This idea is very simple to implement, however, it does not show data per sensor
 \subsubsection{Simple Image Manipulation in a grid}
 Instead of having one image that would take all the data and average out the calculations, we would have a grid where a sensor or a group of sensors would provide the same image manipulation but on a grid scale.
 
-While the grid solves the problems of whether individual sensors or a group of sensors are showing, it introduces another major problem. How to make the grid portable and modifiable. This was solved by using grid in a fairly “loose” meaning. Instead of it meaning a grid in its strict sense, the grid would be a sphere around each sensor. In this fashion the system can visualize a sensor’s immediate surrounding as well as average out values that overlap between two spheres. While this adds a layer of complexity to our implementation, we believe that it still remains fairly simple to implement.
+While the grid solves the problems of whether individual sensors or a group of sensors are showing, it introduces another major problem. How to make the grid portable and modifiable. This was solved by using grid in a fairly “loose” meaning. Instead of it meaning a grid in its strict sense, the grid would be a sphere around each sensor. In this fashion the system can visualize a sensor’s immediate surrounding as well as average out values that overlap between two spheres. While this adds a layer of complexity to our implementation, we believe that it still remains fairly simple to implement. The ideas are illustrated in  \figref{fig:visualizer_idea3} and in \figref{fig:visualizer_idea4}.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{preliminary/visualizer_idea3.png}
 	\caption{Room visualisation with a grid}
+	\label{fig:visualizer_idea3}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=\textwidth]{preliminary/visualizer_idea3.png}
+	\includegraphics[width=\textwidth]{preliminary/visualizer_idea4.png}
 	\caption{Room visualisation with spheres}
+	\label{fig:visualizer_idea4}
 \end{figure}
 
 \subsection{Manipulation of sprites}
 Instead of using geometrical shapes or simple colours, we can use small pre-made images commonly known as sprites. The system works in quite the same fashion. Every sensor or groups of sensors would be presented by a sprite, which would change based on the changes in the environment.
 
-Sprites may be a bit more intuitive than colours and geometrical shapes, as they can speak more than the shapes can. For example a water sprite rising or lowering could represent the change in humidity. On the other hand it becomes more complex and time consuming to draw the sprites and even potentially animate them. Sprites also may have difficulty representing data that changes slowly, like temperature, and small changes to the data might be difficult to notice.
+Sprites may be a bit more intuitive than colours and geometrical shapes, as they can speak more than the shapes can. For example a water sprite rising or lowering could represent the change in humidity. On the other hand it becomes more complex and time consuming to draw the sprites and even potentially animate them. Sprites also may have difficulty representing data that changes slowly, like temperature, and small changes to the data might be difficult to notice. The ideas are illustrated in  \figref{fig:visualizer_idea6} and in \figref{fig:visualizer_idea5}.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{preliminary/visualizer_idea6.png}
 	\caption{Room visualisation with sprites}
+	\label{fig:visualizer_idea6}
 \end{figure}
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{preliminary/visualizer_idea5.png}
 	\caption{Room visualisation with Potato Cat sprites}
+	\label{fig:visualizer_idea5}
 \end{figure}
 
 \subsubsection{Combination of sprites and shapes}
 
 Since sprites may not be able to represent the entire spectrum of data well enough, we could use a combination of sprites and shapes to represent data. Sprites could represent changes that happen more quickly in the environment, such as sound recognition or pressure, while temperature could be represented by colours.
 
-The problem with this approach is that it becomes less intuitive and more cluttered the more we add. While we could make the approach more complex, complexity often hurts intuitiveness. As a result, we would have to carefully balance the two in order to produce a good visual representation.
+The problem with this approach is that it becomes less intuitive and more cluttered the more we add. While we could make the approach more complex, complexity often hurts intuitiveness. As a result, we would have to carefully balance the two in order to produce a good visual representation. The idea is illustrated in \figref{fig:visualizer_idea7}
 
 \begin{figure}
 \includegraphics[width=\textwidth]{preliminary/visualizer_idea7.png}
 \caption{Room visualisation with sprites and shapes}
+\label{fig:visualizer_idea7}
 \end{figure}
 
 \subsection{Visualization Ideas Table}
