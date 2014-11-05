@@ -36,10 +36,12 @@
 % to make it possible to do 1.1 style enumerate
 \usepackage{enumitem}
 
-% adds command \fullref for \ref \nameref
-\newcommand*{\subsubfullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
-\newcommand*{\subfullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
-\newcommand*{\sectionfullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
+% adds commands \fullref for \ref \nameref
+\newcommand*{\subsubfullref}[1]{\hyperref[{#1}]{subsubsection \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\subfullref}[1]{\hyperref[{#1}]{subsection \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\sectionfullref}[1]{\hyperref[{#1}]{section \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\appendixfullref}[1]{\hyperref[{#1}]{Appendix \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
 
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
