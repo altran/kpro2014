@@ -36,6 +36,10 @@
 % to make it possible to do 1.1 style enumerate
 \usepackage{enumitem}
 
+% adds command \fullref for \ref \nameref
+\newcommand*{\subsubfullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
+\newcommand*{\subfullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
+\newcommand*{\sectionfullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
 
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
@@ -72,6 +76,9 @@
 \subfile{tex/sprint_3}
 
 
+\newpage
+\subfile{tex/project_work_progress}
+
 % start of appendixes
 \appendix
 
@@ -101,7 +108,7 @@
 
 % appendix D
 \newpage
-\section{Retierd documents}
+\section{Retired Documents}
 
 \newpage
 \subfile{tex/requirements_cast_1}

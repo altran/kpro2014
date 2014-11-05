@@ -36,43 +36,26 @@ For the problem regarding the fact that the gateway is behind a firewall, we fou
 \subsection{Changes in the documentation}
 
 \subsubsection{Requirements}
-In the first cast for the requirements, based on the smart room idea, we decided that the requirements should be divided into three levels. The first level would be the hardware level from the sensors to the software, the second level would be the visualiser, and the third level would manipulate the environment. The entire requirements document can be seen in (Appendix D - Requirements Cast 1, link this in latex appropriately). We have also planned other functions such as the ad-hoc connection model, which we have also later discarded. 
+In the first cast for the requirements, based on the smart room idea, we decided that the requirements should be divided into three levels. The first level would be the hardware level from the sensors to the software, the second level would be the visualiser, and the third level would manipulate the environment. The entire requirements document can be seen in \fullref{requirements_cast_1}. We have also planned other functions such as the ad-hoc connection model, which we have also later discarded. 
 
 The second cast for the requirements was made after we had found out that the third level was not necessary. In the second cast for the requirements we changed our focus to increase the visualiser function. We kept most of our user interaction from the first requirement, and removed the third level completely. The entire requirements document can be seen in (Appendix D - Requirements Cast 2, link this in latex appropriately).
-.
-The third cast for the requirements was the final version of the requirements document ( link this in latex appropriately). The customer wished for as little user interaction as possible. The customer also did not want a table view or a history view. We have kept the table view internally, but have focused our attention more on the integration and visualisation of the system.
-Architecture
 
-Our initial architecture was created for the smart room system. The first draft was never completed and is therefore somewhat empty and some places are more descriptions than completed subsections. The first draft of the architecture can be seen in Appendix D - Architecture. At first we wanted to use the Model-View-Controller pattern, but the customer expressed disagreements and instead wanted us to use the REST-style. He also had some comments to the quality attributes. Therefore we started to write a new architecture document according to the REST-style. We changed the quality attributes to go with a RESTful architecture including the comments the customer had given us. After some time the customer said he didn’t want a smart room, he only wanted ideas and a small visualization, therefore we needed to cut down on the architecture, and create new use cases and scenarios and an updated physical view. However most of the architecture was the same as we mostly focused on the REST-style, and not the implementation, so we did the changes in the final document. We also added the logical view, the development view and the process view to fit the tableview, historyview and mapview visualisation. Later in the project the customer wanted the visualization to become only one view, the map view, therefore we had to change some of the model views to make them match the new visualization. The old models,views and scenarios can be found under appendix D (i guess, latex people will have to look for the models and stuff in the report models).
+The third cast for the requirements was the final version of the requirements document, as seen in \fullref{requirements}. The customer wished for as little user interaction as possible. The customer also did not want a table view or a history view. We have kept the table view internally, but have focused our attention more on the integration and visualisation of the system.
 
-Test plan
+\subsubsection{Architecture}
+Our initial architecture was created for the smart room system. The first draft was never completed and is therefore somewhat empty and some places are more descriptions than completed subsections. The first draft of the architecture can be seen in \fullref{retired_architecture}. At first we wanted to use the Model-View-Controller pattern, but the customer expressed disagreements and instead wanted us to use the REST-style. He also had some comments to the quality attributes. Therefore we started to write a new architecture document according to the REST-style. We changed the quality attributes to go with a RESTful architecture including the comments the customer had given us. After some time the customer said he didn’t want a smart room, he only wanted ideas and a small visualization, therefore we needed to cut down on the architecture, and create new use cases and scenarios and an updated physical view. However most of the architecture was the same as we mostly focused on the REST-style, and not the implementation, so we did the changes in the final document. We also added the logical view, the development view and the process view to fit the tableview, historyview and mapview visualisation. Later in the project the customer wanted the visualization to become only one view, the map view, therefore we had to change some of the model views to make them match the new visualization. The old models,views and scenarios can be found under appendix D {\color{red}(i guess, latex people will have to look for the models and stuff in the report models)...... no I can't without knowing where they are}
 
+\subsubsection{Test plan}
 We started making a test plan as soon as the first requirement documentation was done. We did not, however, create an entire test plan. Rather than that, we had only made a checklist for what tests will be required. After that we put more time into designing the system and less time into testing the system. This was a good work balancing choice, since the requirements changed many times and with the requirement changes the test plan changed as well. The test plan in it’s current state was made after finalising the requirements document.
 
-Changes in the planning
+\subsection{Changes in the planning}
 
-Gantt
-
+\subsubsection{Gantt}
 When we first started the project we did extensive planning to accommodate the entire group in a healthy work schedule. A part of this was the Gantt diagram that can be seen in project planning. However, there is quite a big difference in the work progress and the Gantt diagram. The main difference is in the agile development; we had planned for three sprints of two weeks each, but in reality did four sprints of varying lengths. The first sprint lasted for three weeks, the second sprint lasted for two weeks, the third sprint lasted for ten days, while the fourth and last sprint lasted for two weeks. Change in schedule is to be expected when using agile methodology, however, it is difficult to execute when time is a limited resource. Therefore, the main reason that we strayed far away from the Gantt diagram is the changes implemented within the length of the project. 
 
 If we were aware of some notions before, such as the database implementation, we could have shortened our work process significantly. Therefore, miscommunication also played a part in us not being able to stay on the same schedule.
 
-Schedule of results
-
+\subsubsection{Schedule of results}
 The schedule of results, which can be found in the introduction of this document, has changed as well. The reasons for this change are much the same as for the Gantt diagram not being followed. However, the two main milestones, which is the pre-delivery to the external examiner, as well as the presentation have been followed. As these had to do with the actual course deadlines and not with the project milestones set by us they were of greater priority.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 \end{document}
