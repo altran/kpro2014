@@ -256,9 +256,11 @@ Pressure is represented by the purple balloon. It fills up for higher pressure.
 Humidity is represented by the blue waterdrop. It fills up for higher humidity.
 \end{itemize}
 
-\ \newline
-{\color{red} Unidentified screenshot here}
-\ \newline
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{sprint_2/mapviewscreenshot.png}
+	\caption{Map View}
+\end{figure}
 
 We have not yet managed to integrate the sensors into to our system. Neither have we managed to fully implement a replacement solution for the SQL-database. The current visualiser pulls data from an SQL-database every 5 seconds, and iterates through the data looking for changes. When the visualiser discovers a change, an animation is started that changes the appearance of the corresponding sensor. The transition is smooth, and without any glitches.
 
