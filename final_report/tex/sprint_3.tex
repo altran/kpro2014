@@ -10,7 +10,7 @@ The following chapter includes all the documentation regarding the third sprint.
 \subsection{Sprint planning}
 Our main goals in this sprint has been focused on integration of modules, testing, and improving the visualizer. We plan on using a total of 124 hours for this sprint for implementation and 150 hours for documentation. We have a total of five work days planned for this sprint, which translates to 40 hours per person and with 7 group members it totals to 280 hours of possible work time during the sprint. Just like in the past sprints, we will most likely overestimate the time to work. We feel that it is better to overestimate than underestimate the time taken, as we are able to have a time buffer, in case we encounter any problems.
 
-Most of the sprint workload will be split equally in between improving and documenting the visualizer, finishing the working prototype by integrating the database and sensors fully, and doing testing. Most of the tests in this sprint will be taken from the test plan document that can be found in appendix C, and therefore some tests may be repeated from previous sprints. We will also use substantial time to work on documentation during this sprint.
+Most of the sprint workload will be split equally in between improving and documenting the visualizer, finishing the working prototype by integrating the database and sensors fully, and doing testing. Most of the tests in this sprint will be taken from the test plan document that can be found in \appendixfullref{test_plan}, and therefore some tests may be repeated from previous sprints. We will also use substantial time to work on documentation during this sprint.
 
 \subsection{Sprint goal}
 The goal of this sprint is to make the visualiser look better, complete the prototype by integrating all the modules, and finish the system tests. Therefore we have three main goals this sprint:
@@ -110,7 +110,7 @@ For the last goal this sprint, the testing, we had planned on working for 48 hou
 As we had not planned for that many hours of implementation, half of the group was free to work on documentation and the report. We had done documentation pertaining to sprint 3, as well as documentation that is not pertaining to sprint 3.
 
 \subsection{Sprint Testing}
-This section covers the tests executed in this sprint, also including tests from the test plan, Appendix C.
+This section covers the tests executed in this sprint, also including tests from the test plan in \appendixfullref{test_plan}.
 
 \begin{table}[H]
 \caption{Test 1}
@@ -197,14 +197,17 @@ This section covers the tests executed in this sprint, also including tests from
 The tests have provided us with positive results. As can be seen from the first test, our database and server connection is working as expected. There were some problems regarding sensors, specifically on the hardware side, as one of the sensors could not read the temperature at all. As we have no direct control over the hardware, this may be a problem in the final showing of the prototype. The latter two tests were, however, quite positive and we are now able to show a full, final working version of the visualiser, without any mock up data.
 
 \subsection{Sprint result}
-During this sprint we finished all of our requirements (refer to requirement document) and most of our test scenarios (refer to test plan). We made the system work from the sensors to the visualiser and the system is believed to be mostly bug free as no bugs were encountered during tests. Because most of the program is easy to modify, we managed to finish this quickly, and any future development upon the system should be easier to implement.
+During this sprint we finished all of our requirements \sectionfullref{requirements} and most of our test scenarios in \appendixfullref{test_plan}. We made the system work from the sensors to the visualiser and the system is believed to be mostly bug free as no bugs were encountered during tests. Because most of the program is easy to modify, we managed to finish this quickly, and any future development upon the system should be easier to implement.
 
-A screenshot of our system working can be seen in image xx. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualiser more pleasing to look at. Also, we are pulling data directly from the database using an ip connection. The data is displayed in the same way as before. 
+A screenshot of our system working can be seen in figure \figfullref{fig:map_view_3}. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualiser more pleasing to look at. Also, we are pulling data directly from the database using an ip connection. The data is displayed in the same way as before. 
 
-\begin{figure}[H]
+\begin{figure}
+	Map View
+
 	\centering
 	\includegraphics[width=\textwidth]{sprint_3/Sprint3Visualiser.png}
 	\caption{Map View}
+	\label{fig:map_view_3}
 \end{figure}
 
 \subsection{Customer Review}
