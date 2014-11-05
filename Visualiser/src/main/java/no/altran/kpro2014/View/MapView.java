@@ -93,6 +93,9 @@ public class MapView extends Application{
     private boolean checkHumidity = true;
     private boolean checkPressure = true;
 
+    private double xScale;
+    private double yScale;
+    private double screenRatio;
 
     /**start method for the system, it requires a stage which we set to the size of the computer window the user have*/
     public void start(Stage stage) {
@@ -103,6 +106,7 @@ public class MapView extends Application{
         stage.setTitle("Map View");
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        screenRatio = stage.getWidth() / stage.getHeight();
 
         /**canvas is set a little smaller than the actual stage in order for the checkboxes to fit*/
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
@@ -122,6 +126,10 @@ public class MapView extends Application{
         Creates the central hub. This object is static.
          */
         final int TotalCHCount = roomModel.getGatewayList().size();
+
+        xScale = canvas.getWidth() / 150;
+        yScale = canvas.getHeight() / 150;
+
 
         /**
          *Animation timer for updating values. Whenever a new update in the data is called, we'll set the array lists to
@@ -217,22 +225,22 @@ public class MapView extends Application{
                         }
                         else {
                             temperatureInstruction = new TemperatureInstruction("S" + (i + 1), oldTemperature.get(i),
-                                    now, 10, oldPositionX.get(i), oldPositionY.get(i), canvas, checkTemperature);
+                                    now, 10, xWideScreenScale(oldPositionX.get(i)), oldPositionY.get(i), canvas, checkTemperature);
                             temperatureRender = new TemperatureRender();
                             temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                             sensorInstruction = new SensorInstruction("S" + (i + 1), oldLighting.get(i), now, 10,
-                                    oldPositionX.get(i) + 20, oldPositionY.get(i) + 20, canvas, checkLighting);
+                                    xWideScreenScale(oldPositionX.get(i)) + 20, oldPositionY.get(i) + 20, canvas, checkLighting);
                             sensorRender = new SensorRender();
                             sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                             humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                    oldPositionX.get(i) + 79, oldPositionY.get(i) + 50, canvas, checkHumidity);
+                                    xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 50, canvas, checkHumidity);
                             humidityRender = new HumidityRender();
                             humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, oldPositionX.get(i) + 79,
-                                    oldPositionY.get(i) + 25, canvas, checkPressure);
+                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE,
+                                    xWideScreenScale(oldPositionX.get(i)) + 79,oldPositionY.get(i) + 25, canvas, checkPressure);
                             pressureRender = new PressureRender();
                             pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                         }
@@ -411,13 +419,11 @@ public class MapView extends Application{
         }
     }
     private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
-        double xScale = canvas.getWidth()/100;
-        double linkBudget1 = Math.pow(xScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get()), 2);
-        double linkBudget2 = Math.pow(xScale*(roomModel.getSensorList().get(sensorNumber)
-                .getLinkbudget().get(roomModel.getGatewayList().get(1)).get()),2);
-        double X = (linkBudget1 - linkBudget2 + Math.pow(canvas.getWidth(),2))/(2*canvas.getWidth());
-//        X = X/xScale;
-        System.out.println("X position: " + X);
+        double linkBudget1 = xScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget()
+                .get(roomModel.getGatewayList().get(0)).get());
+        double linkBudget2 = xScale*(roomModel.getSensorList().get(sensorNumber)
+                .getLinkbudget().get(roomModel.getGatewayList().get(1)).get());
+        double X = (Math.pow(linkBudget1,2) - Math.pow(linkBudget2,2) + Math.pow(canvas.getWidth(),2))/(2*canvas.getWidth());
         if(list.size() <= sensorNumber){
             list.add(X);
         }
@@ -430,13 +436,10 @@ public class MapView extends Application{
     }
 
     private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
-        double xScale = canvas.getWidth()/100;
-        double linkBudget1 = Math.pow(xScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get()),2);
-        double linkBudget3 = Math.pow(xScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(2)).get()),2);
-        double Y = ((linkBudget1 - linkBudget3 + Math.pow(canvas.getWidth()/2,2) + Math.pow(canvas.getHeight(),2))/(2*canvas.getHeight()))-
+        double linkBudget1 = xScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get());
+        double linkBudget3 = yScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(2)).get());
+        double Y = ((Math.pow(linkBudget1,2) - Math.pow(linkBudget3,2) + Math.pow(canvas.getWidth()/2,2) + Math.pow(canvas.getHeight(),2))/(2*canvas.getHeight()))-
                 (canvas.getWidth()/2)/(canvas.getHeight())*X;
-//        Y = Y/yScale;
-        System.out.println("Y position: " + Y);
         if(list.size() <= sensorNumber){
             list.add(Y);
         }
@@ -505,6 +508,13 @@ public class MapView extends Application{
             return canvas.getHeight()-1.5*circleImage.getHeight();
         }
         return 90;
+    }
+
+    private double xWideScreenScale(double x){
+        x = x - canvas.getWidth()/2;
+        x = x* screenRatio;
+        x = x + canvas.getWidth()/2;
+        return x;
     }
 
     public static void main(String[] args) {
