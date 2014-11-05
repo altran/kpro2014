@@ -25,6 +25,17 @@ public class ManualAddDash7Data {
     static WebTarget queryResource;
     static String ip;
 
+
+    // Fields initialized to default values
+    private static String sensorID = "0";
+    private static String gatewayID = "192.168.1.1";
+    private static String temp = "20";
+    private static String light = "1000";
+    private static String humidity = "40";
+    private static String pressure = "50";
+    private static String lb = "50";
+
+
     public static void main(String[] args){
         System.out.println("### DASH7 POST ###");
         System.out.println();
@@ -35,15 +46,61 @@ public class ManualAddDash7Data {
             ip = "localhost";
         }
         queryResource = client.target("http://" + ip + ":4901/iot/observe/radiosensor");
-        System.out.print("Read from file(y/n):");
-        String input = new Scanner(System.in).nextLine();
-        if (input.equals("y") || input.equals("yes")){
-            ManualAddDash7Data.readFromFile();
-        }
-        else{
-            ManualAddDash7Data.manualData();
+
+        String input;
+        System.out.print("Assisted data post? (y/N): ");
+        input = new Scanner(System.in).nextLine();
+        if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
+            ManualAddDash7Data.assistedDataPost();
+            return;
         }
 
+        System.out.print("Read from file? (y/N): ");
+        input = new Scanner(System.in).nextLine();
+        if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
+            ManualAddDash7Data.readFromFile();
+            return;
+        }
+
+        System.out.print("Manual data post? (y/N): ");
+        input = new Scanner(System.in).nextLine();
+        if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
+            ManualAddDash7Data.manualDataPost();
+            return;
+        }
+    }
+
+
+    public static void assistedDataPost(){
+        while(true) {
+            System.out.print("Sensor ID (" + sensorID + "): ");
+            sensorID = readInt(sensorID);
+
+            System.out.print("Gateway ID (" + gatewayID + "): ");
+            gatewayID = readString(gatewayID);
+
+            System.out.print("Temperature (" + temp + "): ");
+            temp = readInt(temp);
+
+            System.out.print("Light (" + light + "): ");
+            light = readInt(light);
+
+            System.out.print("Humidity (" + humidity + "): ");
+            humidity = readInt(humidity);
+
+            System.out.print("Pressure (" + pressure + "): ");
+            pressure = readInt(pressure);
+
+            System.out.print("Link budget (" + lb + "): ");
+            lb = readInt(lb);
+
+            System.out.print("<Press enter to POST>");
+            new Scanner(System.in).nextLine();
+
+            // Post data
+            String data = buildDash7Data(sensorID, gatewayID, temp, light, humidity, pressure, lb);
+            ManualAddDash7Data.postData(data);
+        }
 
     }
 
@@ -64,129 +121,49 @@ public class ManualAddDash7Data {
             e.printStackTrace();
         }
 
-        int sleep = 1000;
-        Boolean manualPost;
-
-        System.out.print("Manual post(y/n):");
-        String input = new Scanner(System.in).nextLine();
-        if (input.equals("y") || input.equals("yes")){
-            manualPost = true;
-        }
-        else{
-            manualPost = false;
-            System.out.print("Sleep time:");
-            input = new Scanner(System.in).nextLine();
-            try{
-                sleep = Integer.parseInt(input);
-            }
-            catch (Exception e){
-                return;
-            }
-
-        }
-
-        int sensorID = 0;
-        int temp = 0;
-        int light = 0;
-        int humidity = 0;
-        int pressure = 0;
-        String gatewayID = "temp";
-
         for (JSONObject json : objList){
-            if (manualPost){
-                System.out.print("Next post:");
-                input = new Scanner(System.in).nextLine();
-            }
-            else{
-                try {
-                    Thread.sleep(sleep);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
             if (json.get("RadioSensorId") != null){
-                sensorID = Integer.parseInt((String) json.get("RadioSensorId"));
+                sensorID = (String) json.get("RadioSensorId");
             }
 
             if (json.get("tmp") != null){
-                temp = Integer.parseInt((String) json.get("tmp"));
+                temp = (String) json.get("tmp");
             }
 
             if (json.get("lig") != null){
-                light = Integer.parseInt((String) json.get("lig"));
+                light = (String) json.get("lig");
             }
             if (json.get("hum") != null){
-                humidity = Integer.parseInt((String) json.get("hum"));
+                humidity = (String) json.get("hum");
             }
             if (json.get("pre") != null){
-                pressure = Integer.parseInt((String) json.get("pre"));
+                pressure = (String) json.get("pre");
             }
 
-
-            String tempString = buildDash7String(sensorID, temp, light, humidity, gatewayID);
+            String tempString = buildDash7Data(sensorID, gatewayID, temp, light, humidity, pressure, lb);
             postData(tempString);
-
         }
-
     }
 
-    public static void manualData(){
-        String input;
-        int sensorID = 0;
-        int temp = 0;
-        int light = 0;
-        int humidity = 0;
-        int pressure = 0;
-        String gatewayID = "temp";
-        while(true) {
-            System.out.print("Sensor ID (" + sensorID + "): ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("")) {
-                sensorID = Integer.parseInt(input);
-            }
-
-            System.out.print("Gateway ID (" + gatewayID + "): ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("")) {
-                gatewayID = input;
-            }
-
-            System.out.print("Temperature (" + temp + "): ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("")) {
-                temp = Integer.parseInt(input);
-            }
-
-            System.out.print("Light (" + light + "): ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("")) {
-                light = Integer.parseInt(input);
-            }
-
-            System.out.print("Humidity (" + humidity + "): ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("")) {
-                humidity = Integer.parseInt(input);
-            }
-
-            System.out.print("Pressure (" + pressure + "): ");
-            input = new Scanner(System.in).nextLine();
-            if(!input.equals("")) {
-                pressure = Integer.parseInt(input);
-            }
-
-
-
-            System.out.print("<Press enter to POST>");
-            new Scanner(System.in).nextLine();
-
-
-            // Post data
-            String data = buildDash7String(sensorID, temp, light, humidity, gatewayID);
-            ManualAddDash7Data.postData(data);
+    private static void manualDataPost() {
+        while(true){
+            System.out.println("Next post: ");
+            postData(new Scanner(System.in).nextLine());
         }
+    }
 
+    private static String readInt(String defaultValue) {
+        String result = new Scanner(System.in).nextLine();
+        if (!result.matches("[0-9]+"))
+            result = defaultValue;
+        return result;
+    }
+
+    private static String readString(String defaultValue) {
+        String result = new Scanner(System.in).nextLine();
+        if (result.equals(""))
+            result = defaultValue;
+        return result;
     }
 
     private static void postData(String data) {
@@ -199,11 +176,19 @@ public class ManualAddDash7Data {
             System.out.println(response);
     }
 
-    public static String buildDash7String(int sensorId, int temp, int light, int humidity, String gateway) {
+    public static String buildDash7Data(String sensorId, String gateway, String temp, String light, String humidity, String pressure, String lb) {
         long now = System.currentTimeMillis();
-        String result = "{\"ts\":" + now + ",\"data\":{\"" + sensorId + "\":{\"uid\":\"001" +
-                "BC50C71000019\",\"ts\":" + now + ",\"tmp\":" + temp + ",\"sn\":190,\"lb\":90,\"lig\":" + light + ",\"rt\":0" +
-                ",\"hum\":" + humidity + "}},\"now\":" + now + "}" + gateway;
+        String result = "{\"ts\":" + now + ",\"data\":{\""+ sensorId + "\":{"
+                + "\"uid\":\"001" + "BC50C71000019\""
+                + ",\"ts\":" + now
+                + ",\"tmp\":" + temp
+                + ",\"lig\":" + light
+                + ",\"hum\":" + humidity
+                + ",\"pre\":" + pressure
+                + ",\"lb\":" + lb
+                + ",\"sn\":190"
+                + ",\"rt\":0"
+                + "}},\"now\":" + now + "}" + gateway;
         return result;
     }
 }
