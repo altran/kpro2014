@@ -7,9 +7,7 @@ import no.altran.kpro2014.Model.SensorModel;
 import no.altran.kpro2014.database.Observation;
 import no.altran.kpro2014.database.ObservationGetter;
 
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by shimin on 9/24/2014.
@@ -22,7 +20,7 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "http://78.91.29.174:4901";
+    private final String domain = "http://78.91.29.87:4901";
  //   private final String domain = "http://iot.altrancloud.com//";
     private final String path = "iot/observe";
 
@@ -30,7 +28,6 @@ public class Controller {
     public Controller(){
         this.roomModel = new RoomModel();
         this.getter = new ObservationGetter(domain, path);
-
         addGateways();
         addSensors();
         updateSensors();
@@ -69,8 +66,9 @@ public class Controller {
     private void updateBacklog(SensorModel sensor) {
         for (String gateway: getRoomModel().getGatewayList()){
             sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(0.00));
-        }
-        for (Observation obs : getter.getBacklogForSensor(sensor.getSensorID())) {
+        };
+        List<Observation> obsList = getter.getBacklogForSensor(sensor.getSensorID());
+        for (Observation obs : obsList) {
             String tempMeasure = obs.getMeasurements().get("hum");
             String gateway = obs.getRadioGatewayId();
             if (tempMeasure != null) {
@@ -150,16 +148,16 @@ public class Controller {
     public static void main(String[] args){
 
         Controller temp = new Controller();
-        for (SensorModel sensor : temp.getRoomModel().getSensorList()){
-            for (String hei : temp.getRoomModel().getGatewayList()){
-                try{
-                    System.out.println(hei + ", " + sensor.getSensorID() + ", "+ sensor.getLinkbudget().get(hei));
-                }
-                catch(Exception e){
-                    System.out.println("fail");
-                }
-            }
-        }
+//        for (SensorModel sensor : temp.getRoomModel().getSensorList()){
+//            for (String hei : temp.getRoomModel().getGatewayList()){
+//                try{
+//                    System.out.println(hei + ", " + sensor.getSensorID() + ", "+ sensor.getLinkbudget().get(hei));
+//                }
+//                catch(Exception e){
+//                    System.out.println("fail");
+//                }
+//            }
+//        }
     }
 
 }
