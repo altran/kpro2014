@@ -28,7 +28,6 @@ public class Controller {
     public Controller(){
         this.roomModel = new RoomModel();
         this.getter = new ObservationGetter(domain, path);
-
         addGateways();
         addSensors();
         updateSensors();
@@ -68,9 +67,8 @@ public class Controller {
         for (String gateway: getRoomModel().getGatewayList()){
             sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(0.00));
         };
-        List<Observation> ObsList = getter.getBacklogForSensor(sensor.getSensorID());
-        Collections.reverse(ObsList);
-        for (Observation obs : ObsList) {
+        List<Observation> obsList = getter.getBacklogForSensor(sensor.getSensorID());
+        for (Observation obs : obsList) {
             String tempMeasure = obs.getMeasurements().get("hum");
             String gateway = obs.getRadioGatewayId();
             if (tempMeasure != null) {

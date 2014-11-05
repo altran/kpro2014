@@ -132,6 +132,13 @@ public class ObservationGetter {
             return null;
         }
         else{
+            if (this.writeToFile){
+                for (Observation obs : observationList){
+                    this.doWriteToFile(obs);
+                }
+            }
+
+            Collections.reverse(observationList);
             return observationList;
         }
     }
@@ -139,6 +146,7 @@ public class ObservationGetter {
     private void doWriteToFile(Observation obs) {
         JSONObject obj = new JSONObject();
         obj.put("RadioSensorId", obs.getRadioSensorId());
+        obj.put("gatewayID", obs.getRadioGatewayId());
         obj.putAll(obs.getMeasurements());
         try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("database/src/main/Resources/observations.txt", true)))) {
             out.println(obj);
