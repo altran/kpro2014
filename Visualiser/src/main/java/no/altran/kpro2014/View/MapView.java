@@ -194,7 +194,7 @@ public class MapView extends Application{
                             counter++;
                         }
 
-                        if (inactiveS(diffTemperature, diffPressure, diffHumidity, diffLighting, i)){
+                        if (inactiveS(diffTemperature, diffPressure, diffHumidity, diffLighting, diffPositionX, diffPositionY, i)){
                             double temp = inactiveSensor.get(i) + 1;
                             inactiveSensor.set(i, temp);
                         }
@@ -202,45 +202,49 @@ public class MapView extends Application{
                             inactiveSensor.set(i, 0.0);
                         }
 
-                        if (inactiveSensor.get(i) > 216000){ //TODO might need to fix the oldPositionX() function
+                        if (inactiveSensor.get(i) > 300){
                             temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
-                                    now, 10, oldPositionX.get(i), oldPositionY.get(i), canvas, false);
+                                    now, 10, xWideScreenScale(oldPositionX.get(i)), oldPositionY.get(i), canvas, false);
                             temperatureRender = new TemperatureRender();
                             temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                             sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
-                                    oldPositionX.get(i)+20, oldPositionY.get(i)+20, canvas, false);
+                                    xWideScreenScale(oldPositionX.get(i)+20), oldPositionY.get(i)+20, canvas, false);
                             sensorRender = new SensorRender();
                             sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                             humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                    oldPositionX.get(i)+79, oldPositionY.get(i)+50, canvas, false);
+                                    xWideScreenScale(oldPositionX.get(i))+79, oldPositionY.get(i)+50, canvas, false);
                             humidityRender = new HumidityRender();
                             humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
-                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, oldPositionX.get(i)+79,
-                                    oldPositionY.get(i)+25, canvas, false);
+                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE,
+                                    xWideScreenScale(oldPositionX.get(i))+79, oldPositionY.get(i)+25, canvas, false);
                             pressureRender = new PressureRender();
                             pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                         }
                         else {
                             temperatureInstruction = new TemperatureInstruction("S" + (i + 1), oldTemperature.get(i),
-                                    now, 10, xWideScreenScale(oldPositionX.get(i)), oldPositionY.get(i), canvas, checkTemperature);
+                                    now, 10, xWideScreenScale(oldPositionX.get(i)),oldPositionY.get(i),
+                                    canvas, checkTemperature);
                             temperatureRender = new TemperatureRender();
                             temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                             sensorInstruction = new SensorInstruction("S" + (i + 1), oldLighting.get(i), now, 10,
-                                    xWideScreenScale(oldPositionX.get(i)) + 20, oldPositionY.get(i) + 20, canvas, checkLighting);
+                                    xWideScreenScale(oldPositionX.get(i)) + 20, oldPositionY.get(i) + 20,
+                                    canvas, checkLighting);
                             sensorRender = new SensorRender();
                             sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                             humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                    xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 50, canvas, checkHumidity);
+                                    xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 50,
+                                    canvas, checkHumidity);
                             humidityRender = new HumidityRender();
                             humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
                             pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE,
-                                    xWideScreenScale(oldPositionX.get(i)) + 79,oldPositionY.get(i) + 25, canvas, checkPressure);
+                                    xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 25,
+                                    canvas, checkPressure);
                             pressureRender = new PressureRender();
                             pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                         }
@@ -479,9 +483,11 @@ public class MapView extends Application{
         }
     }
 
-    private boolean inactiveS(ArrayList<Double> temp, ArrayList<Double> pres, ArrayList<Double> humi, ArrayList<Double> light, int i){
+    private boolean inactiveS(ArrayList<Double> temp, ArrayList<Double> pres, ArrayList<Double> humi, ArrayList<Double> light,
+                              ArrayList<Double> x, ArrayList<Double> y, int i){
         return (temp.get(i) < 0.001 && temp.get(i) > -0.001 && light.get(i) < 0.001 && light.get(i) > -0.001
-                && pres.get(i) < 0.001 && pres.get(i) > -0.001 && humi.get(i) < 0.001 && humi.get(i) > -0.001);
+                && pres.get(i) < 0.001 && pres.get(i) > -0.001 && humi.get(i) < 0.001 && humi.get(i) > -0.001 &&
+                x.get(i) < 0.001 && x.get(i) > -0.001 && y.get(i) < 0.001 && y.get(i) > -0.001);
     }
 
     private double gateWayPositionX(int CHNumber){
