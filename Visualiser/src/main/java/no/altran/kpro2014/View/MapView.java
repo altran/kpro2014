@@ -10,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -28,6 +29,7 @@ import no.altran.kpro2014.Interface.*;
 import no.altran.kpro2014.Model.RoomModel;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -86,6 +88,7 @@ public class MapView extends Application{
     private ArrayList<Double> diffPositionY = new ArrayList<Double>();
     private ArrayList<Double> inactiveSensor = new ArrayList<Double>();
     private ArrayList<Double> linkBudgets = new ArrayList<>();
+    private ArrayList<Point2D> gateWayList = new ArrayList<>();
     private int counter = 0;
 
     /**these are the checkboxes the user can interact with, this will turn off/on certain types of data  */
@@ -142,14 +145,16 @@ public class MapView extends Application{
         new AnimationTimer(){
             @Override
             public void handle(long now){
-
+                gateWayList.clear();
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                 for(int i = 0; i < TotalCHCount; i++){
+                    Point2D point2D = gateWayPosition(i);
                     centralHubInstruction = new CentralHubInstruction(circleImage, now, Long.MAX_VALUE,
-                            gateWayPositionX(i), gateWayPositionsY(i), canvas);
+                            point2D.getX(), point2D.getY(), canvas);
                     centralHubRenderer = new CentralHubRenderer();
                     centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+                    gateWayList.add(point2D);
                 }
 
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
@@ -158,8 +163,7 @@ public class MapView extends Application{
                     HumidityCheck(newHumidity, oldHumidity, i, roomModel);
                     PressureCheck(newPressure, oldPressure, i, roomModel);
                     TemperatureCheck(newTemperature, oldTemperature, i, roomModel);
-                    PositionXCheck(newPositionX, oldPositionX, i, roomModel);
-                    PositionYCheck(newPositionY, oldPositionY, i, newPositionX.get(i), roomModel);
+                    PositionCheck(newPositionX, oldPositionX, newPositionY, oldPositionY, i, roomModel);
 
                     diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure, inactiveSensor, diffPositionX, diffPositionY, i);
 
@@ -419,47 +423,69 @@ public class MapView extends Application{
             oldList.add(roomModel.getSensorModel(i).getTemperature());
         }
         if(list.size() > i){
-            list.set(i,roomModel.getSensorModel(i).getTemperature());
+            list.set(i, roomModel.getSensorModel(i).getTemperature());
         }
     }
 
-    private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
-        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
-            linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
+    private void PositionCheck(ArrayList<Double> positionXList, ArrayList<Double> oldXList,
+                               ArrayList<Double> positionYList, ArrayList<Double> oldYList, int sensorNumber, RoomModel roomModel){
+        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++) {
+            if(linkBudgets.size() > i){
+                linkBudgets.set(i, calculation.getLinkBudget(sensorNumber, roomModel, i));
+            }
+            if(linkBudgets.size() <= i){
+                linkBudgets.add(calculation.getLinkBudget(sensorNumber, roomModel, i));
+            }
         }
-        double X = calculation.xFormular(linkBudgets.get(0), linkBudgets.get(1), canvas);
-        if(list.size() <= sensorNumber){
-            list.add(X);
+        double X = calculation.formula(gateWayList, linkBudgets).getX();
+        double Y = calculation.formula(gateWayList, linkBudgets).getY();
+        if(positionXList.size() <= sensorNumber){
+            positionXList.add(X);
+            positionYList.add(Y);
         }
-        if(oldList.size() <= sensorNumber){
-            oldList.add(X);
+        if(oldXList.size() <= sensorNumber){
+            oldXList.add(X);
+            oldYList.add(Y);
         }
-        if(list.size() > sensorNumber){
-            list.set(sensorNumber,X);
+        if(positionXList.size() > sensorNumber){
+            positionXList.set(sensorNumber, X);
+            positionYList.set(sensorNumber, Y);
         }
     }
 
-    private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
-        linkBudgets.clear();
-        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
-            if(i <= 1){
-                linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
-            }
-            if(i == 2){
-                linkBudgets.add(calculation.scaleUp(yScale, sensorNumber, roomModel, i));
-            }
-        }
-        double Y = calculation.yFormular(linkBudgets.get(0), linkBudgets.get(2), canvas, X);
-        if(list.size() <= sensorNumber){
-            list.add(Y);
-        }
-        if(oldList.size() <= sensorNumber){
-            oldList.add(Y);
-        }
-        if(list.size() > sensorNumber){
-            list.set(sensorNumber,Y);
-        }
-    }
+
+//    private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
+//        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
+//            linkBudgets.add(calculation.getLinkBudget(sensorNumber, roomModel, i));
+//    }
+//        double X = calculation.formular(gateWayList, linkBudgets).getX();
+//        if(list.size() <= sensorNumber){
+//            list.add(X);
+//        }
+//        if(oldList.size() <= sensorNumber){
+//            oldList.add(X);
+//        }
+//        if(list.size() > sensorNumber){
+//            list.set(sensorNumber, X);
+//        }
+//    }
+//
+//    private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
+//        linkBudgets.clear();
+//        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
+//            linkBudgets.add(calculation.getLinkBudget(sensorNumber, roomModel, i));
+//        }
+//        double Y = calculation.formular(gateWayList,linkBudgets).getY();
+//        if(list.size() <= sensorNumber){
+//            list.add(Y);
+//        }
+//        if(oldList.size() <= sensorNumber){
+//            oldList.add(Y);
+//        }
+//        if(list.size() > sensorNumber){
+//            list.set(sensorNumber,Y);
+//        }
+//    }
 
     /**
         Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, inactive, i (loop));
@@ -498,34 +524,11 @@ public class MapView extends Application{
                 x.get(i) < 0.001 && x.get(i) > -0.001 && y.get(i) < 0.001 && y.get(i) > -0.001);
     }
 
-    private double gateWayPositionX(int CHNumber){
-        if(CHNumber == 0){
-            return 0;
-        }
-        else if(CHNumber == 1){
-            return canvas.getWidth() - circleImage.getWidth();
-        }
-        else if(CHNumber == 2){
-            return (canvas.getWidth() - circleImage.getWidth()/2)/2;
-        }
-        else{
-            return 0;
-        }
-    }
-
-    private double gateWayPositionsY(int CHNumber){
-        if(CHNumber == 0){
-            return 0;
-        }
-        else if(CHNumber == 1){
-            return 0;
-        }
-        else if(CHNumber == 2){
-            return canvas.getHeight()-1.5*circleImage.getHeight();
-        }
-        else{
-            return 0;
-        }
+    private Point2D gateWayPosition(int CHNumber){
+        double x = (canvas.getWidth()/2)*(Math.cos(2*Math.PI*CHNumber/TotalCHCount)+1);
+        double y = (canvas.getHeight()/2)*(Math.sin(2 * Math.PI * CHNumber /TotalCHCount)+1);
+        Point2D point = new Point2D(x, y);
+        return point;
     }
 
     private double xWideScreenScale(double x){
