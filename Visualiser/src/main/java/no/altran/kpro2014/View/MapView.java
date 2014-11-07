@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import no.altran.kpro2014.Controller.Controller;
@@ -97,11 +98,9 @@ public class MapView extends Application{
     private boolean checkHumidity = true;
     private boolean checkPressure = true;
 
-    /**Initialise variables for scaling, and initialises the central hub count variable*/
-    private double xScale;
-    private double yScale;
-    private double screenRatio;
+    /**Initialises the central hub count variable*/
     private int TotalCHCount;
+    private Line line;
 
     /**start method for the system, it requires a stage which we set to the size of the computer window the user have*/
     public void start(Stage stage) {
@@ -114,10 +113,13 @@ public class MapView extends Application{
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         stage.setFullScreen(true);
-        screenRatio = stage.getWidth() / stage.getHeight();
 
         /**canvas is set a little smaller than the actual stage in order for the checkboxes to fit*/
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
+        line = new Line(canvas.getWidth()/2, 0 , canvas.getWidth()/2, canvas.getHeight());
+        line.setStrokeWidth(20);
+        line.setStroke(Color.LIGHTSTEELBLUE);
+        line.setFill(Color.LIGHTSTEELBLUE);
 
         /**we also added some bloom and motionBlur to make the animation look better*/
         Bloom mainFX = new Bloom();
@@ -131,11 +133,6 @@ public class MapView extends Application{
         canvas.setEffect(mainFX);
         canvasHist = new Canvas(150, 400);
 
-        /**Set the scaling variables, and the total count of the centralHubs*/
-        TotalCHCount = roomModel.getGatewayList().size();
-        xScale = canvas.getWidth() / 150;
-        yScale = canvas.getHeight() / 150;
-
 
         /**
          *Animation timer for updating values. Whenever a new update in the data is called, we'll set the array lists to
@@ -145,6 +142,7 @@ public class MapView extends Application{
         new AnimationTimer(){
             @Override
             public void handle(long now){
+                TotalCHCount = roomModel.getGatewayList().size();
                 gateWayList.clear();
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -211,43 +209,43 @@ public class MapView extends Application{
 
                     if (inactiveSensor.get(i) > 18000){
                         temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
-                            now, 10, xWideScreenScale(oldPositionX.get(i)), oldPositionY.get(i), canvas, false);
+                            now, 10, oldPositionX.get(i), oldPositionY.get(i), canvas, false);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                         sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
-                            xWideScreenScale(oldPositionX.get(i)+20), oldPositionY.get(i)+20, canvas, false);
+                            oldPositionX.get(i)+20, oldPositionY.get(i)+20, canvas, false);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                         humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                            xWideScreenScale(oldPositionX.get(i))+79, oldPositionY.get(i)+50, canvas, false);
+                            oldPositionX.get(i)+79, oldPositionY.get(i)+50, canvas, false);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
                         pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE,
-                            xWideScreenScale(oldPositionX.get(i))+79, oldPositionY.get(i)+25, canvas, false);
+                            oldPositionX.get(i)+79, oldPositionY.get(i)+25, canvas, false);
                         pressureRender = new PressureRender();
                         pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                     }
                     else {
                         temperatureInstruction = new TemperatureInstruction("S" + (i + 1), oldTemperature.get(i),
-                            now, 10, xWideScreenScale(oldPositionX.get(i)),oldPositionY.get(i), canvas, checkTemperature);
+                            now, 10, oldPositionX.get(i),oldPositionY.get(i), canvas, checkTemperature);
                         temperatureRender = new TemperatureRender();
                         temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
 
                         sensorInstruction = new SensorInstruction("S" + (i + 1), oldLighting.get(i), now, 10,
-                            xWideScreenScale(oldPositionX.get(i)) + 20, oldPositionY.get(i) + 20, canvas, checkLighting);
+                            oldPositionX.get(i) + 20, oldPositionY.get(i) + 20, canvas, checkLighting);
                         sensorRender = new SensorRender();
                         sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
 
                         humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                            xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 50, canvas, checkHumidity);
+                            oldPositionX.get(i) + 79, oldPositionY.get(i) + 50, canvas, checkHumidity);
                         humidityRender = new HumidityRender();
                         humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
 
                         pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE,
-                            xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 25, canvas, checkPressure);
+                            oldPositionX.get(i) + 79, oldPositionY.get(i) + 25, canvas, checkPressure);
                         pressureRender = new PressureRender();
                         pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                     }
@@ -364,6 +362,7 @@ public class MapView extends Application{
         vBox.setSpacing(10);
         vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel, canvasHist);
 
+
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
         gPane.setVgap(0);
@@ -372,7 +371,7 @@ public class MapView extends Application{
         gPane.add(canvas, 0, 0);
         gPane.setStyle("-fx-background-color: black");
 
-        ((Group) scene.getRoot()).getChildren().addAll(gPane);
+        ((Group) scene.getRoot()).getChildren().addAll(gPane, line);
         stage.setScene(scene);
         stage.show();
     }
@@ -454,39 +453,6 @@ public class MapView extends Application{
     }
 
 
-//    private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
-//        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
-//            linkBudgets.add(calculation.getLinkBudget(sensorNumber, roomModel, i));
-//    }
-//        double X = calculation.formular(gateWayList, linkBudgets).getX();
-//        if(list.size() <= sensorNumber){
-//            list.add(X);
-//        }
-//        if(oldList.size() <= sensorNumber){
-//            oldList.add(X);
-//        }
-//        if(list.size() > sensorNumber){
-//            list.set(sensorNumber, X);
-//        }
-//    }
-//
-//    private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
-//        linkBudgets.clear();
-//        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
-//            linkBudgets.add(calculation.getLinkBudget(sensorNumber, roomModel, i));
-//        }
-//        double Y = calculation.formular(gateWayList,linkBudgets).getY();
-//        if(list.size() <= sensorNumber){
-//            list.add(Y);
-//        }
-//        if(oldList.size() <= sensorNumber){
-//            oldList.add(Y);
-//        }
-//        if(list.size() > sensorNumber){
-//            list.set(sensorNumber,Y);
-//        }
-//    }
-
     /**
         Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, inactive, i (loop));
      */
@@ -525,18 +491,12 @@ public class MapView extends Application{
     }
 
     private Point2D gateWayPosition(int CHNumber){
-        double x = (canvas.getWidth()/2)*(Math.cos(2*Math.PI*CHNumber/TotalCHCount)+1);
-        double y = (canvas.getHeight()/2)*(Math.sin(2 * Math.PI * CHNumber /TotalCHCount)+1);
+        double x = ((canvas.getWidth()-circleImage.getWidth())/2)*(Math.cos(2*Math.PI*CHNumber/TotalCHCount)+1);
+        double y = ((canvas.getHeight()-circleImage.getHeight())/2)*(Math.sin(2 * Math.PI * CHNumber /TotalCHCount)+1);
         Point2D point = new Point2D(x, y);
         return point;
     }
 
-    private double xWideScreenScale(double x){
-        x = x - canvas.getWidth()/2;
-        x = x* screenRatio;
-        x = x + canvas.getWidth()/2;
-        return x;
-    }
 
     public static void main(String[] args) {
         launch(args);
