@@ -53,6 +53,23 @@
 \newcommand*{\figref}[1]{\hyperref[{#1}]{Figure \ref*{#1}}}
 \newcommand*{\tableref}[1]{\hyperref[{#1}]{Table \ref*{#1}}}
 
+% Appearance of termianl listings
+\usepackage{listings}
+\definecolor{mybgcolor}{rgb}{0, 0, 0}
+\lstset{
+	language=bash,
+	backgroundcolor=\color{mybgcolor},  % set background color
+	frame=single,                   	% draw border
+	basicstyle=\ttfamily,           	% font
+	basicstyle=\ttfamily\color{white},
+	breakatwhitespace=true, % break lines if necessary
+	breaklines=true,    	%
+	tabsize=4,  	% indentation size
+	columns=flexible,   % preserve indentation
+	keepspaces=true,	%
+} 
+
+
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
@@ -121,7 +138,6 @@
 \subfile{tex/meeting_templates}
 
 % appendix C
-
 \newpage
 \section{Test Plan}
 
@@ -141,5 +157,11 @@
 \newpage
 \subfile{tex/retired_architecture}
 
+% appendix E
+\newpage
+\section{User Installation Guide}
+
+\newpage
+\subfile{tex/user_installation_guide}
 
 \end{document}
