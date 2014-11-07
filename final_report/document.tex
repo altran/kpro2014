@@ -34,6 +34,13 @@
 
 % hyperlink
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 
 % section numbering of figures and tables
 \usepackage{chngcntr}
@@ -74,7 +81,7 @@
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
 
-\subfile{tex/abstract}
+\abstract{\subfile{tex/abstract}}
 
 \newpage
 \subfile{tex/contents}
@@ -82,6 +89,9 @@
 \newpage
 \setcounter{page}{1}
 \renewcommand{\thepage}{\arabic{page}}
+
+\newpage
+\part{Planning \& Requirements}
 
 \newpage
 \subfile{tex/introduction_project_directive}
@@ -99,6 +109,9 @@
 \subfile{tex/architecture}
 
 \newpage
+\part{Sprints}
+
+\newpage
 \subfile{tex/sprint_1}
 
 \newpage
@@ -106,6 +119,9 @@
 
 \newpage
 \subfile{tex/sprint_3}
+
+\newpage
+\part{Evaluation \& Summary}
 
 \newpage
 \subfile{tex/detailed_implementation_document}
@@ -117,7 +133,13 @@
 \subfile{tex/project_work_progress}
 
 \newpage
+
 \subfile{tex/conclusion}
+
+\subfile{tex/project_reflection}
+
+\newpage
+\part{Appendices}
 
 % start of appendixes
 \appendix
@@ -125,8 +147,6 @@
 % appendix A
 \newpage
 \section{SomeTitle}
-
-
 
 \newpage
 \subfile{tex/third_party_tools}
@@ -159,9 +179,6 @@
 \subfile{tex/retired_architecture}
 
 % appendix E
-\newpage
-\section{User Installation Guide}
-
 \newpage
 \subfile{tex/user_installation_guide}
 
