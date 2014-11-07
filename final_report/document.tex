@@ -1,0 +1,166 @@
+\documentclass{article}
+% This is the main document.
+%
+% The different document parts are loaded using the 'subfiles' package.
+
+% special symbols
+\usepackage[T1]{fontenc}
+
+% For compiling subdocuments separately.
+\usepackage{subfiles}
+
+% To get automatic line breaks in tables.
+\usepackage{tabularx}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% format multiple page tables
+\usepackage{longtable}
+
+% Colors, mainly red
+\usepackage{color}
+
+% To include figures
+\usepackage{graphicx}
+
+% graphics path
+\graphicspath{{img/}{../img/}}
+
+% force figure placment
+\usepackage{float}
+
+% solutio for ``''''
+\usepackage[utf8]{inputenc}
+
+% hyperlink
+\usepackage{hyperref}
+
+% section numbering of figures and tables
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+
+% to make it possible to do 1.1 style enumerate
+\usepackage{enumitem}
+
+% adds commands \fullref for \ref \nameref
+\newcommand*{\subsubfullref}[1]{\hyperref[{#1}]{subsubsection \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\subfullref}[1]{\hyperref[{#1}]{subsection \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\sectionfullref}[1]{\hyperref[{#1}]{section \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\appendixfullref}[1]{\hyperref[{#1}]{Appendix \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
+\newcommand*{\figfullref}[1]{\hyperref[{#1}]{Figure \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\figref}[1]{\hyperref[{#1}]{Figure \ref*{#1}}}
+\newcommand*{\tableref}[1]{\hyperref[{#1}]{Table \ref*{#1}}}
+
+% Appearance of termianl listings
+\usepackage{listings}
+\definecolor{mybgcolor}{rgb}{0, 0, 0}
+\lstset{
+	language=bash,
+	backgroundcolor=\color{mybgcolor},  % set background color
+	frame=single,                   	% draw border
+	basicstyle=\ttfamily,           	% font
+	basicstyle=\ttfamily\color{white},
+	breakatwhitespace=true, % break lines if necessary
+	breaklines=true,    	%
+	tabsize=4,  	% indentation size
+	columns=flexible,   % preserve indentation
+	keepspaces=true,	%
+} 
+
+
+\begin{document}
+\renewcommand{\thepage}{\roman{page}}
+\subfile{tex/titlepage}
+
+\subfile{tex/abstract}
+
+\newpage
+\subfile{tex/contents}
+
+\newpage
+\setcounter{page}{1}
+\renewcommand{\thepage}{\arabic{page}}
+
+\newpage
+\subfile{tex/introduction_project_directive}
+
+\newpage
+\subfile{tex/project_planning}
+
+\newpage
+\subfile{tex/preliminary_study}
+
+\newpage
+\subfile{tex/requirements}
+
+\newpage
+\subfile{tex/architecture}
+
+\newpage
+\subfile{tex/sprint_1}
+
+\newpage
+\subfile{tex/sprint_2}
+
+\newpage
+\subfile{tex/sprint_3}
+
+\newpage
+\subfile{tex/detailed_implementation_document}
+
+\newpage
+\subfile{tex/project_evaluation}
+
+\newpage
+\subfile{tex/project_work_progress}
+
+\newpage
+\subfile{tex/project_reflection}
+
+% start of appendixes
+\appendix
+
+% appendix A
+\newpage
+\section{SomeTitle}
+
+\newpage
+\subfile{tex/third_party_tools}
+
+% appendix B
+\newpage
+\section{Meeting Templates}
+
+\newpage
+\subfile{tex/meeting_templates}
+
+% appendix C
+\newpage
+\section{Test Plan}
+
+\newpage
+\subfile{tex/test_plan}
+
+% appendix D
+\newpage
+\section{Retired Documents}
+
+\newpage
+\subfile{tex/requirements_cast_1}
+
+\newpage
+\subfile{tex/requirements_cast_2}
+
+\newpage
+\subfile{tex/retired_architecture}
+
+% appendix E
+\newpage
+\section{User Installation Guide}
+
+\newpage
+\subfile{tex/user_installation_guide}
+
+\end{document}
