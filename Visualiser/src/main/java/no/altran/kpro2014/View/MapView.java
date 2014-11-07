@@ -442,7 +442,12 @@ public class MapView extends Application{
     private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
         linkBudgets.clear();
         for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
-            linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
+            if(i <= 1){
+                linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
+            }
+            if(i == 2){
+                linkBudgets.add(calculation.scaleUp(yScale, sensorNumber, roomModel, i));
+            }
         }
         double Y = calculation.yFormular(linkBudgets.get(0), linkBudgets.get(2), canvas, X);
         if(list.size() <= sensorNumber){
