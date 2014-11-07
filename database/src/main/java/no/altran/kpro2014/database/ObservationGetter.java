@@ -118,6 +118,37 @@ public class ObservationGetter {
         return newestObservation;
     }
 
+    public Observation getMostRecentObservation(String sensorID, String gatewayID) {
+        String response = queryResource
+                .path(path).path("radiosensor")
+                .queryParam("query", "radiosensor:" + sensorID)
+                .request(MediaType.APPLICATION_JSON)
+                .get(String.class);
+        List<Observation> observationList = toObservationList(response);
+        if(observationList.isEmpty()) {
+            return null;
+        }
+        Observation newestObservation = observationList.get(0);
+        for(Observation obs : observationList) {
+            if (obs.getRadioGatewayId().equals(gatewayID)){
+                if (!newestObservation.getRadioGatewayId().equals(gatewayID)){
+                    newestObservation = obs;
+                }
+                else {
+                    if(observationDateComparator.compare(obs, newestObservation) > 0) {
+                        newestObservation = obs;
+                    }
+                }
+            }
+        }
+        if (newestObservation.getRadioGatewayId().equals(gatewayID)){
+            return newestObservation;
+        }
+        else{
+            return null;
+        }
+    }
+
     public List<Observation> getBacklogForSensor(String sensorID) {
         String response = queryResource
                 .path(path).path("radiosensor")
