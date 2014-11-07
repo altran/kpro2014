@@ -3,12 +3,19 @@
 %
 % The different document parts are loaded using the 'subfiles' package.
 
+% special symbols
+\usepackage[T1]{fontenc}
 
 % For compiling subdocuments separately.
 \usepackage{subfiles}
 
 % To get automatic line breaks in tables.
 \usepackage{tabularx}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% format multiple page tables
+\usepackage{longtable}
 
 % Colors, mainly red
 \usepackage{color}
