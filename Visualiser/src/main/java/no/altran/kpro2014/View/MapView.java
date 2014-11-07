@@ -41,6 +41,7 @@ public class MapView extends Application{
     /**controller and roomModel will gather the data we need, and update the data in time.*/
     private Controller controller;
     private RoomModel roomModel;
+    private Calculation calculation;
 
     /**the central hub is in the middle and is a static image*/
     private Image circleImage = new Image("images/CentralHub.png");
@@ -84,6 +85,7 @@ public class MapView extends Application{
     private ArrayList<Double> newPositionY = new ArrayList<Double>();
     private ArrayList<Double> diffPositionY = new ArrayList<Double>();
     private ArrayList<Double> inactiveSensor = new ArrayList<Double>();
+    private ArrayList<Double> linkBudgets = new ArrayList<>();
     private int counter = 0;
 
     /**these are the checkboxes the user can interact with, this will turn off/on certain types of data  */
@@ -103,6 +105,7 @@ public class MapView extends Application{
         long now = System.currentTimeMillis();
         Scene scene = new Scene(new Group());
         controller = new Controller();
+        calculation = new Calculation();
         roomModel = controller.getRoomModel();
         stage.setTitle("Map View");
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
@@ -202,7 +205,7 @@ public class MapView extends Application{
                         inactiveSensor.set(i, 0.0);
                     }
 
-                    if (inactiveSensor.get(i) > 216000){
+                    if (inactiveSensor.get(i) > 18000){
                         temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
                             now, 10, xWideScreenScale(oldPositionX.get(i)), oldPositionY.get(i), canvas, false);
                         temperatureRender = new TemperatureRender();
@@ -421,11 +424,10 @@ public class MapView extends Application{
     }
 
     private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
-        double linkBudget1 = xScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget()
-                .get(roomModel.getGatewayList().get(0)).get());
-        double linkBudget2 = xScale*(roomModel.getSensorList().get(sensorNumber)
-                .getLinkbudget().get(roomModel.getGatewayList().get(1)).get());
-        double X = (Math.pow(linkBudget1,2) - Math.pow(linkBudget2,2) + Math.pow(canvas.getWidth(),2))/(2*canvas.getWidth());
+        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
+            linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
+        }
+        double X = calculation.xFormular(linkBudgets.get(0), linkBudgets.get(1), canvas);
         if(list.size() <= sensorNumber){
             list.add(X);
         }
@@ -438,10 +440,11 @@ public class MapView extends Application{
     }
 
     private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
-        double linkBudget1 = xScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(0)).get());
-        double linkBudget3 = yScale*(roomModel.getSensorList().get(sensorNumber).getLinkbudget().get(roomModel.getGatewayList().get(2)).get());
-        double Y = ((Math.pow(linkBudget1,2) - Math.pow(linkBudget3,2) + Math.pow(canvas.getWidth()/2,2) + Math.pow(canvas.getHeight(),2))/(2*canvas.getHeight()))-
-                (canvas.getWidth()/2)/(canvas.getHeight())*X;
+        linkBudgets.clear();
+        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
+            linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
+        }
+        double Y = calculation.yFormular(linkBudgets.get(0), linkBudgets.get(2), canvas, X);
         if(list.size() <= sensorNumber){
             list.add(Y);
         }
