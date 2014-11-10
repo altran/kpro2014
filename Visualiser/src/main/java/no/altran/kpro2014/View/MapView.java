@@ -45,6 +45,7 @@ public class MapView extends Application{
     private Controller controller;
     private RoomModel roomModel;
     private Calculation calculation;
+    private Constants constants;
 
     /**the central hub is in the middle and is a static image*/
     private Image circleImage = new Image("images/CentralHub.png");
@@ -108,6 +109,7 @@ public class MapView extends Application{
         Scene scene = new Scene(new Group());
         controller = new Controller();
         calculation = new Calculation();
+        constants = new Constants();
         roomModel = controller.getRoomModel();
         stage.setTitle("Map View");
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
@@ -260,6 +262,8 @@ public class MapView extends Application{
         final CheckBox cBox2 = new CheckBox("Lighting");
         final CheckBox cBox3 = new CheckBox("Humidity");
         final CheckBox cBox4 = new CheckBox("Pressure");
+        final Label linkBudgetLabel = new Label("link budget: " + constants.minLinkBudget + " - " + constants.maxLinkBudget);
+        linkBudgetLabel.setTextFill(Color.WHITE);
         cBox1.setTextFill(Color.WHITE);
         cBox2.setTextFill(Color.WHITE);
         cBox3.setTextFill(Color.WHITE);
@@ -360,7 +364,7 @@ public class MapView extends Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel, canvasHist);
+        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel, canvasHist, linkBudgetLabel);
 
 
         final GridPane gPane = new GridPane();
