@@ -22,22 +22,24 @@ public class Calculation {
     public Point2D formula(ArrayList<Point2D> gateWayList, ArrayList<Double> linkBudgets){
         Point2D position = new Point2D(0.0, 0.0);
         double sum = 0;
+        double normalizedLinkBudget;
         for(int i = 0; i < gateWayList.size(); i++){
-            if(linkBudgets.get(i) <= 70){
+            normalizedLinkBudget = (linkBudgets.get(i) - constants.minLinkBudget) / (constants.maxLinkBudget-constants.minLinkBudget);
+            if(normalizedLinkBudget <= 0.75){
                 double temp = constants.maxLinkBudget- linkBudgets.get(i);
                 temp = Math.max(temp, constants.minLinkBudget);
                 temp = Math.min(temp, constants.maxLinkBudget);
                 position = position.add(gateWayList.get(i).multiply(temp));
                 sum += temp;
             }
-            else if(linkBudgets.get(i) > 70){
+            else if(normalizedLinkBudget > 0.75){
                 double temp = 0;
                 position = position.add(gateWayList.get(i).multiply(temp));
                 sum += temp;
             }
         }
-
         position = position.multiply(1/sum);
         return position;
     }
+
 }
