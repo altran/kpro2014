@@ -3,7 +3,9 @@ package no.altran.kpro2014.Interface;
 import javafx.scene.canvas.Canvas;
 
 /**
- * Created by juliejk on 08.10.2014.
+ * This class extends the Instruction interface to make a HumidityInstruction that contains all information of humidity
+ * data, which is the data itself, when it should start and how long the animation gonna last, where the image is gonna
+ * be rendered, in which canvas and if the checkbox is unchecked to hide it or not.
  */
 public class HumidityInstruction implements Instruction {
 

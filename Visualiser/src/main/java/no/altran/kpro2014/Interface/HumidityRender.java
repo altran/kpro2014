@@ -4,7 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.*;
 
 /**
- * Created by juliejk on 08.10.2014.
+ * This class extends the renderer interface by taking an instruction and using information from the instruction to
+ * paint a single image with those data.
  */
 public class HumidityRender implements Renderer {
 
@@ -20,11 +21,19 @@ public class HumidityRender implements Renderer {
                 graphicsContext.beginPath();
                 graphicsContext.moveTo(x, y);
                 graphicsContext.bezierCurveTo(x + 30, y + 35, x - 30, y + 35, x, y);
-                double white = 1 - (humidity / 100);
-                double blue;
-                if (humidity == 100) {
-                    blue = 0;
-                } else {
+                double white = 0.01;
+                double blue = 1;
+
+                if (humidity >= 0 && humidity <= 100) {
+                    white = 1 - (humidity / 100);
+                    if (humidity == 100) {
+                        blue = 0;
+                    } else {
+                        blue = 1;
+                    }
+                }
+                else if (humidity < 0){
+                    white = 1;
                     blue = 1;
                 }
                 graphicsContext.setFill(new LinearGradient(1, 0, 1, 1, true,

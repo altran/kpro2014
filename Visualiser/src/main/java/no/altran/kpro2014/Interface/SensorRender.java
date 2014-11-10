@@ -4,7 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
- * Created by shimin on 10/3/2014.
+ * This class extends the renderer interface by taking an instruction and using information from the instruction to
+ * paint a single image with those data.
  */
 public class SensorRender implements Renderer{
 
@@ -36,7 +37,7 @@ public class SensorRender implements Renderer{
             /*
             Set the colour of the text and the text position.
              */
-                if (temp < 70){
+                if (temp < 65){
                     color = Color.WHITE;
                 }
                 else color = Color.BLACK;

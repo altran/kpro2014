@@ -1,4 +1,5 @@
 \documentclass{article}
+
 % This is the main document.
 %
 % The different document parts are loaded using the 'subfiles' package.
@@ -11,8 +12,11 @@
 
 % To get automatic line breaks in tables.
 \usepackage{tabularx}
+% adds new commands for resizing column
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+% renew the X command in tabularx to raggedright
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}m{#1}}
 
 % format multiple page tables
 \usepackage{longtable}
@@ -86,8 +90,25 @@
 % Appearence of the part style
 \usepackage{sectsty}
 \partfont{\Huge\centering}
-%\sectionfont{\LARGE}
+
+% Spacing after title 
 \usepackage{titlesec}
+\titlespacing\section{0pt}{0pt}{20pt}
+
+
+% Adding penalty for pagebreak between lines.
+\interlinepenalty 10000
+
+
+\begin{document}
+\renewcommand{\thepage}{\roman{page}}
+\subfile{tex/titlepage}
+
+\abstract{\subfile{tex/abstract}}
+
+\newpage
+\subfile{tex/contents}
+
 \titleformat
 {\section} % command
 [display] % shape
@@ -104,17 +125,6 @@
 \vspace{0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
-
-
-
-\begin{document}
-\renewcommand{\thepage}{\roman{page}}
-\subfile{tex/titlepage}
-
-\abstract{\subfile{tex/abstract}}
-
-\newpage
-\subfile{tex/contents}
 
 \newpage
 \setcounter{page}{1}

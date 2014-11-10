@@ -10,7 +10,7 @@ We are using goal driven requirement development methods to gather our requireme
 
 In our brainstorming session for possible use cases we concluded that the best use for our system will be in a smart room implementation. By smart room we mean a room where all of the environmental details are recorded and the system will interact with other equipment such as an air conditioner to manipulate the environment.
 
-\subsubsection{Top goal of the system}
+\subsubsection{Top Goal of the System}
 \begin{itemize}
 	\item
 	Keep stable temperature, lighting, humidity, noise, pressure and tracking
@@ -114,7 +114,7 @@ In our brainstorming session for possible use cases we concluded that the best u
 	\end{itemize}
 \end{itemize}
 
-\subsubsection{Temperature functional requirements}
+\subsubsection{Temperature Functional Requirements}
 We will make a UI for the whole system, one of the windows will be temperature exclusively. That window will display information about average temperature in the room, both current and from the log. The system will also be capable of showing individual sensor data.
 
 From the UI one can change the desired temperature. We will provide a default profile at 25 degrees in the room, but it will be changeable from the UI to any reasonable (15-35) temperature. The system then will use this data to control all temperature adjustment units like air conditioning or heaters to reach that specific temperature.
@@ -345,7 +345,7 @@ Pressure in a room should stay stable all the time, but under rare conditions it
 \end{tabularx}
 \end{table}
 
-\subsubsection{Tracking Functional Requirement}
+\subsubsection{Tracking Functional Requirements}
 The sensors contain some possibility to track in a 2D or 3D environment. The system might use this information in different ways. It may warn people closing in on a restricted area, or do specific actions when people enter or leave a room.
 
 From what we know from the devices, this capability may be limited, or not useful at all, so we have given it a low priority.
@@ -406,7 +406,7 @@ If we do implement tracking for future use, the system should contain a UI with 
 \end{tabularx}
 \end{table}
 
-\subsubsection{Database interaction requirement}
+\subsubsection{Database Interaction Requirements}
 There will be a database where the data collected from the sensors is stored. The data will include time of recording, temperature, lighting, humidity, noise, pressure, tracking and maybe more. The user can later retrieve this data and see the log for any unusual events or just to get a general idea of the room they are in. If the user does not specify the time interval it will be chosen automatically.  
 
 \begin{table}[H]
