@@ -4,13 +4,6 @@
 \begin{document}
 
 \section{Sprint 2}
-\subsection{Latex Notes}
-\begin{enumerate}
-\item
-more subsubsections, there is only subsections.
-\item
-screenshot in google doc not found in drive.
-\end{enumerate}
 \subsection{Introduction}
 The following chapter includes all the documentation regarding the second sprint. The sprint will take place from October 6 and conclude on October 17. During this sprint, the team will make a working visualization.
 
@@ -277,9 +270,9 @@ The customer is still located in Oslo, so all our meetings with the customer is 
 
 In an email received from the customer at the beginning of the sprint, we were informed that Altran had a working database solution with a restful API, and that they used it to store data collected by their own sensors. It was required that we should use the same JSON format as Altran:
 
-\begin{quote}
+\begin{italicquotation}
 We wish for you to use the same JSON format as us to provide interoperability. You’re free to use the code (especially for conversion) as base.
-\end{quote}
+\end{italicquotation}
 
 The customer also expressed his wishes for us to push our data to their database. This email was the basis for our decision to scrap our previous JSON-based Cloudant store. Instead it was decided that we should implement a new database solution during the course of the sprint, being as compliant as possible to the code of the database solution developed by Altran. This was made a high priority task. This decision was made to minimize the risk of future change requirements. Although it was conceivable at that point to simply adapt the cloudant store to the new JSON format, we would still have to get into their database API in order to push data as requested. The difference in work hours seemed small.
 

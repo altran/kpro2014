@@ -18,6 +18,11 @@
 % renew the X command in tabularx to raggedright
 \renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}m{#1}}
 
+% new environment for quatations
+\newenvironment{italicquotation}
+ {\begin{quotation}\itshape}
+ {\end{quotation}}
+
 % format multiple page tables
 \usepackage{longtable}
 
