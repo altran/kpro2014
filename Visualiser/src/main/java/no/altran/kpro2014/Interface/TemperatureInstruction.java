@@ -3,7 +3,10 @@ package no.altran.kpro2014.Interface;
 import javafx.scene.canvas.Canvas;
 
 /**
- * Created by Nenad on 06/10/2014.
+ * This class extends the Instruction interface to make a TemperatureInstruction that contains all information of
+ * temperature data, which is the data it self, when it should start animation and how long the animation gonna last,
+ * where the image is gonna be rendered, in which canvas and if the checkbox is unchecked to hide it or not.
+ * In additon to all that we also have the sensor id number just in case if the user checks off lighting in the checkbox.
  */
 public class TemperatureInstruction implements Instruction{
 

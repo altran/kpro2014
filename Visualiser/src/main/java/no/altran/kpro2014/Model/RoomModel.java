@@ -1,8 +1,8 @@
 package no.altran.kpro2014.Model;
 
 
-
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shimin on 9/24/2014.7
@@ -11,13 +11,19 @@ import java.util.ArrayList;
 public class RoomModel {
 
     private ArrayList<SensorModel> sensorList;
+    private List<String> gatewayList;
 
     public RoomModel(){
         sensorList = new ArrayList<SensorModel>();
+        gatewayList = new ArrayList<String>();
     }
 
     public SensorModel getSensorModel(int id){
         return sensorList.get(id);
+    }
+
+    public List<String> getGatewayList() {
+        return gatewayList;
     }
 
     public int getSensorNumber(){

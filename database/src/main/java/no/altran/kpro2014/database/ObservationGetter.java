@@ -2,6 +2,7 @@ package no.altran.kpro2014.database;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import javax.ws.rs.ServiceUnavailableException;
@@ -11,6 +12,10 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -21,6 +26,7 @@ public class ObservationGetter {
     private String path;
     private Client client;
     private WebTarget queryResource;
+    private boolean writeToFile;
 
     // Variables for comparing new observation to the last observation received.
     private Observation lastObservation;
@@ -44,6 +50,10 @@ public class ObservationGetter {
         };
     }
 
+    public void setWriteToFile(boolean writeToFile) {
+        this.writeToFile = writeToFile;
+    }
+
     //TODO take in gateway
     public List<String> getAllSensorIDs() {
         List<String> idList = null;
@@ -54,6 +64,23 @@ public class ObservationGetter {
                     .get(String.class);
             Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
             Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioSensorIds");
+            idList = new ArrayList<String>();
+            idList.addAll(idObjectList.keySet());
+        } catch (ServiceUnavailableException e) {
+            return null;
+        }
+        return idList;
+    }
+
+    public List<String> getAllGatewaysIDs() {
+        List<String> idList = null;
+        try {
+            String response = queryResource
+                    .path(path).path("radiogateways")
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(String.class);
+            Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
+            Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioGatewayIds");
             idList = new ArrayList<String>();
             idList.addAll(idObjectList.keySet());
         } catch (ServiceUnavailableException e) {
@@ -89,6 +116,34 @@ public class ObservationGetter {
             }
         }
         return newestObservation;
+    }
+
+    public List<Observation> getBacklogForSensor(String sensorID) {
+        String response = queryResource
+                .path(path).path("radiosensor")
+                .queryParam("query", "radiosensor:" + sensorID)
+                .request(MediaType.APPLICATION_JSON)
+                .get(String.class);
+        List<Observation> observationList = toObservationList(response);
+        if(observationList.isEmpty()) {
+            return null;
+        }
+        else{
+            Collections.reverse(observationList);
+            return observationList;
+        }
+    }
+
+    public void doWriteToFile(Observation obs, String filename) {
+        JSONObject obj = new JSONObject();
+        obj.put("RadioSensorId", obs.getRadioSensorId());
+        obj.put("gatewayID", obs.getRadioGatewayId());
+        obj.putAll(obs.getMeasurements());
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("database/src/main/Resources/"+ filename, true)))) {
+            out.println(obj);
+        }catch (IOException e) {
+            //exception handling left as an exercise for the reader
+        }
     }
 
     // TODO: This method uses tail. It should instead query for observations by specifying time.

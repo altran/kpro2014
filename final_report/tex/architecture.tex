@@ -6,9 +6,9 @@
 \section{Architecture}
 \label{architecture}
 \subsection{Introduction}
-This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in appendix D. The sensors and the rasberry pi were already connected together by Altran so we will not write the architecture between the sensors and the rassberry pi. The rasberry pi and the datacollector will use the REST style to communicate and is implemented by one of us. The connection between the database and the user interface will follow Altran's framework for their database/GUI connection.
+This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in appendix D. The sensors and the rasberry pi were already connected together by Altran so we will not write the architecture between the sensors and the Raspberry Pi. The rasberry pi and the datacollector will use the REST style to communicate and is implemented by one of us. The connection between the database and the user interface will follow Altran's framework for their database/GUI connection.
 
-\subsection{Quality attributes}
+\subsection{Quality Attributes}
 \subsubsection{Functionality}
 The system consists of multiple sensor devices, a central hub, and one or more client devices. The sensors gather data from an environment, such as temperature, light level, or sound, and move it to a central hub. A client device collects sensor data from the central hub, and visualizes the data in a grand manner.
 
@@ -18,14 +18,14 @@ The system is a real time system, and changes in the environment is registered a
 \subsubsection{Scalability}
 The system is scaleable to a large degree, and supports adding many sensor devices.
 
-\subsubsection{Modifiability of components}
+\subsubsection{Modifiability of Components}
 The software is easy to alter or configure, to ease system modifications such as moving or removing components, or relocating the system.
 
-\subsubsection{Portability of components}
+\subsubsection{Portability of Components}
 The program code for both the central hub and the sensors is portable, making the system hardware replaceable. This is to ensure that a customer is not tied to any specific supplier. The data should be stored in a database.
 
-\subsection{Architectural styles}
-\subsubsection{Representational state transfer (REST)}
+\subsection{Architectural Styles}
+\subsubsection{Representational State Transfer (REST)}
 We plan to make a system with a RESTful similarity between the collector and the central hub. The architectural style REST focus on how components, connectors and data elements works together within a distributed hypermedia system. REST will accomplish that by having a set of architectural constraints that applies to all modules and their relations. The individual module is not concerned in REST architecture, meaning that the implementation is not that important. The architectural constraints applied by REST can be found under the next subsection architectural constraints. REST is used as a description of the wanted web architecture. We use it to find and identify problems in our system architecture and make sure our system should follow the constraint we find to be more important. As in any software architecture the components, the connectors and the data elements are used to find what architectural properties are most needed in the system. Our components, connectors and data elements are as listed:
 
 \begin{table}[H]
@@ -40,7 +40,7 @@ We plan to make a system with a RESTful similarity between the collector and the
 
 We are using the REST style as guidelines, and therefore it may be some inconsistencies between our system and a RESTful system. 
 
-\subsection{Architectural constraints}
+\subsection{Architectural Constraints}
 REST has some formal constraints we have to follow. If the system does not follow these constraints the system does not have RESTful architecture. They are all written with an interest to our system and architecture.
 
 \subsubsection{Client-Server}
@@ -52,13 +52,13 @@ When the data collector asks for a data update from the central hub, all the inf
 \subsubsection{Cacheable}
 The data collectors in our system will be able to cache the data it receives from the central hub before it pushes the data into the database. Data collectors can therefore lookup data in its cache if it needs the data once more without sending a new request to the central hub. This will improve the scalability and the performance. 
 
-\subsubsection{Layered system}
+\subsubsection{Layered System}
 Our system might not be layered, so the data collector will most likely know for certain that it is connected to the central hub. This is not usually how the REST architecture acts, however we are only having a RESTful system as a framework. 
 
-\subsubsection{Code on demand (optional)}
+\subsubsection{Code on Demand}
 This is the only architectural constraint that is optional with the REST architecture, and we have decided it is not going to be a concern with our system. However, the formal description of this constraint is: Code on demand allows clients to improve its flexibility by temporarily letting the servers extend or customize the functionality of a client. This is done by transferring executable code.
 
-\subsubsection{Uniform interface}
+\subsubsection{Uniform Interface}
 This constraint is used to make the architecture simpler and helps every individual part of the system to evolve independently. The uniform interface is split into four different guidelines.
 
 \paragraph{Identification of resources} \ \\
@@ -73,20 +73,20 @@ All the client requests and server responses are messages, and in a RESTful appl
 \paragraph{Hypermedia as the engine of application state (A.K.A. HATEOAS)}
 The principle that hypermedia is the engine of application state means that a REST client does not need to have any understanding of how to interact with any application or server beyond a generic understanding of hypermedia. In other words, except for simple entry points in the application, a client does not make any state transitions without hypermedia dynamically provided by the server. 
 
-\subsection{Architectural tactics}
+\subsection{Architectural Tactics}
 \subsubsection{Performance}
 To achieve the performance attribute we will let the client be able to cache the data it receives from the server before it pushes it into the database. In this way the client can lookup data in its cache without sending a new request to the server.
 
 \subsubsection{Scalability}
 As mentioned earlier, the server will not be worrying about any kind of user interference, status or UI and, the client will be able to lookup data in its cache if it needs it once more. This makes the server more scalable.
 
-\subsubsection{Modifiability of components}
+\subsubsection{Modifiability of Components}
 To ensure that the system can be easily changed we will use the abstract common services tactic. To abstract common services is when services that provide similar services is implemented once in a general module instead of many times in slightly different but more specific modules. When the common services are abstracted, modifications to them will need to be made to only one module instead of in each module where the services are used. This tactic also supports the prevention of ripple effects because the modifications to the modules that uses these services will not impact other modules.
 
-\subsubsection{Portability of components}
+\subsubsection{Portability of Components}
 To improve the portability we will only let the client ask for data from the server, and not store any data. In this way, the client does not need to worry about the storage and this improves the portability of the code for the client.
 
-\subsection{Stakeholders and concerns}
+\subsection{Stakeholders and Concerns}
 \begin{table}[H]
 	\caption{Stakeholders}
 	\begin{tabularx}{\textwidth}{|X|X|}
@@ -113,11 +113,11 @@ To improve the portability we will only let the client ask for data from the ser
 
 \paragraph{Hardware suppliers:} The hardware suppliers in this project are the developers of the components used in this project. They are delivering all of the parts needed for the sensors and the central hub.
 
-\subsection{Architectural views}
+\subsection{Architectural Views}
 \subsubsection{Introduction}
 In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture. We chose this view model because it allows us to handle the functional and nonfunctional requirements separately, and also address the different concerns of the various stakeholders separately. 
 
-\subsubsection{Logical view}		
+\subsubsection{Logical View}		
 The logical view is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the client, the database, the gui, the gatherer, the server, and the sensors. 
 
 
@@ -127,7 +127,7 @@ The logical view is primarily concerned with the functional requirements. In oth
 	\caption{Logical View}
 \end{figure}
 
-\subsubsection{Development view}
+\subsubsection{Development View}
 The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualizer get this information from the database.
 
 \begin{figure}[H]
@@ -136,7 +136,7 @@ The development view, also known as the implementation view,  presents the syste
 	\caption{Development View}
 \end{figure}
 
-\subsubsection{Process view}
+\subsubsection{Process View}
 The process view considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
 
 \begin{figure}[H]
@@ -145,7 +145,7 @@ The process view considers the dynamic aspects of the system. It explains the sy
 	\caption{Process View}
 \end{figure}
 
-\subsubsection{Physical view}
+\subsubsection{Physical View}
 The physical view, also known as the deployment view, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from a data collector mock. The user interface gets information from the database.
 
 \begin{figure}[H]
@@ -154,7 +154,7 @@ The physical view, also known as the deployment view, is concerned with the topo
 	\caption{System Diagram}
 \end{figure}
 
-\subsubsection{Scenarios and use cases}
+\subsubsection{Scenarios and Use Cases}
 \paragraph{Scenarios} \ \\
 The scenarios view, also known as the use case view, describe sequences of interactions between objects, and between processes. They are used to identify architectural elements and to illustrate and validate the architecture design. They also serve as a starting point for tests of an architecture prototype.
 
