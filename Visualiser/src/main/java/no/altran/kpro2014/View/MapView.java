@@ -375,7 +375,7 @@ public class MapView extends Application{
         gPane.add(canvas, 0, 0);
         gPane.setStyle("-fx-background-color: black");
 
-        ((Group) scene.getRoot()).getChildren().addAll(gPane, line);
+        ((Group) scene.getRoot()).getChildren().addAll(gPane);
         stage.setScene(scene);
         stage.show();
     }
