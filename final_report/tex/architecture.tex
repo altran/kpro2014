@@ -115,10 +115,11 @@ Because the program code for both the central hub and the sensors is portable, t
 
 \subsection{Architectural Views}
 \subsubsection{Introduction}
-In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture. We chose this view model because it allows us to handle the functional and nonfunctional requirements separately, and also address the different concerns of the various stakeholders separately. 
+In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture. We chose this view model because it allows us to handle the functional and nonfunctional requirements separately, and also address the different concerns of the various stakeholders separately. The client and the database are the same in our system, however in the views we seperate them to see how the client side of the database works.
+
 
 \subsubsection{Logical View}		
-The logical view is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the client, the database, the gui, the gatherer, the server, and the sensors. 
+The logical view is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the database, the gui, the gatherer, the server, and the sensors. 
 
 
 \begin{figure}[H]
@@ -128,7 +129,7 @@ The logical view is primarily concerned with the functional requirements. In oth
 \end{figure}
 
 \subsubsection{Development View}
-The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualizer get this information from the database.
+The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualizer pulls the information from the database.
 
 \begin{figure}[H]
 	\centering
@@ -146,7 +147,7 @@ The process view considers the dynamic aspects of the system. It explains the sy
 \end{figure}
 
 \subsubsection{Physical View}
-The physical view, also known as the deployment view, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from a data collector mock. The user interface gets information from the database.
+The physical view, also known as the deployment view, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from mock-up data. The user interface gets information from the database.
 
 \begin{figure}[H]
 	\centering
