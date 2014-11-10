@@ -33,7 +33,23 @@
 \usepackage[utf8]{inputenc}
 
 % hyperlink
+%\PassOptionsToPackage{hyphens}{url}
 \usepackage{hyperref}
+\usepackage{breakurl}
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks% save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z\do\*\do\-\do\~\do\'\do\"\do\-}%
+
+
+\hypersetup{
+    colorlinks,
+    linkcolor=black,
+    urlcolor=blue
+}
 
 % section numbering of figures and tables
 \usepackage{chngcntr}
@@ -74,7 +90,7 @@
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
 
-\subfile{tex/abstract}
+\abstract{\subfile{tex/abstract}}
 
 \newpage
 \subfile{tex/contents}
@@ -82,6 +98,9 @@
 \newpage
 \setcounter{page}{1}
 \renewcommand{\thepage}{\arabic{page}}
+
+\newpage
+\part{Planning \& Requirements}
 
 \newpage
 \subfile{tex/introduction_project_directive}
@@ -99,6 +118,9 @@
 \subfile{tex/architecture}
 
 \newpage
+\part{Sprints}
+
+\newpage
 \subfile{tex/sprint_1}
 
 \newpage
@@ -108,16 +130,25 @@
 \subfile{tex/sprint_3}
 
 \newpage
-\subfile{tex/detailed_implementation_document}
+\part{Evaluation \& Summary}
 
 \newpage
-\subfile{tex/project_evaluation}
+\subfile{tex/detailed_implementation_document}
 
 \newpage
 \subfile{tex/project_work_progress}
 
 \newpage
+\subfile{tex/project_evaluation}
+
+\newpage
+\subfile{tex/conclusion}
+
+\newpage
 \subfile{tex/project_reflection}
+
+\newpage
+\part{Appendices}
 
 % start of appendixes
 \appendix
@@ -157,9 +188,6 @@
 \subfile{tex/retired_architecture}
 
 % appendix E
-\newpage
-\section{User Installation Guide}
-
 \newpage
 \subfile{tex/user_installation_guide}
 

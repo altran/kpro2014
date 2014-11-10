@@ -3,9 +3,11 @@
 \begin{document}
 
 \section{Preliminary Study}
+\label{sec:preliminary_study}
 The project, internet of things, is quite abstract. We did not have a clear goal at first, but rather we were asked by the customer to come up with a solution that fits the customer needs. This chapter outlines these ideas and also why we chose to utilize the scrum model as well as which tools we will use, both hardware and software, for this project.
 
 \subsection{Initial Ideas}
+\label{subsec:initial_ideas}
 Early in the project, we explored a wide range of ideas and application areas for the cheap sensor technology supplied by Altran. These ideas were then further developed into more concrete designs, with pros and cons listed. The outcome of this process is summarized below. These ideas are also presented in a table at the bottom of this section.
 
 \subsubsection{Elder health system}
@@ -23,7 +25,7 @@ Cheap sensors can be an aid when exploring unknown or hazardous environments. Th
 
 Robots are already widely used in exploration. In deep sea ROVs are used. NASA has also conducted research on robots for space exploration.
 
-\subsubsection{Smart Home/Office, or the smart room}
+\subsubsection{Smart Room}
 Our original idea for the project, and one of the ways that this concept can be applied in real world situations, is through a smart room. A smart room would have a panel where one would be able to adjust settings, such as temperature and humidity in the room. The system would then adjust this by interacting with other devices in the room, such as air conditioning and humidifiers. Sunlight could be blocked by automatic curtains, or the curtains could open in the morning letting the sunlight in.
 
 This is a fairly young field of study and application, but it is growing fast. Already there are solutions for smart home systems on the market, but they cost quite a lot in comparison to what our system would cost. Most of these systems also handle only one part of the house automation, such as the security system or entertainment system. Our system would include all of the systems of the house. However, it would be difficult to implement and it would require universal plugins from all the other devices, such as air conditioning, which severely limits its modifiability.
@@ -91,7 +93,7 @@ Our first and simplest idea for visualization would include a simple screen repr
 
 This idea is very simple to implement, however, it does not show data per sensor. It shows data as an average, which while it is good for some environments is unacceptable for others. Therefore this idea was quickly abandoned in favour of the next idea.
 
-\subsubsection{Simple Image Manipulation in a grid}
+\subsubsection{Simple Image Manipulation in a Grid}
 Instead of having one image that would take all the data and average out the calculations, we would have a grid where a sensor or a group of sensors would provide the same image manipulation but on a grid scale.
 
 While the grid solves the problems of whether individual sensors or a group of sensors are showing, it introduces another major problem. How to make the grid portable and modifiable. This was solved by using grid in a fairly “loose” meaning. Instead of it meaning a grid in its strict sense, the grid would be a sphere around each sensor. In this fashion the system can visualize a sensor’s immediate surrounding as well as average out values that overlap between two spheres. While this adds a layer of complexity to our implementation, we believe that it still remains fairly simple to implement. The ideas are illustrated in  \figref{fig:visualizer_idea3} and in \figref{fig:visualizer_idea4}.
@@ -108,7 +110,7 @@ While the grid solves the problems of whether individual sensors or a group of s
 	\label{fig:visualizer_idea4}
 \end{figure}
 
-\subsection{Manipulation of sprites}
+\subsection{Manipulation of Sprites}
 Instead of using geometrical shapes or simple colours, we can use small pre-made images commonly known as sprites. The system works in quite the same fashion. Every sensor or groups of sensors would be presented by a sprite, which would change based on the changes in the environment.
 
 Sprites may be a bit more intuitive than colours and geometrical shapes, as they can speak more than the shapes can. For example a water sprite rising or lowering could represent the change in humidity. On the other hand it becomes more complex and time consuming to draw the sprites and even potentially animate them. Sprites also may have difficulty representing data that changes slowly, like temperature, and small changes to the data might be difficult to notice. The ideas are illustrated in  \figref{fig:visualizer_idea6} and in \figref{fig:visualizer_idea5}.
@@ -125,7 +127,7 @@ Sprites may be a bit more intuitive than colours and geometrical shapes, as they
 	\label{fig:visualizer_idea5}
 \end{figure}
 
-\subsubsection{Combination of sprites and shapes}
+\subsubsection{Combination of Sprites and Shapes}
 
 Since sprites may not be able to represent the entire spectrum of data well enough, we could use a combination of sprites and shapes to represent data. Sprites could represent changes that happen more quickly in the environment, such as sound recognition or pressure, while temperature could be represented by colours.
 
@@ -193,7 +195,7 @@ In our initial project phase, we do not follow the Scrum model strictly. The ini
 
 During the implementation phases, the Scrum model will be much more central. Here we will apply it to have a backlog, scrum meetings, and sprints.
 
-\subsubsection{Different possible architectural models for the prototype}
+\subsubsection{Different Possible Architectural Models for the Prototype}
 While working on the initial stages of the project, we had to prepare countermeasures to counteract risk 1, as seen in the risk table under \subsubfullref{risks_and_risk_mitigation}, which was the possibility of us not getting the hardware necessary to complete our prototype. In order to make the prototype work without any hardware from the customer, he suggested that we could substitute the sensors with android phones. With this in mind we had to prepare for both situations and we found out that the architecture in both cases actually differs. In both cases we would be using a client-server architecture, however, the roles of the client and the server would be reversed.
 
 When using the sensors, we would have a raspberry pi acting as a server. In this case our client requests information from the server, and stores it in a database of some sort. Then our visualizer uses this data to show it in a visual way. The image of the architecture can be seen below.
