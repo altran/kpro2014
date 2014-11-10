@@ -101,7 +101,7 @@
 \titlespacing\section{0pt}{0pt}{20pt}
 
 % Adding penalty for pagebreak between lines.
-\interlinepenalty 10000
+\interlinepenalty 5000
 
 
 % Allow multiple subfigures within one figure
@@ -218,20 +218,26 @@
 
 % appendix A
 \newpage
-\section{Third Party Tools}
+\section{SomeTitle}
 
 \newpage
 \subfile{tex/third_party_tools}
 
-
 % appendix B
+\newpage
+\section{Meeting Templates}
+
+\newpage
+\subfile{tex/meeting_templates}
+
+% appendix C
 \newpage
 \section{Test Plan}
 
 \newpage
 \subfile{tex/test_plan}
 
-% appendix C
+% appendix D
 \newpage
 \section{Retired Documents}
 
@@ -244,15 +250,8 @@
 \newpage
 \subfile{tex/retired_architecture}
 
-% appendix D
-\newpage
-\subfile{tex/user_installation_guide}
-
 % appendix E
 \newpage
-\section{Meeting Templates}
-
-\newpage
-\subfile{tex/meeting_templates}
+\subfile{tex/user_installation_guide}
 
 \end{document}
