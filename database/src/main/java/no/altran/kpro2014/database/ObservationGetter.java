@@ -115,9 +115,6 @@ public class ObservationGetter {
                 newestObservation = obs;
             }
         }
-        if (writeToFile){
-            doWriteToFile(newestObservation);
-        }
         return newestObservation;
     }
 
@@ -132,23 +129,17 @@ public class ObservationGetter {
             return null;
         }
         else{
-            if (this.writeToFile){
-                for (Observation obs : observationList){
-                    this.doWriteToFile(obs);
-                }
-            }
-
             Collections.reverse(observationList);
             return observationList;
         }
     }
 
-    private void doWriteToFile(Observation obs) {
+    public void doWriteToFile(Observation obs, String filename) {
         JSONObject obj = new JSONObject();
         obj.put("RadioSensorId", obs.getRadioSensorId());
         obj.put("gatewayID", obs.getRadioGatewayId());
         obj.putAll(obs.getMeasurements());
-        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("database/src/main/Resources/observations.txt", true)))) {
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("database/src/main/Resources/"+ filename, true)))) {
             out.println(obj);
         }catch (IOException e) {
             //exception handling left as an exercise for the reader
