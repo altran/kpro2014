@@ -189,6 +189,22 @@
 \part{Appendices}
 \vspace*{\fill}
 
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+    Appendix \thesection \
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
 % start of appendixes
 \appendix
 
