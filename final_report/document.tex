@@ -47,8 +47,6 @@
   \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
   \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
   \do\Y\do\Z\do\*\do\-\do\~\do\'\do\"\do\-}%
-
-
 \hypersetup{
     colorlinks,
     linkcolor=black,
@@ -89,12 +87,18 @@
 	keepspaces=true,	%
 } 
 
+% Appearence of the part style
+\usepackage{sectsty}
+\partfont{\Huge\centering}
+
 % Spacing after title 
 \usepackage{titlesec}
 \titlespacing\section{0pt}{0pt}{20pt}
 
+
 % Adding penalty for pagebreak between lines.
 \interlinepenalty 10000
+
 
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
@@ -105,12 +109,31 @@
 \newpage
 \subfile{tex/contents}
 
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+    Chapter \thesection \
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
+
 \newpage
 \setcounter{page}{1}
 \renewcommand{\thepage}{\arabic{page}}
 
 \newpage
+\vspace*{\fill}
 \part{Planning \& Requirements}
+\vspace*{\fill}
 
 \newpage
 \subfile{tex/introduction_project_directive}
@@ -128,7 +151,9 @@
 \subfile{tex/architecture}
 
 \newpage
+\vspace*{\fill}
 \part{Sprints}
+\vspace*{\fill}
 
 \newpage
 \subfile{tex/sprint_1}
@@ -140,7 +165,9 @@
 \subfile{tex/sprint_3}
 
 \newpage
+\vspace*{\fill}
 \part{Evaluation \& Summary}
+\vspace*{\fill}
 
 \newpage
 \subfile{tex/detailed_implementation_document}
@@ -158,8 +185,26 @@
 \subfile{tex/project_reflection}
 
 \newpage
+\vspace*{\fill}
 \part{Appendices}
+\vspace*{\fill}
 
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+    Appendix \thesection \
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
 % start of appendixes
 \appendix
 
