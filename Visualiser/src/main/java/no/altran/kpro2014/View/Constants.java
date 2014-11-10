@@ -1,9 +1,6 @@
 package no.altran.kpro2014.View;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.Properties;
 
@@ -24,19 +21,20 @@ public class Constants {
     public int minLinkBudget;
     private BufferedReader bufferedReader;
     private Properties properties;
+    File file;
 
 
     public Constants(){
         properties = new Properties();
+        file = new File(this.getClass().getClassLoader().getResource("txt/Constants.txt").getFile());
         try{
-            bufferedReader = new BufferedReader(new FileReader("Constants.txt"));
-            System.out.println(bufferedReader);
-
-            maxLinkBudget = Integer.parseInt(properties.getProperty("maxLinkBuget"));
-            minLinkBudget = Integer.parseInt(properties.getProperty("minLinkBuget"));
-        }catch (FileNotFoundException exception){
+            bufferedReader = new BufferedReader(new FileReader(file));
+            properties.load(bufferedReader);
+            minLinkBudget = Integer.parseInt(properties.getProperty("minLinkBudget"));
+            maxLinkBudget = Integer.parseInt(properties.getProperty("maxLinkBudget"));
+            bufferedReader.close();
+        }catch (Exception exception){
             exception.printStackTrace();
-            System.out.println("exception happend");
             maxLinkBudget = 150;
             minLinkBudget = 20;
         }
