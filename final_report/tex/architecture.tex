@@ -61,16 +61,16 @@ This is the only architectural constraint that is optional with the REST archite
 \subsubsection{Uniform Interface}
 This constraint is used to make the architecture simpler and helps every individual part of the system to evolve independently. The uniform interface is split into four different guidelines.
 
-\paragraph{Identification of resources} \ \\
+\paragraph{Identification of Resources} \ \\
 The resources in a REST architecture is identified in the requests and are separate from the representations that the client receives. 
 
-\paragraph{Manipulation of resources through these representations} \ \\
+\paragraph{Manipulation of Resources through These Representations} \ \\
 The client should be able to modify the representation of a resource it receives. As an example the client could be able to calculate maximum, minimum and average of data from each sensor. 
 
-\paragraph{Self-descriptive messages} \ \\
+\paragraph{Self-Descriptive Messages} \ \\
 All the client requests and server responses are messages, and in a RESTful application these messages are expected to be self-descriptive. This means that each message should contain all the information needed to process this message. Moreover, the interaction between requests is stateless, responses explicitly indicate cacheability and standard methods and media types are used to indicate semantics and exchange information. Each message can have a body and metadata.
 
-\paragraph{Hypermedia as the engine of application state (A.K.A. HATEOAS)}
+\paragraph{Hypermedia As the Engine of Application State (A.K.A. HATEOAS)}
 The principle that hypermedia is the engine of application state means that a REST client does not need to have any understanding of how to interact with any application or server beyond a generic understanding of hypermedia. In other words, except for simple entry points in the application, a client does not make any state transitions without hypermedia dynamically provided by the server. 
 
 \subsection{Architectural Tactics}
@@ -101,7 +101,7 @@ To improve the portability we will only let the client ask for data from the ser
 	\end{tabularx}
 \end{table}
 
-\paragraph{End user:} The end user is the future clients who will use the system. They can watch the visualization form the data gathered from a room on a web page or similar. 
+\paragraph{End User:} The end user is the future clients who will use the system. They can watch the visualization form the data gathered from a room on a web page or similar. 
 
 \paragraph{Developers:} The developers in this project is us in group 10. Our job is to plan, implement and test the wanted product. We will start with planning, and then write requirement and architecture documents. When the documentation is done, we will implement the system in Scrum-style sprints. During implementation, we will follow our test plan until the customer is satisfied and the product is finished. We might add test results, changes and issues we had along the way and finish the report and deliver it to the customer.
 
@@ -109,9 +109,9 @@ To improve the portability we will only let the client ask for data from the ser
 
 \paragraph{Adviser:} The groups advisor is Mohsen Anvaari. He will give feedback and guide the developers on all areas. This will be done by giving feedback and help us create a good documentation, and help us with any issues we might have that does not concern the client.
 
-\paragraph{Course staff:} The course staff for subject TDT4290 will be a part of the prestudy as they hold lectures needed for the course, and guidelines and tips for the project. 
+\paragraph{Course Staff:} The course staff for subject TDT4290 will be a part of the prestudy as they hold lectures needed for the course, and guidelines and tips for the project. 
 
-\paragraph{Hardware suppliers:} The hardware suppliers in this project are the developers of the components used in this project. They are delivering all of the parts needed for the sensors and the central hub.
+\paragraph{Hardware Suppliers:} The hardware suppliers in this project are the developers of the components used in this project. They are delivering all of the parts needed for the sensors and the central hub.
 
 \subsection{Architectural Views}
 \subsubsection{Introduction}
@@ -188,7 +188,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 	\end{tabularx}
 \end{table}
 
-\paragraph{Use cases} \ \\
+\paragraph{Use Cases} \ \\
 The use cases shows two ways a user can interact with the system. The first shows how a user can uncheck elements it does not want to see on the screen and second shows how the user can check them back if the user wants to see them again.
 
 \begin{figure}[H]
