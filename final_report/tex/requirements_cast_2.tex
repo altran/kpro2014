@@ -68,7 +68,7 @@ We are using the goal driven requirement development method to gather our requir
 There will be a database where the data collected from the sensors is stored. The data will include time of recording, sensor identification, location if applicable, and measured values such as temperature and lighting. The data can be pulled out later by other modules to be used. 
 
 \begin{table}[H]
-\caption{Database interaction requirement}
+\caption{Database Interaction Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|X|l|X|}
 \hline
@@ -89,7 +89,7 @@ There will be a database where the data collected from the sensors is stored. Th
 The main task of the central hub is to gather the information and send it to the client when requested. The central hub consist of hardware and software. The hardware part is the sensor itself. Because this is provided by the customer, the requirement part is not necessary. The software server will function as a gather and send unit, which gathers data from the sensors and forwards the data if requested.
 
 \begin{table}[H]
-\caption{Central hub requirement}
+\caption{Central Hub Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|X|l|X|}
 \hline
@@ -113,7 +113,7 @@ The main task of the central hub is to gather the information and send it to the
 The main task of the client is to take the data from the central hub and store it into the database. The client will send requests to the central hub and get sensor data in that way. The client can process data into strings for storage that the client will store in the database.
 
 \begin{table}[H]
-\caption{Client requirement}
+\caption{Client Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|X|l|X|}
 \hline
@@ -137,7 +137,7 @@ The main task of the client is to take the data from the central hub and store i
 The visualizer is the main focus of the project. As a result of that this is also the part with most requirements. The visualizer will first gather the data it needs from the database, then present it on a map featuring the position to each sensor. The map will also show the temperature, humidity, pressure, sound and lighting near the sensor. We will also create multiple types of views.
 
 \begin{table}[H]
-\caption{Central hub requirement}
+\caption{Central Hub Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|X|l|X|}
 \hline
@@ -178,7 +178,7 @@ This is the view where all sensors and the data is showcased in a table. The sen
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{retierd_requirements/Table_view.png}
-	\caption{Table view}
+	\caption{Table View}
 \end{figure}
 
 \subsubsection{Map View}
@@ -187,7 +187,7 @@ The map view will make an illustration of the room. In the real model the data w
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{retierd_requirements/Map_view.png}
-	\caption{Map view}
+	\caption{Map View}
 \end{figure}
 
 \subsubsection{History View}
@@ -196,7 +196,7 @@ The user can also access the historical data that is saved in the database by cl
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{retierd_requirements/History_view.png}
-	\caption{History view}
+	\caption{History View}
 \end{figure}
 
 \end{document}
