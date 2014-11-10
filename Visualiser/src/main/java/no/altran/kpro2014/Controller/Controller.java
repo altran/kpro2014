@@ -20,7 +20,7 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "http://78.91.31.8:4901";
+    private final String domain = "http://78.91.29.77:4901";
  //   private final String domain = "http://iot.altrancloud.com//";
     private final String path = "iot/observe";
 
@@ -66,7 +66,7 @@ public class Controller {
     private void updateBacklog(SensorModel sensor) {
         for (String gateway: getRoomModel().getGatewayList()){
             sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(0.00));
-        };
+        }
         List<Observation> obsList = getter.getBacklogForSensor(sensor.getSensorID());
         for (Observation obs : obsList) {
             String tempMeasure = obs.getMeasurements().get("hum");
@@ -106,31 +106,36 @@ public class Controller {
     private  void updateSensors(){
         List<SensorModel> sensorList = roomModel.getSensorList();
         for (SensorModel sensor : sensorList){
-            Observation obs = getter.getMostRecentObservation(sensor.getSensorID());
-            String tempMeasure = obs.getMeasurements().get("hum");
-            String gateway = obs.getRadioGatewayId();
-            if (tempMeasure != null){
-                sensor.setHumidity(Double.parseDouble(tempMeasure));
-            }
-            tempMeasure = obs.getMeasurements().get("lig");
-            if (tempMeasure != null){
-                sensor.setLighting(Double.parseDouble(tempMeasure));
-            }
-            tempMeasure = obs.getMeasurements().get("pre");
-            if (tempMeasure != null){
-                sensor.setPressure(Double.parseDouble(tempMeasure));
-            }
-            tempMeasure = obs.getMeasurements().get("sn");
-            if (tempMeasure != null){
-                sensor.setSound(Double.parseDouble(tempMeasure));
-            }
-            tempMeasure = obs.getMeasurements().get("tmp");
-            if (tempMeasure != null){
-                sensor.setTemperature(Double.parseDouble(tempMeasure));
-            }
-            tempMeasure = obs.getMeasurements().get("lb");
-            if (tempMeasure != null){
-                sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(Double.parseDouble(tempMeasure)));
+            for (String gateway : sensor.getLinkbudget().keySet()){
+                Observation obs = getter.getMostRecentObservation(sensor.getSensorID(), gateway);
+                if (obs == null){
+                    continue;
+                }
+//                System.out.println(obs.toString());
+                String tempMeasure = obs.getMeasurements().get("hum");
+                if (tempMeasure != null){
+                    sensor.setHumidity(Double.parseDouble(tempMeasure));
+                }
+                tempMeasure = obs.getMeasurements().get("lig");
+                if (tempMeasure != null){
+                    sensor.setLighting(Double.parseDouble(tempMeasure));
+                }
+                tempMeasure = obs.getMeasurements().get("pre");
+                if (tempMeasure != null){
+                    sensor.setPressure(Double.parseDouble(tempMeasure));
+                }
+                tempMeasure = obs.getMeasurements().get("sn");
+                if (tempMeasure != null){
+                    sensor.setSound(Double.parseDouble(tempMeasure));
+                }
+                tempMeasure = obs.getMeasurements().get("tmp");
+                if (tempMeasure != null){
+                    sensor.setTemperature(Double.parseDouble(tempMeasure));
+                }
+                tempMeasure = obs.getMeasurements().get("lb");
+                if (tempMeasure != null){
+                    sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(Double.parseDouble(tempMeasure)));
+                }
             }
         }
 
@@ -142,22 +147,23 @@ public class Controller {
     }
 
     private void passiveUpdate(){
-        timer.scheduleAtFixedRate(timerTask, 1000, 5000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
 
         Controller temp = new Controller();
-//        for (SensorModel sensor : temp.getRoomModel().getSensorList()){
-//            for (String hei : temp.getRoomModel().getGatewayList()){
-//                try{
-//                    System.out.println(hei + ", " + sensor.getSensorID() + ", "+ sensor.getLinkbudget().get(hei));
-//                }
-//                catch(Exception e){
-//                    System.out.println("fail");
-//                }
-//            }
-//        }
+        Thread.sleep(3000);
+        for (SensorModel sensor : temp.getRoomModel().getSensorList()){
+            for (String hei : temp.getRoomModel().getGatewayList()){
+                try{
+                    System.out.println(hei + ", " + sensor.getSensorID() + ", "+ sensor.getLinkbudget().get(hei));
+                }
+                catch(Exception e){
+                    System.out.println("fail");
+                }
+            }
+        }
     }
 
 }
