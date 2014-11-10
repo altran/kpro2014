@@ -12,8 +12,11 @@
 
 % To get automatic line breaks in tables.
 \usepackage{tabularx}
+% adds new commands for resizing column
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+% renew the X command in tabularx to raggedright
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}m{#1}}
 
 % format multiple page tables
 \usepackage{longtable}
