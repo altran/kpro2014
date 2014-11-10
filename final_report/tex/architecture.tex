@@ -6,7 +6,7 @@
 \section{Architecture}
 \label{architecture}
 \subsection{Introduction}
-This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in appendix D. The sensors and the rasberry pi were already connected together by Altran so we will not write the architecture between the sensors and the Raspberry Pi. The Raspberry Pi and the datacollector will use the REST style to communicate and is implemented by one of us. The connection between the database and the user interface will follow Altran's framework for their database/GUI connection.
+This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in \appendixfullref{retired_architecture}. The sensors and the rasberry pi were already connected together by Altran so we will not write the architecture between the sensors and the Raspberry Pi. The Raspberry Pi and the database will use the REST style to communicate and is implemented by one of us. The database will act as a client. The connection between the database and the user interface will follow Altrans framework for their database/GUI connection which uses the REST style.
 
 \subsection{Quality Attributes}
 \subsubsection{Functionality}
@@ -16,7 +16,7 @@ The system consists of multiple sensor devices, a central hub, and one or more c
 The system is a real time system, and changes in the environment is registered at the client within five seconds. Also, all transfer links in the system has sufficient throughput to avoid delay or lost packages.
 
 \subsubsection{Scalability}
-The system is scaleable to a large degree, and supports adding many sensor devices.
+The system is scaleable to a large degree, and supports adding many sensor devices and central hubs.
 
 \subsubsection{Modifiability of Components}
 The software is easy to alter or configure, to ease system modifications such as moving or removing components, or relocating the system.
@@ -26,14 +26,14 @@ The program code for both the central hub and the sensors is portable, making th
 
 \subsection{Architectural Styles}
 \subsubsection{Representational State Transfer (REST)}
-We plan to make a system with a RESTful similarity between the collector and the central hub. The architectural style REST focus on how components, connectors and data elements works together within a distributed hypermedia system. REST will accomplish that by having a set of architectural constraints that applies to all modules and their relations. The individual module is not concerned in REST architecture, meaning that the implementation is not that important. The architectural constraints applied by REST can be found under the next subsection architectural constraints. REST is used as a description of the wanted web architecture. We use it to find and identify problems in our system architecture and make sure our system should follow the constraint we find to be more important. As in any software architecture the components, the connectors and the data elements are used to find what architectural properties are most needed in the system. Our components, connectors and data elements are as listed:
+We plan to make a system with a RESTful similarity between the databaser and the central hub. The architectural style REST focus on how components, connectors and data elements works together within a distributed hypermedia system. REST will accomplish that by having a set of architectural constraints that applies to all modules and their relations. The individual module is not concerned in REST architecture, meaning that the implementation is not that important. The architectural constraints applied by REST can be found under the next subsection architectural constraints. REST is used as a description of the wanted web architecture. We use it to find and identify problems in our system architecture and make sure our system should follow the constraint we find to be more important. As in any software architecture the components, the connectors and the data elements are used to find what architectural properties are most needed in the system. Our components, connectors and data elements are as listed:
 
 \begin{table}[H]
 	\caption{Identified REST elements}
 	\begin{tabularx}{\textwidth}{|X|X|}
 		\hline
 		\textbf{Components}		& The sensors, the central hub, the database and the UI.  \\ \hline
-		\textbf{Connectors}		& The collector who ask on-demand for the data the central hub receives from the sensors.  \\ \hline
+		\textbf{Connectors}		& The database who ask on-demand for the data the central hub receives from the sensors.  \\ \hline
 		\textbf{Data elements}	& The information sent from the sensors through every component in the system until it reaches  the visualization.  \\ \hline
 	\end{tabularx}
 \end{table}
@@ -44,13 +44,13 @@ We are using the REST style as guidelines, and therefore it may be some inconsis
 REST has some formal constraints we have to follow. If the system does not follow these constraints the system does not have RESTful architecture. They are all written with an interest to our system and architecture.
 
 \subsubsection{Client-Server}
-The central hub will act as a server, and a data collector as the client. All the data is stored in a database that may be run on either the central hub, or externally. The data collector will only ask for data from the central hub and will not be storing any data, it will just push the data into the database. Having the data collector not worrying about the storage improves the portability of the code for the data collector. The central hub will not be worrying about the UI or any kind of user interference or status. This makes the central hub more scalable and it can be developed or changed without the data collector knowing if the interface between them are altered or not. 
+The central hub will act as a server, and a database as the client. All the data is stored in a database that may be run externally. The central hub will not be worrying about the UI or any kind of user interference or status. This makes the central hub more scalable and it can be developed or changed without the database knowing if the interface between them are altered or not. 
 
 \subsubsection{Stateless}
-When the data collector asks for a data update from the central hub, all the information needed for the central hub to do what is requested is in the request sent from the data collector. All the states of the data collector is only for the data collector to see. The central hub should not be concerned with which state the data collector is in. The data collector have 4 different states which are state 1: send request, state 2: pull data, state 3: manipulate data and state 4: send data.
+When the database asks for a data update from the central hub, all the information needed for the central hub to do what is requested is in the request sent from the database. All the states of the database is only for the database to see. The central hub should not be concerned with which state the database is in. The database have 4 different states which are state 1: send request, state 2: pull data, state 3: store data 4: send data.
 
 \subsubsection{Cacheable}
-The data collectors in our system will be able to cache the data it receives from the central hub before it pushes the data into the database. Data collectors can therefore lookup data in its cache if it needs the data once more without sending a new request to the central hub. This will improve the scalability and the performance. 
+The client in our system is the database, which means our client will store all the data it recives. 
 
 \subsubsection{Layered System}
 Our system might not be layered, so the data collector will most likely know for certain that it is connected to the central hub. This is not usually how the REST architecture acts, however we are only having a RESTful system as a framework. 
