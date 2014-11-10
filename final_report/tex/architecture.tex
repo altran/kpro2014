@@ -50,10 +50,10 @@ The central hub will act as a server, and a database as the client. All the data
 When the database asks for a data update from the central hub, all the information needed for the central hub to do what is requested is in the request sent from the database. All the states of the database is only for the database to see. The central hub should not be concerned with which state the database is in. The database have 4 different states which are state 1: send request, state 2: pull data, state 3: store data 4: send data.
 
 \subsubsection{Cacheable}
-The client in our system is the database, which means our client will store all the data it recives. 
+The client in our system is the database, which means our client will store all the data it receives. 
 
 \subsubsection{Layered System}
-Our system might not be layered, so the data collector will most likely know for certain that it is connected to the central hub. This is not usually how the REST architecture acts, however we are only having a RESTful system as a framework. 
+Our system might not be layered, so the database will most likely know for certain that it is connected to the central hub. This is not usually how the REST architecture acts, however we are only having a RESTful system as a framework. 
 
 \subsubsection{Code on Demand}
 This is the only architectural constraint that is optional with the REST architecture, and we have decided it is not going to be a concern with our system. However, the formal description of this constraint is: Code on demand allows clients to improve its flexibility by temporarily letting the servers extend or customize the functionality of a client. This is done by transferring executable code.
@@ -75,16 +75,16 @@ The principle that hypermedia is the engine of application state means that a RE
 
 \subsection{Architectural Tactics}
 \subsubsection{Performance}
-To achieve the performance attribute we will let the client be able to cache the data it receives from the server before it pushes it into the database. In this way the client can lookup data in its cache without sending a new request to the server.
+To achieve the performance attribute we will let the database receive information from the sensors every 5 seconds. 
 
 \subsubsection{Scalability}
-As mentioned earlier, the server will not be worrying about any kind of user interference, status or UI and, the client will be able to lookup data in its cache if it needs it once more. This makes the server more scalable.
+As mentioned earlier, the server will not be worrying about any kind of user interference, status or UI. This makes the server more scalable.
 
 \subsubsection{Modifiability of Components}
 To ensure that the system can be easily changed we will use the abstract common services tactic. To abstract common services is when services that provide similar services is implemented once in a general module instead of many times in slightly different but more specific modules. When the common services are abstracted, modifications to them will need to be made to only one module instead of in each module where the services are used. This tactic also supports the prevention of ripple effects because the modifications to the modules that uses these services will not impact other modules.
 
 \subsubsection{Portability of Components}
-To improve the portability we will only let the client ask for data from the server, and not store any data. In this way, the client does not need to worry about the storage and this improves the portability of the code for the client.
+Because the program code for both the central hub and the sensors is portable, the customer is not tied to a specific supplier. This improves the portability of the components.
 
 \subsection{Stakeholders and Concerns}
 \begin{table}[H]
