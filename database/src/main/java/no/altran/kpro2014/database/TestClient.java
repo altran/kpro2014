@@ -33,13 +33,9 @@ public class TestClient {
 //        TestClient test = new TestClient();
         ObservationGetter getter = new ObservationGetter("http://localhost:4901", "iot/observe");
 //        test.postDummyData(getter);
-        getter.setWriteToFile(true);
-        System.out.println(getter.getAllSensorIDs());
-        System.out.println(getter.getMostRecentObservation("1"));
-        System.out.println(getter.getMostRecentObservation("2"));
-        System.out.println(getter.getMostRecentObservation("3"));
-        System.out.println(getter.getMostRecentObservation("4"));
-        System.out.println(getter.getMostRecentObservation("5"));
+//        getter.setWriteToFile(true);
+        System.out.println(getter.getMostRecentObservation("0", "localhost"));
+
         //curl -X POST -d @radiosensor1.txt http://localhost:4901/iot/observe/radiosensor
     }
 }
