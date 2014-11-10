@@ -6,11 +6,11 @@
 \subsubsection{Introduction}
 This chapter gives an overview of the system we had planned to implement, including quality attributes, architectural patterns, design patterns, tactics and architectural views. The purpose of this is to give an overview of the architectural structure of the system we first started to plan. We wanted to make a smart room where the we took in information from the sensors and used that information to create a better enviorment. We didn't start to make the logicview, developmentview and procesview until after we weren't going to create a smart room.
 
-\subsubsection{Quality attributes}
+\subsubsection{Quality Attributes}
 \subsubsection{Functionality}
 The system should function as planned. 
 
-\paragraph{Availability/reliability} \ \newline
+\paragraph{Availability/Reliability} \ \newline
 System should always be working, and be available 24h. Sensors might stop, but should have a time limit and restart when if it reaches the time limit. 
 
 \paragraph{Modifiability} \ \newline
@@ -34,11 +34,11 @@ Depends on hardware. Other users who don't have authorization, should not be abl
 \paragraph{Scalability} \ \newline
 The system should be able to add more sensors/change scenery a.s.o.  
 
-\subsubsection{Patterns and tactics}
+\subsubsection{Patterns and Tactics}
 \paragraph{Model-View-Controller}  \ \newline
 The Model-View-Controller (MVC) pattern is an architectural pattern that divides a software application into three interconnected components. The different components are the model, the view and the controller. The model manages the the application’s data, logic and rules. The view requests information from the model and uses this information to give an output representation of the information to the user. The controller takes input from the user and converts it to commands for the model or view. 
 
-\subsubsection{Stakeholders and concerns}
+\subsubsection{Stakeholders and Concerns}
 \begin{table}[H]
 	\caption{Stakeholders}
 	\begin{tabularx}{\textwidth}{|X|X|}
@@ -53,23 +53,23 @@ The Model-View-Controller (MVC) pattern is an architectural pattern that divides
 	\end{tabularx}
 \end{table}
 
-\subsubsection{Architectural views}
+\subsubsection{Architectural Views}
 In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture. We chose this view model because this model allows us to handle the functional and nonfunctional requirements separately, and also address the different concerns of the various stakeholders separately.
 
-\paragraph{Logical view} \ \newline				
+\paragraph{Logical View} \ \newline				
 The logical view is primarily concerned with the functional requirements. This means that it is concerned with what the system should provide in terms of services to its end-users. As we have changed the system 
 
 
 
-\paragraph{Development view} \ \newline
+\paragraph{Development View} \ \newline
 The development view illustrates a system from a programmer's perspective and is concerned with software management. This view is also known as the implementation view. The software is packaged in small chunks that can be developed by one or a small number of developers. The subsystems are organized in a hierarchy of layers, each layer providing a narrow and well-defined interface to the layers above it. The development architecture of the system is represented by module and subsystem diagrams, showing the export and import relationships. 
  
 
-\paragraph{Process view} \ \newline
+\paragraph{Process View} \ \newline
 The process view deals with the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. The process view addresses concurrency, distribution, integrators, performance, and scalability, etc. UML Diagrams to represent process view include the Activity diagram.
 
 
-\paragraph{Physical view} \ \newline
+\paragraph{Physical View} \ \newline
 The physical view depicts the system from a system engineer's point of view. It is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. This view is also known as the deployment view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from a data collector mock. Both the user interface and the command unit gets information from the database. The command unit is used to control the room. 
 
 \begin{figure}[H]
@@ -126,7 +126,7 @@ The description of an architecture is illustrated using a small set of use cases
 	\caption{Use Case v.1.2}
 \end{figure}
 
-\subsubsection{Retierd Architectural views}
+\subsubsection{Retierd Architectural Views}
 \label{retierd_architectural_views}
 This section will cover the old views from when the visulizer was divided into three parts; the tableview, the historyview and the map view. 
 
