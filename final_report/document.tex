@@ -1,0 +1,258 @@
+\documentclass{article}
+
+% This is the main document.
+%
+% The different document parts are loaded using the 'subfiles' package.
+
+
+% special symbols
+\usepackage[T1]{fontenc}
+
+% For compiling subdocuments separately.
+\usepackage{subfiles}
+
+% To get automatic line breaks in tables.
+\usepackage{tabularx}
+% adds new commands for resizing column
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
+% renew the X command in tabularx to raggedright
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}m{#1}}
+
+% new environment for quatations
+\newenvironment{italicquotation}
+ {\begin{quotation}\itshape}
+ {\end{quotation}}
+
+% format multiple page tables
+\usepackage{longtable}
+
+% Colors, mainly red
+\usepackage{color}
+
+% To include figures
+\usepackage{graphicx}
+
+% graphics path
+\graphicspath{{img/}{../img/}}
+
+% force figure placment
+\usepackage{float}
+
+% solutio for ``''''
+\usepackage[utf8]{inputenc}
+
+% hyperlink
+\usepackage{hyperref}
+\usepackage{breakurl}
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks% save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z\do\*\do\-\do\~\do\'\do\"\do\-}%
+\hypersetup{
+    colorlinks,
+    linkcolor=black,
+    urlcolor=blue
+}
+
+% section numbering of figures and tables
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+
+% to make it possible to do 1.1 style enumerate
+\usepackage{enumitem}
+
+% adds commands \fullref for \ref \nameref
+\newcommand*{\subsubfullref}[1]{\hyperref[{#1}]{subsubsection \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\subfullref}[1]{\hyperref[{#1}]{subsection \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\sectionfullref}[1]{\hyperref[{#1}]{section \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\appendixfullref}[1]{\hyperref[{#1}]{Appendix \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} - \nameref*{#1}}}
+\newcommand*{\figfullref}[1]{\hyperref[{#1}]{Figure \ref*{#1} - \nameref*{#1}}}
+\newcommand*{\figref}[1]{\hyperref[{#1}]{Figure \ref*{#1}}}
+\newcommand*{\tableref}[1]{\hyperref[{#1}]{Table \ref*{#1}}}
+
+% Appearance of termianl listings
+\usepackage{listings}
+\definecolor{mybgcolor}{rgb}{0, 0, 0}
+\lstset{
+	language=bash,
+	backgroundcolor=\color{mybgcolor},  % set background color
+	frame=single,                   	% draw border
+	basicstyle=\ttfamily,           	% font
+	basicstyle=\ttfamily\color{white},
+	breakatwhitespace=true, % break lines if necessary
+	breaklines=true,    	%
+	tabsize=4,  	% indentation size
+	columns=flexible,   % preserve indentation
+	keepspaces=true,	%
+} 
+
+% Appearence of the part style
+\usepackage{sectsty}
+\partfont{\Huge\centering}
+
+% Spacing after title 
+\usepackage{titlesec}
+\titlespacing\section{0pt}{0pt}{20pt}
+
+% Adding penalty for pagebreak between lines.
+\interlinepenalty 10000
+
+
+% Allow multiple subfigures within one figure
+\usepackage{subcaption}
+
+\begin{document}
+\renewcommand{\thepage}{\roman{page}}
+\subfile{tex/titlepage}
+
+\subfile{tex/abstract}
+
+\setcounter{page}{0}
+\newpage
+\subfile{tex/contents}
+
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+    Chapter \thesection \
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
+
+\newpage
+\setcounter{page}{1}
+\renewcommand{\thepage}{\arabic{page}}
+
+\newpage
+\vspace*{\fill}
+\part{Planning \& Requirements}
+\vspace*{\fill}
+
+\newpage
+\subfile{tex/introduction_project_directive}
+
+\newpage
+\subfile{tex/project_planning}
+
+\newpage
+\subfile{tex/preliminary_study}
+
+\newpage
+\subfile{tex/requirements}
+
+\newpage
+\subfile{tex/architecture}
+
+\newpage
+\vspace*{\fill}
+\part{Sprints}
+\vspace*{\fill}
+
+\newpage
+\subfile{tex/sprint_1}
+
+\newpage
+\subfile{tex/sprint_2}
+
+\newpage
+\subfile{tex/sprint_3}
+
+\newpage
+\vspace*{\fill}
+\part{Evaluation \& Summary}
+\vspace*{\fill}
+
+\newpage
+\subfile{tex/detailed_implementation_document}
+
+\newpage
+\subfile{tex/project_work_progress}
+
+\newpage
+\subfile{tex/project_evaluation}
+
+\newpage
+\subfile{tex/conclusion}
+
+\newpage
+\subfile{tex/project_reflection}
+
+\newpage
+\vspace*{\fill}
+\part{Appendices}
+\vspace*{\fill}
+
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+    Appendix \thesection \
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
+% start of appendixes
+\appendix
+
+% appendix A
+\newpage
+\section{Third Party Tools}
+
+\newpage
+\subfile{tex/third_party_tools}
+
+% appendix B
+\newpage
+\section{Test Plan}
+
+\newpage
+\subfile{tex/test_plan}
+
+% appendix C
+\newpage
+\section{Retired Documents}
+
+\newpage
+\subfile{tex/requirements_cast_1}
+
+\newpage
+\subfile{tex/requirements_cast_2}
+
+\newpage
+\subfile{tex/retired_architecture}
+
+% appendix D
+\newpage
+\subfile{tex/user_installation_guide}
+
+% appendix E
+
+\newpage
+\section{Meeting Templates}
+
+\newpage
+\subfile{tex/meeting_templates}
+
+\end{document}

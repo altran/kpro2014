@@ -1,0 +1,531 @@
+\documentclass[../document]{subfiles}
+
+\begin{document}
+
+
+\subsection{Requirements Cast 1}
+\label{sec:requirements_cast_1}
+\subsubsection{Introduction}
+We are using goal driven requirement development methods to gather our requirements. The first part will be a top down goal level view, with a main goal and sub goals. After that there will be a more detailed text description for some of the important requirements followed by a table with a short description for each functional requirement and its priority. The last part will be a text about non-functional requirements with a description to each one of them and its priority.
+
+In our brainstorming session for possible use cases we concluded that the best use for our system will be in a smart room implementation. By smart room we mean a room where all of the environmental details are recorded and the system will interact with other equipment such as an air conditioner to manipulate the environment.
+
+\subsubsection{Top Goal of the System}
+\begin{itemize}
+	\item
+	Keep stable temperature, lighting, humidity, noise, pressure and tracking
+	\begin{itemize}
+		\item
+		Keeping stable temperature
+		\begin{itemize}
+			\item
+			Recording of temperature
+			\item
+			Recording of temperature sway
+			\item
+			Control of the temperature operating unit (Air conditioning, heat source)
+			\item
+			Fail safe mechanism
+		\end{itemize}
+		\item
+		Keeping stable lighting in the room
+		\begin{itemize}
+			\item
+			Recording of sunlight
+			\item
+			Recording of position of curtains
+			\item
+			Control of the curtains
+			\item
+			Control of the lights
+		\end{itemize}
+		\item
+		Keeping stable humidity
+		\begin{itemize}
+			\item
+			Recording of humidity
+			\item
+			Report humidity level over time
+			\item
+			Ability to interact with the humidifier.
+		\end{itemize}
+		\item
+		Keeping track of noise levels
+		\begin{itemize}
+			\item
+			Recording noise levels
+			\item
+			Warning if above certain threshold 
+			\item
+			Report noise levels over time 
+			\item
+			Close windows and use other countermeasures
+		\end{itemize}
+		\item
+		Keeping track of pressure
+		\begin{itemize}
+			\item
+			Pressure sensor
+			\item
+			Report pressure levels over time
+			\item
+			Recording of pressure
+		\end{itemize}
+		\item
+		Tracking
+		\begin{itemize}
+			\item
+			Able to record location of people wearing a sensor
+			\item
+			Interactions with user if a device is entering certain area
+			\item
+			Able to do some tracking of people not wearing an device
+		\end{itemize}
+	\end{itemize}
+	\item
+	Logging and report
+	\begin{itemize}
+		\item
+		Identifying a faulty device
+		\begin{itemize}
+			\item
+			Able to identify a device showing abnormal data
+		\end{itemize}
+		\item
+		The system should be able to store data
+		\begin{itemize}
+			\item
+			The system should be able to save data about sensors over a longer period of time
+			\item
+			The system should be able to, at request, show the data currently stored
+		\end{itemize}
+	\end{itemize}
+	\item
+	Other
+	\begin{itemize}
+		\item
+		Ad-hoc solution
+		\begin{itemize}
+			\item
+			Automatic start
+			\item
+			Manual start
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Temperature Functional Requirements}
+We will make a UI for the whole system, one of the windows will be temperature exclusively. That window will display information about average temperature in the room, both current and from the log. The system will also be capable of showing individual sensor data.
+
+From the UI one can change the desired temperature. We will provide a default profile at 25 degrees in the room, but it will be changeable from the UI to any reasonable (15-35) temperature. The system then will use this data to control all temperature adjustment units like air conditioning or heaters to reach that specific temperature.
+
+\begin{table}[H]
+\caption{Temperature Functional Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	\\ \hline Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 1.1
+	&UI for temperature
+	&Show the temperature in a table
+	&VH
+	&VH
+	\\ \hline 1.1.1
+	&Temperature of an individual sensor
+	&Show the temperature 
+	&VH
+	&M
+	\\ \hline 1.1.2
+	&Capable to take input from a user
+	&Take the input and make a user profile
+	&VH
+	&M
+	\\ \hline 1.1.3
+	&Show a log of temperature
+	&Show temperature readings over a certain time period
+	&M
+	&L
+	\\ \hline 1.1.4
+	&Show individual temperature unit
+	&Show individual temperature adjustment related unit (like heat or air conditioner)
+	&L
+	&L
+	\\ \hline 1.2
+	&Controller for temperature
+	&Controlling all temperature adjustment related units
+	&M
+	&M
+	\\ \hline 1.2.1
+	&Controlling multiple units
+	&Capable to control multiple temperature adjustment units to achieve the required result
+	&L
+	&L
+	\\ \hline 1.2.2
+	&Status of units
+	&Registration status of each unit
+	&L
+	&L
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Lighting Functional Requirements}
+
+The requirement for lighting is much like the requirement for temperature. It will use the same template with different data. If we have enough time, we are planning to expand lighting UI with possibility to show each light with percent scale and half closed curtains, depending on the users preference.
+
+The system should wire itself to the light control of the room (this will require a central light control somewhere in the room). The system can then use the central control to make lighting in the room as close to user preference as possible. This means that system will be able to recognize each light or any sort of curtains or blinds and adjust them all individually. If time and technology permits we are planning to expand on this so that each light unit can do more than just turn on or off. We want the light to be partially on and curtains or blinds partially down with a certain angle.
+
+
+\begin{table}[H]
+\caption{Lighting Functional Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 2.1
+	&UI for lighting
+	&Show the lighting in a table
+	&VH
+	&VH
+	\\ \hline 2.1.1
+	&Lighting for each sensor
+	&Show how much light is shining on each sensor
+	&H
+	&M
+	\\ \hline 2.1.2
+	&Capable to take input from user
+	&If user switches a light off or on both in the software or physically
+	&H
+	&L
+	\\ \hline 2.1.3
+	&Show log of lighting
+	&Select one or more devices and show their lighting reading over time
+	&L
+	&L
+	\\ \hline 2.1.4
+	&Show individual lighting unit
+	&Show individual lighting adjustment related unit (lights or curtains)
+	&L
+	&L
+	\\ \hline 2.2
+	&Controlling brightness adjusting units
+	&Controlling units to be able to adjust the light levels in the room
+	&M
+	&M
+	\\ \hline 2.2.1
+	&Controlling multiple units
+	&Capable to control multiple units to achieve wide array of results involving brightness 
+	&H
+	&M
+	\\ \hline 2.2.2
+	&Status of units
+	&System needs to know at all times the status of every unit
+	&H
+	&H
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Humidity Functional Requirements}
+Humidity does not change drastically in a room, and theres not many offices with humidity changing units built in, therefore we do not think humidity will be a big factor. Still humidity does affect working performance and one can find humidifiers, which is why we put a log to show case if anything needs to be changed. 
+
+\begin{table}[H]
+\caption{Humidity Functional Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 3.1
+	&UI for humidity
+	&A value showing average humidity
+	&VH
+	&VH
+	\\ \hline 3.1.1
+	&Humidity by each unit
+	&A list showing humidity recorded by each unit
+	&L
+	&L
+	\\ \hline 3.1.2
+	&Show the log of humidity
+	&A way to show the recorded log of humidity over a certain time period (decided by the user)
+	&M
+	&M
+	\\ \hline 
+	\end{tabularx}
+	\end{table}
+
+	\subsubsection{Noise Functional Requirements}
+	In an ideal situation our system should be able to have control over doors and windows as well, which makes it possible to control noise level. In our prototype we are probably not going to implement that function. However, the system will be able to record the noise level over the room and then save it in the database. If the noise level is above a certain level, there will be a warning on the UI and it will be marked in the log.
+
+	\begin{table}[H]
+	\caption{Noise Functional Requirements}
+	\centering
+	\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 4.1
+	&UI for noise
+	&Show the average noise level in the room
+	&VH
+	&H
+	\\ \hline 4.1.1
+	&Noise registered by each sensor
+	&Show the sensor in a list with the noise level they are registering
+	&H
+	&M
+	\\ \hline 4.1.2
+	&Input from user
+	&User can input a desired noise level 
+	&L
+	&L
+	\\ \hline 4.1.3
+	&Show a log of noise
+	&Show noise registered over a certain time period
+	&L
+	&L
+	\\ \hline 4.1.4
+	&Warning system
+	&There’ll be a warning both on the UI and in the log
+	&M
+	&M
+	\\ \hline 4.2
+	&Countermeasures
+	&System will counter the noise level if possible (close windows, doors)
+	&L
+	&L
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Pressure Functional Requirements}
+Pressure in a room should stay stable all the time, but under rare conditions it might change and those changes are often unnoticeable. If we change the environment to some dangerous areas then the pressure might be a factor to be worried about, and in such area the pressure needs to be monitored and the data should be saved and shown later.
+
+\begin{table}[H]
+\caption{Pressure Functional Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 5.1
+	&UI for pressure
+	&An GUI for showing pressure
+	&M
+	&M
+	\\ \hline 5.1.1
+	&Showing pressure single device
+	&Select one device, and show its current pressure
+	&M
+	&M
+	\\ \hline 5.1.2
+	&Show log of pressure
+	&Select one or more devices and show the log of readings
+	&L
+	&L
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Tracking Functional Requirements}
+The sensors contain some possibility to track in a 2D or 3D environment. The system might use this information in different ways. It may warn people closing in on a restricted area, or do specific actions when people enter or leave a room.
+
+From what we know from the devices, this capability may be limited, or not useful at all, so we have given it a low priority.
+
+If we do implement tracking for future use, the system should contain a UI with a possibility for the user to add the environment map. It will display the position of employees with the tracking device and give them a warning if they enter a restricted area.
+
+\begin{table}[H]
+\caption{Tracking Functional Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 6.1
+	&UI for tracking
+	&A GUI for showing  tracking
+	&L
+	&L
+	\\ \hline 6.1.1
+	&Showing location of one device
+	&Showing the location of one device or person in a room
+	&L
+	&L
+	\\ \hline 6.1.2
+	&Creating a representation of a room
+	&Using the location of the devices, the system should be able to recreate a representation of the room
+	&L
+	&L
+	\\ \hline 6.1.3
+	&Show movement over time
+	&Using the locations of device or person, the system should be able to show movement over time 
+	&L
+	&L
+	\\ \hline 6.2
+	&Using multiple methods for tracking
+	&The system should adapt to current available tracking capabilities
+	&L
+	&L
+	\\ \hline 6.2.1
+	&Tracking a person wearing the device
+	&The system should be able to track a person wearing a sensor
+	&L
+	&L
+	\\ \hline 6.2.2
+	&Tracking person without wearing device 
+	&The system should be able to have some understanding where people without a sensor are
+	&L
+	&L
+	\\ \hline 6.2.3
+	&Understanding dimensions of a room based on sensor location 
+	&Based on the location of the devices, the system should be able to get an understanding of the dimension of the room
+	&L
+	&L
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Database Interaction Requirements}
+There will be a database where the data collected from the sensors is stored. The data will include time of recording, temperature, lighting, humidity, noise, pressure, tracking and maybe more. The user can later retrieve this data and see the log for any unusual events or just to get a general idea of the room they are in. If the user does not specify the time interval it will be chosen automatically.  
+
+\begin{table}[H]
+\caption{Visualizer Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 7.1.1
+	&Storing data
+	&All data collected from the devices need to be stored
+	&VH
+	&VH
+	\\ \hline 7.1.2
+	&Setting time for all data to be stored
+	&The collected data should be stored for a set amount of time and be deleted when that time is exceeded
+	&H
+	&H
+	\\ \hline 7.2
+	&Retrieving data
+	&The system should be able to easily retrieve and use stored data
+	&H
+	&H
+	\\ \hline 7.2.1
+	&Automatic reports
+	&The system should be able to create a report of timed intervals with selected data
+	&M
+	&M
+	\\ \hline 7.2.2
+	&Manual request
+	&A user should be able to do a request for selective data
+	&H
+	&H
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Self Maintenance Requirements}
+From our first experience with the sensors we found that they are not really reliable without any external protection. Therefore it is a possibility that they might be broken during the deployment time. To counter that we are adding a self maintenance function, which will find and report any unusual activities of the sensor that might indicate a failure in the hardware. We also think that if there are many sensors in a room, then one single faulty device does not really matter and should therefore be ignored to reduce the overall maintenance from the user side.
+
+\begin{table}[H]
+\caption{Self Maintenance Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Name
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 8.1
+	&Identify faulty device
+	&The system should be able to identify a device that is not responding correctly
+	&H
+	&H
+	\\ \hline 8.1.2
+	&Ignore faulty device
+	&The system should ignore all data from a device that is not correctly responding
+	&H
+	&H
+	\\ \hline 8.1.3
+	&Report faulty device
+	&The system should give a warning to the system administrator that a device is not working correctly
+	&H
+	&H
+	\\ \hline 8.2
+	&Identify faulty sensor
+	&The system should be able to identify a sensor that is giving abnormal data
+	&H
+	&VH
+	\\ \hline 8.2.1
+	&Ignore faulty sensor
+	&When a sensor is sending faulty data, the system should ignore it
+	&H
+	&H
+	\\ \hline 8.2.2
+	&Report faulty sensor
+	&The system should send an warning to the system administrator when a sensor is sending faulty data
+	&M
+	&M
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Ad-Hoc Requirements}
+Ad-hoc is a possibility when there are no base stations accessible to the sensors. Instead of relying on the base station, the sensors need to be able to relay data between themselves and get it to a location where it is possible to relay it to the database. Some calculations will be needed to be done one the sensors and this may greatly affect battery life.
+
+In a smart room environment a base station is the best choice, so we have given this solution a low priority. 
+
+\begin{table}[H]
+\caption{Ad-Hoc Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\hline
+	Req.nr
+	&Unit
+	&Description
+	&Priority
+	&Risks if not implemented
+	\\ \hline 9.1
+	&Ad-hoc solution capability
+	&The system should be able to support Ad-hoc
+	&L
+	&M
+	\\ \hline 9.1.2
+	&Automatic solution
+	&The system should try an Ad-hoc solution when no base station is present
+	&L
+	&L
+	\\ \hline 9.1.3
+	&Manual solution
+	&A user should be able to turn on or off the Ad-hoc solution
+	&L
+	&L
+	\\ \hline 
+\end{tabularx}
+\end{table}
+\end{document}

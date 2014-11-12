@@ -5,8 +5,19 @@ out/
 **.xml
 **.iws
 **.class
+**.txt
 
 # Maven
 log/
 target/
 !pom.xml
+
+# latex
+**.pdf
+**.log
+**.aux
+**.synctex.*
+**.out
+**.toc
+**.lof
+**.lot

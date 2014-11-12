@@ -2,6 +2,8 @@ package no.altran.kpro2014.Model;
 
 import javafx.beans.property.SimpleDoubleProperty;
 
+import java.util.HashMap;
+
 /**
  * Created by shimin on 9/24/2014.
  *
@@ -16,6 +18,7 @@ public class SensorModel {
     private SimpleDoubleProperty pressure;
     private SimpleDoubleProperty humidity;
     private SimpleDoubleProperty sound;
+    private HashMap<String, SimpleDoubleProperty> linkbudget;
 
 
     public SensorModel(){
@@ -25,6 +28,7 @@ public class SensorModel {
         pressure = new SimpleDoubleProperty();
         humidity = new SimpleDoubleProperty();
         sound = new SimpleDoubleProperty();
+        linkbudget = new HashMap<String, SimpleDoubleProperty>();
     }
 
     public double getTemperature(){ return temperature.get();}
@@ -39,6 +43,9 @@ public class SensorModel {
 
     public String getSensorID(){return sensorID;}
 
+    public HashMap<String, SimpleDoubleProperty> getLinkbudget() {
+        return linkbudget;
+    }
 
     public void setSensorID(String ID){
         this.sensorID = ID;

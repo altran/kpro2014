@@ -41,6 +41,7 @@ public class MapView extends Application{
     /**controller and roomModel will gather the data we need, and update the data in time.*/
     private Controller controller;
     private RoomModel roomModel;
+    private Calculation calculation;
 
     /**the central hub is in the middle and is a static image*/
     private Image circleImage = new Image("images/CentralHub.png");
@@ -77,10 +78,14 @@ public class MapView extends Application{
     private ArrayList<Double> oldTemperature = new ArrayList<Double>();
     private ArrayList<Double> newTemperature = new ArrayList<Double>();
     private ArrayList<Double> diffTemperature = new ArrayList<Double>();
-    private ArrayList<Double> positionX = new ArrayList<Double>();
-    private ArrayList<Double> positionY = new ArrayList<Double>();
-    private ArrayList<Double> tList = new ArrayList<Double>();
+    private ArrayList<Double> oldPositionX = new ArrayList<Double>();
+    private ArrayList<Double> newPositionX = new ArrayList<Double>();
+    private ArrayList<Double> diffPositionX = new ArrayList<Double>();
+    private ArrayList<Double> oldPositionY = new ArrayList<Double>();
+    private ArrayList<Double> newPositionY = new ArrayList<Double>();
+    private ArrayList<Double> diffPositionY = new ArrayList<Double>();
     private ArrayList<Double> inactiveSensor = new ArrayList<Double>();
+    private ArrayList<Double> linkBudgets = new ArrayList<>();
     private int counter = 0;
 
     /**these are the checkboxes the user can interact with, this will turn off/on certain types of data  */
@@ -89,15 +94,24 @@ public class MapView extends Application{
     private boolean checkHumidity = true;
     private boolean checkPressure = true;
 
+    /**Initialise variables for scaling, and initialises the central hub count variable*/
+    private double xScale;
+    private double yScale;
+    private double screenRatio;
+    private int TotalCHCount;
+
     /**start method for the system, it requires a stage which we set to the size of the computer window the user have*/
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
         Scene scene = new Scene(new Group());
         controller = new Controller();
+        calculation = new Calculation();
         roomModel = controller.getRoomModel();
         stage.setTitle("Map View");
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        stage.setFullScreen(true);
+        screenRatio = stage.getWidth() / stage.getHeight();
 
         /**canvas is set a little smaller than the actual stage in order for the checkboxes to fit*/
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
@@ -114,14 +128,11 @@ public class MapView extends Application{
         canvas.setEffect(mainFX);
         canvasHist = new Canvas(150, 400);
 
-        /**
-        Creates the central hub. This object is static.
-         */
-        centralHubInstruction = new CentralHubInstruction(circleImage, now, Long.MAX_VALUE,
-                canvas.getWidth()/2-circleImage.getWidth()/2,
-                canvas.getHeight()/2-circleImage.getWidth()/2 , canvas);
-        centralHubRenderer = new CentralHubRenderer();
-        centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+        /**Set the scaling variables, and the total count of the centralHubs*/
+        TotalCHCount = roomModel.getGatewayList().size();
+        xScale = canvas.getWidth() / 150;
+        yScale = canvas.getHeight() / 150;
+
 
         /**
          *Animation timer for updating values. Whenever a new update in the data is called, we'll set the array lists to
@@ -131,99 +142,113 @@ public class MapView extends Application{
         new AnimationTimer(){
             @Override
             public void handle(long now){
+
                 canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+
+                for(int i = 0; i < TotalCHCount; i++){
+                    centralHubInstruction = new CentralHubInstruction(circleImage, now, Long.MAX_VALUE,
+                            gateWayPositionX(i), gateWayPositionsY(i), canvas);
+                    centralHubRenderer = new CentralHubRenderer();
+                    centralHubRenderer.notify(centralHubInstruction, Long.MAX_VALUE);
+                }
 
                 for(int i = 0; i < roomModel.getSensorNumber(); i++){
 
-                        makeTList(tList, i);
-                        updateTList(tList, i);
+                    LightingCheck(newLighting, oldLighting, i, roomModel);
+                    HumidityCheck(newHumidity, oldHumidity, i, roomModel);
+                    PressureCheck(newPressure, oldPressure, i, roomModel);
+                    TemperatureCheck(newTemperature, oldTemperature, i, roomModel);
+                    PositionXCheck(newPositionX, oldPositionX, i, roomModel);
+                    PositionYCheck(newPositionY, oldPositionY, i, newPositionX.get(i), roomModel);
 
-                        initialXPosition(positionX, i);
-                        initialYPosition(positionY, i);
+                    diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure, inactiveSensor, diffPositionX, diffPositionY, i);
 
-                        LightingCheck(newLighting, oldLighting, i, roomModel);
-                        HumidityCheck(newHumidity, oldHumidity, i, roomModel);
-                        PressureCheck(newPressure, oldPressure, i, roomModel);
-                        TemperatureCheck(newTemperature, oldTemperature, i, roomModel);
-                        diffInit(diffTemperature,diffLighting,diffHumidity,diffPressure,inactiveSensor, i);
-
-                        if (counter >= 300) {
-                            counter = 0;
-                        } else if (counter == 0) {
-                            if (newLighting.get(i) != oldLighting.get(i)) {
-                                diffLighting.set(i, (newLighting.get(i) - oldLighting.get(i)) / 300);
-                            }
-                            if (newHumidity.get(i) != oldHumidity.get(i)) {
-                                diffHumidity.set(i, (newHumidity.get(i) - oldHumidity.get(i)) / 300);
-                            }
-                            if (newPressure.get(i) != oldPressure.get(i)) {
-                                diffPressure.set(i, (newPressure.get(i) - oldPressure.get(i)) / 300);
-                            }
-                            if (newTemperature.get(i) != oldTemperature.get(i)) {
-                                diffTemperature.set(i, (newTemperature.get(i) - oldTemperature.get(i)) / 300);
-                            }
-                            counter++;
-                        } else {
-                            oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
-                            oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
-                            oldPressure.set(i, oldPressure.get(i) + diffPressure.get(i));
-                            oldTemperature.set(i, oldTemperature.get(i) + diffTemperature.get(i));
-                            counter++;
+                    if (counter >= 300) {
+                        counter = 0;
                         }
-
-                        if (inactiveS(diffTemperature, diffPressure, diffHumidity, diffLighting, i)){
-                            double temp = inactiveSensor.get(i) + 1;
-                            inactiveSensor.set(i, temp);
+                    else if (counter == 0) {
+                        if (newLighting.get(i) != oldLighting.get(i)) {
+                            diffLighting.set(i, (newLighting.get(i) - oldLighting.get(i)) / 300);
                         }
-                        else{
-                            inactiveSensor.set(i, 0.0);
+                        if (newHumidity.get(i) != oldHumidity.get(i)) {
+                            diffHumidity.set(i, (newHumidity.get(i) - oldHumidity.get(i)) / 300);
                         }
-
-                        if (inactiveSensor.get(i) > 216000){
-                            temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
-                                    now, 10, getPositionX(i, tList.get(i)), getPositionY(i, tList.get(i)), canvas, false);
-                            temperatureRender = new TemperatureRender();
-                            temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
-
-                            sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
-                                    getPositionX(i, tList.get(i))+20, getPositionY(i, tList.get(i))+20, canvas, false);
-                            sensorRender = new SensorRender();
-                            sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
-
-                            humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                    getPositionX(i, tList.get(i))+79, getPositionY(i, tList.get(i))+50, canvas, false);
-                            humidityRender = new HumidityRender();
-                            humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
-
-                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, tList.get(i))+79,
-                                    getPositionY(i, tList.get(i))+25, canvas, false);
-                            pressureRender = new PressureRender();
-                            pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
+                        if (newPressure.get(i) != oldPressure.get(i)) {
+                            diffPressure.set(i, (newPressure.get(i) - oldPressure.get(i)) / 300);
                         }
-                        else {
-                            temperatureInstruction = new TemperatureInstruction("S" + (i + 1), oldTemperature.get(i),
-                                    now, 10, getPositionX(i, tList.get(i)), getPositionY(i, tList.get(i)), canvas, checkTemperature);
-                            temperatureRender = new TemperatureRender();
-                            temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
-
-                            sensorInstruction = new SensorInstruction("S" + (i + 1), oldLighting.get(i), now, 10,
-                                    getPositionX(i, tList.get(i)) + 20, getPositionY(i, tList.get(i)) + 20, canvas, checkLighting);
-                            sensorRender = new SensorRender();
-                            sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
-
-                            humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
-                                    getPositionX(i, tList.get(i)) + 79, getPositionY(i, tList.get(i)) + 50, canvas, checkHumidity);
-                            humidityRender = new HumidityRender();
-                            humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
-
-                            pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE, getPositionX(i, tList.get(i)) + 79,
-                                    getPositionY(i, tList.get(i)) + 25, canvas, checkPressure);
-                            pressureRender = new PressureRender();
-                            pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
+                        if (newTemperature.get(i) != oldTemperature.get(i)) {
+                            diffTemperature.set(i, (newTemperature.get(i) - oldTemperature.get(i)) / 300);
                         }
+                        if (newPositionX.get(i) != oldPositionX.get(i)) {
+                            diffPositionX.set(i, (newPositionX.get(i) - oldPositionX.get(i)) / 300);
+                        }
+                        if (newPositionY.get(i) != oldPositionY.get(i)) {
+                            diffPositionY.set(i, (newPositionY.get(i) - oldPositionY.get(i)) / 300);
+                        }
+                        counter++;
+                    }
+                    else {
+                        oldLighting.set(i, oldLighting.get(i) + diffLighting.get(i));
+                        oldHumidity.set(i, oldHumidity.get(i) + diffHumidity.get(i));
+                        oldPressure.set(i, oldPressure.get(i) + diffPressure.get(i));
+                        oldTemperature.set(i, oldTemperature.get(i) + diffTemperature.get(i));
+                        oldPositionX.set(i, oldPositionX.get(i) + diffPositionX.get(i));
+                        oldPositionY.set(i, oldPositionY.get(i) + diffPositionY.get(i));
+                        counter++;
+                    }
+
+                    if (inactiveS(diffTemperature, diffPressure, diffHumidity, diffLighting, diffPositionX, diffPositionY, i)){
+                        double temp = inactiveSensor.get(i) + 1;
+                        inactiveSensor.set(i, temp);
+                    }
+                    else{
+                        inactiveSensor.set(i, 0.0);
+                    }
+
+                    if (inactiveSensor.get(i) > 18000){
+                        temperatureInstruction = new TemperatureInstruction("S" + (i+1), oldTemperature.get(i),
+                            now, 10, xWideScreenScale(oldPositionX.get(i)), oldPositionY.get(i), canvas, false);
+                        temperatureRender = new TemperatureRender();
+                        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+
+                        sensorInstruction = new SensorInstruction("S"+(i+1), oldLighting.get(i), now, 10,
+                            xWideScreenScale(oldPositionX.get(i)+20), oldPositionY.get(i)+20, canvas, false);
+                        sensorRender = new SensorRender();
+                        sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+
+                        humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
+                            xWideScreenScale(oldPositionX.get(i))+79, oldPositionY.get(i)+50, canvas, false);
+                        humidityRender = new HumidityRender();
+                        humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
+
+                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE,
+                            xWideScreenScale(oldPositionX.get(i))+79, oldPositionY.get(i)+25, canvas, false);
+                        pressureRender = new PressureRender();
+                        pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
+                    }
+                    else {
+                        temperatureInstruction = new TemperatureInstruction("S" + (i + 1), oldTemperature.get(i),
+                            now, 10, xWideScreenScale(oldPositionX.get(i)),oldPositionY.get(i), canvas, checkTemperature);
+                        temperatureRender = new TemperatureRender();
+                        temperatureRender.notify(temperatureInstruction, Long.MAX_VALUE);
+
+                        sensorInstruction = new SensorInstruction("S" + (i + 1), oldLighting.get(i), now, 10,
+                            xWideScreenScale(oldPositionX.get(i)) + 20, oldPositionY.get(i) + 20, canvas, checkLighting);
+                        sensorRender = new SensorRender();
+                        sensorRender.notify(sensorInstruction, Long.MAX_VALUE);
+
+                        humidityInstruction = new HumidityInstruction(oldHumidity.get(i), now, Long.MAX_VALUE,
+                            xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 50, canvas, checkHumidity);
+                        humidityRender = new HumidityRender();
+                        humidityRender.notify(humidityInstruction, Long.MAX_VALUE);
+
+                        pressureInstruction = new PressureInstruction(oldPressure.get(i), now, Long.MAX_VALUE,
+                            xWideScreenScale(oldPositionX.get(i)) + 79, oldPositionY.get(i) + 25, canvas, checkPressure);
+                        pressureRender = new PressureRender();
+                        pressureRender.notify(pressureInstruction, Long.MAX_VALUE);
                     }
                 }
+            }
         }.start();
 
         /**
@@ -373,6 +398,7 @@ public class MapView extends Application{
             list.set(i,roomModel.getSensorModel(i).getHumidity());
         }
     }
+
     private void PressureCheck(ArrayList<Double> list, ArrayList<Double> oldList, int i, RoomModel roomModel){
         if(list.size() <= i){
             list.add(roomModel.getSensorModel(i).getPressure());
@@ -397,46 +423,50 @@ public class MapView extends Application{
         }
     }
 
-    private void initialXPosition(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(canvas.getWidth() / 2 - circleImage.getWidth() / 2 + i * 150 + 100);
+    private void PositionXCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber, RoomModel roomModel){
+        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
+            linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
+        }
+        double X = calculation.xFormular(linkBudgets.get(0), linkBudgets.get(1), canvas);
+        if(list.size() <= sensorNumber){
+            list.add(X);
+        }
+        if(oldList.size() <= sensorNumber){
+            oldList.add(X);
+        }
+        if(list.size() > sensorNumber){
+            list.set(sensorNumber,X);
         }
     }
 
-    private void initialYPosition(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            list.add(canvas.getHeight()/2-circleImage.getWidth()/2);
-        }
-    }
-
-    private void makeTList(ArrayList<Double> list, int i){
-        if(list.size() <= i){
-            if(i % 2 == 0){
-                list.add(-1*0.006978/i);
-            }else{
-                list.add(0.006978/i);
+    private void PositionYCheck(ArrayList<Double> list, ArrayList<Double> oldList, int sensorNumber,  double X,  RoomModel roomModel ){
+        linkBudgets.clear();
+        for(int i = 0; i < roomModel.getSensorList().get(sensorNumber).getLinkbudget().size(); i ++){
+            if(i <= 1){
+                linkBudgets.add(calculation.scaleUp(xScale, sensorNumber, roomModel, i));
+            }
+            if(i == 2){
+                linkBudgets.add(calculation.scaleUp(yScale, sensorNumber, roomModel, i));
             }
         }
-    }
-
-    private void updateTList(ArrayList<Double> list, int i){
-        double temp = list.get(i);
-        if(i % 2 == 0){
-            temp += -1*(0.008-0.006978*(i*0.23));
+        double Y = calculation.yFormular(linkBudgets.get(0), linkBudgets.get(2), canvas, X);
+        if(list.size() <= sensorNumber){
+            list.add(Y);
         }
-        else{
-            temp += 0.008-0.006978*(i*0.23);
+        if(oldList.size() <= sensorNumber){
+            oldList.add(Y);
         }
-        list.set(i, temp);
-        if(temp > 6.28 || temp < -6.28){
-            list.set(i, 0.0);
+        if(list.size() > sensorNumber){
+            list.set(sensorNumber,Y);
         }
     }
 
     /**
         Initialize the difference lists. diffInit(temperature, lighting, humidity, pressure, inactive, i (loop));
      */
-    private void diffInit(ArrayList<Double> temp, ArrayList<Double> light, ArrayList<Double> humi, ArrayList<Double> pres, ArrayList<Double> inact, int i){
+    private void diffInit(ArrayList<Double> temp, ArrayList<Double> light, ArrayList<Double> humi, ArrayList<Double> pres,
+                          ArrayList<Double> inact, ArrayList<Double> x, ArrayList<Double> y, int i){
+
         if(temp.size() <= i){
             temp.add(0.0);
         }
@@ -452,25 +482,57 @@ public class MapView extends Application{
         if(inact.size() <= i){
             inact.add(0.0);
         }
+        if(x.size() <= i){
+            x.add(0.0);
+        }
+        if(y.size() <= i){
+            y.add(0.0);
+        }
     }
 
-    private double getPositionX(int i, double t){
-        double a =i*100 + 150 ;
-        double temp = a*Math.cos(t) +canvas.getWidth() / 2 - circleImage.getWidth() / 2;
-        positionX.set(i, temp);
-        return positionX.get(i);
-    }
+    private boolean inactiveS(ArrayList<Double> temp, ArrayList<Double> pres, ArrayList<Double> humi, ArrayList<Double> light,
+                              ArrayList<Double> x, ArrayList<Double> y, int i){
 
-    private double getPositionY(int i, double t){
-        double b = 100 + i*100;
-        double temp = b*Math.sin(t) + canvas.getHeight() / 2 - circleImage.getWidth() / 2;
-        positionY.set(i, temp);
-        return positionY.get(i);
-    }
-
-    private boolean inactiveS(ArrayList<Double> temp, ArrayList<Double> pres, ArrayList<Double> humi, ArrayList<Double> light, int i){
         return (temp.get(i) < 0.001 && temp.get(i) > -0.001 && light.get(i) < 0.001 && light.get(i) > -0.001
-                && pres.get(i) < 0.001 && pres.get(i) > -0.001 && humi.get(i) < 0.001 && humi.get(i) > -0.001);
+                && pres.get(i) < 0.001 && pres.get(i) > -0.001 && humi.get(i) < 0.001 && humi.get(i) > -0.001 &&
+                x.get(i) < 0.001 && x.get(i) > -0.001 && y.get(i) < 0.001 && y.get(i) > -0.001);
+    }
+
+    private double gateWayPositionX(int CHNumber){
+        if(CHNumber == 0){
+            return 0;
+        }
+        else if(CHNumber == 1){
+            return canvas.getWidth() - circleImage.getWidth();
+        }
+        else if(CHNumber == 2){
+            return (canvas.getWidth() - circleImage.getWidth()/2)/2;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    private double gateWayPositionsY(int CHNumber){
+        if(CHNumber == 0){
+            return 0;
+        }
+        else if(CHNumber == 1){
+            return 0;
+        }
+        else if(CHNumber == 2){
+            return canvas.getHeight()-1.5*circleImage.getHeight();
+        }
+        else{
+            return 0;
+        }
+    }
+
+    private double xWideScreenScale(double x){
+        x = x - canvas.getWidth()/2;
+        x = x* screenRatio;
+        x = x + canvas.getWidth()/2;
+        return x;
     }
 
     public static void main(String[] args) {
