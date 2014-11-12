@@ -42,6 +42,9 @@ public class Controller {
         passiveUpdate();
     }
 
+    /**
+     * adds new sensors that is not currently in roomModel
+     */
     private void addSensors() {
         List<String> sensorIdList = getter.getAllSensorIDs();
         List<SensorModel> sensorList = roomModel.getSensorList();
@@ -63,6 +66,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Adds all Observations done for a sensor, so that current values is more filled than just most recent observation.
+     * @param sensor Sensor to update with backlog of observations.
+     */
     private void updateBacklog(SensorModel sensor) {
         for (String gateway: getRoomModel().getGatewayList()){
             sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(0.00));
@@ -97,12 +104,16 @@ public class Controller {
         }
     }
 
+    /**
+     * Adds all gateways currently in the database to roomModel.
+     */
     private void addGateways() {
         roomModel.getGatewayList().addAll(getter.getAllGatewaysIDs());
     }
 
-
-
+    /**
+     * Updates sensors with new observations from all gateways.
+     */
     private  void updateSensors(){
         List<SensorModel> sensorList = roomModel.getSensorList();
         for (SensorModel sensor : sensorList){
@@ -141,11 +152,16 @@ public class Controller {
 
     }
 
-
+    /**
+     * @return The used RoomModel
+     */
     public RoomModel getRoomModel(){
         return roomModel;
     }
 
+    /**
+     * Uses scheduleAtFixedRate to schedule a update at a fixed rate.
+     */
     private void passiveUpdate(){
         timer.scheduleAtFixedRate(timerTask, 500, 5000);
     }

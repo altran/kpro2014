@@ -26,7 +26,6 @@ public class ObservationGetter {
     private String path;
     private Client client;
     private WebTarget queryResource;
-    private boolean writeToFile;
 
     // Variables for comparing new observation to the last observation received.
     private Observation lastObservation;
@@ -50,11 +49,11 @@ public class ObservationGetter {
         };
     }
 
-    public void setWriteToFile(boolean writeToFile) {
-        this.writeToFile = writeToFile;
-    }
-
-    //TODO take in gateway
+    /**
+     * Query the IoT Service database using radiogatways as path, and sort out the the sensorIDs from the returned
+     * result
+     * @return returns List<String> of sensor IDs currently in the database.
+     */
     public List<String> getAllSensorIDs() {
         List<String> idList = null;
         try {
@@ -72,7 +71,11 @@ public class ObservationGetter {
         return idList;
     }
 
-    public List<String> getAllGatewaysIDs() {
+    /**
+     * Query the IoT Service database using radiogatways as path, and sort out the the gatewayIDs from the returned
+     * result
+     * @return returns List<String> of gatewayIDs currently in the database.
+     */    public List<String> getAllGatewaysIDs() {
         List<String> idList = null;
         try {
             String response = queryResource
@@ -89,6 +92,9 @@ public class ObservationGetter {
         return idList;
     }
 
+    /**
+     * Takes a string in Dash7 format and post it to the database.
+     */
     public String postD7data(String data){
         Response response;
         response = queryResource
@@ -99,6 +105,11 @@ public class ObservationGetter {
         return  response.toString();
     }
 
+    /**
+     * Returns the most recent Observation in the database for the sensor
+     * @param sensorID, the sensor to lookup in the database
+     * @return Most recent Observation for the sensor.
+     */
     public Observation getMostRecentObservation(String sensorID) {
         String response = queryResource
                 .path(path).path("radiosensor")
@@ -118,6 +129,12 @@ public class ObservationGetter {
         return newestObservation;
     }
 
+    /**
+     * Returns the most recent Observation in the database for the sensor and gateway.
+     * @param sensorID the sensor to return newest observation for.
+     * @param gatewayID the gateway that recorded the observation.
+     * @return Return most recent observation for sensor, done by gateway.
+     */
     public Observation getMostRecentObservation(String sensorID, String gatewayID) {
         String response = queryResource
                 .path(path).path("radiosensor")
@@ -148,6 +165,13 @@ public class ObservationGetter {
             return null;
         }
     }
+
+    /**
+     * Returns the most recent Observations in the database for the sensor and gateways.
+     * @param sensorID the sensor to return newest observations for.
+     * @param gatewayIDs the gateways that recorded the observations.
+     * @return Return most recent observation for sensor, done by gateway.
+     */
     public List<Observation> getMostRecentObservation(String sensorID, List<String> gatewayIDs) {
         List<Observation> returnObservations = new ArrayList<Observation>();
         String response = queryResource
@@ -179,6 +203,11 @@ public class ObservationGetter {
         return returnObservations;
     }
 
+    /**
+     * Used to return all observations done by the sensor
+     * @param sensorID The Id for the sensor to return results for.
+     * @return Observations done by a sensor, stored in the database.
+     */
     public List<Observation> getBacklogForSensor(String sensorID) {
         String response = queryResource
                 .path(path).path("radiosensor")
@@ -195,6 +224,11 @@ public class ObservationGetter {
         }
     }
 
+    /**
+     * Writes a Observvation to file.
+     * @param obs Observation to write to file.
+     * @param filename Full filename for the file to write to.
+     */
     public void doWriteToFile(Observation obs, String filename) {
         JSONObject obj = new JSONObject();
         obj.put("RadioSensorId", obs.getRadioSensorId());
@@ -207,7 +241,10 @@ public class ObservationGetter {
         }
     }
 
-    // TODO: This method uses tail. It should instead query for observations by specifying time.
+    /**
+     * Query the database for the most recent observations in the database.
+     * @return List of most recent Observations.
+     */
     public List<Observation> getRecentObservations() {
 
         // Get observations from the server.
@@ -238,6 +275,11 @@ public class ObservationGetter {
         return result;
     }
 
+    /**
+     * Uses Dash7 and parse it to Observation objects.
+     * @param jsondata Dash7 data that is to be parsed to Observations.
+     * @return List of Observations parsed from jsondata.
+     */
     public static List<Observation> toObservationList(String jsondata) {
         List<Observation> result = new ArrayList<Observation>();
         Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(jsondata);
