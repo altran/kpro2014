@@ -10,40 +10,40 @@ We are using the goal driven requirement development method to gather our requir
 \subsubsection{Top Goal of the System}
 \begin{itemize}
 \item
-Gather data and present the data visually
+Gather data and present the data visually.
 \begin{itemize}
 \item
-Data storage requirement
+Data storage requirement.
 \begin{itemize}
 \item
-Write data
+Write data.
 \item
-Pull data
+Pull data.
 \end{itemize}
 \item
-Central hub requirement
+Central hub requirement.
 \begin{itemize}
 \item
-Gather data from sensor
+Gather data from sensor.
 \item
-Process data
+Process data.
 \item
-Send data upon request
+Send data upon request.
 \end{itemize}
 \item
-Visualizer requirement
+Visualizer requirement.
 \begin{itemize}
 \item
-Pull data from the database
+Pull data from the database.
 \item
-Show the data on the GUI
+Show the data on the GUI.
 \begin{itemize}
 \item
-Show a table containing sensors and their data value (temperature, humidity etc)
+Show a table containing sensors and their data value (temperature, humidity etc).
 \item
-Show a map with sensors and their position if possible
+Show a map with sensors and their position if possible.
 \item
-Map will showcase the temperature, humidity, pressure and lighting near the sensor
+Map will showcase the temperature, humidity, pressure and lighting near the sensor.
 \end{itemize}
 \item
 Allow the user to choose what data to be showcased; the user can choose to turn off temperature, humidity or anything else they please.
@@ -165,33 +165,33 @@ Below we will represent these new requirements, first as a top-down representati
 
 \begin{itemize}
 	\item
-	Visualise multiple gateways and positions of each sensor using link budget
+	Visualise multiple gateways and positions of each sensor using link budget.
 	\begin{itemize}
 		\item
-		Visualiser supports multiple gateways
+		Visualiser supports multiple gateways.
 		\begin{itemize}
 			\item
-			Drawing of the gateway on the visualiser, by using a geometric pattern
+			Drawing of the gateway on the visualiser, by using a geometric pattern.
 		\end{itemize}
 		\item
-		Implementing link budget variable
+		Implementing link budget variable.
 		\begin{itemize}
 			\item
-			One link budget for each gateway sensor pair
+			One link budget for each gateway sensor pair.
 			\item
-			Using link budgets as weights to calculate the position of the sensor
+			Using link budgets as weights to calculate the position of the sensor.
 			\item
-			Sensors will be able to move during runtime if link budget changes
+			Sensors will be able to move during runtime if link budget changes.
 			\item
-			If the sensor moves too far away the visualiser will reflect that
+			If the sensor moves too far away the visualiser will reflect that.
 			\item
-			The administrator can configure a file containing scaling for link budget
+			The administrator can configure a file containing scaling for link budget.
 		\end{itemize}
 		\item
-		Make a random data generator for testing and simulation purposes
+		Make a random data generator for testing and simulation purposes.
 		\begin{itemize}
 			\item
-			The random data generator should generate data in the pattern that is similar to real life instances
+			The random data generator should generate data in the pattern that is similar to real life instances.
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
