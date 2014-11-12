@@ -88,7 +88,6 @@ public class WalledRoomGenerator implements Dash7Generator {
                 // adjust link budget if the gateway and sensor are in different rooms
                 int sensorRoom = (int)((sensorTime % timePeriod) / timePerRoom);
                 int gatewayRoom = (int)(gatewayID / gatewaysPerRoom);
-                System.out.println(sensorRoom + " : " + gatewayRoom);
                 if (sensorRoom != gatewayRoom) {
                     lb = 100;
                 }
