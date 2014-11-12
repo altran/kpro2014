@@ -106,8 +106,8 @@ public class Controller {
     private  void updateSensors(){
         List<SensorModel> sensorList = roomModel.getSensorList();
         for (SensorModel sensor : sensorList){
-            for (String gateway : sensor.getLinkbudget().keySet()){
-                Observation obs = getter.getMostRecentObservation(sensor.getSensorID(), gateway);
+            List<Observation> Observations = getter.getMostRecentObservation(sensor.getSensorID(), this.roomModel.getGatewayList());
+            for (Observation obs: Observations){
                 if (obs == null){
                     continue;
                 }
@@ -134,7 +134,7 @@ public class Controller {
                 }
                 tempMeasure = obs.getMeasurements().get("lb");
                 if (tempMeasure != null){
-                    sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(Double.parseDouble(tempMeasure)));
+                    sensor.getLinkbudget().put(obs.getRadioGatewayId(), new SimpleDoubleProperty(Double.parseDouble(tempMeasure)));
                 }
             }
         }
@@ -147,7 +147,7 @@ public class Controller {
     }
 
     private void passiveUpdate(){
-        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
+        timer.scheduleAtFixedRate(timerTask, 500, 5000);
     }
 
     public static void main(String[] args) throws InterruptedException {
