@@ -8,6 +8,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
+ * A class for calculating the position of a sensor based on the link budgets received from the gateways.
+ *
  * Created by shimin on 11/7/2014.
  */
 public class Calculation {
