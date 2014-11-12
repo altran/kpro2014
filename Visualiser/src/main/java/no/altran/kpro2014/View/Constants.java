@@ -5,18 +5,14 @@ import java.nio.file.Files;
 import java.util.Properties;
 
 /**
+ * Defines a configuration object for the MapView.
+ *
+ * The configuration object makes it possible to set the link budget extreme values.
+ *
  * Created by shimin on 11/7/2014.
  */
 public class Constants {
 
-    public int maxLighting;
-    public int minLighting;
-    public int maxHumidity;
-    public int minHumidity;
-    public int maxPressure;
-    public int minPressure;
-    public int maxTemperature;
-    public int minTemperature;
     public int maxLinkBudget;
     public int minLinkBudget;
     private BufferedReader bufferedReader;
