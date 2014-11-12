@@ -20,8 +20,8 @@ public class Controller {
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-    private final String domain = "http://78.91.29.77:4901";
- //   private final String domain = "http://iot.altrancloud.com//";
+    private final String domain = "http://78.91.30.72:4901";
+ //   private final String domain = "http://iot.altrancloud.com/";
     private final String path = "iot/observe";
 
 
@@ -153,7 +153,7 @@ public class Controller {
     public static void main(String[] args) throws InterruptedException {
 
         Controller temp = new Controller();
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         for (SensorModel sensor : temp.getRoomModel().getSensorList()){
             for (String hei : temp.getRoomModel().getGatewayList()){
                 try{
