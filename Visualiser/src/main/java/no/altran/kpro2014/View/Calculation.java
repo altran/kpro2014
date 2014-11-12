@@ -38,8 +38,13 @@ public class Calculation {
                 sum += temp;
             }
         }
-        position = position.multiply(1/sum);
-        return position;
+        if(sum == 0){
+            position.add(2000, 2000);
+            return position;
+        }else{
+            position = position.multiply(1/sum);
+            return position;
+        }
     }
 
 }
