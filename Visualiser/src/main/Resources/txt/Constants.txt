@@ -1,0 +1,2 @@
+minLinkBudget = 0
+maxLinkBudget = 100
