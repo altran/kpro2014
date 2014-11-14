@@ -9,6 +9,9 @@
 This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in \appendixfullref{retired_architecture}. The sensors and the rasberry pi were already connected together by Altran so we will not write the architecture between the sensors and the Raspberry Pi. The Raspberry Pi and the database will use the REST style to communicate and is implemented by one of us. The database will act as a client. The connection between the database and the user interface will follow Altrans framework for their database/GUI connection which uses the REST style.
 
 \subsection{Quality Attributes}
+\label{quality_attributes}
+The quality metrics can be found in \subsubfullref{subsubsec:quality_metrics}
+
 \subsubsection{Functionality}
 The system consists of multiple sensor devices, a central hub, and one or more client devices. The sensors gather data from an environment, such as temperature, light level, or sound, and move it to a central hub. A client device collects sensor data from the central hub, and visualizes the data in a grand manner.
 
