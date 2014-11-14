@@ -119,8 +119,10 @@ public class ManualAddDash7Data {
         try {
             BufferedReader br = new BufferedReader(new FileReader("database/src/main/Resources/observations.txt"));
             for (String line = br.readLine(); line != null; line = br.readLine()) {
-                Object obj = parser.parse(line);
-                objList.add((JSONObject) obj);
+                if (!line.equals("")){
+                    Object obj = parser.parse(line);
+                    objList.add((JSONObject) obj);
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -130,9 +132,21 @@ public class ManualAddDash7Data {
             e.printStackTrace();
         }
 
+        int batchSize = 6;
+        int batchProgress = 6;
+
         for (JSONObject json : objList){
+            if (batchProgress >= 6){
+                System.out.println("Next observation batch:");
+                new Scanner(System.in).nextLine();
+                batchProgress = 0;
+            }
+
             if (json.get("RadioSensorId") != null){
                 sensorID = (String) json.get("RadioSensorId");
+            }
+            if (json.get("gatewayID") != null){
+                gatewayID = (String) json.get("gatewayID");
             }
 
             if (json.get("tmp") != null){
@@ -148,9 +162,13 @@ public class ManualAddDash7Data {
             if (json.get("pre") != null){
                 pressure = (String) json.get("pre");
             }
+            if (json.get("lb") != null){
+                lb = (String) json.get("lb");
+            }
 
             String tempString = buildDash7Data(sensorID, gatewayID, temp, light, humidity, pressure, lb);
             postData(tempString);
+            batchProgress++;
         }
     }
 
