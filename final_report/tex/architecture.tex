@@ -252,4 +252,65 @@ The use cases shows two ways a user can interact with the system. The first show
 	\caption{Use Case Check}
 \end{figure}
 
+\subsubsection{Sprint 4 Scenarios and Use Cases}
+
+With sprint 4, we have introduced some new use-case scenarios into the system, but the architecture remains the same as it was before. The new use-case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figfullref{usecasesprint4}
+\begin{table}[H]
+\caption{Scenario P6}
+\label{scenario6}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline	
+ID
+&P6
+\\ \hline Source
+&System
+\\ \hline Stimulus
+&The link budget changes
+\\ \hline Environment
+&Runtime
+\\ \hline Artifact
+&Link budget sensor
+\\ \hline Response
+&The animation of sensor movement will happen after the next pull from the database.
+\\ \hline Response Measure
+&Time \newline
+Should be less than 30 seconds \newline
+Accuracy \newline
+The sensor should be correctly placed on the screen according to the link budget
+\\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Scenario P7}
+\label{scenario7}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline	
+ID
+&P7
+\\ \hline Source
+&System
+\\ \hline Stimulus
+&The administrator changes the calibration
+\\ \hline Environment
+&Configuration time
+\\ \hline Artifact
+&Constant.txt
+\\ \hline Response
+&The sensor movement will be scaled by the Constant.txt
+\\ \hline Response Measure
+&Accuracy \newline
+The scaling of the data will change upon the next boot up of the system, and this should be correctly reflected by the animation.
+\\ \hline
+\end{tabularx}
+\end{table}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/useCasesprint4.png}
+	\caption{Use Case Sprint 4}
+	\label{usecasesprint4}
+\end{figure}
+
 \end{document}
