@@ -313,9 +313,8 @@ The Altran database API is RESTful, and is accessed through simple HTTP messages
 
 Since the visualiser needed to pull from a working database while implementing the new database, we used the old, working SQL database to do all the testing in the visualiser until we managed to integrate the new database with the visualiser.
 
-\subsubsection{ObservationGetter(OG)}
 \begin{table}[H]
-\caption{Description}
+\caption{Database Module Description}
 \centering
 \begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
@@ -356,6 +355,8 @@ Since the visualiser needed to pull from a working database while implementing t
 \end{tabularx}
 \end{table}
 
+\subsubsection{ObservationGetter(OG)}
+
 \subsubsection{Observation}
 A model class from our customers Iot-Service project, so that our data easily follow their wanted format.
 
@@ -374,9 +375,13 @@ This approach makes sure that even if the sensors are behind a network with a fi
 \label{fig:ClassDiagramC++}
 \end{figure}
 
-{\color{red}Write how the classes work together. Just change the things that have changed from the paragraph over this one.}
+The class diagram for this prototype, as shown in \figref{fig:ClassDiagramC++}, has been scaled down, and all the notes from the class diagram from the hardware-based prototype apply here as well. Furthermore, we have several new classes that are added into the implementation.
 
-The class diagram for this prototype, as shown in \figref{fig:ClassDiagramC++}, has been scaled down, and all the notes from the class diagram from the hardware-based prototype apply here as well. In short, we ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method, and everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead. Some new changes in the class diagram is the (x2) in the class ObservationGetter, this means the class have two methods with the same name, and one of the methods have to string parameters and the other only has one.
+The two classes appended to the visualiser are Constants and Calculation. The constants class serves as a loading point to make the code more modifiable. While it is not used in our prototype to its full extent, it can hold fields for any type of value and allows reading from a Constants.txt file. In our prototype, we only use it to calibrate values of the link budget. 
+
+The calculation class is a helper class to the visualisation, which takes in the position of the gateways and the sensor numbers, and returns the position of the sensors on the screen as a 2D point. This is used to calculate the distance of the sensors from each gateway, using the formula method.
+
+Like before, we have ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method. Everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead.
 
 \subsubsection{Visualiser overview after sprint 4}
 
@@ -448,7 +453,7 @@ The controller is capable of updating sensor positions using link budgets from m
 \begin{table}[H]
 \caption{Controller Description}
 \centering
-\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|}
 \hline ID
 &Name
 &Description
@@ -471,7 +476,7 @@ The class ObservationGetter now has support for more specific observation querie
 \begin{table}[H]
 \caption{ObservationGetter Description}
 \centering
-\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|L{1.1cm}|L{5.1cm}|X|}
 \hline 
 ID
 &Name
@@ -501,7 +506,7 @@ The class ManualAddDash7Data is a program used to manually add observation data 
 \begin{table}[H]
 \caption{ManualAddDash7Data Description}
 \centering
-\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{4cm}|X|}
 \hline 
 ID
 &Name
@@ -556,7 +561,7 @@ The gateways are divided into equally sized groups, one per room. Whenever an ob
 \begin{table}[H]
 \caption{WalledRoomGenerator Description}
 \centering
-\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{4cm}|X|}
 \hline ID
 &Name
 &Description
