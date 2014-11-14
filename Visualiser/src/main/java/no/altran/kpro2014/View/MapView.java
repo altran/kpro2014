@@ -118,8 +118,8 @@ public class MapView extends Application{
 
         /**canvas is set a little smaller than the actual stage in order for the checkboxes to fit*/
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
-        line = new Line(canvas.getWidth()/2, 0 , canvas.getWidth()/2, canvas.getHeight());
-        line.setStrokeWidth(20);
+        line = new Line(canvas.getWidth(), 0 , 0, canvas.getHeight());
+        line.setStrokeWidth(10);
         line.setStroke(Color.LIGHTSTEELBLUE);
         line.setFill(Color.LIGHTSTEELBLUE);
 
@@ -375,7 +375,7 @@ public class MapView extends Application{
         gPane.add(canvas, 0, 0);
         gPane.setStyle("-fx-background-color: black");
 
-        ((Group) scene.getRoot()).getChildren().addAll(gPane);
+        ((Group) scene.getRoot()).getChildren().addAll(gPane, line);
         stage.setScene(scene);
         stage.show();
     }
