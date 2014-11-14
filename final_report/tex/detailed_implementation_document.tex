@@ -177,7 +177,7 @@ The visualiser takes as input from the database using what we call a controller 
 
 \begin{figure}[H]
 \centering
-\includegraphics{detailed_implementation/mapview.png}
+\includegraphics[width=\textwidth]{detailed_implementation/mapview.png}
 \caption{MapView Class Contents}
 \end{figure}
 
@@ -381,11 +381,19 @@ The class diagram for this prototype has been scaled dowl, and all the notes fro
 
 The visualiser now uses the separate class Calculation to compute the screen position of gateways and sensors based on the link budget. In order to make the link budget calculation configurable, the calculation involves fields from the class Constants, which again initialises the fields from properties in the file “constants.txt”. The animation works the same way as before, using the class AnimationTimer and the interfaces Instruction and Renderer.
 
-Bilde
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{detailed_implementation/VisualiserClassdiagramsprint4.png}
+\caption{Structure overview for Visualiser after sprint 4}
+\end{figure}
 
 \subsubsection{Calculation class(C)}
 
-bilde
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{detailed_implementation/CalculationClassdiagram.png}
+\caption{Calculation Class Contents}
+\end{figure}
 
 \begin{table}[H]
 \caption{Calculation Description}
@@ -406,7 +414,11 @@ bilde
 
 \subsubsection{Constants class(CC)}
 
-bilde
+\begin{figure}[H]
+\centering
+\includegraphics{detailed_implementation/ConstantsClassdiagram.png}
+\caption{Constants Class Contents}
+\end{figure}
 
 \begin{table}[H]
 \caption{Constants Description}
@@ -426,7 +438,11 @@ CC1
 \subsubsection{Controller function (CF)}
 The controller is capable of updating sensor positions using link budgets from more than one gateway. In order to make the link budgets available for calculation, they were placed in a list with a one to one correspondence to the list of gateway IDs.
 
-bilde
+\begin{figure}[H]
+\centering
+\includegraphics{detailed_implementation/controllersprint4.png}
+\caption{Controller Class Contents}
+\end{figure}
 
 \begin{table}[H]
 \caption{Controller Description}
