@@ -111,6 +111,7 @@
 % glossary
 \usepackage[xindy]{glossaries}
 
+
 % tocnumbers
 \usepackage{tocloft}
 \setlength{\cftsubsecnumwidth}{2.75em}
@@ -122,6 +123,8 @@
 \usepackage{etoolbox}
 \apptocmd{\thebibliography}{\csname phantomsection\endcsname\addcontentsline{toc}{section}{Bibliography}}{}{}
 \renewcommand\refname{Bibliography}
+%\apptocmd{\printglossaries}{\csname phantomsection\endcsname\addcontentsline{toc}{subsection}{\arabic{section}.\arabic{subsection} Glossary}}{}{}
+
 
 
 \begin{document}
@@ -260,7 +263,10 @@
 
 % appendix A
 \newpage
-\section{Third Party Tools}
+\section{NEW NAME HERE}
+
+\newpage
+\subfile{tex/glossary_print}
 
 \newpage
 \subfile{tex/third_party_tools}
