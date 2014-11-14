@@ -120,7 +120,7 @@
 % bibliography
 \usepackage{etoolbox}
 \apptocmd{\thebibliography}{\csname phantomsection\endcsname\addcontentsline{toc}{section}{Bibliography}}{}{}
-\patchcmd{\thebibliography}{\section*{\refname}}{Bibliography}{}{}
+\renewcommand\refname{Bibliography}
 
 
 \begin{document}
