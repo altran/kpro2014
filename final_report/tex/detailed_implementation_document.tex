@@ -368,14 +368,194 @@ This approach makes sure that even if the sensors are behind a network with a fi
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{detailed_implementation/ClassDiagramC++.png}
+\includegraphics[width=\textwidth]{detailed_implementation/classdiagramC++.png}
 \caption{Class Diagram for Mock-Up Data Based Prototypee}
 \label{fig:ClassDiagramC++}
 \end{figure}
 
 {\color{red}Write how the classes work togheter. Just change the things that have changed from the paragraph over this one.}
-\newline \ \newline
 
 The class diagram for this prototype has been scaled dowl, and all the notes from the class diagram from the hardware-based prototype apply here as well. In short, we ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method, and everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead. Some new changes in the class diagram is the (x2) in the class ObservationGetter, this means the class have two methods with the same name, and one of the methods have to string parameters and the other only has one.
+
+\subsubsection{Visualiser overview after sprint 4}
+
+The visualiser now uses the separate class Calculation to compute the screen position of gateways and sensors based on the link budget. In order to make the link budget calculation configurable, the calculation involves fields from the class Constants, which again initialises the fields from properties in the file “constants.txt”. The animation works the same way as before, using the class AnimationTimer and the interfaces Instruction and Renderer.
+
+Bilde
+
+\subsubsection{Calculation class(C)}
+
+bilde
+
+\begin{table}[H]
+\caption{Calculation Description}
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline ID
+&Name
+&Description
+\\ \hline C1
+&getLinkBudget()
+&This method returns the link budget for a specific sensor from a specific room with a number variable saying from which gateway we are calculating from.
+\\ \hline C2
+&formula()
+&This method will return the position of the sensor in javafx Point2D format. We take position variables of all gateways and the link budgets from all those to the sensor we are calculating for. We also take in values from constants class during the calculation.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Constants class(CC)}
+
+bilde
+
+\begin{table}[H]
+\caption{Constants Description}
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline ID
+&Name
+&Description
+\\ \hline 
+CC1
+&Constants
+&This method will read from a .txt file that contains maxLinkBudget and minLinkBudget and set those two fields.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Controller function (CF)}
+The controller is capable of updating sensor positions using link budgets from more than one gateway. In order to make the link budgets available for calculation, they were placed in a list with a one to one correspondence to the list of gateway IDs.
+
+bilde
+
+\begin{table}[H]
+\caption{Controller Description}
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline ID
+&Name
+&Description
+\\ \hline CF6
+&updateSensors()
+&The method now uses all Observations from each gateway, so that the link budget is updated for all gateways.
+\\ \hline CF7 
+&updateBacklog(SensorModel sensor)
+&Adds all Observations done for a sensor, so that current values is more filled than just most recent observation.
+\\ \hline CF8
+&addGateways()
+&Adds all gateways currently in the database to roomModel.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{ObservationGetter (DBM)}
+The class ObservationGetter now has support for more specific observation queries based on gateway id. This makes it possible to reduce the flow of data between the database and the visualiser.
+
+\begin{table}[H]
+\caption{ObservationGetter Description}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline 
+ID
+&Name
+&Description
+\\ \hline DBM11
+&getAllGatewaysIDs()
+&Query the IoT Service database using radiogatways as path, and sort out the the gatewayIDs from the returned result.
+\\ \hline DBM12
+&getMostRecentObservation(String sensorID, String gatewayID)
+&Returns the most recent Observation in the database for the sensor that is recorded by gateway.
+\\ \hline DBM13
+&getMostRecentObservation(String sensorID, List<String> gatewayIDs)
+&Returns the most recent Observation in the database for the sensor that is recorded by the gateways.
+\\ \hline DBM14
+&List<Observation> getBacklogForSensor(String sensorID)
+&Returns all Observations for a sensor.
+\\ \hline DBM15
+&doWriteToFile(Observation obs, String filename)
+&Writes a Observation to file.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{ManualAddDash7Data (MADD)}
+The class ManualAddDash7Data is a program used to manually add observation data to a running database. It can be used in several different modes. In each mode the user controls the program through a console; the difference is how observation data is generated and added to the database. The modes are implemented by the static methods outlined in the table below.
+
+\begin{table}[H]
+\caption{ManualAddDash7Data Description}
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline 
+ID
+&Name
+&Description
+\\ \hline MADD1
+&main()
+&Starts the program. Prompts the user for IP-address of the database.
+\\ \hline MADD2
+&assistedDataPost()
+&The user specifies measurement values of the observations explicitly, and presses enter to post the data. This input sequence runs in a loop.
+\\ \hline MADD3
+&autoGeneratedDataPost()
+&A Dash7Generator object (see below) is used to generate data periodically, and the data is posted to the database. The user sets the length of the update period, and also specifies the generator type and configures the generator.
+\\ \hline MADD4
+&manualDataPost()
+&The user writes observations in DASH7 format directly into the console. This mode is meant for copypasting observations into the console.
+\\ \hline MADD5
+&readFromFile()
+&The program attempts to read the resource file observations.txt as a JSON file with observations, posting the data to the database automatically.
+
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Dash7Generator (DG)}
+The interface Dash7Generator defines a type for objects that generates observations as strings in the DASH7 format. The observations are generated according to rules specified by the implementing class. The interface is currently implemented by the classes DefaultGenerator and WalledRoomGenerator.
+
+\begin{table}[H]
+\caption{Dash7Generator Description}
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline ID
+&Name
+&Description
+\\ \hline 
+DG1
+&nextObservation()
+&Returns the next observation generated according to the internal rules of this generator object.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{WalledRoomGenerator (WRG)}
+The class WalledRoomGenerator implements the Dash7Generator interface. It generates observations to simulate an environment where the gateways are placed in different rooms; the rooms are separated by thick walls blocking all signals sent between the sensor and the gateway.
+
+\paragraph{Observation generation rule}
+The constructor takes as parameters the number of sensors, gateways and rooms, and generates lists of sensor, gateway and room ids. Each measurement value is modelled by as a linear saw-tooth function based on the system time and the sensor id. The function for the link budget is based also on the gateway id, in addition to being adjusted to simulate the movement of sensors between rooms.
+
+\paragraph{Link budget adjustment}
+The gateways are divided into equally sized groups, one per room. Whenever an observation is generated for a sensor and a gateway, a it is decided if the gateway is in the same room as the sensor. If it is not, the link budget value is set to 100 to indicate that there is no connectivity. This is picked up by the position calculation in the visualiser, which will then move the sensor away from the gateway in question.
+
+\begin{table}[H]
+\caption{WalledRoomGenerator Description}
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline ID
+&Name
+&Description
+\\ \hline 
+WRG1
+&nextObservation()
+&Returns the next observation generated according to the internal rules of this generator object.
+\\ \hline WRG2
+&WalledRoomGenerator()
+&Constructs a new instance of this generator.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{DefaultGenerator (DEG)}
+The class DefaultGenerator simply inherits the class WalledRoomGenerator, fixing the number of rooms to 1.
+
 
 \end{document}
