@@ -497,6 +497,12 @@ public class MapView extends Application{
     private Point2D gateWayPosition(int CHNumber){
         double x = ((canvas.getWidth()-circleImage.getWidth())/2)*(Math.cos(2*Math.PI*CHNumber/TotalCHCount)+1);
         double y = ((canvas.getHeight()-circleImage.getHeight())/2)*(Math.sin(2 * Math.PI * CHNumber /TotalCHCount)+1);
+        if(x == 0){
+            x = 1;
+        }
+        if(y == 0){
+            y = 1;
+        }
         Point2D point = new Point2D(x, y);
         return point;
     }
