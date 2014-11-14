@@ -122,40 +122,44 @@ In this section we will show the different views of our architecture. We will fo
 
 
 \subsubsection{Logical View}		
-The logical view is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the database, the gui, the gatherer, the server, and the sensors. 
+The logical view, shown in \figref{fig:LogicalView}, is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the database, the gui, the gatherer, the server, and the sensors. 
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/LogicalView.png}
 	\caption{Logical View}
+	\label{fig:LogicalView}
 \end{figure}
 
 \subsubsection{Development View}
-The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualiser pulls the information from the database.
+The development view, shown in \figref{fig:DevelopmentView},  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualiser pulls the information from the database.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/DevelopmentView.png}
 	\caption{Development View}
+	\label{fig:DevelopmentView}
 \end{figure}
 
 \subsubsection{Process View}
-The process view considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
+The process view, shown in \figref{fig:ProcessView}, considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/ProcessviewNew.png}
 	\caption{Process View}
+	\label{fig:ProcessView}
 \end{figure}
 
 \subsubsection{Physical View}
-The physical view, also known as the deployment view, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from mock-up data. The user interface gets information from the database.
+The physical view, shown in \figref{fig:SystemDiagram}, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from mock-up data. The user interface gets information from the database.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/SystemDiagram.png}
-	\caption{System Diagram}
+	\caption{Physical View}
+	\label{fig:SystemDiagram}
 \end{figure}
 
 \subsubsection{Scenarios and Use Cases}
