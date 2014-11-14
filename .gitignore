@@ -21,3 +21,4 @@ target/
 **.toc
 **.lof
 **.lot
+**.glsdefs
