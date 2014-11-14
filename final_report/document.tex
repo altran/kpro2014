@@ -76,20 +76,21 @@
 \newcommand*{\figref}[1]{\hyperref[{#1}]{Figure \ref*{#1}}}
 \newcommand*{\tableref}[1]{\hyperref[{#1}]{Table \ref*{#1}}}
 
-% Appearance of termianl listings
+% Appearance of terminal listings
 \usepackage{listings}
 \definecolor{mybgcolor}{rgb}{0, 0, 0}
-\lstset{
+\lstdefinestyle{custombash}{
 	language=bash,
 	backgroundcolor=\color{mybgcolor},  % set background color
 	frame=single,                   	% draw border
-	basicstyle=\ttfamily,           	% font
+	basicstyle=\ttfamily,          	% font
 	basicstyle=\ttfamily\color{white},
 	breakatwhitespace=true, % break lines if necessary
 	breaklines=true,    	%
 	tabsize=4,  	% indentation size
 	columns=flexible,   % preserve indentation
 	keepspaces=true,	%
+	captionpos=b,	% place caption at the bottom
 } 
 
 % Appearence of the part style

@@ -143,6 +143,7 @@ For the central hub, the simplest way to discover the address is by trial and er
 If a laptop is used as a DHCP server, another option is also available. This involves viewing the log messages from the running DHCP server. The DHCP server will write the addresses it leases to the log, allowing you to read the address of the central hub.
 
 It is also necessary to get the IP address of the database. Assuming the database is run on a computer with easy access to a terminal, this can be found using the command-line utility ipconfig in Windows, or ifconfig in OS X or Linux.
+\lstset{style=custombash}
 \begin{lstlisting}[caption=Example output of the ifconfig command in Linux]
 $ ifconfig
 wlan0     Link encap:Ethernet  HWaddr 00:18:de:01:f9:8c  
@@ -161,6 +162,7 @@ At this point all devices are powered on, they are connected to the network, and
 
 \subsubsection{Starting the Database}
 The database receives sensor samples from the central hub, storing them in files. In order to start the database, open a terminal and navigate to the folder where the file the executable .jar file is located. Next, execute the .jar using the command
+\lstset{style=custombash}
 \begin{lstlisting}
 $ java -jar IoT-service-0.9.1-SNAPSHOT-with-deps.jar
 \end{lstlisting}
@@ -170,12 +172,14 @@ The database should now start printing log messages.
 
 \subsubsection{Starting the pull script}
 The script running on the Raspberry Pi along with the central hub is used pull sensor samples from the central hub and push them to the database. It is a Bash script that uses the command-line tool cURL to communicate with the central hub and the database. This script resides on the central hub under the path /home/root/push.sh. The recommended way to start the script, is to log on to the Raspberry Pi through ssh, using ‘root’ as both username and password. After logging in, the script is started with the command
+\lstset{style=custombash}
 \begin{lstlisting}
 $ ./pull.sh <central hub ip> <database ip>
 \end{lstlisting}
 where the IP of the central hub and the database is specified as arguments.
 
 The script can also be run on any computer connected to the network. Using a bash shell it can be pulled from the central hub with the command below.
+\lstset{style=custombash}
 \begin{lstlisting}[caption=Bash command to copy the central hub script. Note the period at the end.]
 $ scp root@<central hub ip>:/home/root/pull.sh .
 \end{lstlisting}
