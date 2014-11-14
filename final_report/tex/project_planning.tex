@@ -457,62 +457,24 @@ Number
 \subsection{Quality Assurance}
 In this section we will specify some quality guidelines to assure high quality of communication and documentation.
 
-\subsubsection{Product Qualities}
-
-\paragraph{Functionality} \ \\
-The systems main functionalities are to:
-\begin{itemize}
-\item
-Gather information from the environment.
-\item
-Send the information from the sensors to the central hub.
-\item
-Send the information from the central hub to the database.
-\item
-Visualize this data through image manipulation.
-\end{itemize}
-\ \newline
-These four functionalities are key if our system is to operate.
-\newline \ \newline
-Gathering information is vital for our system. Without it we can only use mock-up data which on its own is useful as it does allow us to create a system. However, it does not allow us to have any real world implementation of the system. Moreover, it does not allow us to fulfill our goals of modularity, as we can not test the system. We also need to be able to send this data to the central hub which will organize the data by sensors. This data is further sent to the database, which will store the data as JSON objects. Finally, this data is passed into the image visualizer. Therefore, we need to be able to create a visualization method, that will visualize the data received through the sensors. These four functional requirements are the only functional requirements our system needs and as such they are top priority when it comes to quality of implementation.
-
-\paragraph{Reliability} \ \\
-Our system needs to be able to run continuously for one full day. There is not a large need for reliability of the system and it is not required of us by the customer. That being said the sensors, the central hub, the database and the visualization program should all function continuously through at least a duration of one day. This is so that we may showcase data well through our visualization program.
-
-\paragraph{Usability} \ \\
-There is no need for usability in our system. The sensors will function with or without prior knowledge, or even end users present in the room. However, the user can directly influence the visualization by increasing or decreasing the temperature of the environment or turning the light on and off, amongst other things.
-
-\paragraph{Efficiency} \ \\
-Our network needs to be capable of transmitting data at least once every five seconds. In addition to that the visualization program should use less than five seconds to react to the change. This is so that we can visualise every change. Other than that, the system need not be highly efficient.
-
-\paragraph{Maintainability} \ \\
-As with some of the other requirements, maintainability is not a high priority. Our customer is to decide what they will be using these sensors for in the future, and will provide maintainability for the system when it is necessary. Regarding our project, we do ot require any maintainability.
-
-\paragraph{Portability} \ \\
-The system needs to be portable. In other words, it should work on any platform. Using Java we will contribute to the overall portability of the system, however, we may also limit the system to certain hardware, as some hardware may not have all of the capabilities, or libraries, of the Java version that we are using.
-
 \subsubsection{Quality Metrics}
 \label{subsubsec:quality_metrics}
-The quality metrics represent how well our project is implemented, or in other words how well our prototype works in relation to the product qualities.
+The quality metrics represent how well our project is implemented, or in other words how well our prototype works in relation to the product qualities. The quality attributes can be seen in insertlinkhere.
 
 \paragraph{Functionality} \ \\
 Functionality is measure in pass or fail. If a function works fully then it gets a pass. Otherwise it fails. For the program to be fully functional, we need to have four passes: one for gathering information from the environment, one for sending the information from the sensors to the central hub, one for sending and storing the data in the database and one for visualizing the data through image manipulation. If we add any more functionalities they need to be fully implemented and receive a pass in order to be added to the prototype.
 
-\paragraph{Reliability} \ \\
-Our prototype needs to work for a total of one day, or a total of twenty-four hours. It is desirable, but not necessary, for the prototype to run for more than one working day.
+\paragraph{Performance} \ \\
+If our system is able to collect data every five seconds, store it and visualize it, then we will have satisfied the performance metric.
 
-\paragraph{Usability} \ \\
-If our UI can be learned within a minute of operating the system, then we will have satisfied the usability metric.
+\paragraph{Scalability} \ \\
+If the system can support adding sensors and central hubs both offline and online, and there is no limit to how many sensors and central hubs we can add, then we have satisfied the scalability metric.
 
-\paragraph{Efficiency} \ \\
-If our system is able to collect data every five seconds, store it and visualize it then we will have satisfied the efficiency metric.
-
-\paragraph{Maintainability} \ \\
-The prototype does not need to be maintained. We have no metrics related to maintainability.
+\paragraph{Modifiability} \ \\
+If the system can be changed at runtime, by removing or adding sensors, and if the system can be configured to work with different sensors in the time frame of one day, then we have satisfied the modifiability metric.
 
 \paragraph{Portability} \ \\
-If our system is able to work in an environment other than the development environment, then we have satisfied the portability metric.
-
+If the hardware is replaceable and our data can be stored in a database that is detached from our system, then we have satisfied the portability metric.
 
 \subsubsection{Internal Resources}
 The following section describes the quality metrics of our code as well as the internal documentation.
