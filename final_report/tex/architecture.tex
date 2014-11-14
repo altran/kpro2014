@@ -172,7 +172,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		Environment			& Runtime \\ \hline
 		Artifact			& Light sensors \\ \hline
 		Response			& Update the new info, and add it to the database \\ \hline
-		Response Measure	& Time \newline Should be less than 30 seconds
+		Response Measure	& Time \newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
 		\\ \hline
 	\end{tabularx}
 \end{table}
@@ -187,7 +187,52 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		Environment			& Runtime \\ \hline
 		Artifact			& Temperature sensors \\ \hline
 		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
-		Response Measure	& Time\newline Should be less than 30 seconds
+		Response Measure	& Time\newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Scenario P3}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P3 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& The pressure changes \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& Pressure sensors \\ \hline
+		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
+		Response Measure	& Time\newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Scenario P4}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P4 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& The humidity changes \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& Humidity sensors \\ \hline
+		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
+		Response Measure	& Time\newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Scenario P5}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P5 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& User uncheck an element  \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& GUI \\ \hline
+		Response			& The presentation of that specific element will be hidden \\ \hline
+		Response Measure	& Time\newline Should be instant \newline Accuracy \newline The data should be correctly hidden
 		\\ \hline
 	\end{tabularx}
 \end{table}
