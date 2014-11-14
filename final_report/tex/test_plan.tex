@@ -16,7 +16,7 @@ We are planning to use JUnit to do the unit testing. Every single test is done b
 	&Description
 	&Input
 	&Output
-	\\ \hline Visualizer
+	\\ \hline Visualiser
 	&The visualiser will be able to showcase the data which is pulled from the database.
 	&When the program starts, it will obtain data from the database.
 	&Visualisation is displayed in the correct fashion with the correct data.
@@ -42,7 +42,7 @@ Each unit testing should have atleast 60 percent code coverage and full state co
 \subsection{Integration Testing}
 In this section we will collect the different modules of our prototype together and test if they are able to correctly work.
 
-\subsubsection{Modules That Need to Be Integrated}
+\paragraph{Modules that need to be integrated}
 \begin{itemize}
 	\item
 	Visualiser from database
@@ -52,7 +52,7 @@ In this section we will collect the different modules of our prototype together 
 	Central hub from sensors
 \end{itemize}
 
-\subsubsection{Test That Need to Be Done to Each Integration}
+\paragraph{Tests that need to be done at each integration}
 \begin{itemize}
 	\item
 	Visualiser from database:
@@ -105,15 +105,15 @@ In this section we will collect the different modules of our prototype together 
 	&T3
 	&2.4
 	&The central hub can take in new sensors or remove sensors from it at runtime.
-	\\ \hline Visualizer taking data from database
+	\\ \hline Visualiser taking data from database
 	&T4
 	&1.2, 4.1
 	&The visualiser will pull known data from the database and we will check if the values are correct.
-	\\ \hline Visualizer displaying the data
+	\\ \hline Visualiser displaying the data
 	&T5
 	&4.2.1, 4.2.2, 4.2.3
 	&Visualiser displaying the correct data that it pulled from the database. The data should be displayed correctly both for the table, and for the animation.
-	\\ \hline Visualizer switches what data to visualise
+	\\ \hline Visualiser switches what data to visualise
 	&T6
 	&4.3
 	&The user should be able to manipulate what data to visualise at any time by using checkboxes.

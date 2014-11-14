@@ -9,6 +9,9 @@
 This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in \appendixfullref{retired_architecture}. The sensors and the rasberry pi were already connected together by Altran so we will not write the architecture between the sensors and the Raspberry Pi. The Raspberry Pi and the database will use the REST style to communicate and is implemented by one of us. The database will act as a client. The connection between the database and the user interface will follow Altrans framework for their database/GUI connection which uses the REST style.
 
 \subsection{Quality Attributes}
+\label{quality_attributes}
+The quality metrics can be found in \subsubfullref{subsubsec:quality_metrics}
+
 \subsubsection{Functionality}
 The system consists of multiple sensor devices, a central hub, and one or more client devices. The sensors gather data from an environment, such as temperature, light level, or sound, and move it to a central hub. A client device collects sensor data from the central hub, and visualizes the data in a grand manner.
 
@@ -129,7 +132,7 @@ The logical view is primarily concerned with the functional requirements. In oth
 \end{figure}
 
 \subsubsection{Development View}
-The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualizer pulls the information from the database.
+The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualiser pulls the information from the database.
 
 \begin{figure}[H]
 	\centering
@@ -169,7 +172,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		Environment			& Runtime \\ \hline
 		Artifact			& Light sensors \\ \hline
 		Response			& Update the new info, and add it to the database \\ \hline
-		Response Measure	& Time \newline Should be less than 30 seconds
+		Response Measure	& Time \newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
 		\\ \hline
 	\end{tabularx}
 \end{table}
@@ -183,8 +186,53 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		Stimulus			& The temperature gets higher \\ \hline
 		Environment			& Runtime \\ \hline
 		Artifact			& Temperature sensors \\ \hline
-		Response			& The animation in the visualizer should start after it pulls new data from the database \\ \hline
-		Response Measure	& Time\newline Should be less than 30 seconds
+		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
+		Response Measure	& Time\newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Scenario P3}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P3 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& The pressure changes \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& Pressure sensors \\ \hline
+		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
+		Response Measure	& Time\newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Scenario P4}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P4 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& The humidity changes \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& Humidity sensors \\ \hline
+		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
+		Response Measure	& Time\newline Should be less than 30 seconds \newline Accuracy \newline The data should be correctly represented
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Scenario P5}
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		ID					& P5 \\ \hline
+		Source				& System \\ \hline
+		Stimulus			& User uncheck an element  \\ \hline
+		Environment			& Runtime \\ \hline
+		Artifact			& GUI \\ \hline
+		Response			& The presentation of that specific element will be hidden \\ \hline
+		Response Measure	& Time\newline Should be instant \newline Accuracy \newline The data should be correctly hidden
 		\\ \hline
 	\end{tabularx}
 \end{table}

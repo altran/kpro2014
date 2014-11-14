@@ -1,0 +1,211 @@
+\documentclass[../document]{subfiles}
+
+\begin{document}
+\subsection{Sprint 4 Testing Plan}
+\label{test_plan_sprint_4}
+
+\subsubsection{Unit testing}
+We added two new units to the visualiser, a calculation unit and a constant unit. The calculation unit will deal with the mathematics behind the positioning, and the constant unit will be the calibration unit for administrative use. An entire new module was created, that can generate dash7 data both manually and randomly. We have also changed the sensorModel and our main visualizer, the mapView. They will all be tested independently during the development. 
+
+Acceptance level for unit testing is a full coverage of states and it is required for all members to have above 60\% line test coverage for all the code.
+
+\begin{table}[H]
+\caption{Unit Test}
+\centering
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+	\hline
+	Modules
+	&Description
+	&Input
+	&Output
+	\\ \hline Calculation
+	&Calculate the position of the sensor using weights.
+	&Link budget and gateway position.
+	&Position of sensor on the screen.
+	\\ \hline Constant
+	&Contains a list for the calibration of data for the administrator
+	&A .txt document containing constants.
+	&Use constants to calibrate the sensors.
+	\\ \hline Generate dash 7 data
+	&Generate dash 7 data and store it into the database. This can be done both manually and randomly. 
+	&A number of gateways and a number of sensors.
+	&All sensors will have data for each and every gateway.
+	\\ \hline SensorModel
+	&The model for the sensor.
+	&Data from the database.
+	&Sensor data.
+	\\ \hline MapView
+	&The main GUI visualising everything.
+	&Sensor data.
+	&UI for animation.
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Integration test}
+The integration test for sprint 4 is mostly concerned with the visualizer and the database. For the database we have a new module which is outside our initial architecture, the dash7 data generator. We have to make sure the data generated is similar to what we will find in the real world. Creating mock-up data proved to be more difficult than we originally thought. The data has to be created for each sensor on each gateway, which means quite a lot of data needs to be generated, as each sensor needs to have data in each gateway. 
+
+The new module for the visualizer is the calculation unit. We need two mathematical formulas, one for placing multiple gateways in a perfect geometric shape, and one for calculating the position of the sensors. These two formulas must work with the rest of the animation framework we had already. Furthermore, we need to integrate a .txt document for admin to configure calibration. All of these must be integrated into our original prototype, created before the fourth sprint. Note that these modules are smaller in scale than the previous ones.
+
+\paragraph{Modules that need to be integrated} \ \\
+\begin{itemize}
+	\item
+	Calculation to visualizer
+	\item
+	Constants to visualizer
+	\item
+	Dash 7 data generator to database
+\end{itemize}
+
+\paragraph{Tests that need to be performed to each integration} \ \\
+\begin{itemize}
+	\item
+	Calculation to visualizer
+	\begin{itemize}
+		\item
+		The visualizer needs the gateway formula to place the gateway at the beginning of runtime.
+		\item
+		The visualizer needs the weight formula to animate sensor movements during runtime.
+	\end{itemize}
+	\item
+	Constants to visualizer
+	\begin{itemize}
+		\item
+		The visualizer will take the constants configured by the administrator through a .txt document.
+	\end{itemize}
+	\item
+	Dash 7 data generator to database
+	\begin{itemize}
+		\item
+		The data generator will generate random dash 7 data into the database.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Function test}
+
+In this section we present the function tests in a table
+
+\begin{table}[H]
+\caption{Function Test}
+\centering
+\begin{tabularx}{\textwidth}{|L{2cm}|l|L{2.2cm}|X|}
+	\hline
+	Test name
+	&Test ID
+	&Requirement(s) ID
+	&Description
+	\\ \hline Generate data
+	&T7
+	&5.3, 5.3.1
+	&We should be able to insert values into the database. This should be able to be done both manually and automatically. The automatically generated data needs to be in a correct format, similar to a real sensor reading.
+	\\ \hline Multiple gateways
+	&T8
+	&5.1, 5.1.1
+	&Generate multiple gateways on the visualizer and the number of gateways should be configurable. They will all be placed in a geometric shape, that will reflect a perfect setup.
+	\\ \hline Link budget
+	&T9
+	&5.2, 5.2.1, 5.2.2, 5.2.3, 5.2.4
+	&The visualizer will use a link budget value as weights in our formula to animate the position of sensors. This will also consider most of real life cases like going behind a wall or go to a different room.
+	\\ \hline Calibration
+	&T10
+	&5.2.5
+	&The administrator is able to calibrate sensor movement according to the situation. The calibration data is stored in a separate .txt file.
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{System test}
+
+\begin{table}[H]
+\caption{Test scenario 5}
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|X|}
+	\hline
+	Description
+	&Visualise a situation with three gateways and five sensors where the link budget is used to place the sensors to begin with. There will be no change of link budget during the test, this test is aimed at testing the placing formula.
+	\\ \hline Enviroment
+	&Runtime
+	\\ \hline Test cases involved
+	&T8, T9
+	\\ \hline Dependency
+	&Test scenario 4
+	\\ \hline Input
+	&Link budget, gateway position and weight formula
+	\\ \hline Output
+	&A static picture with sensors and gateways placed on the screen
+	\\ \hline Acceptance
+	&A static picture with sensors placed on the correct position using the weight formula. The sensors are correctly placed in a fixed position.
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Test scenario 6}
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|X|}
+	\hline
+	Description
+	&Test the movement of multiple sensors with multiple gateways at fixed position. The data should be manually added for this test, to ensure movement is correct.
+	\\ \hline Enviroment
+	&Runtime
+	\\ \hline Test cases involved
+	&T7,T9
+	\\ \hline Dependency
+	&Test scenario 5
+	\\ \hline Input
+	&Manually added data, link budget, number of gateways, formula for placing the gateways and formula for sensor movement. 
+	\\ \hline Output
+	&Correct animation for sensor movement using multiple gateways and using manually added data
+	\\ \hline Acceptance
+	&When the movement is correct in accordance to the data we have added to the database.
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Test scenario 7}
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|X|}
+	\hline
+	Description
+	&The random data generator will generate data for an environment with six gateways and multiple sensors, five to begin with. Furthermore we will simulate a wall in the middle of the visualiser, where the link budget will experience heavy interference. Heavy interference translates into a larger link budget.
+	\\ \hline Enviroment
+	&Runtime
+	\\ \hline Test cases involved
+	&T7, T8, T9
+	\\ \hline Dependency
+	&Test scenario 6
+	\\ \hline Input
+	&Random generated data for all sensors in a six gateway environment
+	\\ \hline Output
+	&Animation of sensor movement using random generated data updating between six gateways
+	\\ \hline Acceptance
+	&Correct movement of sensors in a six gateway environment using random generated data.
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Test scenario 8}
+\centering
+\begin{tabularx}{\textwidth}{|L{3cm}|X|}
+	\hline
+	Description
+	&Calibration of the link budget will be done through a configuration .txt file. The sensor movement is to be scalable for different calibrations. A normal configuration follows the calibration of 40-100, and regards being out of range when it is higher than $\frac{3}{4}$ of the maximum. In animation this is reflected by placing the sensor at the edge of the trilateration.
+	\\ \hline Enviroment
+	&Runtime
+	\\ \hline Test cases involved
+	&T10
+	\\ \hline Dependency
+	&Test scenario 7
+	\\ \hline Input
+	&A .txt file that takes in certain numbers for calibration
+	\\ \hline Output
+	&The sensor link budget will be calibrated by the .txt file
+	\\ \hline Acceptance
+	&The sensor will move according to the link budget correctly.
+	\\ \hline 
+\end{tabularx}
+\end{table}
+
+\end{document}

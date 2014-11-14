@@ -10,19 +10,19 @@ The following chapter includes all the documentation regarding the second sprint
 During the last sprint and at the beginning of this sprint, the customer has changed their preference to the database again and now wishes to use a database designed by them. We will have to integrate this database with our system in order for our system to be satisfactory and work.
 
 \subsection{Sprint Planning}
-The total planned working hours for the second sprint is 300 hours. Of that 220 hours is to be used on implementation and 80 hours to be used on documentation, including pre-study. With 7 working members, the workload per member should be roughly 22 hours per week. We plan on spending most of this time on working with the visualizer, specifically animating it and integrating it with the new database. About 70\% of our implementation time, or more precisely 148 hours are planned for the visualizer animation and presentation. The remaining 30\% of the implementation time will be spent on database integration as well as sensor integration. We will continue to utilize pair programming, as it has proven effective in sprint 1 and there is no possibility to split the work in more than three groups. The last person will overview documentation and join any groups that need the help. 
+The total planned working hours for the second sprint is 300 hours. Of that 220 hours is to be used on implementation and 80 hours to be used on documentation, including pre-study. With 7 working members, the workload per member should be roughly 22 hours per week. We plan on spending most of this time on working with the visualiser, specifically animating it and integrating it with the new database. About 70\% of our implementation time, or more precisely 148 hours are planned for the visualiser animation and presentation. The remaining 30\% of the implementation time will be spent on database integration as well as sensor integration. We will continue to utilize pair programming, as it has proven effective in sprint 1 and there is no possibility to split the work in more than three groups. The last person will overview documentation and join any groups that need the help. 
 
 \subsection{Sprint Goals}
-The main goal of the second sprint is to create a fully functional prototype with an animated visualizer and an integrated database that can pull values from our sensors and store those values until we need to pull them in our visualizer. Our main goal can be split into five goals:
+The main goal of the second sprint is to create a fully functional prototype with an animated visualiser and an integrated database that can pull values from our sensors and store those values until we need to pull them in our visualiser. Our main goal can be split into five goals:
 \begin{enumerate}
 \item
 Learn the new database received from our customer, Altran Norge AS.
 \item
-Integrate the said database and data updating with the visualizer.
+Integrate the said database and data updating with the visualiser.
 \item
 Integrate the said database for data gathering with the central hub.
 \item
-Represent all types of data in the visualizer..
+Represent all types of data in the visualiser..
 \item
 Represent data in an interesting, animated fashion with a variable frame-rate.
 \end{enumerate}
@@ -71,7 +71,7 @@ Item
 &15
 &8
 \\ \hline 1.7
-&Integrate Altrans database with visualizer
+&Integrate Altrans database with visualiser
 &H
 &12
 &8
@@ -142,7 +142,7 @@ Item
 \subsection{Sprint Backlog Evaluation}
 The sprint plan above shows a general lack of hours. The explanation for this is two-fold.
 
-For the visualizer module all planned features were implemented, but we overestimated the hours needed for implementation. The backlog shows 120 planned hours, with only 68 hours spent. One reason for this is that our estimate was influenced by the fact that we had estimated too few hours for the visualizer module in sprint 1, which probably caused us to add some extra hours as a buffer. Additionally, we did not take into account the knowledge we gained of JavaFX during sprint 1, which reduced the actual implementation time needed. Together, these two factors should explain the difference in hours for the visualizer module. The work hours saved were spent writing documentation.
+For the visualiser module all planned features were implemented, but we overestimated the hours needed for implementation. The backlog shows 120 planned hours, with only 68 hours spent. One reason for this is that our estimate was influenced by the fact that we had estimated too few hours for the visualiser module in sprint 1, which probably caused us to add some extra hours as a buffer. Additionally, we did not take into account the knowledge we gained of JavaFX during sprint 1, which reduced the actual implementation time needed. Together, these two factors should explain the difference in hours for the visualiser module. The work hours saved were spent writing documentation.
 
 For the database module, all planned features were implemented, except the high-priority item “Integrate Altran's database with client” (1.1). The backlog shows 67 planned hours, with only 48 hours spent. The estimates should be largely correct, and it is likely that the module would be finished had the planned number of work hours been invested. The imbalance between planned and spent hours is fully explained by the fact that we did not plan any overhead for the emerging high-priority tasks of writing documentation and finalizing the predelivery, which required 21.5 work hours in total of members of the database team.
 
@@ -171,7 +171,7 @@ Test nr
 \\ \hline Acceptance
 &All of the data needs to be visible and animation needs to be correct and smooth. The animation should be spotted within 5 seconds and there should be no visual glitches.
 \\ \hline Result
-&When the mapview is started, there is some lag where the system mixes up the sensorIDs. However, this is a mistake with the way our database is set up and has little to do with the actual visualizer. When the database is fully integrated, we expect this bug to be solved. Furthermore, the animation is very smooth and database updates change the values and trigger animation correctly.
+&When the mapview is started, there is some lag where the system mixes up the sensorIDs. However, this is a mistake with the way our database is set up and has little to do with the actual visualiser. When the database is fully integrated, we expect this bug to be solved. Furthermore, the animation is very smooth and database updates change the values and trigger animation correctly.
 \\ \hline 
 \end{tabularx}
 \end{table}
@@ -213,7 +213,7 @@ Test nr
 \\ \hline Requirements
 &4.1
 \\ \hline Test name
-&Send correct data to the visualizer
+&Send correct data to the visualiser
 \\ \hline Environment
 &Runtime
 \\ \hline Description
@@ -234,7 +234,7 @@ Test nr
 In this sprint we did fewer tests than in the previous sprint. This is due to the fact that we needed to write more documentation as well as due to the fact that most of our goals revolved around implementing Altran AS database. However, due to time constraints and limitation we had decided that testing is of less priority and have thus shortened the testing for this sprint. We are very satisfied with the animation test (the first out of the three tests here) as it produced excellent results.
 
 \subsection{Sprint Results}
-During this sprint the visualization part of our system has reached its goals, and we have completed the tasks. Changes to any data type is now reflected by an animation in the visualizer, and the animations are running in an orbit around the central hub. This is all we planned to do this sprint, and we managed to do it within the time limit of this period. 
+During this sprint the visualization part of our system has reached its goals, and we have completed the tasks. Changes to any data type is now reflected by an animation in the visualiser, and the animations are running in an orbit around the central hub. This is all we planned to do this sprint, and we managed to do it within the time limit of this period. 
 
 Under is the finished mapView for this sprint. All the sensors have four elements and they circle around the central hub in different speeds.
 
@@ -255,15 +255,15 @@ Humidity is represented by the blue waterdrop. It fills up for higher humidity.
 	\caption{Map View}
 \end{figure}
 
-We have not yet managed to integrate the sensors into to our system. Neither have we managed to fully implement a replacement solution for the SQL-database. The current visualizer pulls data from an SQL-database every 5 seconds, and iterates through the data looking for changes. When the visualizer discovers a change, an animation is started that changes the appearance of the corresponding sensor. The transition is smooth, and without any glitches.
+We have not yet managed to integrate the sensors into to our system. Neither have we managed to fully implement a replacement solution for the SQL-database. The current visualiser pulls data from an SQL-database every 5 seconds, and iterates through the data looking for changes. When the visualiser discovers a change, an animation is started that changes the appearance of the corresponding sensor. The transition is smooth, and without any glitches.
 
 Although the new database was not integrated with the rest of the system in this sprint, a working prototype implementation was completed. This database prototype tries to be as compliant to Altran’s database as possible. The Altran database API is restful, and is accessed through simple HTTP messages. To send and receive HTTP messages, our implementation uses the Jersey implementation of JAX-RS (Java API for RESTful Services).
 
-The Altran database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending HTTP GET requests with query parameters in a Lucene-specific format. When providing the visualizer with the most recent data samples, our implementation should use Lucene queries in order to limit the amount of data that has to be sent. However, this part was not implemented, as we could not manage to query for sensor samples with timestamps in a specified time interval.
+The Altran database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending HTTP GET requests with query parameters in a Lucene-specific format. When providing the visualiser with the most recent data samples, our implementation should use Lucene queries in order to limit the amount of data that has to be sent. However, this part was not implemented, as we could not manage to query for sensor samples with timestamps in a specified time interval.
 
-Work started on integrating the new database with the visualizer, a process in which the controller class of the visualizer module went through a major refactoring. In this work it was necessary to reorganize the structure of the visualizer module to make it conformant to the style of a Maven project, a change that was largely completed.
+Work started on integrating the new database with the visualiser, a process in which the controller class of the visualiser module went through a major refactoring. In this work it was necessary to reorganize the structure of the visualiser module to make it conformant to the style of a Maven project, a change that was largely completed.
 
-A problem with the new database is that it is harder to insert sensor samples manually, making it somewhat less suited for testing the visualizer. This problem will be solved once our hardware person has managed to connect our sensor hardware up against a running Altran database.
+A problem with the new database is that it is harder to insert sensor samples manually, making it somewhat less suited for testing the visualiser. This problem will be solved once our hardware person has managed to connect our sensor hardware up against a running Altran database.
 
 \subsection{Customer Review}
 The customer is still located in Oslo, so all our meetings with the customer is done over skype. We showed him our progress and let him know our plans further. To do this we used the built in function for sharing screens. During this sprint we had a misunderstanding about when the customer meeting was supposed to be held, which led to there not being any meeting the first week of this sprint.
@@ -279,9 +279,9 @@ The customer also expressed his wishes for us to push our data to their database
 In the last meeting with the customer during this sprint the customer approved our visualization, and gave us some suggestions for what we can work on in the next sprint.  
 
 \subsection{Sprint Evaluation}
-This sprint went better than sprint 1. Now we knew we would not get to integrate the hardware in time, so we focused on implementing the database and visualizer without the hardware. As we now had a better idea of what the customer actually wanted of the visualizer we could finish our suggestion. The customer was happy with our solution for visualisation, which makes this sprint a success, at least when it comes to the visualisation part. Excepting the database, we have reached all our goals, and we did not come over any major setbacks.
+This sprint went better than sprint 1. Now we knew we would not get to integrate the hardware in time, so we focused on implementing the database and visualiser without the hardware. As we now had a better idea of what the customer actually wanted of the visualiser we could finish our suggestion. The customer was happy with our solution for visualisation, which makes this sprint a success, at least when it comes to the visualisation part. Excepting the database, we have reached all our goals, and we did not come over any major setbacks.
 
-As for the database implementation during this sprint, until now the visualizer has used the SQL-database from sprint 1 as a backend for testing purposes. This has worked out fine, however when the new database is ready, it will allow a much cleaner integration with both the visualizer and the hardware. Note that as a result of the database delay, two tests were not conducted.
+As for the database implementation during this sprint, until now the visualiser has used the SQL-database from sprint 1 as a backend for testing purposes. This has worked out fine, however when the new database is ready, it will allow a much cleaner integration with both the visualiser and the hardware. Note that as a result of the database delay, two tests were not conducted.
 
 During this sprint we have gained knowledge of Altran’s database implementation, and how it uses the Spring framework to setup a restful server for storing sensor samples, Lucene to implement queries, and an SQL-database to store data through reboots. Another thing we have learned is how to make animations involving motions, orbital motions in particular.
 
