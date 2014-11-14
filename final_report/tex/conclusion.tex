@@ -8,33 +8,12 @@ adviser\documentclass[../document]{subfiles}
 This section contains the system overview for the final draft of the project. It also includes further development plans for the project, or in other words, what could the project become in the future as well as any current project improvements. Finally, we briefly discuss testing and the overarching goal of the tests.
 
 \subsection{System Overview}
-The majority of the project was dedicated on completing the requirements set out by the customer. To that end planning, analysis of requirements and architecture, and three sprints were all focused on creating a fully functioning, modifiable prototype of our final product. However, in the latter part of the project we were tasked on adding additional features to our prototype, something that was not planned initially. The extra features do not use real data, but rather mock-up data, as we do not have the hardware to support these extra features. Therefore, we have constructed another prototype to accommodate these features into our original prototype. Each of the systems class diagrams can be seen in \figref{fig:ClassDiagramB} and {\color{red} (figure yet to be added)}.
-
-\subsection{Hardware-Based Prototype}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Architecture/ClassDiagramB.png}
-\caption{Class Diagram for Hardware-Based Prototype}
-\label{fig:ClassDiagramB}
-\end{figure}
-
-The class diagram for the hardware-based, or real time prototype, shows how the classes interact with each other and the main methods and fields for each class. It also shows how the client requests data from the central hub and how the central hub gets the data from the sensors. The client then pushes the data into the database. The Controller uses a Timer to request data using methods in the ObservationGetter, then based on the data it gets, the Controller then creates or updates a list of SensorModels stored in a RoomModel object. The MapView is the class that is actually creating the visualisation by using a canvas and an animation timer. The animation timer updates the screen sixty frames per seconds. This frame rate can be adjusted to anything the customer would be pleased with, but the higher the frame rate, the smoother the animation. The animation timer uses Interfaces and Renderer classes to draw on the canvas and animate everything. The animation is done through events; every single time a value is changed an event fires off and the difference between the new and old values are calculated. This difference then is played over the time frame between the data pulls and it makes a smooth animation. 
-
-Our class diagram has been scaled down, to make the image readable. Some fields and methods that are not really important are not included, and if a class has getters and setters, we have just indicated getters and setters, and did not mentioned them all. Constructors are not included as well, though many classes have a constructor method. Another difference is the places where the data types have methods and fields and classes that are similar have been merged together. An example is the instruction classes which we have written as (Datatype)Instruction, where (Datatype) is to be switched to either Temperature, Humidity, Pressure or Lighting. This is done to make it an easier and smaller class diagram. In the (Datatype)Instruction class the field String text is not in the HumidityInstruction nor in the PressureInstruction.
-
-\subsection{Mock-Up Data Based Prototype}
-
-{\color{red}This is going to be finished when the prototype C is finished. It is in the random crap document.}
-\newline \ \newline
-{\color{red}Class diagram image here}
-
-Discussion
+The majority of the project was dedicated on completing the requirements set out by the customer. To that end planning, analysis of requirements and architecture, and three sprints were all focused on creating a fully functioning, modifiable prototype of our final product. However, in the latter part of the project we were tasked on adding additional features to our prototype, something that was not planned initially. The extra features do not use real data, but rather mock-up data, as we do not have the hardware to support these extra features. Therefore, we have constructed another prototype to accommodate these features into our original prototype. Each of the systems class diagrams can be seen in \figref{fig:ClassDiagramB} and \figref{fig:ClassDiagramC++}.
 
 \subsection{Further Development}
 A large part of future development for the project was already discussed in \sectionfullref{sec:preliminary_study}. This project is similar to an internal project carried out by a company. We do not do anything with the data but visualize it in an interesting fashion. As mentioned in \subfullref{subsec:initial_ideas}, we could use the data in health systems, exploration, high risk work environments as well as the smart room concept, for which we have quite a detailed set of requirements as well in \sectionfullref{sec:requirements_cast_1}. 
 
-All of these systems, and many more could build on the base of this project. Furthermore, data visualisation is not completely useless. In a more advanced project, such as for example oil well digging, data visualisation is used with experts to determine if the system is behaving correctly. With substantial adjustments to our system, it too could potentially serve as a complex data visualisation system. These adjustments are, however, well beyond the scope of this project.
+All of these systems, and many more could build on the base of this project. Furthermore, data visualisation is not completelyn useless. In a more advanced project, such as for example oil well digging, data visualisation is used with experts to determine if the system is behaving correctly. With substantial adjustments to our system, it too could potentially serve as a complex data visualisation system. These adjustments are, however, well beyond the scope of this project.
 
 \subsection{Additional Improvement}
 As we progressed through the project, we have discovered some limitations and as we approached the end of the project we have noted down several areas where both or either of the prototypes could be improved. The possible improvements are outlined in this section.
