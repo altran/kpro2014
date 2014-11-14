@@ -8,17 +8,17 @@
 The following chapter includes all the documentation regarding the third sprint. This sprint will last 10 days and will take place from October 22 to October 31. The team will spend most of the time on integrating all the modules. testing and improving current code.
 
 \subsection{Sprint Planning}
-Our main goals in this sprint has been focused on integration of modules, testing, and improving the visualizer. We plan on using a total of 124 hours for this sprint for implementation and 150 hours for documentation. We have a total of five work days planned for this sprint, which translates to 40 hours per person and with 7 group members it totals to 280 hours of possible work time during the sprint. Just like in the past sprints, we will most likely overestimate the time to work. We feel that it is better to overestimate than underestimate the time taken, as we are able to have a time buffer, in case we encounter any problems.
+Our main goals in this sprint has been focused on integration of modules, testing, and improving the visualiser. We plan on using a total of 124 hours for this sprint for implementation and 150 hours for documentation. We have a total of five work days planned for this sprint, which translates to 40 hours per person and with 7 group members it totals to 280 hours of possible work time during the sprint. Just like in the past sprints, we will most likely overestimate the time to work. We feel that it is better to overestimate than underestimate the time taken, as we are able to have a time buffer, in case we encounter any problems.
 
-Most of the sprint workload will be split equally in between improving and documenting the visualizer, finishing the working prototype by integrating the database and sensors fully, and doing testing. Most of the tests in this sprint will be taken from the test plan document that can be found in \appendixfullref{test_plan}, and therefore some tests may be repeated from previous sprints. We will also use substantial time to work on documentation during this sprint.
+Most of the sprint workload will be split equally in between improving and documenting the visualiser, finishing the working prototype by integrating the database and sensors fully, and doing testing. Most of the tests in this sprint will be taken from the test plan document that can be found in \appendixfullref{test_plan}, and therefore some tests may be repeated from previous sprints. We will also use substantial time to work on documentation during this sprint.
 
 \subsection{Sprint Goals}
-The goal of this sprint is to make the visualizer look better, complete the prototype by integrating all the modules, and finish the system tests. Therefore we have three main goals this sprint:
+The goal of this sprint is to make the visualiser look better, complete the prototype by integrating all the modules, and finish the system tests. Therefore we have three main goals this sprint:
 \begin{enumerate}
 	\item
-	Improve the look of the visualizer.
+	Improve the look of the visualiser.
 	\item
-	Finish integrating the system, from sensors to visualizer.
+	Finish integrating the system, from sensors to visualiser.
 	\item
 	Complete the tests as seen in our test plan.
 \end{enumerate}
@@ -58,7 +58,7 @@ Below is the sprint backlog in the form of a table, listing all the tasks we pla
 	&10
 	&5
 	\\ \hline 2.3
-	&Integration of the Database and the Visualizer
+	&Integration of the Database and the Visualiser
 	&H
 	&10
 	&4.5
@@ -101,9 +101,9 @@ Below is the sprint backlog in the form of a table, listing all the tasks we pla
 \subsection{Sprint Backlog Evaluation}
 As we can see from the backlog, we are lacking some hours of work in this sprint. We had planned for a total of a 124 hours, and we have worked for a total of 77.5 hours. As there are three goals, we will go through all three individually to see why we worked for less than the estimated hours.
 
-For the first goal, improving the visualizer, we can see that we were quite close to the estimated hours. We planned to work for 16 hours and have worked for 13 hours with the visualizer. The visualizer was fully finished in this time and we were quite satisfied with it.
+For the first goal, improving the visualiser, we can see that we were quite close to the estimated hours. We planned to work for 16 hours and have worked for 13 hours with the visualiser. The visualiser was fully finished in this time and we were quite satisfied with it.
 
-For the second goal, the integration, we can see that we have planned for 60 hours of work and we have worked for 31.5 hours. The main reason for this is the modular way we have approached the implementation. With the visualizer being quite modular, we were able to quickly integrate the database with it. Furthermore the sensor integration to the central hub and further to the database also took less time as we had been working on that even before the sprint had started. Finally, we had done some optimization but it took less time to do higher level optimization as Java does a lot of optimization itself, such as garbage collection, which saves us a lot of manual work.
+For the second goal, the integration, we can see that we have planned for 60 hours of work and we have worked for 31.5 hours. The main reason for this is the modular way we have approached the implementation. With the visualiser being quite modular, we were able to quickly integrate the database with it. Furthermore the sensor integration to the central hub and further to the database also took less time as we had been working on that even before the sprint had started. Finally, we had done some optimization but it took less time to do higher level optimization as Java does a lot of optimization itself, such as garbage collection, which saves us a lot of manual work.
 
 For the last goal this sprint, the testing, we had planned on working for 48 hours and have worked for 37 hours. The main reason for overestimating is our experience with testing in previous courses and projects, where testing usually took up a large portion of the project. Here, however, we were able to test quite quickly.
 
@@ -161,7 +161,7 @@ This section covers the tests executed in this sprint, also including tests from
 	\\ \hline Acceptance
 	&When turning off a sensor the animation should just show the last data pulled. When turning on the sensor, the animation should update regularly.
 	\\ \hline Result
-	&When a sensor is turned off, nothing happens in the visualizer. When it is turned on it works correctly with animation. From the visualizers point of view the system is not disrupted. Furthermore if a sensor does not send any data for a total of 1 hour, the sensor will be considered “dead” and its data will henceforth be hidden in the visualizer. Should the sensor “wake up” and send data, the sensor will once again be shown in the visualizer.
+	&When a sensor is turned off, nothing happens in the visualiser. When it is turned on it works correctly with animation. From the visualisers point of view the system is not disrupted. Furthermore if a sensor does not send any data for a total of 1 hour, the sensor will be considered “dead” and its data will henceforth be hidden in the visualiser. Should the sensor “wake up” and send data, the sensor will once again be shown in the visualiser.
 	\\ \hline 
 \end{tabularx}
 \end{table}
@@ -180,7 +180,7 @@ This section covers the tests executed in this sprint, also including tests from
 	\\ \hline Environment
 	&Runtime
 	\\ \hline Description
-	&The data is correctly gathered from the sensors, stored in the database and shown in the visualizer in the form we intended to show it in. The framerate should also be stable to the naked eye.
+	&The data is correctly gathered from the sensors, stored in the database and shown in the visualiser in the form we intended to show it in. The framerate should also be stable to the naked eye.
 	\\ \hline Input
 	&Environmental data
 	\\ \hline Output
@@ -194,12 +194,12 @@ This section covers the tests executed in this sprint, also including tests from
 \end{table}
 
 \subsection{Test Results}
-The tests have provided us with positive results. As can be seen from the first test, our database and server connection is working as expected. There were some problems regarding sensors, specifically on the hardware side, as one of the sensors could not read the temperature at all. As we have no direct control over the hardware, this may be a problem in the final showing of the prototype. The latter two tests were, however, quite positive and we are now able to show a full, final working version of the visualizer, without any mock up data.
+The tests have provided us with positive results. As can be seen from the first test, our database and server connection is working as expected. There were some problems regarding sensors, specifically on the hardware side, as one of the sensors could not read the temperature at all. As we have no direct control over the hardware, this may be a problem in the final showing of the prototype. The latter two tests were, however, quite positive and we are now able to show a full, final working version of the visualiser, without any mock up data.
 
 \subsection{Sprint Results}
-During this sprint we finished all of our requirements \sectionfullref{requirements} and most of our test scenarios in \appendixfullref{test_plan}. We made the system work from the sensors to the visualizer and the system is believed to be mostly bug free as no bugs were encountered during tests. Because most of the program is easy to modify, we managed to finish this quickly, and any future development upon the system should be easier to implement.
+During this sprint we finished all of our requirements \sectionfullref{requirements} and most of our test scenarios in \appendixfullref{test_plan}. We made the system work from the sensors to the visualiser and the system is believed to be mostly bug free as no bugs were encountered during tests. Because most of the program is easy to modify, we managed to finish this quickly, and any future development upon the system should be easier to implement.
 
-A screenshot of our system working can be seen in \figfullref{fig:map_view_3}. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualizer more pleasing to look at. Also, we are pulling data directly from the database using an ip connection. The data is displayed in the same way as before. 
+A screenshot of our system working can be seen in \figfullref{fig:map_view_3}. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualiser more pleasing to look at. Also, we are pulling data directly from the database using an ip connection. The data is displayed in the same way as before. 
 
 \begin{figure}
 	\centering
@@ -220,7 +220,7 @@ To satisfy the customer needs, we will continue outside of our original plan and
 \subsection{Sprint Evaluation}
 We have completed all of the goals of the sprint. We have fully integrated the system and we do not need any mock up data to run it. The system still retains the ability to connect to any database, with just a change in one line of code. By changing the IP or the address in the controller, we can connect to any database, containing real or mock up data.
 
-We have also improved the look of the visualizer as well as added some new functionality. Besides adding a legend, representing what we are displaying on the screen, we have also added some subtle effects to make the visualizer look better. The response to these was positive. Finally, we have added a function that hides a sensor deemed “dead”. A sensor is deemed “dead” when it has not sent any data in the last hour. The visualizer then hides the sensor from display, but retain its previous data. Should the sensor “wake up” the visualizer will animate it once again without any disruption.
+We have also improved the look of the visualiser as well as added some new functionality. Besides adding a legend, representing what we are displaying on the screen, we have also added some subtle effects to make the visualiser look better. The response to these was positive. Finally, we have added a function that hides a sensor deemed “dead”. A sensor is deemed “dead” when it has not sent any data in the last hour. The visualiser then hides the sensor from display, but retain its previous data. Should the sensor “wake up” the visualiser will animate it once again without any disruption.
 
 Finally, we have managed to complete all the tests successfully for this sprint. There are still some hardware difficulties and the sensors often do not register any data, which we can not fix, unfortunately. Still, besides the hardware failures we have managed to complete the overarching goal of the project, which is to visualize data gathered by the sensors. 
 
