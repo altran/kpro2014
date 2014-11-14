@@ -19,12 +19,13 @@ The class diagram for the hardware-based, or real time prototype, shown in \figr
 Our class diagram has been scaled down, to make the image readable. Some fields and methods that are not really important are not included, and if a class has getters and setters, we have just indicated getters and setters, and did not mentioned them all. Constructors are not included as well, though many classes have a constructor method. In some methods there are xNr after the some parameters, this is because some method have many of the same parameter type. The Nr will indicate how many of the given parameter type there is in this method. String x3 means there are three String parameters. Another difference is the places where the data types have methods and fields and classes that are similar have been merged together. An example is the instruction classes which we have written as (Datatype)Instruction, where (Datatype) is to be switched to either Temperature, Humidity, Pressure or Lighting. This is done to make it an easier and smaller class diagram. In the (Datatype)Instruction class the field String text is not in the HumidityInstruction nor in the PressureInstruction. 
 
 \subsubsection{Visualiser Overview}
-The visualiser takes as input from the database using what we call a controller (referring as IP controller for where the data is gathered). This data is then sorted into models and then used to make an animation. We make the animation by sending a new instruction for each frame and then use the render class to put the picture onto the stage itself. If need be, we can also change the framerate of the animation, from the standard sixty frames to anything less than sixty.
+\figref{fig:overview} gives an overview of the visualiser. The visualiser takes as input from the database using what we call a controller (referring as IP controller for where the data is gathered). This data is then sorted into models and then used to make an animation. We make the animation by sending a new instruction for each frame and then use the render class to put the picture onto the stage itself. If need be, we can also change the framerate of the animation, from the standard sixty frames to anything less than sixty.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{detailed_implementation/overview.png}
 \caption{Structure overview for Visualiser}
+\label{fig:overview}
 \end{figure}
 
 \subsubsection{Controller Function(CF)}
@@ -373,9 +374,9 @@ This approach makes sure that even if the sensors are behind a network with a fi
 \label{fig:ClassDiagramC++}
 \end{figure}
 
-{\color{red}Write how the classes work togheter. Just change the things that have changed from the paragraph over this one.}
+{\color{red}Write how the classes work together. Just change the things that have changed from the paragraph over this one.}
 
-The class diagram for this prototype has been scaled dowl, and all the notes from the class diagram from the hardware-based prototype apply here as well. In short, we ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method, and everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead. Some new changes in the class diagram is the (x2) in the class ObservationGetter, this means the class have two methods with the same name, and one of the methods have to string parameters and the other only has one.
+The class diagram for this prototype, as shown in \figref{fig:ClassDiagramC++}, has been scaled down, and all the notes from the class diagram from the hardware-based prototype apply here as well. In short, we ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method, and everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead. Some new changes in the class diagram is the (x2) in the class ObservationGetter, this means the class have two methods with the same name, and one of the methods have to string parameters and the other only has one.
 
 \subsubsection{Visualiser overview after sprint 4}
 
