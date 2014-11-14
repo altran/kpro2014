@@ -122,14 +122,26 @@ In this section we will show the different views of our architecture. We will fo
 
 
 \subsubsection{Logical View}		
-The logical view, shown in \figref{fig:LogicalView}, is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the database, the gui, the gatherer, the server, and the sensors. 
+The logical view, shown in \figref{fig:LogicalView}, is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view consist of a class diagram and a sequence diagram.
 
+\paragraph{Class diagram}\ \\
+The class diagram, shown in \figref{fig:LogicalView}, demonstrates how the GUI, the gatherer, the client, and the servers are linked together.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/LogicalView.png}
 	\caption{Logical View}
 	\label{fig:LogicalView}
+\end{figure}
+
+\paragraph{Sequence Diagram} \ \\
+The sequence diagram, shown in \figref{fig:SequenceDiagram1}, describes the logical interaction between the map view, the model, the database, the instruction and the renderer. When the program is executed, the first that happens is that the map view creates a new room model. This room model then starts pulling data from the database, and it will proceed with pulling data continuously throughout the execution time of the program. This data is then used by the map view to visualise the sensor values. If data from the database is different from what the visualisation is showing, the map view creates an instruction and a renderer. This renderer will change the visualisation according to the information in the instruction.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Architecture/SequenceDiagram1.png}
+	\caption{Sequence Diagram}
+	\label{fig:SequenceDiagram1}
 \end{figure}
 
 \subsubsection{Development View}
@@ -250,17 +262,9 @@ The use cases shows two ways a user can interact with the system. The first show
 	\caption{Use Case Diagram}
 \end{figure}
 
-\paragraph{Sequence Diagram} \ \\
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{Architecture/SequenceDiagram1.png}
-	\caption{Sequence Diagram}
-\end{figure}
-
 \subsubsection{Sprint 4 Scenarios and Use Cases}
 
-With sprint 4, we have introduced some new use-case scenarios into the system, but the architecture remains the same as it was before. The new use-case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figref{usecasesprint4}
+With sprint 4, we have introduced some new use-case scenarios into the system, and a new sequence diagram, but the rest of the architecture remains the same as it was before. The new use-case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figref{usecasesprint4}
 \begin{table}[H]
 \caption{Scenario P6}
 \label{scenario6}
@@ -318,7 +322,7 @@ The scaling of the data will change upon the next boot up of the system, and thi
 	\label{usecasesprint4}
 \end{figure}
 
-\paragraph{Sprin 4 Sequence Diagram} \ \\
+\paragraph{Sprint 4 Sequence Diagram} \ \\
 
 \begin{figure}[H]
 	\centering
