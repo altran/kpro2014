@@ -5,7 +5,28 @@
 \section{User Installation Guide}
 
 \subsection{System Setup}
-Setting up the system involves setting up different individual components. These components are the central hub, the client and the visualiser. In addition, a network needs to be set up for communication between the central hub, the client and the visualiser.
+Setting up the system involves setting up different individual system components. The main components are the central hub, the database, and the visualiser. Other components involve a network to connect the main components together, and a script to pull pull data from the central hub and push it to the visualiser. The steps in the process are the following:
+\begin{enumerate}
+\item Setting up a network
+
+\item Setting up the central hub and the sensors
+\item Connecting the central hub to the network
+
+\item Setting up the database
+\item Connecting the database to the network
+
+\item Configuring the visualiser
+\item Connecting the visualiser to the network
+
+\item Running the central hub
+\item Configuring the central hub
+
+\item Running the database
+\item Running the visualiser
+\item Running the script
+\end{enumerate}
+
+%TODO: Write about charging the sensors
 
 \subsection{Network Setup}
 As the central hub can only run on a Raspberry Pi, a network is needed to connect it to the rest of the system. The Raspberry Pi is connected to the network using a cable. The Raspberry Pi is configured to get an IP address automatically through DHCP, so the network needs to have a DHCP server available. Normally the DHCP server is a router, but a laptop running Linux can also be setup to function as one. Regardless, it is recommended to setup your own dedicated network using either a router or a laptop, as it eases the next step considerably. Instructions for setting up a laptop running Linux as a DHCP server can be found here \url{http://www.cyberciti.biz/faq/howto-ubuntu-debian-squeeze-dhcp-server-setup-tutorial/}.
