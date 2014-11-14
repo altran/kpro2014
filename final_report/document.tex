@@ -107,6 +107,16 @@
 % Allow multiple subfigures within one figure
 \usepackage{subcaption}
 
+% glossary
+\usepackage[xindy]{glossaries}
+
+\usepackage{tocloft}
+\setlength{\cftsubsecnumwidth}{2.75em}
+\setlength{\cftsubsubsecnumwidth}{3.5em}
+\setlength{\cftfignumwidth}{3em}
+\setlength{\cfttabnumwidth}{3em}
+
+
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}

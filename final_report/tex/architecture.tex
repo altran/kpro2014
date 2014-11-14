@@ -98,7 +98,7 @@ Because the program code for both the central hub and the sensors is portable, t
 		End user				& The end user is the future clients who will use our system.  \\ \hline
 		Developers				& The developer are us in group 10 and our job is to develop the product and document the project.  \\ \hline
 		Customer				& The customer is Stig Lau representing Altran AS. He will specify the product to be developed.  \\ \hline
-		Adviser					& The adviser is Mohsen Anvaari. His job is to act as a project management.  \\ \hline
+		Adviser					& The adviser is Mohsen Anvaari. His job is to act as our guide during the project.  \\ \hline
 		Course staff			& The course staff for subject TDT4290 will provide information and prestudy for the course.  \\ \hline
 		Hardware suppliers		& The hardware suppliers are the makers for the components used in this project.  \\ \hline
 	\end{tabularx}
@@ -122,40 +122,44 @@ In this section we will show the different views of our architecture. We will fo
 
 
 \subsubsection{Logical View}		
-The logical view is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the database, the gui, the gatherer, the server, and the sensors. 
+The logical view, shown in \figref{fig:LogicalView}, is primarily concerned with the functional requirements. In other words, it is concerned with what the system should provide in terms of services to its end-users. Our logic view uses a class diagram to demonstrate the logical interaction between the database, the gui, the gatherer, the server, and the sensors. 
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/LogicalView.png}
 	\caption{Logical View}
+	\label{fig:LogicalView}
 \end{figure}
 
 \subsubsection{Development View}
-The development view, also known as the implementation view,  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualiser pulls the information from the database.
+The development view, shown in \figref{fig:DevelopmentView},  presents the system from a programmers perspective and is concerned with software management. Our development view shows the relationships between importing and exporting information from and to the database. It shows that the client stores the information from the sensors in the database and that the visualiser pulls the information from the database.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/DevelopmentView.png}
 	\caption{Development View}
+	\label{fig:DevelopmentView}
 \end{figure}
 
 \subsubsection{Process View}
-The process view considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
+The process view, shown in \figref{fig:ProcessView}, considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/ProcessviewNew.png}
 	\caption{Process View}
+	\label{fig:ProcessView}
 \end{figure}
 
 \subsubsection{Physical View}
-The physical view, also known as the deployment view, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from mock-up data. The user interface gets information from the database.
+The physical view, shown in \figref{fig:SystemDiagram}, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from mock-up data. The user interface gets information from the database.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/SystemDiagram.png}
-	\caption{System Diagram}
+	\caption{Physical View}
+	\label{fig:SystemDiagram}
 \end{figure}
 
 \subsubsection{Scenarios and Use Cases}
@@ -243,13 +247,67 @@ The use cases shows two ways a user can interact with the system. The first show
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/usecaseUncheck.png}
-	\caption{Use Case Uncheck}
+	\caption{Use Case Diagram}
 \end{figure}
+
+\subsubsection{Sprint 4 Scenarios and Use Cases}
+
+With sprint 4, we have introduced some new use-case scenarios into the system, but the architecture remains the same as it was before. The new use-case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figref{usecasesprint4}
+\begin{table}[H]
+\caption{Scenario P6}
+\label{scenario6}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline	
+ID
+&P6
+\\ \hline Source
+&System
+\\ \hline Stimulus
+&The link budget changes
+\\ \hline Environment
+&Runtime
+\\ \hline Artifact
+&Link budget sensor
+\\ \hline Response
+&The animation of sensor movement will happen after the next pull from the database.
+\\ \hline Response Measure
+&Time \newline
+Should be less than 30 seconds \newline
+Accuracy \newline
+The sensor should be correctly placed on the screen according to the link budget
+\\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Scenario P7}
+\label{scenario7}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline	
+ID
+&P7
+\\ \hline Source
+&System
+\\ \hline Stimulus
+&The administrator changes the calibration
+\\ \hline Environment
+&Configuration time
+\\ \hline Artifact
+&Constant.txt
+\\ \hline Response
+&The sensor movement will be scaled by the Constant.txt
+\\ \hline Response Measure
+&Accuracy \newline
+The scaling of the data will change upon the next boot up of the system, and this should be correctly reflected by the animation.
+\\ \hline
+\end{tabularx}
+\end{table}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Architecture/usecaseCheck.png}
-	\caption{Use Case Check}
+	\includegraphics[width=\textwidth]{Architecture/useCasesprint4.png}
+	\caption{Use Case Diagram for Sprint 4}
+	\label{usecasesprint4}
 \end{figure}
 
 \end{document}

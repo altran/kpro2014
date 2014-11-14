@@ -14,17 +14,18 @@
 \label{fig:ClassDiagramB}
 \end{figure}
 
-The class diagram for the hardware-based, or real time prototype, shows how the classes interact with each other and the main methods and fields for each class. It also shows how the client requests data from the central hub and how the central hub gets the data from the sensors. The client then pushes the data into the database. The Controller uses a Timer to request data using methods in the ObservationGetter, then based on the data it gets, the Controller then creates or updates a list of SensorModels stored in a RoomModel object. The MapView is the class that is actually creating the visualisation by using a canvas and an animation timer. The animation timer updates the screen sixty frames per seconds. This frame rate can be adjusted to anything the customer would be pleased with, but the higher the frame rate, the smoother the animation. The animation timer uses Interfaces and Renderer classes to draw on the canvas and animate everything. The animation is done through events; every single time a value is changed an event fires off and the difference between the new and old values are calculated. This difference then is played over the time frame between the data pulls and it makes a smooth animation. 
+The class diagram for the hardware-based, or real time prototype, shown in \figref{fig:ClassDiagramB}, describes how the classes interact with each other and the main methods and fields for each class. It also shows how the client requests data from the central hub and how the central hub gets the data from the sensors. The client then pushes the data into the database. The Controller uses a Timer to request data using methods in the ObservationGetter, then based on the data it gets, the Controller then creates or updates a list of SensorModels stored in a RoomModel object. The MapView is the class that is actually creating the visualisation by using a canvas and an animation timer. The animation timer updates the screen sixty frames per seconds. This frame rate can be adjusted to anything the customer would be pleased with, but the higher the frame rate, the smoother the animation. The animation timer uses Interfaces and Renderer classes to draw on the canvas and animate everything. The animation is done through events; every single time a value is changed an event fires off and the difference between the new and old values are calculated. This difference then is played over the time frame between the data pulls and it makes a smooth animation. 
 
 Our class diagram has been scaled down, to make the image readable. Some fields and methods that are not really important are not included, and if a class has getters and setters, we have just indicated getters and setters, and did not mentioned them all. Constructors are not included as well, though many classes have a constructor method. In some methods there are xNr after the some parameters, this is because some method have many of the same parameter type. The Nr will indicate how many of the given parameter type there is in this method. String x3 means there are three String parameters. Another difference is the places where the data types have methods and fields and classes that are similar have been merged together. An example is the instruction classes which we have written as (Datatype)Instruction, where (Datatype) is to be switched to either Temperature, Humidity, Pressure or Lighting. This is done to make it an easier and smaller class diagram. In the (Datatype)Instruction class the field String text is not in the HumidityInstruction nor in the PressureInstruction. 
 
 \subsubsection{Visualiser Overview}
-The visualiser takes as input from the database using what we call a controller (referring as IP controller for where the data is gathered). This data is then sorted into models and then used to make an animation. We make the animation by sending a new instruction for each frame and then use the render class to put the picture onto the stage itself. If need be, we can also change the framerate of the animation, from the standard sixty frames to anything less than sixty.
+\figref{fig:overview} gives an overview of the visualiser. The visualiser takes as input from the database using what we call a controller (referring as IP controller for where the data is gathered). This data is then sorted into models and then used to make an animation. We make the animation by sending a new instruction for each frame and then use the render class to put the picture onto the stage itself. If need be, we can also change the framerate of the animation, from the standard sixty frames to anything less than sixty.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{detailed_implementation/overview.png}
 \caption{Structure overview for Visualiser}
+\label{fig:overview}
 \end{figure}
 
 \subsubsection{Controller Function(CF)}
@@ -38,7 +39,7 @@ The visualiser takes as input from the database using what we call a controller 
 \begin{table}[H]
 \caption{Controller Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
@@ -76,7 +77,7 @@ The visualiser takes as input from the database using what we call a controller 
 \begin{table}[H]
 \caption{SensorModel Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
@@ -126,7 +127,7 @@ The visualiser takes as input from the database using what we call a controller 
 \begin{table}[H]
 \caption{RoomModel Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
@@ -155,13 +156,13 @@ The visualiser takes as input from the database using what we call a controller 
 \begin{table}[H]
 \caption{BaseView Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
 	&Description
 	\\ \hline BVF1
-	&ObservableList<SensorModel> data
+	&ObservableList <SensorModel> data
 	&Creates a new empty observable list that is backed by an arraylist to store data from the Sensor model.
 	\\ \hline BVF2
 	&start(Stage primaryStage)
@@ -177,14 +178,14 @@ The visualiser takes as input from the database using what we call a controller 
 
 \begin{figure}[H]
 \centering
-\includegraphics{detailed_implementation/mapview.png}
+\includegraphics[width=\textwidth]{detailed_implementation/mapview.png}
 \caption{MapView Class Contents}
 \end{figure}
 
 \begin{table}[H]
 \caption{Map View Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|L{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
@@ -220,7 +221,7 @@ The visualiser takes as input from the database using what we call a controller 
 \begin{table}[H]
 \caption{Map View Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|L{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	MVF4
 	&initialXPosition( ArrayList list, int i)
@@ -237,7 +238,7 @@ The instructions vary for the different instruction classes but they all have mu
 \begin{table}[H]
 \caption{Instruction Function Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
@@ -277,7 +278,7 @@ The instructions vary for the different instruction classes but they all have mu
 \begin{table}[H]
 \caption{Instruction Function Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	IF6.4
 	&Sensor
@@ -293,7 +294,7 @@ The instructions vary for the different instruction classes but they all have mu
 \begin{table}[H]
 \caption{Render Function Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
@@ -312,11 +313,10 @@ The Altran database API is RESTful, and is accessed through simple HTTP messages
 
 Since the visualiser needed to pull from a working database while implementing the new database, we used the old, working SQL database to do all the testing in the visualiser until we managed to integrate the new database with the visualiser.
 
-\subsubsection{ObservationGetter(OG)}
 \begin{table}[H]
-\caption{Description}
+\caption{Database Module Description}
 \centering
-\begin{tabularx}{\textwidth}{|l|L{3cm}|X|}
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
 	\hline
 	ID
 	&Name
@@ -355,6 +355,8 @@ Since the visualiser needed to pull from a working database while implementing t
 \end{tabularx}
 \end{table}
 
+\subsubsection{ObservationGetter(OG)}
+
 \subsubsection{Observation}
 A model class from our customers Iot-Service project, so that our data easily follow their wanted format.
 
@@ -368,14 +370,214 @@ This approach makes sure that even if the sensors are behind a network with a fi
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{detailed_implementation/ClassDiagramC++.png}
+\includegraphics[width=\textwidth]{detailed_implementation/classdiagramC++.png}
 \caption{Class Diagram for Mock-Up Data Based Prototypee}
 \label{fig:ClassDiagramC++}
 \end{figure}
 
-{\color{red}Write how the classes work togheter. Just change the things that have changed from the paragraph over this one.}
-\newline \ \newline
+The class diagram for this prototype, as shown in \figref{fig:ClassDiagramC++}, has been scaled down, and all the notes from the class diagram from the hardware-based prototype apply here as well. Furthermore, we have several new classes that are added into the implementation.
 
-The class diagram for this prototype has been scaled dowl, and all the notes from the class diagram from the hardware-based prototype apply here as well. In short, we ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method, and everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead. Some new changes in the class diagram is the (x2) in the class ObservationGetter, this means the class have two methods with the same name, and one of the methods have to string parameters and the other only has one.
+The two classes appended to the visualiser are Constants and Calculation. The constants class serves as a loading point to make the code more modifiable. While it is not used in our prototype to its full extent, it can hold fields for any type of value and allows reading from a Constants.txt file. In our prototype, we only use it to calibrate values of the link budget. 
+
+The calculation class is a helper class to the visualisation, which takes in the position of the gateways and the sensor numbers, and returns the position of the sensors on the screen as a 2D point. This is used to calculate the distance of the sensors from each gateway, using the formula method.
+
+Like before, we have ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method. Everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead.
+
+\subsubsection{Visualiser overview after sprint 4}
+
+The visualiser now uses the separate class Calculation to compute the screen position of gateways and sensors based on the link budget. In order to make the link budget calculation configurable, the calculation involves fields from the class Constants, which again initialises the fields from properties in the file “constants.txt”. The animation works the same way as before, using the class AnimationTimer and the interfaces Instruction and Renderer.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{detailed_implementation/VisualiserClassdiagramsprint4.png}
+\caption{Structure overview for Visualiser after sprint 4}
+\end{figure}
+
+\subsubsection{Calculation class(C)}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{detailed_implementation/CalculationClassdiagram.png}
+\caption{Calculation Class Contents}
+\end{figure}
+
+\begin{table}[H]
+\caption{Calculation Description}
+\centering
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
+\hline ID
+&Name
+&Description
+\\ \hline C1
+&getLinkBudget()
+&This method returns the link budget for a specific sensor from a specific room with a number variable saying from which gateway we are calculating from.
+\\ \hline C2
+&formula()
+&This method will return the position of the sensor in javafx Point2D format. We take position variables of all gateways and the link budgets from all those to the sensor we are calculating for. We also take in values from constants class during the calculation.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Constants class(CC)}
+
+\begin{figure}[H]
+\centering
+\includegraphics{detailed_implementation/ConstantsClassdiagram.png}
+\caption{Constants Class Contents}
+\end{figure}
+
+\begin{table}[H]
+\caption{Constants Description}
+\centering
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
+\hline ID
+&Name
+&Description
+\\ \hline 
+CC1
+&Constants
+&This method will read from a .txt file that contains maxLinkBudget and minLinkBudget and set those two fields.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Controller function (CF)}
+The controller is capable of updating sensor positions using link budgets from more than one gateway. In order to make the link budgets available for calculation, they were placed in a list with a one to one correspondence to the list of gateway IDs.
+
+\begin{figure}[H]
+\centering
+\includegraphics{detailed_implementation/controllersprint4.png}
+\caption{Controller Class Contents}
+\end{figure}
+
+\begin{table}[H]
+\caption{Controller Description}
+\centering
+\begin{tabularx}{\textwidth}{|L{1cm}|L{4.5cm}|X|}
+\hline ID
+&Name
+&Description
+\\ \hline CF6
+&updateSensors()
+&The method now uses all Observations from each gateway, so that the link budget is updated for all gateways.
+\\ \hline CF7 
+&updateBacklog(SensorModel sensor)
+&Adds all Observations done for a sensor, so that current values is more filled than just most recent observation.
+\\ \hline CF8
+&addGateways()
+&Adds all gateways currently in the database to roomModel.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{ObservationGetter (DBM)}
+The class ObservationGetter now has support for more specific observation queries based on gateway id. This makes it possible to reduce the flow of data between the database and the visualiser.
+
+\begin{table}[H]
+\caption{ObservationGetter Description}
+\centering
+\begin{tabularx}{\textwidth}{|L{1.1cm}|L{5.1cm}|X|}
+\hline 
+ID
+&Name
+&Description
+\\ \hline DBM11
+&getAllGatewaysIDs()
+&Query the IoT Service database using radiogatways as path, and sort out the the gatewayIDs from the returned result.
+\\ \hline DBM12
+&getMostRecentObservation(String sensorID, String gatewayID)
+&Returns the most recent Observation in the database for the sensor that is recorded by gateway.
+\\ \hline DBM13
+&getMostRecentObservation(String sensorID, List<String> gatewayIDs)
+&Returns the most recent Observation in the database for the sensor that is recorded by the gateways.
+\\ \hline DBM14
+&List<Observation> getBacklogForSensor(String sensorID)
+&Returns all Observations for a sensor.
+\\ \hline DBM15
+&doWriteToFile(Observation obs, String filename)
+&Writes a Observation to file.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{ManualAddDash7Data (MADD)}
+The class ManualAddDash7Data is a program used to manually add observation data to a running database. It can be used in several different modes. In each mode the user controls the program through a console; the difference is how observation data is generated and added to the database. The modes are implemented by the static methods outlined in the table below.
+
+\begin{table}[H]
+\caption{ManualAddDash7Data Description}
+\centering
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{4cm}|X|}
+\hline 
+ID
+&Name
+&Description
+\\ \hline MADD1
+&main()
+&Starts the program. Prompts the user for IP-address of the database.
+\\ \hline MADD2
+&assistedDataPost()
+&The user specifies measurement values of the observations explicitly, and presses enter to post the data. This input sequence runs in a loop.
+\\ \hline MADD3
+&autoGeneratedDataPost()
+&A Dash7Generator object (see below) is used to generate data periodically, and the data is posted to the database. The user sets the length of the update period, and also specifies the generator type and configures the generator.
+\\ \hline MADD4
+&manualDataPost()
+&The user writes observations in DASH7 format directly into the console. This mode is meant for copypasting observations into the console.
+\\ \hline MADD5
+&readFromFile()
+&The program attempts to read the resource file observations.txt as a JSON file with observations, posting the data to the database automatically.
+
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Dash7Generator (DG)}
+The interface Dash7Generator defines a type for objects that generates observations as strings in the DASH7 format. The observations are generated according to rules specified by the implementing class. The interface is currently implemented by the classes DefaultGenerator and WalledRoomGenerator.
+
+\begin{table}[H]
+\caption{Dash7Generator Description}
+\centering
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
+\hline ID
+&Name
+&Description
+\\ \hline 
+DG1
+&nextObservation()
+&Returns the next observation generated according to the internal rules of this generator object.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{WalledRoomGenerator (WRG)}
+The class WalledRoomGenerator implements the Dash7Generator interface. It generates observations to simulate an environment where the gateways are placed in different rooms; the rooms are separated by thick walls blocking all signals sent between the sensor and the gateway.
+
+\paragraph{Observation generation rule}
+The constructor takes as parameters the number of sensors, gateways and rooms, and generates lists of sensor, gateway and room ids. Each measurement value is modelled by as a linear saw-tooth function based on the system time and the sensor id. The function for the link budget is based also on the gateway id, in addition to being adjusted to simulate the movement of sensors between rooms.
+
+\paragraph{Link budget adjustment}
+The gateways are divided into equally sized groups, one per room. Whenever an observation is generated for a sensor and a gateway, a it is decided if the gateway is in the same room as the sensor. If it is not, the link budget value is set to 100 to indicate that there is no connectivity. This is picked up by the position calculation in the visualiser, which will then move the sensor away from the gateway in question.
+
+\begin{table}[H]
+\caption{WalledRoomGenerator Description}
+\centering
+\begin{tabularx}{\textwidth}{|L{1.2cm}|L{4cm}|X|}
+\hline ID
+&Name
+&Description
+\\ \hline 
+WRG1
+&nextObservation()
+&Returns the next observation generated according to the internal rules of this generator object.
+\\ \hline WRG2
+&WalledRoomGenerator()
+&Constructs a new instance of this generator.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{DefaultGenerator (DEG)}
+The class DefaultGenerator simply inherits the class WalledRoomGenerator, fixing the number of rooms to 1.
+
 
 \end{document}
