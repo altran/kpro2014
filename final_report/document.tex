@@ -110,11 +110,17 @@
 % glossary
 \usepackage[xindy]{glossaries}
 
+% tocnumbers
 \usepackage{tocloft}
 \setlength{\cftsubsecnumwidth}{2.75em}
 \setlength{\cftsubsubsecnumwidth}{3.5em}
 \setlength{\cftfignumwidth}{3em}
 \setlength{\cfttabnumwidth}{3em}
+
+% bibliography
+\usepackage{etoolbox}
+\apptocmd{\thebibliography}{\csname phantomsection\endcsname\addcontentsline{toc}{section}{Bibliography}}{}{}
+\patchcmd{\thebibliography}{\section*{\refname}}{Bibliography}{}{}
 
 
 \begin{document}
@@ -207,6 +213,25 @@
 \newpage
 \subfile{tex/conclusion}
 
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
+
+\newpage
+\subfile{tex/bibliography}
+
 \newpage
 \vspace*{\fill}
 \part{Appendices}
@@ -228,6 +253,7 @@
 \vspace{0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
+
 % start of appendixes
 \appendix
 
