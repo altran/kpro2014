@@ -22,3 +22,8 @@ target/
 **.lof
 **.lot
 **.glsdefs
+**.glo
+**.gls
+**.glg
+**.ilg
+**.xdy
