@@ -307,7 +307,7 @@ The instructions vary for the different instruction classes but they all have mu
 \end{table}
 
 \subsubsection{Database Module}
-The database module support methods for opening a new connection with a database using \gls{REST}, query for new data as a Observation object, and adding new data in the form of DASH7 String. The Observation class is a class taken from our customer, to better fit the format of their database.
+The database module support methods for opening a new connection with a database using \gls{REST}, query for new data as a Observation object, and adding new data in the form of \gls{DASH7} String. The Observation class is a class taken from our customer, to better fit the format of their database.
 
 The \gls{Altran} database \gls{API} is RESTful, and is accessed through simple \gls{HTTP} messages. Our database implementation accesses the \gls{Altran} database through this \gls{API}. To send and receive \gls{HTTP} messages, our implementation uses the Jersey implementation of JAX-RS (\gls{Java} \gls{API} for RESTful Services). The \gls{Altran} database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending \gls{HTTP} GET requests with query parameters in a Lucene-specific format.
 
@@ -337,13 +337,13 @@ Since the visualiser needed to pull from a working database while implementing t
 	&The target for all requests done with Jersey, set to client.target(domain).
 	\\ \hline DBM5
 	&List<String> getAllSensorIDs()
-	&Add “radiogateways” to the queryResource path, and split the returned DASH7 String so that only a list of radiosensorIDs remain, and return it.
+	&Add “radiogateways” to the queryResource path, and split the returned \gls{DASH7} String so that only a list of radiosensorIDs remain, and return it.
 	\\ \hline DBM6
 	&String postD7data(String data)
-	&Take a DASH7 string and post it to the server. A separate script is used for upload from sensors, so this method is used for test using mock data.
+	&Take a \gls{DASH7} string and post it to the server. A separate script is used for upload from sensors, so this method is used for test using mock data.
 	\\ \hline DBM7
 	&List<Observation> toObservationList(String jsondata)
-	&Used to parse a DASH7 String response to Observation Objects.
+	&Used to parse a \gls{DASH7} String response to Observation Objects.
 	\\ \hline DBM8
 	&Observation getMostRecentObservation(String sensorID)
 	&Query the database for latest data for a sensorID using POST request with query parameter (“query”, “radiosensor:”) . Then return the observation with most recent Date value.
@@ -522,7 +522,7 @@ ID
 &A Dash7Generator object (see below) is used to generate data periodically, and the data is posted to the database. The user sets the length of the update period, and also specifies the generator type and configures the generator.
 \\ \hline MADD4
 &manualDataPost()
-&The user writes observations in DASH7 format directly into the console. This mode is meant for copypasting observations into the console.
+&The user writes observations in \gls{DASH7} format directly into the console. This mode is meant for copypasting observations into the console.
 \\ \hline MADD5
 &readFromFile()
 &The program attempts to read the resource file observations.txt as a \gls{JSON} file with observations, posting the data to the database automatically.
@@ -532,7 +532,7 @@ ID
 \end{table}
 
 \subsubsection{Dash7Generator (DG)}
-The interface Dash7Generator defines a type for objects that generates observations as strings in the DASH7 format. The observations are generated according to rules specified by the implementing class. The interface is currently implemented by the classes DefaultGenerator and WalledRoomGenerator.
+The interface Dash7Generator defines a type for objects that generates observations as strings in the \gls{DASH7} format. The observations are generated according to rules specified by the implementing class. The interface is currently implemented by the classes DefaultGenerator and WalledRoomGenerator.
 
 \begin{table}[H]
 \caption{Dash7Generator Description}
