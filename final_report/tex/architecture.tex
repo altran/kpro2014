@@ -135,7 +135,7 @@ The class diagram, shown in \figref{fig:LogicalView}, demonstrates how the GUI, 
 \end{figure}
 
 \paragraph{Sequence Diagram} \ \\
-The sequence diagram, shown in \figref{fig:SequenceDiagram1}, describes the logical interaction between the map view, the model, the database, the instruction and the renderer. When the program is executed, the first that happens is that the map view creates a new room model. This room model then starts pulling data from the database, and it will proceed with pulling data continuously throughout the execution time of the program. This data is then used by the map view to visualise the sensor values. If data from the database is different from what the visualisation is showing, the map view creates an instruction and a renderer. This renderer will change the visualisation according to the information in the instruction.
+The sequence diagram, shown in \figref{fig:SequenceDiagram1}, describes the logical interaction between the map view, the model, the database, the instruction and the renderer. When the program is executed, the map view creates a new room model. This room model then starts pulling data from the database, and it will proceed with pulling data continuously throughout the execution time of the program. This data is then used by the map view to visualise the sensor values. If data from the database is different from what the visualisation is showing, the map view creates an instruction and a renderer. This renderer will change the visualisation according to the information in the instruction.
 
 \begin{figure}[H]
 	\centering
@@ -176,7 +176,7 @@ The physical view, shown in \figref{fig:SystemDiagram}, is concerned with the to
 
 \subsubsection{Scenarios and Use Cases}
 \paragraph{Scenarios} \ \\
-The scenarios view, also known as the use case view, describe sequences of interactions between objects, and between processes. They are used to identify architectural elements and to illustrate and validate the architecture design. They also serve as a starting point for tests of an architecture prototype.
+The scenario view, also known as the use case view, describes sequences of interactions between objects, and between processes. They are used to identify architectural elements and to illustrate and validate the architecture design. They also serve as a starting point for tests of an architecture prototype.
 
 \begin{table}[H]
 	\caption{Scenario P1}
@@ -184,7 +184,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		\hline
 		ID					& P1 \\ \hline
 		Source				& System \\ \hline
-		Stimulus			& The light gets turned off \\ \hline
+		Stimulus			& The light level increases or decreases \\ \hline
 		Environment			& Runtime \\ \hline
 		Artifact			& Light sensors \\ \hline
 		Response			& Update the new info, and add it to the database \\ \hline
@@ -199,7 +199,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		\hline
 		ID					& P2 \\ \hline
 		Source				& System \\ \hline
-		Stimulus			& The temperature gets higher \\ \hline
+		Stimulus			& The temperature increases or decreases \\ \hline
 		Environment			& Runtime \\ \hline
 		Artifact			& Temperature sensors \\ \hline
 		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
@@ -214,7 +214,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		\hline
 		ID					& P3 \\ \hline
 		Source				& System \\ \hline
-		Stimulus			& The pressure changes \\ \hline
+		Stimulus			& The pressure increases or decreases \\ \hline
 		Environment			& Runtime \\ \hline
 		Artifact			& Pressure sensors \\ \hline
 		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
@@ -229,7 +229,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		\hline
 		ID					& P4 \\ \hline
 		Source				& System \\ \hline
-		Stimulus			& The humidity changes \\ \hline
+		Stimulus			& The humidity increases or decreases \\ \hline
 		Environment			& Runtime \\ \hline
 		Artifact			& Humidity sensors \\ \hline
 		Response			& The animation in the visualiser should start after it pulls new data from the database \\ \hline
@@ -244,7 +244,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 		\hline
 		ID					& P5 \\ \hline
 		Source				& System \\ \hline
-		Stimulus			& User uncheck an element  \\ \hline
+		Stimulus			& User unchecks an element  \\ \hline
 		Environment			& Runtime \\ \hline
 		Artifact			& GUI \\ \hline
 		Response			& The presentation of that specific element will be hidden \\ \hline
@@ -254,7 +254,7 @@ The scenarios view, also known as the use case view, describe sequences of inter
 \end{table}
 
 \paragraph{Use Cases} \ \\
-The use cases shows two ways a user can interact with the system. The first shows how a user can uncheck elements it does not want to see on the screen and second shows how the user can check them back if the user wants to see them again.
+The use cases show two ways a user can interact with the system. The first shows how a user can uncheck elements they do not want to see on the screen and the second shows how the user can check them, if the user wants to see them again.
 
 \begin{figure}[H]
 	\centering
@@ -264,7 +264,7 @@ The use cases shows two ways a user can interact with the system. The first show
 
 \subsubsection{Sprint 4 Scenarios and Use Cases}
 
-With sprint 4, we have introduced some new use-case scenarios into the system, and a new sequence diagram, but the rest of the architecture remains the same as it was before. The new use-case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figref{usecasesprint4}
+With sprint 4, we have introduced some new use case scenarios into the system, and a new sequence diagram, but the rest of the architecture remains the same as it was before. The new use case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figref{usecasesprint4}
 \begin{table}[H]
 \caption{Scenario P6}
 \label{scenario6}
@@ -323,7 +323,7 @@ The scaling of the data will change upon the next boot up of the system, and thi
 \end{figure}
 
 \paragraph{Sprint 4 Sequence Diagram} \ \\
-This sequence diagram, shown in \figref{fig:SequenceDiagram2}, is mostly the same as the previous one, which was \figref{fig:SequenceDiagram1}. The only difference is that it contains one additional, calculation, which calculates the positions of the sensors according to the link budget.
+This sequence diagram, shown in \figref{fig:SequenceDiagram2}, is mostly the same as the previous one, which was \figref{fig:SequenceDiagram1}. The only difference is that it contains one additional class, calculation, which calculates the positions of the sensors according to the link budget.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Architecture/SequenceDiagram2.png}
