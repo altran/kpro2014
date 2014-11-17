@@ -124,9 +124,22 @@
 \usepackage{etoolbox}
 \apptocmd{\thebibliography}{\csname phantomsection\endcsname\addcontentsline{toc}{section}{Bibliography}}{}{}
 \renewcommand\refname{Bibliography}
-%\apptocmd{\printglossaries}{\csname phantomsection\endcsname\addcontentsline{toc}{subsection}{\arabic{section}.\arabic{subsection} Glossary}}{}{}
 
-
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
 
 
 %=================UNCOMMENT WHEN NEEDED=========
@@ -142,7 +155,13 @@
 
 \setcounter{page}{0}
 \newpage
+\subfile{tex/preface}
+\addcontentsline{toc}{section}{Preface}
+
+\newpage
 \subfile{tex/contents}
+
+
 
 \titleformat
 {\section} % command
@@ -160,6 +179,8 @@
 \vspace{0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
+
+
 
 \newpage
 \setcounter{page}{1}
@@ -185,6 +206,7 @@
 
 \newpage
 \subfile{tex/test_plan}
+\subfile{tex/Sprint_4_testing_plan}
 
 \newpage
 \subfile{tex/architecture}
@@ -224,6 +246,8 @@
 \newpage
 \subfile{tex/conclusion}
 
+
+
 \titleformat
 {\section} % command
 [display] % shape
@@ -240,6 +264,8 @@
 \rule{\textwidth}{0.3pt}
 ] % after-code
 
+
+
 \newpage
 \subfile{tex/bibliography}
 
@@ -247,6 +273,8 @@
 \vspace*{\fill}
 \part{Appendices}
 \vspace*{\fill}
+
+
 
 \titleformat
 {\section} % command
@@ -264,6 +292,8 @@
 \vspace{0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
+
+
 
 % start of appendixes
 \appendix
