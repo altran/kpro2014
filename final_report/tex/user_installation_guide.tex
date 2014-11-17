@@ -23,7 +23,7 @@ Setting up the system involves setting up different individual system components
 %TODO: Write about charging the sensors
 
 \subsection{Setting up a network}
-As the central hub can only run on a Raspberry Pi, a network is needed to connect it to the rest of the system. The Raspberry Pi is configured to get an IP address automatically through DHCP, so the network needs to have a DHCP server available. Normally the DHCP server is a router, but a laptop running Linux can also be setup to function as one. Regardless, it is recommended to setup your own dedicated network using either a router or a laptop, as it eases the next step considerably. Instructions for setting up a laptop running Linux as a DHCP server can be found here \url{http://www.cyberciti.biz/faq/howto-ubuntu-debian-squeeze-dhcp-server-setup-tutorial/}.
+As the central hub can only run on a \gls{Raspberry Pi}, a network is needed to connect it to the \gls{REST} of the system. The \gls{Raspberry Pi} is configured to get an IP address automatically through DHCP, so the network needs to have a DHCP server available. Normally the DHCP server is a router, but a laptop running Linux can also be setup to function as one. Regardless, it is recommended to setup your own dedicated network using either a router or a laptop, as it eases the next step considerably. Instructions for setting up a laptop running Linux as a DHCP server can be found here \url{http://www.cyberciti.biz/faq/howto-ubuntu-debian-squeeze-dhcp-server-setup-tutorial/}.
 Setting up a DHCP server on windows involves a considerable amount of work, and is not recommended.
 
 After the network is set up with a DHCP server, the different systems running the components will be assigned IP addresses automatically when they are connected.
@@ -37,12 +37,12 @@ The following accessories is needed to setup the central hub and the sensors:
 	\centering
 	\begin{subfigure}[h]{\Imwidth\textwidth}
 		\includegraphics[width=\textwidth]{user_installation_guide/rpi.jpg}
-		\caption{Raspberry Pi}	
+		\caption{\gls{Raspberry Pi}}	
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[h]{\Imwidth\textwidth}
 		\includegraphics[width=\textwidth]{user_installation_guide/rpi-power-cord.jpg}
-		\caption{Raspberry Pi power cord}	
+		\caption{\gls{Raspberry Pi} power cord}	
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[h]{\Imwidth\textwidth}
@@ -94,7 +94,7 @@ To setup the central hub and the sensors, complete the steps outlined in the fig
 	\begin{subfigure}[h]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{user_installation_guide/connect-rpi-network-2.jpg}
 	\end{subfigure}
-	\caption{Connect the Raspberry Pi to the router using the networking cable}
+	\caption{Connect the \gls{Raspberry Pi} to the router using the networking cable}
 \end{figure}
 
 \begin{figure}[H]
@@ -130,7 +130,7 @@ To setup the central hub and the sensors, complete the steps outlined in the fig
 	\begin{subfigure}[h]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{user_installation_guide/connect-rpi-power-2.jpg}
 	\end{subfigure}
-	\caption{Start the Raspberry Pi by plugging the power cord into it. The other end of the cord should be plugged into a power outlet. A red LED will light up indicating that the Raspberry is running.}
+	\caption{Start the \gls{Raspberry Pi} by plugging the power cord into it. The other end of the cord should be plugged into a power outlet. A red LED will light up indicating that the Raspberry is running.}
 \end{figure}
 
 
@@ -138,7 +138,7 @@ To setup the central hub and the sensors, complete the steps outlined in the fig
 \subsection{Acquiring IP Addresses}
 In order to set up all the components of the system, it is necessary to know the IP addresses of the central hub and the database. As these addresses are assigned dynamically by the DHCP server, it is not possible to known them in advance. This section goes into detail about how to acquire the IP addresses.
 
-For the central hub, the simplest way to discover the address is by trial and error. For this we need to know the address pool used by the DHCP server, so take note of this when setting up the network. The idea is to test subsequent addresses from this pool until the address of the central hub is found. The central hub runs a REST-based server, and the easiest way of testing an address is to type in the address in a browser. If the address is correct, this will open the configuration service of the central hub. It is likely that the central hub was leased an address in the lower end of the range, so it is a good idea to start there. For example, if the setup is performed on a local network, a typical lower end of the range address is 192.168.1.1.
+For the central hub, the simplest way to discover the address is by trial and error. For this we need to know the address pool used by the DHCP server, so take note of this when setting up the network. The idea is to test subsequent addresses from this pool until the address of the central hub is found. The central hub runs a \gls{REST}-based server, and the easiest way of testing an address is to type in the address in a browser. If the address is correct, this will open the configuration service of the central hub. It is likely that the central hub was leased an address in the lower end of the range, so it is a good idea to start there. For example, if the setup is performed on a local network, a typical lower end of the range address is 192.168.1.1.
 
 If a laptop is used as a DHCP server, another option is also available. This involves viewing the log messages from the running DHCP server. The DHCP server will write the addresses it leases to the log, allowing you to read the address of the central hub.
 
@@ -158,7 +158,7 @@ wlan0     Link encap:Ethernet  HWaddr 00:18:de:01:f9:8c
 
 
 \subsection{Starting the System Components}
-At this point all devices are powered on, they are connected to the network, and the IP address of the central hub and the database has been acquired. The final step is to start the individual system components. These include the visualiser, the database, and a small script running on the Raspberry Pi. The central hub is started automatically by the Raspberry Pi on boot. It is important that the database already runs before the visualiser is started. Apart from that, the components can be started in any order. However, it is recommended to start them in the order specified below.
+At this point all devices are powered on, they are connected to the network, and the IP address of the central hub and the database has been acquired. The final step is to start the individual system components. These include the visualiser, the database, and a small script running on the \gls{Raspberry Pi}. The central hub is started automatically by the \gls{Raspberry Pi} on boot. It is important that the database already runs before the visualiser is started. Apart from that, the components can be started in any order. However, it is recommended to start them in the order specified below.
 
 \subsubsection{Starting the Database}
 The database receives sensor samples from the central hub, storing them in files. In order to start the database, open a terminal and navigate to the folder where the file the executable .jar file is located. Next, execute the .jar using the command
@@ -171,7 +171,7 @@ The database should now start printing log messages.
 
 
 \subsubsection{Starting the pull script}
-The script running on the Raspberry Pi along with the central hub is used pull sensor samples from the central hub and push them to the database. It is a Bash script that uses the command-line tool cURL to communicate with the central hub and the database. This script resides on the central hub under the path /home/root/push.sh. The recommended way to start the script, is to log on to the Raspberry Pi through ssh, using ‘root’ as both username and password. After logging in, the script is started with the command
+The script running on the \gls{Raspberry Pi} along with the central hub is used pull sensor samples from the central hub and push them to the database. It is a Bash script that uses the command-line tool cURL to communicate with the central hub and the database. This script resides on the central hub under the path /home/root/push.sh. The recommended way to start the script, is to log on to the \gls{Raspberry Pi} through ssh, using ‘root’ as both username and password. After logging in, the script is started with the command
 \lstset{style=custombash}
 \begin{lstlisting}
 $ ./pull.sh <central hub ip> <database ip>
