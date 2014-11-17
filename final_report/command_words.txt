@@ -7,7 +7,7 @@ cloudant
 #api
 !#http
 restful
-#REST
+!#REST
 #java
 Raspberry Pi (<- wording correct)
 
