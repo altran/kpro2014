@@ -189,7 +189,7 @@ While there are similar projects that deal with the concept of “Internet of Th
 \subsubsection{Different Possible Architectural Models for the Prototype}
 While working on the initial stages of the project, we had to prepare countermeasures to counteract risk 1, as seen in the risk table under \subsubfullref{risks_and_risk_mitigation}, which was the possibility of us not getting the hardware necessary to complete our prototype. In order to make the prototype work without any hardware from the customer, he suggested that we could substitute the sensors with android phones. With this in mind we had to prepare for both situations and we found out that the architecture in both cases actually differs. In both cases we would be using a client-server architecture, however, the roles of the client and the server would be reversed.
 
-When using the sensors, we would have a raspberry pi acting as a server. In this case our client requests information from the server, and stores it in a database of some sort. Then our visualiser uses this data to show it in a visual way. \figref{fig:Architecture_1} illustrates this architecture.
+When using the sensors, we would have a \gls{Raspberry Pi} acting as a server. In this case our client requests information from the server, and stores it in a database of some sort. Then our visualiser uses this data to show it in a visual way. \figref{fig:Architecture_1} illustrates this architecture.
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{preliminary/Architecture_1.png}
