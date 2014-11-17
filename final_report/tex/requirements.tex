@@ -26,11 +26,19 @@ Pull data.
 Central hub requirement.
 \begin{itemize}
 \item
-Gather data from sensor.
+Request data from sensor.
 \item
 Process data.
 \item
 Send data upon request.
+\end{itemize}
+\item
+Sensor requirement.
+\begin{itemize}
+\item
+Sensor will gather temperature, humidity, lighting and pressure data
+\item
+Send data to central hub
 \end{itemize}
 \item
 Visualiser requirement.
@@ -89,17 +97,38 @@ Req. nr
 &Name
 &Description
 \\ \hline 2.1
-&Gather data from sensor
-&The sensor data will be collected by the server, this is done by sensor sending data into the server every few secounds(the time is set from the sensor side). The data format is dash7.
+&Request data from sensor
+&The sensor data will be collected by the server, this is done by central hub reuqesting data from the sensors every few secounds (the time is set from the sensor side). The data format is in raw data format.
 \\ \hline 2.2
 &Store data
 &The central hub will store information it has pooled from the sensors into the database.
 \\ \hline 2.3
 &Process data 
-&The central hub will process data into the form the visualiser needs, meaning sort the dash7 into \gls{JSON}.
+&The central hub will process data into the form the visualiser needs, meaning sort the raw data format into \gls{JSON}.
 \\ \hline 2.4
 &Support hotjoin
 &Sensors should be able to disconnect and connect to the central hub at will, if we start a new sensor during runtime the central hub will be able to pick it up and treat it as if it was connected to begin with.
+\\ \hline 
+\end{tabularx}
+\end{table}
+
+\subsubsection{Sensor Requirement}
+The sensor is provided by the customer. We do not know how the sensor interract with enviroment to get the data, but it does not concers us. We will focus on how sensor interracts with central hub. Still the sensor is the basic of the system and gathering those data is a must have requirement in order to make the whole system work.
+
+\begin{table}[H]
+\caption{Sensor Requirements}
+\centering
+\begin{tabularx}{\textwidth}{|l|L{2.5cm}|X|}
+\hline
+Req. nr
+&Name
+&Description
+\\ \hline 3.1
+&Gathering data
+&The sensor will record 4 types enviromental data, temperature ,pressure , humididty and lighting. Those 4 will then be saved until next recording.
+\\ \hline 3.2
+&Send data
+&The sensor will send data to the central hub if requested, the format will be in raw data format.  
 \\ \hline 
 \end{tabularx}
 \end{table}
