@@ -311,7 +311,7 @@ The database module support methods for opening a new connection with a database
 
 The Altran database API is RESTful, and is accessed through simple HTTP messages. Our database implementation accesses the Altran database through this API. To send and receive HTTP messages, our implementation uses the Jersey implementation of JAX-RS (Java API for RESTful Services). The Altran database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending HTTP GET requests with query parameters in a Lucene-specific format.
 
-Since the visualiser needed to pull from a working database while implementing the new database, we used the old, working SQL database to do all the testing in the visualiser until we managed to integrate the new database with the visualiser.
+Since the visualiser needed to pull from a working database while implementing the new database, we used the old, working \gls{SQL} database to do all the testing in the visualiser until we managed to integrate the new database with the visualiser.
 
 \subsubsection{ObservationGetter(DBM)}
 

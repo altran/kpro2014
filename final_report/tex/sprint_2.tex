@@ -255,7 +255,7 @@ Humidity is represented by the blue waterdrop. It fills up for higher humidity.
 	\caption{Map View}
 \end{figure}
 
-We have not yet managed to integrate the sensors into to our system. Neither have we managed to fully implement a replacement solution for the SQL-database. The current visualiser pulls data from an SQL-database every 5 seconds, and iterates through the data looking for changes. When the visualiser discovers a change, an animation is started that changes the appearance of the corresponding sensor. The transition is smooth, and without any glitches.
+We have not yet managed to integrate the sensors into to our system. Neither have we managed to fully implement a replacement solution for the \gls{SQL}-database. The current visualiser pulls data from an \gls{SQL}-database every 5 seconds, and iterates through the data looking for changes. When the visualiser discovers a change, an animation is started that changes the appearance of the corresponding sensor. The transition is smooth, and without any glitches.
 
 Although the new database was not integrated with the rest of the system in this sprint, a working prototype implementation was completed. This database prototype tries to be as compliant to Altran’s database as possible. The Altran database API is restful, and is accessed through simple HTTP messages. To send and receive HTTP messages, our implementation uses the Jersey implementation of JAX-RS (Java API for RESTful Services).
 
@@ -281,8 +281,8 @@ In the last meeting with the customer during this sprint the customer approved o
 \subsection{Sprint Evaluation}
 This sprint went better than sprint 1. Now we knew we would not get to integrate the hardware in time, so we focused on implementing the database and visualiser without the hardware. As we now had a better idea of what the customer actually wanted of the visualiser we could finish our suggestion. The customer was happy with our solution for visualisation, which makes this sprint a success, at least when it comes to the visualisation part. Excepting the database, we have reached all our goals, and we did not come over any major setbacks.
 
-As for the database implementation during this sprint, until now the visualiser has used the SQL-database from sprint 1 as a backend for testing purposes. This has worked out fine, however when the new database is ready, it will allow a much cleaner integration with both the visualiser and the hardware. Note that as a result of the database delay, two tests were not conducted.
+As for the database implementation during this sprint, until now the visualiser has used the \gls{SQL}-database from sprint 1 as a backend for testing purposes. This has worked out fine, however when the new database is ready, it will allow a much cleaner integration with both the visualiser and the hardware. Note that as a result of the database delay, two tests were not conducted.
 
-During this sprint we have gained knowledge of Altran’s database implementation, and how it uses the Spring framework to setup a restful server for storing sensor samples, Lucene to implement queries, and an SQL-database to store data through reboots. Another thing we have learned is how to make animations involving motions, orbital motions in particular.
+During this sprint we have gained knowledge of Altran’s database implementation, and how it uses the Spring framework to setup a restful server for storing sensor samples, Lucene to implement queries, and an \gls{SQL}-database to store data through reboots. Another thing we have learned is how to make animations involving motions, orbital motions in particular.
 
 \end{document}
