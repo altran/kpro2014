@@ -2,14 +2,15 @@ This file contains a list of words that probably should be replaced with command
 !#ntnu
 !#sql
 !#json
-cloudant
+!#cloudant
 !#altran
-#api
+!#api
 !#http
 restful
 !#REST
-#java
-Raspberry Pi (<- wording correct)
+!#java
+!#Raspberry Pi (<- wording correct)
+JavaFX
 
 
 
