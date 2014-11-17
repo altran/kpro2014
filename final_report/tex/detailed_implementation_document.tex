@@ -361,7 +361,7 @@ Since the visualiser needed to pull from a working database while implementing t
 A model class from our customers Iot-Service project, so that our data easily follow their wanted format.
 
 \subsubsection{Gateway}
-In order to get the data from the sensors and push it into the database a few steps are needed to be done. First, data is retrieved from the sensors with a simple HTTP GET request to the server that runs on the Raspberry PI and the data is received in a JSON-like format. The response does not respect the protocol fully so we do not process the data, but we send it as we get it to the Altran web service which does this and inserts the data into their database. The data transmission is done through an HTTP POST request. 
+In order to get the data from the sensors and push it into the database a few steps are needed to be done. First, data is retrieved from the sensors with a simple HTTP GET request to the server that runs on the Raspberry PI and the data is received in a \gls{JSON}-like format. The response does not respect the protocol fully so we do not process the data, but we send it as we get it to the Altran web service which does this and inserts the data into their database. The data transmission is done through an HTTP POST request. 
 
 All these steps are done by using shell script code and are repeated at regular intervals of time.
 This approach makes sure that even if the sensors are behind a network with a firewall and a router with closed sensors, the data still reaches the database because it is our gateway that contacts the web service and not the other way around.
@@ -525,7 +525,7 @@ ID
 &The user writes observations in DASH7 format directly into the console. This mode is meant for copypasting observations into the console.
 \\ \hline MADD5
 &readFromFile()
-&The program attempts to read the resource file observations.txt as a JSON file with observations, posting the data to the database automatically.
+&The program attempts to read the resource file observations.txt as a \gls{JSON} file with observations, posting the data to the database automatically.
 
 \\ \hline 
 \end{tabularx}

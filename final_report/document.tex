@@ -5,6 +5,7 @@
 % The different document parts are loaded using the 'subfiles' package.
 
 
+
 % special symbols
 \usepackage[T1]{fontenc}
 
@@ -140,7 +141,13 @@
 \rule{\textwidth}{0.3pt}
 ] % after-code
 
+
+%=================UNCOMMENT WHEN NEEDED=========
+\renewcommand{\gls}[1]{ }
+
 \begin{document}
+\subfile{tex/glossary}
+
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
 
@@ -282,7 +289,7 @@
 
 % appendix A
 \newpage
-\section{NEW NAME HERE}
+\section{List of Third Party Tools}
 
 \newpage
 \subfile{tex/glossary_print}
