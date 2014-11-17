@@ -309,7 +309,7 @@ The instructions vary for the different instruction classes but they all have mu
 \subsubsection{Database Module}
 The database module support methods for opening a new connection with a database using REST, query for new data as a Observation object, and adding new data in the form of DASH7 String. The Observation class is a class taken from our customer, to better fit the format of their database.
 
-The \gls{Altran} database API is RESTful, and is accessed through simple HTTP messages. Our database implementation accesses the \gls{Altran} database through this API. To send and receive HTTP messages, our implementation uses the Jersey implementation of JAX-RS (Java API for RESTful Services). The \gls{Altran} database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending HTTP GET requests with query parameters in a Lucene-specific format.
+The \gls{Altran} database \gls{API} is RESTful, and is accessed through simple HTTP messages. Our database implementation accesses the \gls{Altran} database through this \gls{API}. To send and receive HTTP messages, our implementation uses the Jersey implementation of JAX-RS (Java \gls{API} for RESTful Services). The \gls{Altran} database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending HTTP GET requests with query parameters in a Lucene-specific format.
 
 Since the visualiser needed to pull from a working database while implementing the new database, we used the old, working \gls{SQL} database to do all the testing in the visualiser until we managed to integrate the new database with the visualiser.
 
@@ -331,7 +331,7 @@ Since the visualiser needed to pull from a working database while implementing t
 	&The path call used to refer to the database supporting REST in the domain server. 
 	\\ \hline DBM3
 	&Client client
-	&A javax.ws.rs.client.Client, that is the entry point which to communicate with the Jersey API.
+	&A javax.ws.rs.client.Client, that is the entry point which to communicate with the Jersey \gls{API}.
 	\\ \hline DMB4
 	&WebTarget queryResource
 	&The target for all requests done with Jersey, set to client.target(domain).

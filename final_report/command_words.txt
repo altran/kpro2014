@@ -3,7 +3,7 @@ This file contains a list of words that probably should be replaced with command
 !#sql
 !#json
 cloudant
-#altran
+!#altran
 #api
 #http
 restful
