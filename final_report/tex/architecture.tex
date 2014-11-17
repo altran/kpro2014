@@ -6,7 +6,7 @@
 \section{Architecture}
 \label{architecture}
 \subsection{Introduction}
-This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in \appendixfullref{retired_architecture}. The sensors and the rasberry pi were already connected together by \gls{Altran} so we will not write the architecture between the sensors and the Raspberry Pi. The Raspberry Pi and the database will use the REST style to communicate and is implemented by one of us. The database will act as a client. The connection between the database and the user interface will follow Altrans framework for their database/GUI connection which uses the REST style.
+This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in \appendixfullref{retired_architecture}. The sensors and the rasberry pi were already connected together by \gls{Altran} so we will not write the architecture between the sensors and the Raspberry Pi. The Raspberry Pi and the database will use the \gls{REST} style to communicate and is implemented by one of us. The database will act as a client. The connection between the database and the user interface will follow Altrans framework for their database/GUI connection which uses the \gls{REST} style.
 
 \subsection{Quality Attributes}
 \label{quality_attributes}
@@ -28,11 +28,11 @@ The software is easy to alter or configure, to ease system modifications such as
 The program code for both the central hub and the sensors is portable, making the system hardware replaceable. This is to ensure that a customer is not tied to any specific supplier. The data should be stored in a database.
 
 \subsection{Architectural Styles}
-\subsubsection{Representational State Transfer (REST)}
-We plan to make a system with a RESTful similarity between the databaser and the central hub. The architectural style REST focus on how components, connectors and data elements works together within a distributed hypermedia system. REST will accomplish that by having a set of architectural constraints that applies to all modules and their relations. The individual module is not concerned in REST architecture, meaning that the implementation is not that important. The architectural constraints applied by REST can be found under the next subsection architectural constraints. REST is used as a description of the wanted web architecture. We use it to find and identify problems in our system architecture and make sure our system should follow the constraint we find to be more important. As in any software architecture the components, the connectors and the data elements are used to find what architectural properties are most needed in the system. Our components, connectors and data elements are as listed:
+\subsubsection{Representational State Transfer (\gls{REST})}
+We plan to make a system with a RESTful similarity between the databaser and the central hub. The architectural style \gls{REST} focus on how components, connectors and data elements works together within a distributed hypermedia system. \gls{REST} will accomplish that by having a set of architectural constraints that applies to all modules and their relations. The individual module is not concerned in \gls{REST} architecture, meaning that the implementation is not that important. The architectural constraints applied by \gls{REST} can be found under the next subsection architectural constraints. \gls{REST} is used as a description of the wanted web architecture. We use it to find and identify problems in our system architecture and make sure our system should follow the constraint we find to be more important. As in any software architecture the components, the connectors and the data elements are used to find what architectural properties are most needed in the system. Our components, connectors and data elements are as listed:
 
 \begin{table}[H]
-	\caption{Identified REST elements}
+	\caption{Identified \gls{REST} elements}
 	\begin{tabularx}{\textwidth}{|X|X|}
 		\hline
 		\textbf{Components}		& The sensors, the central hub, the database and the UI.  \\ \hline
@@ -41,10 +41,10 @@ We plan to make a system with a RESTful similarity between the databaser and the
 	\end{tabularx}
 \end{table}
 
-We are using the REST style as guidelines, and therefore it may be some inconsistencies between our system and a RESTful system. 
+We are using the \gls{REST} style as guidelines, and therefore it may be some inconsistencies between our system and a RESTful system. 
 
 \subsection{Architectural Constraints}
-REST has some formal constraints we have to follow. If the system does not follow these constraints the system does not have RESTful architecture. They are all written with an interest to our system and architecture.
+\gls{REST} has some formal constraints we have to follow. If the system does not follow these constraints the system does not have RESTful architecture. They are all written with an interest to our system and architecture.
 
 \subsubsection{Client-Server}
 The central hub will act as a server, and a database as the client. All the data is stored in a database that may be run externally. The central hub will not be worrying about the UI or any kind of user interference or status. This makes the central hub more scalable and it can be developed or changed without the database knowing if the interface between them are altered or not. 
@@ -56,16 +56,16 @@ When the database asks for a data update from the central hub, all the informati
 The client in our system is the database, which means our client will store all the data it receives. 
 
 \subsubsection{Layered System}
-Our system might not be layered, so the database will most likely know for certain that it is connected to the central hub. This is not usually how the REST architecture acts, however we are only having a RESTful system as a framework. 
+Our system might not be layered, so the database will most likely know for certain that it is connected to the central hub. This is not usually how the \gls{REST} architecture acts, however we are only having a RESTful system as a framework. 
 
 \subsubsection{Code on Demand}
-This is the only architectural constraint that is optional with the REST architecture, and we have decided it is not going to be a concern with our system. However, the formal description of this constraint is: Code on demand allows clients to improve its flexibility by temporarily letting the servers extend or customize the functionality of a client. This is done by transferring executable code.
+This is the only architectural constraint that is optional with the \gls{REST} architecture, and we have decided it is not going to be a concern with our system. However, the formal description of this constraint is: Code on demand allows clients to improve its flexibility by temporarily letting the servers extend or customize the functionality of a client. This is done by transferring executable code.
 
 \subsubsection{Uniform Interface}
 This constraint is used to make the architecture simpler and helps every individual part of the system to evolve independently. The uniform interface is split into four different guidelines.
 
 \paragraph{Identification of Resources} \ \\
-The resources in a REST architecture is identified in the requests and are separate from the representations that the client receives. 
+The resources in a \gls{REST} architecture is identified in the requests and are separate from the representations that the client receives. 
 
 \paragraph{Manipulation of Resources through These Representations} \ \\
 The client should be able to modify the representation of a resource it receives. As an example the client could be able to calculate maximum, minimum and average of data from each sensor. 
@@ -74,7 +74,7 @@ The client should be able to modify the representation of a resource it receives
 All the client requests and server responses are messages, and in a RESTful application these messages are expected to be self-descriptive. This means that each message should contain all the information needed to process this message. Moreover, the interaction between requests is stateless, responses explicitly indicate cacheability and standard methods and media types are used to indicate semantics and exchange information. Each message can have a body and metadata.
 
 \paragraph{Hypermedia As the Engine of Application State (A.K.A. HATEOAS)}
-The principle that hypermedia is the engine of application state means that a REST client does not need to have any understanding of how to interact with any application or server beyond a generic understanding of hypermedia. In other words, except for simple entry points in the application, a client does not make any state transitions without hypermedia dynamically provided by the server. 
+The principle that hypermedia is the engine of application state means that a \gls{REST} client does not need to have any understanding of how to interact with any application or server beyond a generic understanding of hypermedia. In other words, except for simple entry points in the application, a client does not make any state transitions without hypermedia dynamically provided by the server. 
 
 \subsection{Architectural Tactics}
 \subsubsection{Performance}
@@ -165,7 +165,7 @@ The process view, shown in \figref{fig:ProcessView}, considers the dynamic aspec
 \end{figure}
 
 \subsubsection{Physical View}
-The physical view, shown in \figref{fig:SystemDiagram}, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the REST server, which gives information about the sensors to the database through the REST client. If the sensors for some reason are not used then the database gets random information from mock-up data. The user interface gets information from the database.
+The physical view, shown in \figref{fig:SystemDiagram}, is concerned with the topology of software components on the physical layer, as well as the physical connections between these components. In other words, it depicts the system from a system engineers point of view. The sensors are all somehow connected to the \gls{REST} server, which gives information about the sensors to the database through the \gls{REST} client. If the sensors for some reason are not used then the database gets random information from mock-up data. The user interface gets information from the database.
 
 \begin{figure}[H]
 	\centering
@@ -264,7 +264,7 @@ The use cases show two ways a user can interact with the system. The first shows
 
 \subsubsection{Sprint 4 Scenarios and Use Cases}
 
-With sprint 4, we have introduced some new use case scenarios into the system, and a new sequence diagram, but the rest of the architecture remains the same as it was before. The new use case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figref{usecasesprint4}
+With sprint 4, we have introduced some new use case scenarios into the system, and a new sequence diagram, but the \gls{REST} of the architecture remains the same as it was before. The new use case scenarios are listed below, in \tableref{scenario6} and \tableref{scenario7}. The use case diagram for sprint 4 is in the \figref{usecasesprint4}
 \begin{table}[H]
 \caption{Scenario P6}
 \label{scenario6}

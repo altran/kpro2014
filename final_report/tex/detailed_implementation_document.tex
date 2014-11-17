@@ -307,7 +307,7 @@ The instructions vary for the different instruction classes but they all have mu
 \end{table}
 
 \subsubsection{Database Module}
-The database module support methods for opening a new connection with a database using REST, query for new data as a Observation object, and adding new data in the form of DASH7 String. The Observation class is a class taken from our customer, to better fit the format of their database.
+The database module support methods for opening a new connection with a database using \gls{REST}, query for new data as a Observation object, and adding new data in the form of DASH7 String. The Observation class is a class taken from our customer, to better fit the format of their database.
 
 The \gls{Altran} database \gls{API} is RESTful, and is accessed through simple \gls{HTTP} messages. Our database implementation accesses the \gls{Altran} database through this \gls{API}. To send and receive \gls{HTTP} messages, our implementation uses the Jersey implementation of JAX-RS (Java \gls{API} for RESTful Services). The \gls{Altran} database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending \gls{HTTP} GET requests with query parameters in a Lucene-specific format.
 
@@ -328,7 +328,7 @@ Since the visualiser needed to pull from a working database while implementing t
 	&The domain address that will be used for all calls during current runtime. Most used values for our project is http://iot.altrancloud.com and localhost:4901, depending if we are using our customers database, or hosting it locally. Is set during construction.
 	\\ \hline DBM2
 	&String path
-	&The path call used to refer to the database supporting REST in the domain server. 
+	&The path call used to refer to the database supporting \gls{REST} in the domain server. 
 	\\ \hline DBM3
 	&Client client
 	&A javax.ws.rs.client.Client, that is the entry point which to communicate with the Jersey \gls{API}.
