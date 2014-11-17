@@ -5,6 +5,7 @@
 % The different document parts are loaded using the 'subfiles' package.
 
 
+
 % special symbols
 \usepackage[T1]{fontenc}
 
@@ -127,7 +128,13 @@
 
 
 
+
+%=================UNCOMMENT WHEN NEEDED=========
+\renewcommand{\gls}[1]{ }
+
 \begin{document}
+\subfile{tex/glossary}
+
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
 
