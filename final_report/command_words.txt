@@ -5,8 +5,11 @@ This file contains a list of words that probably should be replaced with command
 cloudant
 !#altran
 #api
-#http
+!#http
 restful
 java
 Raspberry Pi (<- wording correct)
 
+
+
+ xindy -L english -C utf8 -I xindy -M document -t document.glg -o document.gls document.glo
