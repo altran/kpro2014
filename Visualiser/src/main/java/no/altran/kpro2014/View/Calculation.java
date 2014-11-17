@@ -27,14 +27,14 @@ public class Calculation {
         double normalizedLinkBudget;
         for(int i = 0; i < gateWayList.size(); i++){
             normalizedLinkBudget = (linkBudgets.get(i) - constants.minLinkBudget) / (constants.maxLinkBudget-constants.minLinkBudget);
-            if(normalizedLinkBudget <= 0.75){
+            if(normalizedLinkBudget <= 0.85){
                 double temp = constants.maxLinkBudget- linkBudgets.get(i);
                 temp = Math.max(temp, constants.minLinkBudget);
                 temp = Math.min(temp, constants.maxLinkBudget);
                 position = position.add(gateWayList.get(i).multiply(temp));
                 sum += temp;
             }
-            else if(normalizedLinkBudget > 0.75){
+            else if(normalizedLinkBudget > 0.85){
                 double temp = 0;
                 position = position.add(gateWayList.get(i).multiply(temp));
                 sum += temp;
