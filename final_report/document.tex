@@ -151,7 +151,6 @@
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
 
-
 \subfile{tex/abstract}
 
 \setcounter{page}{0}
@@ -159,9 +158,10 @@
 \subfile{tex/preface}
 \addcontentsline{toc}{section}{Preface}
 
-
 \newpage
 \subfile{tex/contents}
+
+
 
 \titleformat
 {\section} % command
@@ -179,6 +179,8 @@
 \vspace{0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
+
+
 
 \newpage
 \setcounter{page}{1}
@@ -243,6 +245,8 @@
 \newpage
 \subfile{tex/conclusion}
 
+
+
 \titleformat
 {\section} % command
 [display] % shape
@@ -259,6 +263,8 @@
 \rule{\textwidth}{0.3pt}
 ] % after-code
 
+
+
 \newpage
 \subfile{tex/bibliography}
 
@@ -266,6 +272,8 @@
 \vspace*{\fill}
 \part{Appendices}
 \vspace*{\fill}
+
+
 
 \titleformat
 {\section} % command
@@ -283,6 +291,8 @@
 \vspace{0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
+
+
 
 % start of appendixes
 \appendix
