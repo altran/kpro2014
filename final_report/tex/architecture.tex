@@ -84,7 +84,7 @@ To achieve the performance attribute we will let the database receive informatio
 As mentioned earlier, the server will not be worrying about any kind of user interference, status or UI. This makes the server more scalable.
 
 \subsubsection{Modifiability of Components}
-To ensure that the system can be easily changed we will use the abstract common services tactic. To abstract common services is when services that provide similar services is implemented once in a general module instead of many times in slightly different but more specific modules. When the common services are abstracted, modifications to them will need to be made to only one module instead of in each module where the services are used. This tactic also supports the prevention of ripple effects because the modifications to the modules that uses these services will not impact other modules.
+To ensure that the system can be easily changed we will use the abstract common services tactic \cite{Software Architecture}. To abstract common services is when services that provide similar services is implemented once in a general module instead of many times in slightly different but more specific modules. When the common services are abstracted, modifications to them will need to be made to only one module instead of in each module where the services are used. This tactic also supports the prevention of ripple effects because the modifications to the modules that uses these services will not impact other modules.
 
 \subsubsection{Portability of Components}
 Because the program code for both the central hub and the sensors is portable, the customer is not tied to a specific supplier. This improves the portability of the components.
