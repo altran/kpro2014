@@ -123,17 +123,36 @@
 \usepackage{etoolbox}
 \apptocmd{\thebibliography}{\csname phantomsection\endcsname\addcontentsline{toc}{section}{Bibliography}}{}{}
 \renewcommand\refname{Bibliography}
-%\apptocmd{\printglossaries}{\csname phantomsection\endcsname\addcontentsline{toc}{subsection}{\arabic{section}.\arabic{subsection} Glossary}}{}{}
 
-
+\titleformat
+{\section} % command
+[display] % shape
+{\bfseries\LARGE\itshape} % format
+{\ \\} % label
+{1ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+} % before-code
+[
+\vspace{0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
 
 \begin{document}
 \renewcommand{\thepage}{\roman{page}}
 \subfile{tex/titlepage}
 
+
 \subfile{tex/abstract}
 
 \setcounter{page}{0}
+\newpage
+\subfile{tex/preface}
+\addcontentsline{toc}{section}{Preface}
+
+
 \newpage
 \subfile{tex/contents}
 
