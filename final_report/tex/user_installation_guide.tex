@@ -15,6 +15,8 @@ Setting up the system involves setting up several individual system components. 
 
 \item Downloading the visualiser
 
+\item Configuring the system
+
 \item Running the database
 \item Running the script
 \item Running the visualiser
@@ -178,10 +180,38 @@ wlan0  Link encap:Ethernet  HWaddr 00:18:de:01:f9:8c
 \end{lstlisting}
 
 
+
 \subsection{Downloading the visualiser}\label{sec:downloading_the_visualiser}
 This section describes how to download the visualiser component as an executable jar file. The executable jar file can be downloaded by visiting the url
 \url{https://github.com/audunx/tdt4290g10/raw/Prototype_C%2B%2B/visualiser-1.0-SNAPSHOT-jar-with-dependencies.jar}
 \noindent in a browser, and save the file to a suitable location.
+
+
+
+\subsection{Configuring the system}
+Some of the different system components can be configured. These are the visualiser, and the central hub.
+
+\subsubsection{Configuring the central hub}
+The central hub and the sensors can be highly customized in how the central hub pulls data from the sensors. This configuration interface is accessed with a web browser, typing the IP address of the central hub into the address bar. Visiting the IP address should redirect the browser to a login screen. As before, use as login credentials ‘root’ as both username and password. A screenshot of the configuration interface is shown below.
+\begin{figure}[H]\caption{Configuring the central hub using a browser}
+	\centering
+	\includegraphics[width=\textwidth]{user_installation_guide/configure-central-hub.png}
+\end{figure}
+
+Using the configuration interface it is possible to configure the frequency with which sensors measure the different environment characteristics. It is also possible to configure several different kinds of thresholds for that specify how large a change should be before it is reported.
+
+\subsubsection{Configuring the visualiser}
+There are two aspects of the visualiser that can be configured. Notably, the unless the visualiser and the database are running on the same system, the visualiser needs to be configured with the IP address of the database. In addition, it is also possible to specify what the map view will use as maximum and minimum accepted values for the link budget. A link budget value exceeding a threshold will be set to the closest acceptable value. In order to configure the visualiser, a file named "visualiser.properties" should be created in the folder where the visualiser is run. This file may contain the link budget and database configuration elements as shown in the below example table:
+\begin{table}[H]
+	\centering
+	\ttfamily
+	\begin{tabular}{|ll|}\hline
+		minLinkBudget &= 40		\\
+		maxLinkBudget &= 100	\\
+		databaseIpAddress &= 192.168.1.8	\\\hline
+	\end{tabular}
+\end{table}
+
 
 
 \subsection{Starting the System Components}
@@ -230,30 +260,6 @@ $ java -jar visualiser-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 
-\subsection{System Configuration}
-Some of the different system components can be configured. These are the visualiser, and the central hub.
-
-
-\subsubsection{Configuring the central hub}
-The central hub and the sensors can be highly customized in how the central hub pulls data from the sensors. This configuration interface is accessed with a web browser, typing the IP address of the central hub into the address bar. Visiting the IP address should redirect the browser to a login screen. As before, use as login credentials ‘root’ as both username and password. A screenshot of the configuration interface is shown below.
-\begin{figure}[H]\caption{Configuring the central hub using a browser}
-	\centering
-	\includegraphics[width=\textwidth]{user_installation_guide/configure-central-hub.png}
-\end{figure}
-
-Using the configuration interface it is possible to configure the frequency with which sensors measure the different environment characteristics. It is also possible to configure several different kinds of thresholds for that specify how large a change should be before it is reported.
-
-
-\subsubsection{Configuring the visualiser}
-There is one small aspect of the visualiser that allows configuration: It is possible to specify what the map view will use as maximum and minimum accepted values for the link budget. A link budget value exceeding a threshold will be set to the closest acceptable value. In order to configure the link budget bounds, a file named "visualiser.properties" should be created in the folder where the visualiser is run. This file may contain the link budget configuration elements shown in the below example table:
-\begin{table}[H]
-	\centering
-	\ttfamily
-	\begin{tabular}{|rl|}\hline
-		minLinkBudget &= 40	\\
-		maxLinkBudget &= 100	\\\hline
-	\end{tabular}
-\end{table}
 
 
 \end{document}
