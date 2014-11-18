@@ -26,11 +26,11 @@ public class Calculation {
         double sum = 0;
         double normalizedLinkBudget;
         for(int i = 0; i < gateWayList.size(); i++){
-            normalizedLinkBudget = (linkBudgets.get(i) - constants.minLinkBudget) / (constants.maxLinkBudget-constants.minLinkBudget);
+            normalizedLinkBudget = (linkBudgets.get(i) - constants.MIN_LINK_BUDGET) / (constants.MAX_LINK_BUDGET-constants.MIN_LINK_BUDGET);
             if(normalizedLinkBudget <= 0.85){
-                double temp = constants.maxLinkBudget- linkBudgets.get(i);
-                temp = Math.max(temp, constants.minLinkBudget);
-                temp = Math.min(temp, constants.maxLinkBudget);
+                double temp = constants.MAX_LINK_BUDGET- linkBudgets.get(i);
+                temp = Math.max(temp, constants.MIN_LINK_BUDGET);
+                temp = Math.min(temp, constants.MAX_LINK_BUDGET);
                 position = position.add(gateWayList.get(i).multiply(temp));
                 sum += temp;
             }

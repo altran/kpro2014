@@ -262,7 +262,7 @@ public class MapView extends Application{
         final CheckBox cBox2 = new CheckBox("Lighting");
         final CheckBox cBox3 = new CheckBox("Humidity");
         final CheckBox cBox4 = new CheckBox("Pressure");
-        final Label linkBudgetLabel = new Label("link budget: " + constants.minLinkBudget + " - " + constants.maxLinkBudget);
+        final Label linkBudgetLabel = new Label("link budget: " + constants.MIN_LINK_BUDGET + " - " + constants.MAX_LINK_BUDGET);
         linkBudgetLabel.setTextFill(Color.WHITE);
         cBox1.setTextFill(Color.WHITE);
         cBox2.setTextFill(Color.WHITE);
