@@ -377,9 +377,13 @@ This approach makes sure that even if the sensors are behind a network with a fi
 
 The class diagram for this prototype, as shown in \figref{fig:ClassDiagramC++}, has been scaled down, and all the notes from the class diagram from the hardware-based prototype apply here as well. Furthermore, we have several new classes that are added into the implementation.
 
-The two classes appended to the visualiser are Constants and Calculation. The constants class serves as a loading point to make the code more modifiable. While it is not used in our prototype to its full extent, it can hold fields for any type of value and allows reading from a Constants.txt file. In our prototype, we only use it to calibrate values of the link budget. 
+There are two classes appended to the visualiser module: Constants and Calculation. The constants class serves as a loading point to make the code more modifiable. While it is not used in our prototype to its full extent, it can hold fields for any configurable visualiser property. It allows reading from a user-generated visualiser.properties file, and provides sensible defaults if no such file is provided. In our prototype, we use it to set the database IP address, and to calibrate values of the link budget.
 
 The calculation class is a helper class to the visualisation, which takes in the position of the gateways and the sensor numbers, and returns the position of the sensors on the screen as a 2D point. This is used to calculate the distance of the sensors from each gateway, using the formula method.
+
+In addition to the two classes in the visualiser, four classes were added to the database module: ManualAddDash7Data, Dash7Generator, WalledRoomGenerator and DefaultGenerator. The class ManualAddDash7Data is used to add mock-up data to a running database. It is executed as a stand-alone java program, and contains only static fields.
+
+The class ManualAddDash7Data relies on the three generator classes. The relationship between the generator classes is that Dash7Generator is an interface realised by WalledRoomGenerator and DefaultGenerator. The Dash7Generator interface defines the type of an object that generates strings of sensor data ready to be posted to the database. The class WalledRoomGenerator defines a generator object for generating sensor data simulating an environment with several isolated rooms, while the class DefaultGenerator defines a similar generator object for one room only.
 
 Like before, we have ignored getters and setters, constructors and other methods or fields that are not important. Methods still have xNr if there are similar parameter types in one method. Everywhere where Temperature, Humidity, Pressure and Lighting have the same fields and methods we wrote (Data type) instead.
 
