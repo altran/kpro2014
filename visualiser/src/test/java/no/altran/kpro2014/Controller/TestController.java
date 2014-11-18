@@ -10,7 +10,7 @@ import org.junit.Test;
 
 
 public class TestController{
-
+/*
     public ObservationGetter getter;
     public Controller controller;
 //    public final String domain = "http://iot.altran.com";
@@ -74,4 +74,5 @@ public class TestController{
         getter.postD7data(inputData4);
 
     }
+    */
 }

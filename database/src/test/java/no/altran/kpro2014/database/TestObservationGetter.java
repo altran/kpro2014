@@ -8,7 +8,7 @@ import org.junit.Test;
 
 
 public class TestObservationGetter{
-
+/*
     public ObservationGetter getter;
 //    public final String domain = "http://iot.altran.com";
     public final String domain = "http://localhost:4901";
@@ -66,4 +66,5 @@ public class TestObservationGetter{
         getter.postD7data(inputData4);
 
     }
+    */
 }
