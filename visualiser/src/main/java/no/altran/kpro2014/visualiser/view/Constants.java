@@ -23,28 +23,28 @@ public class Constants {
     private static final int MIN_LINK_BUDGET_DEFAULT = 20;
 
     public Constants(){
-        String propertiesFile = "/txt/Constants.txt";
+        String propertiesFile = "visualiser.properties";
+        boolean hasException = false;
+        InputStream is = null;
         Properties properties = new Properties();
+
+        // Initialise input stream
+        try {
+            is = new FileInputStream(propertiesFile);
+        } catch (FileNotFoundException e) {
+
+            // On FileNotFoundException, read properties from resources instead.
+            System.err.println("Warning: Could not find any configuration file! Falling back to defaults.");
+            is = getClass().getClassLoader().getResourceAsStream(propertiesFile);
+        }
+
+        // Load properties object
         try{
-            // Create input stream
-            InputStream is = getClass().getResourceAsStream(propertiesFile);
-
-            // Throw FileNotFoundException if resource does not exist
-            if(is == null) {
-                throw new FileNotFoundException("No resource found with name \"" + propertiesFile + "\"");
-            }
-
-            // Load properties object
             properties.load(is);
         }catch(IOException e){
 
-            // On FileNotFoundException or IOException, set the property values to default values.
-            System.err.println("An exception occurred while reading properties.");
-            e.printStackTrace();
-            System.err.println("WARNING: Properties were initialised to default values.");
-            MAX_LINK_BUDGET = MAX_LINK_BUDGET_DEFAULT;
-            MIN_LINK_BUDGET = MIN_LINK_BUDGET_DEFAULT;
-            return;
+            // Fail on IOException. We're supposed to have an input stream.
+            throw new RuntimeException("An exception occurred while reading properties.");
         }
 
         // Read property values from file
