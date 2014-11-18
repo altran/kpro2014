@@ -6,6 +6,7 @@ import no.altran.kpro2014.database.Observation;
 import no.altran.kpro2014.database.ObservationGetter;
 import no.altran.kpro2014.visualiser.model.RoomModel;
 import no.altran.kpro2014.visualiser.model.SensorModel;
+import no.altran.kpro2014.visualiser.view.Constants;
 
 import java.util.List;
 import java.util.Timer;
@@ -23,13 +24,14 @@ public class Controller {
     private Timer timer;
     private TimerTask timerTask;
 //    private final String domain = "http://localhost:4901";
-    private final String domain = "http://localhost:4901";
+    private final String domain;
  //   private final String domain = "http://iot.altrancloud.com/";
     private final String path = "iot/observe";
 
 
     public Controller(){
         this.roomModel = new RoomModel();
+        domain = "http://" + new Constants().DATABASE_IP_ADDRESS + ":4901";
         this.getter = new ObservationGetter(domain, path);
         addGateways();
         addSensors();

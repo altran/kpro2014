@@ -17,10 +17,7 @@ public class Constants {
     // Configured property values from file
     public final int MAX_LINK_BUDGET;
     public final int MIN_LINK_BUDGET;
-
-    // Default property values
-    private static final int MAX_LINK_BUDGET_DEFAULT = 150;
-    private static final int MIN_LINK_BUDGET_DEFAULT = 20;
+    public final String DATABASE_IP_ADDRESS;
 
     public Constants(){
         String propertiesFile = "visualiser.properties";
@@ -50,5 +47,6 @@ public class Constants {
         // Read property values from file
         MIN_LINK_BUDGET = Integer.parseInt(properties.getProperty("minLinkBudget"));
         MAX_LINK_BUDGET = Integer.parseInt(properties.getProperty("maxLinkBudget"));
+        DATABASE_IP_ADDRESS = properties.getProperty("databaseIpAddress");
     }
 }
