@@ -116,9 +116,9 @@ In our brainstorming session for possible use cases we concluded that the best u
 
 \newpage
 \subsubsection{Temperature Functional Requirements}
-We will make a UI for the whole system, one of the windows will be temperature exclusively. That window will display information about average temperature in the room, both current and from the log. The system will also be capable of showing individual sensor data.
+We will make a user interface for the whole system, one of the windows will be temperature exclusively. That window will display information about average temperature in the room, both current and from the log. The system will also be capable of showing individual sensor data.
 
-From the UI one can change the desired temperature. We will provide a default profile at 25 degrees in the room, but it will be changeable from the UI to any reasonable (15-35) temperature. The system then will use this data to control all temperature adjustment units like air conditioning or heaters to reach that specific temperature.
+From the user interface one can change the desired temperature. We will provide a default profile at 25 degrees in the room, but it will be changeable from the user interface to any reasonable (15-35) temperature. The system then will use this data to control all temperature adjustment units like air conditioning or heaters to reach that specific temperature.
 
 \begin{table}[H]
 \caption{Temperature Functional Requirements}
@@ -131,7 +131,7 @@ From the UI one can change the desired temperature. We will provide a default pr
 	&Priority
 	&Risks if not implemented
 	\\ \hline 1.1
-	&UI for temperature
+	&User interface for temperature
 	&Show the temperature in a table
 	&VH
 	&VH
@@ -176,7 +176,7 @@ From the UI one can change the desired temperature. We will provide a default pr
 
 \subsubsection{Lighting Functional Requirements}
 
-The requirement for lighting is much like the requirement for temperature. It will use the same template with different data. If we have enough time, we are planning to expand lighting UI with possibility to show each light with percent scale and half closed curtains, depending on the users preference.
+The requirement for lighting is much like the requirement for temperature. It will use the same template with different data. If we have enough time, we are planning to expand the user interface lighting configuration by adding the possibility of showing each light with percent scale and half closed curtains, depending on the users preference.
 
 The system should wire itself to the light control of the room (this will require a central light control somewhere in the room). The system can then use the central control to make lighting in the room as close to user preference as possible. This means that system will be able to recognize each light or any sort of curtains or blinds and adjust them all individually. If time and technology permits we are planning to expand on this so that each light unit can do more than just turn on or off. We want the light to be partially on and curtains or blinds partially down with a certain angle.
 
@@ -186,7 +186,7 @@ The system should wire itself to the light control of the room (this will requir
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Name
 	&Description
 	&Priority
@@ -236,20 +236,20 @@ The system should wire itself to the light control of the room (this will requir
 \end{table}
 
 \subsubsection{Humidity Functional Requirements}
-Humidity does not change drastically in a room, and theres not many offices with humidity changing units built in, therefore we do not think humidity will be a big factor. Still humidity does affect working performance and one can find humidifiers, which is why we put a log to show case if anything needs to be changed. 
+Humidity does not change drastically in a room, and there is not many offices with humidity changing units built in, therefore we do not think humidity will be a big factor. Still humidity does affect working performance and one can find humidifiers, which is why we put a log to show case if anything needs to be changed. 
 
 \begin{table}[H]
 \caption{Humidity Functional Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Name
 	&Description
 	&Priority
 	&Risks if not implemented
 	\\ \hline 3.1
-	&UI for humidity
+	&User interface for humidity
 	&A value showing average humidity
 	&VH
 	&VH
@@ -269,20 +269,20 @@ Humidity does not change drastically in a room, and theres not many offices with
 
 \newpage	
 \subsubsection{Noise Functional Requirements}
-In an ideal situation our system should be able to have control over doors and windows as well, which makes it possible to control noise level. In our prototype we are probably not going to implement that function. However, the system will be able to record the noise level over the room and then save it in the database. If the noise level is above a certain level, there will be a warning on the UI and it will be marked in the log.
+In an ideal situation our system should be able to have control over doors and windows as well, which makes it possible to control noise level. In our prototype we are probably not going to implement that function. However, the system will be able to record the noise level over the room and then save it in the database. If the noise level is above a certain level, there will be a warning on the user interface and it will be marked in the log.
 
 	\begin{table}[H]
 	\caption{Noise Functional Requirements}
 	\centering
 	\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Name
 	&Description
 	&Priority
 	&Risks if not implemented
 	\\ \hline 4.1
-	&UI for noise
+	&User interface for noise
 	&Show the average noise level in the room
 	&VH
 	&H
@@ -303,7 +303,7 @@ In an ideal situation our system should be able to have control over doors and w
 	&L
 	\\ \hline 4.1.4
 	&Warning system
-	&There’ll be a warning both on the UI and in the log
+	&There’ll be a warning both on the user interface and in the log
 	&M
 	&M
 	\\ \hline 4.2
@@ -324,16 +324,16 @@ Pressure in a room should stay stable all the time, but under rare conditions it
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Name
 	&Description
 	&Priority
 	&Risks if not implemented
 	\\ \hline 5.1
-	&UI for pressure
+	&User interface for pressure
 	&An GUI for showing pressure
 	&M
-	&M
+	&
 	\\ \hline 5.1.1
 	&Showing pressure single device
 	&Select one device, and show its current pressure
@@ -353,20 +353,20 @@ The sensors contain some possibility to track in a 2D or 3D environment. The sys
 
 From what we know from the devices, this capability may be limited, or not useful at all, so we have given it a low priority.
 
-If we do implement tracking for future use, the system should contain a UI with a possibility for the user to add the environment map. It will display the position of employees with the tracking device and give them a warning if they enter a restricted area.
+If we do implement tracking for future use, the system should contain a user interface with a possibility for the user to add the environment map. It will display the position of employees with the tracking device and give them a warning if they enter a restricted area.
 
 \begin{table}[H]
 \caption{Tracking Functional Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Name
 	&Description
 	&Priority
 	&Risks if not implemented
 	\\ \hline 6.1
-	&UI for tracking
+	&User interface for tracking
 	&A GUI for showing  tracking
 	&L
 	&L
@@ -417,7 +417,7 @@ There will be a database where the data collected from the sensors is stored. Th
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Name
 	&Description
 	&Priority
@@ -460,7 +460,7 @@ From our first experience with the sensors we found that they are not really rel
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Name
 	&Description
 	&Priority
@@ -499,17 +499,17 @@ From our first experience with the sensors we found that they are not really rel
 \end{tabularx}
 \end{table}
 
-\subsubsection{Ad-Hoc Requirements}
+\subsubsection{Ad-hoc Requirements}
 Ad-hoc is a possibility when there are no base stations accessible to the sensors. Instead of relying on the base station, the sensors need to be able to relay data between themselves and get it to a location where it is possible to relay it to the database. Some calculations will be needed to be done one the sensors and this may greatly affect battery life.
 
 In a smart room environment a base station is the best choice, so we have given this solution a low priority. 
 
 \begin{table}[H]
-\caption{Ad-Hoc Requirements}
+\caption{Ad-hoc Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	Req.nr
+	Req no
 	&Unit
 	&Description
 	&Priority
