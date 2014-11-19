@@ -114,6 +114,7 @@ In our brainstorming session for possible use cases we concluded that the best u
 	\end{itemize}
 \end{itemize}
 
+\newpage
 \subsubsection{Temperature Functional Requirements}
 We will make a UI for the whole system, one of the windows will be temperature exclusively. That window will display information about average temperature in the room, both current and from the log. The system will also be capable of showing individual sensor data.
 
@@ -122,9 +123,9 @@ From the UI one can change the desired temperature. We will provide a default pr
 \begin{table}[H]
 \caption{Temperature Functional Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
-	\\ \hline Req.nr
+	Req.nr
 	&Name
 	&Description
 	&Priority
@@ -183,7 +184,7 @@ The system should wire itself to the light control of the room (this will requir
 \begin{table}[H]
 \caption{Lighting Functional Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Name
@@ -240,7 +241,7 @@ Humidity does not change drastically in a room, and theres not many offices with
 \begin{table}[H]
 \caption{Humidity Functional Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Name
@@ -263,16 +264,17 @@ Humidity does not change drastically in a room, and theres not many offices with
 	&M
 	&M
 	\\ \hline 
-	\end{tabularx}
-	\end{table}
+\end{tabularx}
+\end{table}
 
-	\subsubsection{Noise Functional Requirements}
-	In an ideal situation our system should be able to have control over doors and windows as well, which makes it possible to control noise level. In our prototype we are probably not going to implement that function. However, the system will be able to record the noise level over the room and then save it in the database. If the noise level is above a certain level, there will be a warning on the UI and it will be marked in the log.
+\newpage	
+\subsubsection{Noise Functional Requirements}
+In an ideal situation our system should be able to have control over doors and windows as well, which makes it possible to control noise level. In our prototype we are probably not going to implement that function. However, the system will be able to record the noise level over the room and then save it in the database. If the noise level is above a certain level, there will be a warning on the UI and it will be marked in the log.
 
 	\begin{table}[H]
 	\caption{Noise Functional Requirements}
 	\centering
-	\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+	\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Name
@@ -305,7 +307,7 @@ Humidity does not change drastically in a room, and theres not many offices with
 	&M
 	&M
 	\\ \hline 4.2
-	&Countermeasures
+	&Counter-measures
 	&System will counter the noise level if possible (close windows, doors)
 	&L
 	&L
@@ -313,13 +315,14 @@ Humidity does not change drastically in a room, and theres not many offices with
 \end{tabularx}
 \end{table}
 
+\newpage
 \subsubsection{Pressure Functional Requirements}
 Pressure in a room should stay stable all the time, but under rare conditions it might change and those changes are often unnoticeable. If we change the environment to some dangerous areas then the pressure might be a factor to be worried about, and in such area the pressure needs to be monitored and the data should be saved and shown later.
 
 \begin{table}[H]
 \caption{Pressure Functional Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Name
@@ -355,7 +358,7 @@ If we do implement tracking for future use, the system should contain a UI with 
 \begin{table}[H]
 \caption{Tracking Functional Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Name
@@ -412,7 +415,7 @@ There will be a database where the data collected from the sensors is stored. Th
 \begin{table}[H]
 \caption{Database Interaction Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Name
@@ -448,13 +451,14 @@ There will be a database where the data collected from the sensors is stored. Th
 \end{tabularx}
 \end{table}
 
+\newpage
 \subsubsection{Self Maintenance Requirements}
 From our first experience with the sensors we found that they are not really reliable without any external protection. Therefore it is a possibility that they might be broken during the deployment time. To counter that we are adding a self maintenance function, which will find and report any unusual activities of the sensor that might indicate a failure in the hardware. We also think that if there are many sensors in a room, then one single faulty device does not really matter and should therefore be ignored to reduce the overall maintenance from the user side.
 
 \begin{table}[H]
 \caption{Self Maintenance Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Name
@@ -503,7 +507,7 @@ In a smart room environment a base station is the best choice, so we have given 
 \begin{table}[H]
 \caption{Ad-Hoc Requirements}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|l|X|}
+\begin{tabularx}{\textwidth}{|l|L{2cm}|X|l|L{2cm}|}
 	\hline
 	Req.nr
 	&Unit
