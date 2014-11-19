@@ -5,7 +5,7 @@
 \label{test_plan_sprint_4}
 
 \subsubsection{Unit testing}
-We added two new units to the visualiser, a calculation unit and a constant unit. The calculation unit will deal with the mathematics behind the positioning, and the constant unit will be the calibration unit for administrative use. An entire new module was created, that can generate \gls{DASH7} data both manually and randomly. We have also changed the sensorModel and our main visualizer, the mapView. They will all be tested independently during the development. 
+We added two new units to the visualiser, a calculation unit and a constant unit. The calculation unit will deal with the mathematics behind the positioning, and the constant unit will be the calibration unit for administrative use. An entire new module was created, that can generate \gls{DASH7} data both manually and randomly. In the visualiser module we have also changed the class SensorModel and the class MapView. They will all be tested independently during the development. 
 
 Acceptance level for unit testing is a full coverage of states and it is required for all members to have above 60\% line test coverage for all the code.
 
@@ -37,7 +37,7 @@ Acceptance level for unit testing is a full coverage of states and it is require
 	\\ \hline MapView
 	&The main GUI visualising everything.
 	&Sensor data.
-	&UI for animation.
+	&User interface for animation.
 	\\ \hline 
 \end{tabularx}
 \end{table}
@@ -45,7 +45,7 @@ Acceptance level for unit testing is a full coverage of states and it is require
 \subsubsection{Integration test}
 The integration test for sprint 4 is mostly concerned with the visualizer and the database. For the database we have a new module which is outside our initial architecture, the \gls{DASH7} data generator. We have to make sure the data generated is similar to what we will find in the real world. Creating mock-up data proved to be more difficult than we originally thought. The data has to be created for each sensor on each gateway, which means quite a lot of data needs to be generated, as each sensor needs to have data in each gateway. 
 
-The new module for the visualizer is the calculation unit. We need two mathematical formulas, one for placing multiple gateways in a perfect geometric shape, and one for calculating the position of the sensors. These two formulas must work with the rest of the animation framework we had already. Furthermore, we need to integrate a .txt document for admin to configure calibration. All of these must be integrated into our original prototype, created before the fourth sprint. Note that these modules are smaller in scale than the previous ones.
+The new module for the visualizer is the calculation unit. We need two mathematical formulas, one for placing multiple gateways in a perfect geometric shape, and one for calculating the position of the sensors. These two formulas must work with the rest of the animation framework we had already. Furthermore, we need to integrate a text document that an administrator can use to calibrate the position calculation. All of these must be integrated into our original prototype, created before the fourth sprint. Note that these modules are smaller in scale than the previous ones.
 
 \paragraph{Modules that need to be integrated} \ \\
 \begin{itemize}
@@ -71,7 +71,7 @@ The new module for the visualizer is the calculation unit. We need two mathemati
 	Constants to visualizer
 	\begin{itemize}
 		\item
-		The visualizer will take the constants configured by the administrator through a .txt document.
+		The visualizer will take the constants configured by the administrator through a text document.
 	\end{itemize}
 	\item
 	\gls{DASH7} data generator to database
@@ -109,7 +109,7 @@ In this section we present the function tests in a table
 	\\ \hline Calibration
 	&T10
 	&5.2.5
-	&The administrator is able to calibrate sensor movement according to the situation. The calibration data is stored in a separate .txt file.
+	&The administrator is able to calibrate sensor movement according to the situation. The calibration data is stored in a separate text file.
 	\\ \hline 
 \end{tabularx}
 \end{table}
@@ -123,7 +123,7 @@ In this section we present the function tests in a table
 	\hline
 	Description
 	&Visualise a situation with three gateways and five sensors where the link budget is used to place the sensors to begin with. There will be no change of link budget during the test, this test is aimed at testing the placing formula.
-	\\ \hline Enviroment
+	\\ \hline Environment
 	&Runtime
 	\\ \hline Test cases involved
 	&T8, T9
@@ -146,7 +146,7 @@ In this section we present the function tests in a table
 	\hline
 	Description
 	&Test the movement of multiple sensors with multiple gateways at fixed position. The data should be manually added for this test, to ensure movement is correct.
-	\\ \hline Enviroment
+	\\ \hline Environment
 	&Runtime
 	\\ \hline Test cases involved
 	&T7,T9
@@ -169,7 +169,7 @@ In this section we present the function tests in a table
 	\hline
 	Description
 	&The random data generator will generate data for an environment with six gateways and multiple sensors, five to begin with. Furthermore we will simulate a wall in the middle of the visualiser, where the link budget will experience heavy interference. Heavy interference translates into a larger link budget.
-	\\ \hline Enviroment
+	\\ \hline Environment
 	&Runtime
 	\\ \hline Test cases involved
 	&T7, T8, T9
@@ -191,17 +191,17 @@ In this section we present the function tests in a table
 \begin{tabularx}{\textwidth}{|L{3cm}|X|}
 	\hline
 	Description
-	&Calibration of the link budget will be done through a configuration .txt file. The sensor movement is to be scalable for different calibrations. A normal configuration follows the calibration of 40-100, and regards being out of range when it is higher than $\frac{3}{4}$ of the maximum. In animation this is reflected by placing the sensor at the edge of the trilateration.
-	\\ \hline Enviroment
+	&Calibration of the link budget will be done through a configuration file. The sensor movement is to be scalable for different calibrations. A normal configuration follows the calibration of 40-100, and regards being out of range when it is higher than $\frac{3}{4}$ of the maximum. In animation this is reflected by placing the sensor at the edge of the trilateration.
+	\\ \hline Environment
 	&Runtime
 	\\ \hline Test cases involved
 	&T10
 	\\ \hline Dependency
 	&Test scenario 7
 	\\ \hline Input
-	&A .txt file that takes in certain numbers for calibration
+	&A text file that takes in certain numbers for calibration
 	\\ \hline Output
-	&The sensor link budget will be calibrated by the .txt file
+	&The sensor link budget will be calibrated by the text file
 	\\ \hline Acceptance
 	&The sensor will move according to the link budget correctly.
 	\\ \hline 
