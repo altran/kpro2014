@@ -74,7 +74,7 @@ There will be a database where the data collected from the sensors are stored. T
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2.5cm}|X|}
 \hline
-Req. nr
+Req. No.
 &Name
 &Description
 \\ \hline 1.1
@@ -95,12 +95,12 @@ The main task of the central hub is to gather the information and send it to the
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2.5cm}|X|}
 \hline
-Req. nr
+Req. No
 &Name
 &Description
 \\ \hline 2.1
 &Request data from sensor
-&The sensor data will be collected by the server, this is done by central hub reuqesting data from the sensors every few secounds (the time is set from the sensor side). The data format is in raw data format.
+&The sensor data will be collected by the server, this is done by central hub requesting data from the sensors every few seconds (the time is set from the sensor side). The data format is in raw data format.
 \\ \hline 2.2
 &Store data
 &The central hub will store information it has pooled from the sensors into the database.
@@ -115,19 +115,19 @@ Req. nr
 \end{table}
 
 \subsubsection{Sensor Requirement}
-The sensor is provided by the customer. We do not know how the sensor interract with enviroment to get the data, but it does not concers us. We will focus on how sensor interracts with central hub. Still the sensor is the basic of the system and gathering those data is a must have requirement in order to make the whole system work.
+The sensor is provided by the customer. We do not know how the sensor interact with environment to get the data, but it does not concern us. We will focus on how the sensors interact with central hub. Still the sensor is the basic of the system and gathering those data is a must have requirement in order to make the whole system work.
 
 \begin{table}[H]
 \caption{Sensor Requirements}
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2.5cm}|X|}
 \hline
-Req. nr
+Req. No.
 &Name
 &Description
 \\ \hline 3.1
 &Gathering data
-&The sensor will record 4 types enviromental data, temperature ,pressure , humididty and lighting. Those 4 will then be saved until next recording.
+&The sensor will record 4 types environmental data, temperature ,pressure , humidity and lighting. Those 4 will then be saved until next recording.
 \\ \hline 3.2
 &Send data
 &The sensor will send data to the central hub if requested, the format will be in raw data format.  
@@ -143,7 +143,7 @@ The visualiser is the main focus of the project. As a result of that this is als
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2.5cm}|X|}
 \hline
-Req. nr
+Req. No.
 &Name
 &Description
 \\ \hline 4.1
@@ -151,7 +151,7 @@ Req. nr
 &The visualiser will be able to pull data from the database in regular intervals, this timer is set from the visualiser side.
 \\ \hline 4.2
 &Show the data on the GUI
-&The data will be displayed inside a window by different elements that would reflect data status. For example there will be a color showcasing temperature and that color should turn more red if the temperature increases, to blue if temeprature decreases.
+&The data will be displayed inside a window by different elements that would reflect data status. For example there will be a colour showcasing temperature and that colour should turn more red if the temperature increases, to blue if the temperature decreases.
 \\ \hline 4.2.1
 &Present data in a table
 &The data collected will be placed in a table with the data type on the right, and the value on the left.
@@ -171,7 +171,7 @@ Req. nr
 \newpage
 
 \subsubsection{Table View}
-This is the view where all sensors and the data is showcased in a table. The sensor number can be seen on the left and the data from the sensors can be seen in the appropriate row. If the user prefers less information he can click on the checkbox on the right to hide information that is unwanted.
+This is the view where all sensors and the data is showcased in a table. The sensor number can be seen on the left and the data from the sensors can be seen in the appropriate row. If the user prefers less information he can click on the check box on the right to hide information that is unwanted.
 
 \begin{figure}[H]
 \centering
@@ -182,7 +182,7 @@ This is the view where all sensors and the data is showcased in a table. The sen
 \newpage
 
 \subsubsection{Map View}
-The map view will make an illustration of the room. In the real model the data will be shown in the form of image manipulation, not a function in the mockup program. If position can be tracked we will do so, otherwise we must find another way to show the data in a 2D map.
+The map view will make an illustration of the room. In the real model the data will be shown in the form of image manipulation, not a function in the mock-up program. If position can be tracked we will do so, otherwise we must find another way to show the data in a 2D map.
 
 \begin{figure}[H]
 \centering
@@ -193,7 +193,7 @@ The map view will make an illustration of the room. In the real model the data w
 \newpage
 \subsection{Sprint 4 Requirements}
 \label{requirements_sprint_4}
-After finishing sprint 3 and reviewing the final prototype with the customer, he had some input on things that we should change. Although we did not have much time we left, we took the challenge and added new requirements to our program. The requirements were mostly concerned with visualisation of multiple gateways and the use of link budget to visualise sensor position. For each sensor and gateway pair we have a link budget. The link budget works like a ping system. It accounts for losses and gains of radio signals through a medium, and reports that in a unit of value. We have found out that the link budget varies in between forty and one hundred. The higher the link budget, the theoretically larger the distance between it and the central hub. By having multiple gateways, at least three, we are able to trilaterate the position of the sensor in the visualiser.
+After finishing sprint 3 and reviewing the final prototype with the customer, he had some input on things that we should change. Although we did not have much time we left, we took the challenge and added new requirements to our program. The requirements were mostly concerned with visualisation of multiple gateways and the use of link budget to visualise sensor position. For each sensor and gateway pair we have a link budget. The link budget works like a ping system. It accounts for losses and gains of radio signals through a medium, and reports that in a unit of value. We have found out that the link budget varies in between forty and one hundred. The higher the link budget, the theoretically larger the distance between it and the central hub. By having multiple gateways, at least three, we are able to use trilateration to position the sensors in the visualiser.
 
 Below we will represent these new requirements, first as a top-down representation, and then as a table.
 
@@ -235,7 +235,7 @@ Below we will represent these new requirements, first as a top-down representati
 \centering
 \begin{tabularx}{\textwidth}{|l|L{2.5cm}|X|}
 \hline
-Req. nr
+Req. No.
 &Name
 &Description
 \\ \hline 5.1
@@ -261,7 +261,7 @@ Req. nr
 &If the sensor moves too far away from a gateway the signal should reflect that.
 \\ \hline 5.2.5
 &Link budget calibration
-&The administrator can configure a .txt file containing scaling for link budget, meaning how large the link budget needs to be before we consider the link budget as out of range.
+&The administrator can configure a text file containing scaling for link budget, meaning how large the link budget needs to be before we consider the link budget as out of range.
 \\ \hline 5.3
 &Random data generator
 &Make random data generator for the database
