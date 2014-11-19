@@ -31,11 +31,11 @@ public class TestClient {
 
     public static void main(String[] args){
 //        TestClient test = new TestClient();
-        ObservationGetter getter = new ObservationGetter("http://iot.altrancloud.com", "iot/observe");
+        ObservationGetter getter = new ObservationGetter("http://localhost:4901", "iot/observe");
 //        test.postDummyData(getter);
-        System.out.println(getter.getAllSensorIDs());
-        System.out.println(getter.getMostRecentObservation("001BC50C71000017"));
-        System.out.println(getter.getMostRecentObservation("001BC50C7100001F"));
+//        getter.setWriteToFile(true);
+        System.out.println(getter.getMostRecentObservation("0", "localhost"));
+
         //curl -X POST -d @radiosensor1.txt http://localhost:4901/iot/observe/radiosensor
     }
 }
