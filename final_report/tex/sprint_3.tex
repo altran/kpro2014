@@ -5,7 +5,7 @@
 \section{Sprint 3}
 
 \subsection{Introduction}
-The following chapter includes all the documentation regarding the third sprint. This sprint will last 10 days and will take place from October 22 to October 31. The team will spend most of the time on integrating all the modules. testing and improving current code.
+The following chapter includes all the documentation regarding the third sprint. This sprint will last 10 days and will take place from October 22 to October 31. The team will spend most of the time on integrating all the modules. Testing and improving current code.
 
 \subsection{Sprint Planning}
 Our main goals in this sprint has been focused on integration of modules, testing, and improving the visualiser. We plan on using a total of 124 hours for this sprint for implementation and 150 hours for documentation. We have a total of five work days planned for this sprint, which translates to 40 hours per person and with 7 group members it totals to 280 hours of possible work time during the sprint. Just like in the past sprints, we will most likely overestimate the time to work. We feel that it is better to overestimate than underestimate the time taken, as we are able to have a time buffer, in case we encounter any problems.
@@ -43,17 +43,17 @@ Below is the sprint backlog in the form of a table, listing all the tasks we pla
 	&8
 	&6
 	\\ \hline 1.2
-	&Improve UI
+	&Improve user interface
 	&H
 	&8
 	&7
 	\\ \hline 2.1
-	&Integration of Sensors and Central Hub
+	&Integration of sensors and Central hub
 	&H
 	&10
 	&4
 	\\ \hline 2.2
-	&Integration of Central hub and the Database
+	&Integration of Central hub and the database
 	&H
 	&10
 	&5
@@ -117,7 +117,7 @@ This section covers the tests executed in this sprint, also including tests from
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 	\hline
-	Test nr
+	Test no
 	&1
 	\\ \hline Requirements
 	&1.1, 2.1, 2.2, 2.3
@@ -144,12 +144,12 @@ This section covers the tests executed in this sprint, also including tests from
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 	\hline
-	Test nr
+	Test no
 	&2
 	\\ \hline Requirements
 	&2.4
 	\\ \hline Test name
-	&Hotjoin
+	&Hot join
 	\\ \hline Environment
 	&Runtime
 	\\ \hline Description
@@ -171,7 +171,7 @@ This section covers the tests executed in this sprint, also including tests from
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 	\hline
-	Test nr:
+	Test no
 	&3
 	\\ \hline Requirements
 	&1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 4.1, 4.2.1, 4.2.2, 4.2.3
@@ -180,15 +180,15 @@ This section covers the tests executed in this sprint, also including tests from
 	\\ \hline Environment
 	&Runtime
 	\\ \hline Description
-	&The data is correctly gathered from the sensors, stored in the database and shown in the visualiser in the form we intended to show it in. The framerate should also be stable to the naked eye.
+	&The data is correctly gathered from the sensors, stored in the database and shown in the visualiser in the form we intended to show it in. The frame rate should also be stable to the naked eye.
 	\\ \hline Input
 	&Environmental data
 	\\ \hline Output
 	&GUI animation
 	\\ \hline Acceptance
-	&When the data is correct and the framerate is acceptable
+	&When the data is correct and the frame rate is acceptable
 	\\ \hline Result
-	&Everything was correct and the framerate was stable.
+	&Everything was correct and the frame rate was stable.
 	\\ \hline 
 \end{tabularx}
 \end{table}
@@ -198,7 +198,7 @@ This section covers the tests executed in this sprint, also including tests from
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
     \hline
-	Test nr:
+	Test no
 	&4
     \\ \hline Requirements
 	&1.1, 1.2, 2.1, 2.2, 2.3, 3.1, 3.2, 4.1, 4.2
@@ -206,7 +206,7 @@ This section covers the tests executed in this sprint, also including tests from
     &24-hour test
     \\ \hline Description
     &This is a system test that lasts for 24 hours. The central hub is set up with sensors to measure changes in the environment, the database will pull data from the sensors, and the visualiser will pull data from the database and display them in the map view. To ensure that the sensor batteries will last, the sensors are powered through mini-USB cables.
-    \\ \hline Enviroment
+    \\ \hline Environment
     &Runtime
     \\ \hline Input
     &Environmental data
@@ -226,7 +226,7 @@ The tests have provided us with positive results. As can be seen from the first 
 \subsection{Sprint Results}
 During this sprint we finished all of our requirements \sectionfullref{requirements} and most of our test scenarios in \sectionfullref{test_plan}. We made the system work from the sensors to the visualiser and the system is believed to be mostly bug free as no bugs were encountered during tests. Because most of the program is easy to modify, we managed to finish this quickly, and any future development upon the system should be easier to implement.
 
-A screenshot of our system working can be seen in \figfullref{fig:map_view_3}. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualiser more pleasing to look at. Also, we are pulling data directly from the database using an ip connection. The data is displayed in the same way as before. 
+A screenshot of our system working can be seen in \figfullref{fig:map_view_3}. All of the sensors have four elements and they circle around the central hub in different speeds. We made the background black to make it easier to see the changes, and added some bloom effect to make the visualiser more pleasing to look at. Also, we are pulling data directly from the database using an IP connection. The data is displayed in the same way as before. 
 
 \begin{figure}
 	\centering
