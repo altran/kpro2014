@@ -96,11 +96,11 @@ As we can see from the backlog, we have managed to finish our implementation ahe
 	\\ \hline Description:
 	&A script will put random and complete sensor data into the database to serve as our mock-up data. The mock-up data should be equivalent in scope to the data that could be gathered by the sensors.
 	\\ \hline Input:
-	&Random dash 7 data input
+	&Random \gls{DASH7} data input
 	\\ \hline Output:
 	&The database will have multiple mock-up sensors with their own data
 	\\ \hline Acceptance:
-	&The dash 7 data input must be correct in it’s scope and it must be stored correctly.
+	&The \gls{DASH7} data input must be correct in it’s scope and it must be stored correctly.
 	\\ \hline Result:
 	&The data is generated and stored correctly.	
 	\\ \hline 
@@ -243,7 +243,7 @@ The screenshots of our system working can be seen in \figref{fig:sprint4_1} and 
 For sprint 4 it was required that we display data from more than one gateway in the new prototype map view, and that we simulate the environment of two rooms separated by a wall blocking all signals. As the hardware supplied by \gls{Altran} only included one gateway, it was necessary to develop methods for generation of mock-up data. The main challenge in this was to generate correct link budget data for the different gateways as sensors were moved between the rooms. In addition, we also needed to associate gateways with the correct rooms in both the data generation module and the visualiser module. Several new classes were created to solve the problem, the most important listed below.
 
 \subsubsection{ManualAddDash7Data}
-This class allows a user to post DASH7 observations to the database through the console. It has several different modes, most notably a mode that generates and posts data automatically, simulating the multi-room environment. Also included is a manual mode where the user types in all measurement values explicitly, giving the user full control.
+This class allows a user to post \gls{DASH7} observations to the database through the console. It has several different modes, most notably a mode that generates and posts data automatically, simulating the multi-room environment. Also included is a manual mode where the user types in all measurement values explicitly, giving the user full control.
 
 \subsubsection{WalledRoomDash7Generator}
 This is the class used to simulate the multi-room environment. The constructor of the class needs to be passed a number of parameters, the number of gateways, sensors, and rooms among them. Through the interface the class provides the function nextObservation() from the Dash7Generator interface to generate observations. The link budget of each observation is generated in a pseudo-random fashion, using sensor id, gateway id, and system time as seeds. It also compares the room of the sensor and the gateway; if the rooms are different the link budget is increased, to simulate a decrease in signal strength. Apart from the link budget, the other measurements are generated using as seeds the system time and sensor id only. 

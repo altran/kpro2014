@@ -2,15 +2,17 @@ This file contains a list of words that probably should be replaced with command
 !#ntnu
 !#sql
 !#json
-cloudant
+!#cloudant
 !#altran
-#api
+!#api
 !#http
 restful
 !#REST
-#java
-Raspberry Pi (<- wording correct)
-
+!#java
+!#Raspberry Pi (<- wording correct)
+!#JavaFX
+!#DASH7
+!#Android
 
 
  xindy -L english -C utf8 -I xindy -M document -t document.glg -o document.gls document.glo

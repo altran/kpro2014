@@ -5,7 +5,7 @@
 \label{test_plan_sprint_4}
 
 \subsubsection{Unit testing}
-We added two new units to the visualiser, a calculation unit and a constant unit. The calculation unit will deal with the mathematics behind the positioning, and the constant unit will be the calibration unit for administrative use. An entire new module was created, that can generate dash7 data both manually and randomly. We have also changed the sensorModel and our main visualizer, the mapView. They will all be tested independently during the development. 
+We added two new units to the visualiser, a calculation unit and a constant unit. The calculation unit will deal with the mathematics behind the positioning, and the constant unit will be the calibration unit for administrative use. An entire new module was created, that can generate \gls{DASH7} data both manually and randomly. We have also changed the sensorModel and our main visualizer, the mapView. They will all be tested independently during the development. 
 
 Acceptance level for unit testing is a full coverage of states and it is required for all members to have above 60\% line test coverage for all the code.
 
@@ -26,8 +26,8 @@ Acceptance level for unit testing is a full coverage of states and it is require
 	&Contains a list for the calibration of data for the administrator
 	&A .txt document containing constants.
 	&Use constants to calibrate the sensors.
-	\\ \hline Generate dash 7 data
-	&Generate dash 7 data and store it into the database. This can be done both manually and randomly. 
+	\\ \hline Generate \gls{DASH7} data
+	&Generate \gls{DASH7} data and store it into the database. This can be done both manually and randomly. 
 	&A number of gateways and a number of sensors.
 	&All sensors will have data for each and every gateway.
 	\\ \hline SensorModel
@@ -43,7 +43,7 @@ Acceptance level for unit testing is a full coverage of states and it is require
 \end{table}
 
 \subsubsection{Integration test}
-The integration test for sprint 4 is mostly concerned with the visualizer and the database. For the database we have a new module which is outside our initial architecture, the dash7 data generator. We have to make sure the data generated is similar to what we will find in the real world. Creating mock-up data proved to be more difficult than we originally thought. The data has to be created for each sensor on each gateway, which means quite a lot of data needs to be generated, as each sensor needs to have data in each gateway. 
+The integration test for sprint 4 is mostly concerned with the visualizer and the database. For the database we have a new module which is outside our initial architecture, the \gls{DASH7} data generator. We have to make sure the data generated is similar to what we will find in the real world. Creating mock-up data proved to be more difficult than we originally thought. The data has to be created for each sensor on each gateway, which means quite a lot of data needs to be generated, as each sensor needs to have data in each gateway. 
 
 The new module for the visualizer is the calculation unit. We need two mathematical formulas, one for placing multiple gateways in a perfect geometric shape, and one for calculating the position of the sensors. These two formulas must work with the \gls{REST} of the animation framework we had already. Furthermore, we need to integrate a .txt document for admin to configure calibration. All of these must be integrated into our original prototype, created before the fourth sprint. Note that these modules are smaller in scale than the previous ones.
 
@@ -54,7 +54,7 @@ The new module for the visualizer is the calculation unit. We need two mathemati
 	\item
 	Constants to visualizer
 	\item
-	Dash 7 data generator to database
+	\gls{DASH7} data generator to database
 \end{itemize}
 
 \paragraph{Tests that need to be performed to each integration} \ \\
@@ -74,10 +74,10 @@ The new module for the visualizer is the calculation unit. We need two mathemati
 		The visualizer will take the constants configured by the administrator through a .txt document.
 	\end{itemize}
 	\item
-	Dash 7 data generator to database
+	\gls{DASH7} data generator to database
 	\begin{itemize}
 		\item
-		The data generator will generate random dash 7 data into the database.
+		The data generator will generate random \gls{DASH7} data into the database.
 	\end{itemize}
 \end{itemize}
 

@@ -193,8 +193,35 @@ This section covers the tests executed in this sprint, also including tests from
 \end{tabularx}
 \end{table}
 
+\begin{table}[H]
+\caption{Test 4}
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+    \hline
+	Test nr:
+	&4
+    \\ \hline Requirements
+	&1.1, 1.2, 2.1, 2.2, 2.3, 3.1, 3.2, 4.1, 4.2
+    \\ \hline Test Name
+    &24-hour test
+    \\ \hline Description
+    &This is a system test that lasts for 24 hours. The central hub is set up with sensors to measure changes in the environment, the database will pull data from the sensors, and the visualiser will pull data from the database and display them in the map view. To ensure that the sensor batteries will last, the sensors are powered through mini-USB cables.
+    \\ \hline Enviroment
+    &Runtime
+    \\ \hline Input
+    &Environmental data
+    \\ \hline Output
+    &GUI animation
+    \\ \hline Acceptance
+    &Same as in test 3, just that the system has to be able to run over the whole period of time without any failure that shuts down the system. This means that the focus of this test is on failure handling.
+	\\ \hline Result
+	&The system was able to run for 24-hours without failure. Changes were also registered in the environment: At an early point in the test, a window was opened causing the temperature of a nearby sensor to drop. The same sensor also registered a considerable drop in lighting around sunset.
+    \\ \hline
+\end{tabularx}
+\end{table}
+
 \subsection{Test Results}
-The tests have provided us with positive results. As can be seen from the first test, our database and server connection is working as expected. There were some problems regarding sensors, specifically on the hardware side, as one of the sensors could not read the temperature at all. As we have no direct control over the hardware, this may be a problem in the final showing of the prototype. The latter two tests were, however, quite positive and we are now able to show a full, final working version of the visualiser, without any mock up data.
+The tests have provided us with positive results. As can be seen from the first test, our database and server connection is working as expected. There were some problems regarding sensors, specifically on the hardware side, as one of the sensors could not read the temperature at all. As we have no direct control over the hardware, this may be a problem in the final showing of the prototype. The latter tests were, however, quite positive and we are now able to show a full, final working version of the visualiser, without any mock up data.
 
 \subsection{Sprint Results}
 During this sprint we finished all of our requirements \sectionfullref{requirements} and most of our test scenarios in \sectionfullref{test_plan}. We made the system work from the sensors to the visualiser and the system is believed to be mostly bug free as no bugs were encountered during tests. Because most of the program is easy to modify, we managed to finish this quickly, and any future development upon the system should be easier to implement.
