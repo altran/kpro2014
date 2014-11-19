@@ -4,20 +4,20 @@
 \subsection{Retired Architecture}
 \label{retired_architecture}
 \subsubsection{Introduction}
-This chapter gives an overview of the system we had planned to implement, including quality attributes, architectural patterns, design patterns, tactics and architectural views. The purpose of this is to give an overview of the architectural structure of the system we first started to plan. We wanted to make a smart room where the we took in information from the sensors and used that information to create a better enviorment. We did not start to make the logicview, developmentview and procesview until after we desided not create a smart room.
+This chapter gives an overview of the system we had planned to implement, including quality attributes, architectural patterns, design patterns, tactics and architectural views. The purpose of this is to give an overview of the architectural structure of the system we first started to plan. We wanted to make a smart room where the we took in information from the sensors and used that information to create a better environment. We did not start to make the logical view, development view and the process view until after we decided not create a smart room.
 
 \subsubsection{Quality Attributes}
 \subsubsection{Functionality}
 The system should function as planned. 
 
 \paragraph{Availability/Reliability} \ \newline
-System should always be working, and be available 24h. Sensors might stop, but should have a time limit and restart when if it reaches the time limit. 
+System should always be working, and be available 24 hours. Sensors might stop, but should have a time limit and restart when if it reaches the time limit. 
 
 \paragraph{Modifiability} \ \newline
 Our system needs to be easy to change/modify so our customer can expand and/or change the system afterwards. New sensors should be easy to implement.
 
 \paragraph{Usability} \ \newline
-User friendly, noobs should understand how to control the system, easy to modify custom settings.
+The system should be user friendly, and an inexperienced novice should understand how to control the system, and modify custom settings.
 
 \paragraph{Portability} \ \newline
 Hardware should be easy to move to different environments and the system still works.
@@ -32,11 +32,11 @@ The system should be efficient and recognize relatively fast if the light is too
 Depends on hardware. Other users who do not have authorization, should not be able to access our system.
 
 \paragraph{Scalability} \ \newline
-The system should be able to add more sensors/change scenery a.s.o.  
+It should be possible to add more sensors and gateways to the system.  
 
 \subsubsection{Patterns and Tactics}
 \paragraph{Model-View-Controller}  \ \newline
-The Model-View-Controller (MVC) pattern is an architectural pattern that divides a software application into three interconnected components. The different components are the model, the view and the controller. The model manages the the application’s data, logic and rules. The view requests information from the model and uses this information to give an output representation of the information to the user. The controller takes input from the user and converts it to commands for the model or view. 
+The Model-View-Controller (MVC) pattern is an architectural pattern that divides a software application into three interconnected components. The different components are the model, the view and the controller. The model manages the applications data, logic and rules. The view requests information from the model and uses this information to give an output representation of the information to the user. The controller takes input from the user and converts it to commands for the model or view. 
 
 \subsubsection{Stakeholders and Concerns}
 \begin{table}[H]
@@ -48,13 +48,13 @@ The Model-View-Controller (MVC) pattern is an architectural pattern that divides
 		Developers				& The developer are us in group 10 and our job is to develop the product and document the project.  \\ \hline
 		Customer				& The customer is Stig Lau representing \gls{Altran} AS. He will specify the product to be developed.  \\ \hline
 		Adviser					& The adviser is Mohsen Anvaari. His job is to act as a project management.  \\ \hline
-		Course staff			& The course staff for subject TDT4290 will provide information and prestudy for the course.  \\ \hline
+		Course staff			& The course staff for subject TDT4290 will provide information for the course.  \\ \hline
 		Hardware suppliers		& The hardware suppliers are the makers for the components used in this project.  \\ \hline
 	\end{tabularx}
 \end{table}
 
 \subsubsection{Architectural Views}
-In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture. We chose this view model because this model allows us to handle the functional and nonfunctional requirements separately, and also address the different concerns of the various stakeholders separately.
+In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture. We chose this view model because this model allows us to handle the functional and non-functional requirements separately, and also address the different concerns of the various stakeholders separately.
 
 \paragraph{Logical View} \ \newline				
 The logical view is primarily concerned with the functional requirements. This means that it is concerned with what the system should provide in terms of services to its end-users. As we have changed the system 
@@ -66,7 +66,7 @@ The development view illustrates a system from a programmer's perspective and is
  
 
 \paragraph{Process View} \ \newline
-The process view deals with the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. The process view addresses concurrency, distribution, integrators, performance, and scalability, etc. UML Diagrams to represent process view include the Activity diagram.
+The process view deals with the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behaviour of the system. The process view addresses concurrency, distribution, integrators, performance, and scalability, etc. UML Diagrams to represent process view include the Activity diagram.
 
 
 \paragraph{Physical View} \ \newline
@@ -91,7 +91,7 @@ The description of an architecture is illustrated using a small set of use cases
 		Stimulus			& Close the curtains when its too bright \\ \hline
 		Environment			& Runtime \\ \hline
 		Artifact			& Light sensors \\ \hline
-		Response			& The curtains are closede \\ \hline
+		Response			& The curtains are closed \\ \hline
 		Response Measure	& Time \newline Should be less than 5 minutes
 		\\ \hline
 	\end{tabularx}
@@ -129,7 +129,7 @@ The description of an architecture is illustrated using a small set of use cases
 
 \subsubsection{Retired Architectural Views}
 \label{retierd_architectural_views}
-This section will cover the old views from when the visulizer was divided into three parts; the tableview, the historyview and the map view. 
+This section will cover the old views from when the visualiser was divided into three parts; the table view, the history view and the map view. 
 
 
 \begin{figure}[H]
