@@ -37,10 +37,10 @@ We are planning to use JUnit to do the unit testing. Every single test is done b
 \end{table}
 
 \subsection{Test coverage}
-Each unit testing should have atleast 60 percent code coverage and full state coverage. The reason we are only doing 60 percent is because our lack of time and the lack of testing experience at professional level, also we belive the code is rather tolerant of unused codes and so on. We do belive that a full state coverage is needed and this is because we want to animate all the different state of sensor movement, be it right or wrong. 
+Each unit testing should have at least sixty percent code coverage and full state coverage. The reason we are only doing sixty percent is because our lack of time and the lack of testing experience at professional level, also we believe the code is rather tolerant of unused codes and so on. We do believe that a full state coverage is needed and this is because we want to animate all the different state of sensor movement, be it right or wrong. 
 
 \subsection{Integration Testing}
-In this section we will collect the different modules of our prototype together and test if they are able to correctly work. Do note that requirement 3.1 and 3.2 is needed for everything to work, but it is expected for it to work since it comes from the customer. Therefore we are not gonna mention it directly in the coming up text.
+In this section we will collect the different modules of our prototype together and test if they are able to correctly work. Do note that requirement 3.1 and 3.2 is needed for everything to work, but it is expected for it to work since it comes from the customer. Therefore we are not going to mention it directly in the coming up text.
 
 \paragraph{Modules that need to be integrated}
 \begin{itemize}
@@ -96,12 +96,12 @@ In this section we will collect the different modules of our prototype together 
 	\\ \hline Central hub gathering and processing
 	&T1
 	&2.1, 2.3
-	&This test will gather information from the hardware and then process it into a set of data which is sorted by sensorID.
+	&This test will gather information from the hardware and then process it into a set of data which is sorted by sensor id.
 	\\ \hline Central hub data storage
 	&T2
 	&1.1, 2.2
 	&After processing the data, it will be pushed forward into the database and stored. This process will be using \gls{REST} \gls{API}.
-	\\ \hline Central hub hotjoin
+	\\ \hline Central hub hot join
 	&T3
 	&2.4
 	&The central hub can take in new sensors or remove sensors from it at runtime.
@@ -116,7 +116,7 @@ In this section we will collect the different modules of our prototype together 
 	\\ \hline Visualiser switches what data to visualise
 	&T6
 	&4.3
-	&The user should be able to manipulate what data to visualise at any time by using checkboxes.
+	&The user should be able to manipulate what data to visualise at any time by using check boxes.
 	\\ \hline 
 \end{tabularx}
 \end{table}
@@ -132,7 +132,7 @@ In this section we will collect the different modules of our prototype together 
 	&Test Scenario 3
 	\\ \hline Description
 	&First the sensors, central hub and the database need to be set up. We will see if the sensors gather the correct data, and if they do, how the central hub pulls the data from the sensors, processes the data and then stores it.
-	\\ \hline Enviroment
+	\\ \hline Environment
 	&Run time
 	\\ \hline Test case involved
 	&T0, T1, T2
@@ -157,7 +157,7 @@ In this section we will collect the different modules of our prototype together 
 	&Test Scenario 2
 	\\ \hline Description
 	&A new sensor is added during runtime and we see if the data can be registered by the central hub. After that remove the sensor and see if this affects rest of the system. 
-	\\ \hline Enviroment
+	\\ \hline Environment
 	&Run time
 	\\ \hline Test case involved
 	&T3
@@ -182,7 +182,7 @@ In this section we will collect the different modules of our prototype together 
 	&Test Scenario 3
 	\\ \hline Description
 	&This test will cover all functions for the visualiser. The visualiser will pull data from the database and then show them on the GUI. This will be done both in the traditional table format and an animation format. The user should also be able to chose what to show by interacting with the program.
-	\\ \hline Enviroment
+	\\ \hline Environment
 	&Run time
 	\\ \hline Test case involved
 	&T4, T5, T6
@@ -199,15 +199,15 @@ In this section we will collect the different modules of our prototype together 
 \end{table}
 
 \begin{table}[H]
-\caption{System Test Scentario 4}
+\caption{System Test Scenario 4}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 	\hline
 	Test Name
-	&Test Scentario 4
+	&Test Scenario 4
 	\\ \hline Description
 	&This test will be an overall test that will last over a long period of time. We will set up the system in a closed environment and observe the changes of data over a long period of time (twelve or more hours, depending on the battery life). During this time the data will be stored and shown.
-	\\ \hline Enviroment
+	\\ \hline Environment
 	&Run time
 	\\ \hline Test case involved
 	&T0,T1,T2,T3, T4, T5, T6
@@ -229,30 +229,30 @@ In this section we will collect the different modules of our prototype together 
 \centering
 \begin{tabularx}{\textwidth}{|l|X|X|}
 	\hline
-	Scenario nr
+	Scenario no
 	&Acceptance
 	&Result
 	\\ \hline 1
 	&The data stored is correct and in the format we wanted.
-	&The sensor data coming in is in raw data format and then was saved as json fomat.
+	&The sensor data coming in is in raw data format and then was saved as JSON format.
 	\\ \hline 2
 	&When the new sensor set is updated correctly with correct data. And if we remove any sensors, the database will not update anything random and the whole system should not crash.
 	&The new sensor is working and treated by the system at the same level as any other sensors, the system and the database is also running without any problem.
 	\\ \hline 3
 	&The data is correctly shown both on the table and in the animation. The animation needs to be smooth (meaning at least 24 fps). The user interaction will not have any impact other than hiding or showing a certain data type.
-	&We cross check the data with table and what we see in the animation and they do match. The fps was stable 60 with drop down to 55 or so sometimes, we do belive thats a problem with the hardware it self. When user can only hide or show certain data type any other interraction is not possible.
+	&We cross check the data with table and what we see in the animation and they do match. The fps was stable 60 with drop down to 55 or so sometimes, we do believe that is a problem with the hardware it self. When user can only hide or show certain data type any other interaction is not possible.
 	\\ \hline 4
 	&Same as in test scenario 3, just that the system has to be able to run over the whole period of time without any failure that shuts down the system, in other words failure handling is a concern in this case.
-	&The long period of time went well, we did not ecounter any problem and the memory use was stable at 150MB all the way, thanks to java garbage collector.
+	&The long period of time went well, we did not encounter any problem and the memory use was stable at 150MB all the way, thanks to Java garbage collector.
 	\\ \hline 
 \end{tabularx}
 \end{table}
 
 \subsection{User test}
-We do not have a large user base to perform user tests due to our lack of time and resources. Therefore most of our user testing was done inside the team, with customer and adviser as the only two outsiders who have seen our implementation so far. Although this is not enough to say if our UI is up to par, but it did give us a lot of help during the developement when something is wrong.
+We do not have a large user base to perform user tests due to our lack of time and resources. Therefore most of our user testing was done inside the team, with customer and adviser as the only two outsiders who have seen our implementation so far. Although this is not enough to say if our user interface is up to par, but it did give us a lot of help during the development when something is wrong.
 
 \subsection{Performance test}
-Performance is one of the few non-functional goal we have, and the only one we are able to test fully. We are planning to have a 24 hour test from test scenario 4, which is targede directly at performance. From that test scenario we should get a good grasp on how good the performance is of our system.
+Performance is one of the few non-functional goal we have, and the only one we are able to test fully. We are planning to have a 24 hour test from test scenario 4, which is targeted directly at performance. From that test scenario we should get a good grasp on how good the performance is of our system.
 
 
 \end{document}
