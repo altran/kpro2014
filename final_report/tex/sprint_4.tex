@@ -24,7 +24,7 @@ As a short list, these are our goals for this sprint:
 	\item
 	Create a script that inputs random data into the database.
 	\item
-	Create a system that can support three or more central hubs, so that we may trilaterate the position of the sensors.
+	Create a system that can support three or more central hubs, and that uses trilateration to find the position of the sensors.
 	\item
 	Implement the system into the visualiser.
 \end{enumerate}
@@ -79,14 +79,14 @@ As a short list, these are our goals for this sprint:
 
 As we can see from the backlog, we have managed to finish our implementation ahead of time. We had planned for sixty hours of work, and we have managed to finish everything in thirty-four hours of work. This is mostly due to the highly modifiable code that we had written from the start in order to accommodate change. Furthermore, we were careful with the implementation and therefore did not have too many bugs. Overall, we are satisfied with the time this sprint took, especially since there is a lot of documentation the group needs to write for the final report.
 
-\subsection{Testplan}
+\subsection{Test plan}
 
 \begin{table}[H]
 \caption{Test 1}
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 	\hline
-	Test nr:
+	Test no:
 	&1
 	\\ \hline Requirements:
 	&5.3, 5.3.1
@@ -101,7 +101,7 @@ As we can see from the backlog, we have managed to finish our implementation ahe
 	\\ \hline Output:
 	&The database will have multiple mock-up sensors with their own data
 	\\ \hline Acceptance:
-	&The \gls{DASH7} data input must be correct in it’s scope and it must be stored correctly.
+	&The \gls{DASH7} data input must be correct in its scope and it must be stored correctly.
 	\\ \hline Result:
 	&The data is generated and stored correctly.	
 	\\ \hline 
@@ -113,7 +113,7 @@ As we can see from the backlog, we have managed to finish our implementation ahe
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-Test nr:
+Test no:
 2
 \\ \hline Requirements:
 5.1, 5.1.1
@@ -140,7 +140,7 @@ Test nr:
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline	
-Test nr:
+Test no:
 &3
 \\ \hline Requirements:
 &5.2.1, 5.2.2
@@ -155,7 +155,7 @@ Test nr:
 \\ \hline Output:
 &Position on the screen
 \\ \hline Acceptance:
-&When the position on the screen reflects where the sensor are on the screen. The position needs to be sufficiently accurate for this test to pass. The accuracy is determined by the group members judgment.
+&When the position on the screen reflects where the sensor are on the screen. The position needs to be sufficiently accurate for this test to pass. The accuracy is determined by the group members judgement.
 \\ \hline Result:
 &The position and movement of sensors reflects the link budget correctly.
 \\ \hline 
@@ -167,7 +167,7 @@ Test nr:
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-Test nr:
+Test no:
 &4
 \\ \hline Requirements:
 &5.2.3, 5.2.4, 5.2.5
@@ -182,9 +182,9 @@ Test nr:
 \\ \hline Output:
 &Animation of the sensor movement by using the link budget
 \\ \hline Acceptance:
-&When the animation on the screen reflects where the sensors are on the screen. The position and the animation need to be accurate and smooth for this test to pass. The accuracy and animation quality is determined by the group members judgment.
+&When the animation on the screen reflects where the sensors are on the screen. The position and the animation need to be accurate and smooth for this test to pass. The accuracy and animation quality is determined by the group members judgement.
 \\ \hline Result:
-&The positional animation is correct and the animation quality is above acceptable according to the group judgment.
+&The positional animation is correct and the animation quality is above acceptable according to the group judgement.
 \\ \hline 
 \end{tabularx}
 \end{table}
@@ -194,7 +194,7 @@ Test nr:
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-Test nr:
+Test no:
 &5
 \\ \hline Requirements:
 &All requirement from 5.1, 5.2 and 5.3
@@ -223,9 +223,9 @@ The tests have all been positive and provided good results. They have also been 
 
 \subsection{Sprint results}
 
-During the sprint we have managed to finish the new requirements listed in \subfullref{requirements_sprint_4} and to fulfill of the tests detailed in the \subfullref{test_plan_sprint_4}. The system is currently able to take any number of gateways and sensors from the database and arrange them correctly in the visualiser. The sensors are also correctly animated using their link budget as weights. There are some limitations to this system, most notably the use of mock-up data and the testing that used the mock-up data. In theory, our implementation should work for live sensor data, however, we did not have the hardware to test nor implement that solution. Due to our modular implementation, we have had less difficulty than expected, and have finished our implementation in due time.
+During the sprint we have managed to finish the new requirements listed in \subfullref{requirements_sprint_4} and to fulfil of the tests detailed in the \subfullref{test_plan_sprint_4}. The system is currently able to take any number of gateways and sensors from the database and arrange them correctly in the visualiser. The sensors are also correctly animated using their link budget as weights. There are some limitations to this system, most notably the use of mock-up data and the testing that used the mock-up data. In theory, our implementation should work for live sensor data, however, we did not have the hardware to test nor implement that solution. Due to our modular implementation, we have had less difficulty than expected, and have finished our implementation in due time.
 
-The screenshots of our system working can be seen in \figref{fig:sprint4_1} and \figref{fig:sprint4_2} . In the first figure, we can see a black background, with a legend on the side and a clock, along with some minor effects, such as blur and bloom to make the visualiser look a bit more stylish. These were all present from the previous implementation of the prototype. What is new is the capability of supporting multiple gateways, and the way the sensors move to these gateways. The sensors no longer orbit a singular gateway, but rather have a mathematical formula that uses the link budget as weights to trilaterate the position in between the gateways. The trilateration works for any amount of gateways, as can be seen in the second figure. The gateways, no matter their number, will be placed in an imaginary circle to create a perfect geometrical shape. This is the perfect positioning of the sensors in a room.
+The screenshots of our system working can be seen in \figref{fig:sprint4_1} and \figref{fig:sprint4_2} . In the first figure, we can see a black background, with a legend on the side and a clock, along with some minor effects, such as blur and bloom to make the visualiser look a bit more stylish. These were all present from the previous implementation of the prototype. What is new is the capability of supporting multiple gateways, and the way the sensors move to these gateways. The sensors no longer orbit a singular gateway, but rather have a mathematical formula that uses trilateration to calculate the gateway positions from the link budget values. The trilateration formula works for any amount of gateways, as can be seen in the second figure. The gateways, no matter their number, will be placed in an imaginary circle to create a perfect geometrical shape. This is the perfect positioning of the sensors in a room.
 
 \begin{figure}[H]
 \centering
