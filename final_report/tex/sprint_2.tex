@@ -42,12 +42,12 @@ Item
 &Estimated Hours
 &Actual Hours
 \\ \hline 1.1
-&Integrate Altrans database with client
+&Integrate Altran's database with client
 &H
 &10
 &6
 \\ \hline 1.2
-&Familiarize with Altrans database
+&Familiarize with Altran's database
 &H
 &10
 &6
@@ -72,7 +72,7 @@ Item
 &15
 &8
 \\ \hline 1.7
-&Integrate Altrans database with visualiser
+&Integrate Altran's database with visualiser
 &H
 &12
 &8
@@ -146,7 +146,7 @@ The sprint plan above shows a general lack of hours. The explanation for this is
 
 For the visualiser module all planned features were implemented, but we overestimated the hours needed for implementation. The backlog shows 120 planned hours, with only 68 hours spent. One reason for this is that our estimate was influenced by the fact that we had estimated too few hours for the visualiser module in sprint 1, which probably caused us to add some extra hours as a buffer. Additionally, we did not take into account the knowledge we gained of \gls{JavaFX} during sprint 1, which reduced the actual implementation time needed. Together, these two factors should explain the difference in hours for the visualiser module. The work hours saved were spent writing documentation.
 
-For the database module, all planned features were implemented, except the high-priority item “Integrate \gls{Altran}s database with client” (1.1). The backlog shows 67 planned hours, with only 48 hours spent. The estimates should be largely correct, and it is likely that the module would be finished had the planned number of work hours been invested. The imbalance between planned and spent hours is fully explained by the fact that we did not plan any overhead for the emerging high-priority tasks of writing documentation and finalizing the pre-delivery, which required 21.5 work hours in total of members of the database team.
+For the database module, all planned features were implemented, except the high-priority item “Integrate \gls{Altran}'s database with client” (1.1). The backlog shows 67 planned hours, with only 48 hours spent. The estimates should be largely correct, and it is likely that the module would be finished had the planned number of work hours been invested. The imbalance between planned and spent hours is fully explained by the fact that we did not plan any overhead for the emerging high-priority tasks of writing documentation and finalizing the pre-delivery, which required 21.5 work hours in total of members of the database team.
 
 \newpage
 \subsection{Sprint Testing}
@@ -260,7 +260,7 @@ Humidity is represented by the blue water drop. It fills up for higher humidity.
 
 We have not yet managed to integrate the sensors into to our system. Neither have we managed to fully implement a replacement solution for the \gls{SQL}-database. The current visualiser pulls data from an \gls{SQL}-database every 5 seconds, and iterates through the data looking for changes. When the visualiser discovers a change, an animation is started that changes the appearance of the corresponding sensor. The transition is smooth, and without any glitches.
 
-Although the new database was not integrated with the rest of the system in this sprint, a working prototype implementation was completed. This database prototype tries to be as compliant to Altrans database as possible. The \gls{Altran} database \gls{API} is restful, and is accessed through simple \gls{HTTP} messages. To send and receive \gls{HTTP} messages, our implementation uses the Jersey implementation of JAX-RS (\gls{Java} \gls{API} for RESTful Services).
+Although the new database was not integrated with the rest of the system in this sprint, a working prototype implementation was completed. This database prototype tries to be as compliant to Altran’s database as possible. The \gls{Altran} database \gls{API} is restful, and is accessed through simple \gls{HTTP} messages. To send and receive \gls{HTTP} messages, our implementation uses the Jersey implementation of JAX-RS (\gls{Java} \gls{API} for RESTful Services).
 
 The \gls{Altran} database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending \gls{HTTP} GET requests with query parameters in a Lucene-specific format. When providing the visualiser with the most recent data samples, our implementation should use Lucene queries in order to limit the amount of data that has to be sent. However, this part was not implemented, as we could not manage to query for sensor samples with timestamps in a specified time interval.
 
@@ -286,6 +286,6 @@ This sprint went better than sprint 1. Now we knew we would not get to integrate
 
 As for the database implementation during this sprint, until now the visualiser has used the \gls{SQL}-database from sprint 1 as a back end for testing purposes. This has worked out fine, however when the new database is ready, it will allow a much cleaner integration with both the visualiser and the hardware. Note that as a result of the database delay, two tests were not conducted.
 
-During this sprint we have gained knowledge of Altrans database implementation, and how it uses the Spring framework to set up a restful server for storing sensor samples, Lucene to implement queries, and an \gls{SQL}-database to store data through reboots. Another thing we have learned is how to make animations involving motions, orbital motions in particular.
+During this sprint we have gained knowledge of Altran’s database implementation, and how it uses the Spring framework to set up a restful server for storing sensor samples, Lucene to implement queries, and an \gls{SQL}-database to store data through reboots. Another thing we have learned is how to make animations involving motions, orbital motions in particular.
 
 \end{document}
