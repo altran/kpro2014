@@ -10,7 +10,7 @@ We are planning to use JUnit to do the unit testing. Every single test is done b
 \begin{table}[H]
 \caption{Unit Test Plan}
 \centering
-\begin{tabularx}{\textwidth}{|l|X|X|X|}
+\begin{tabularx}{\textwidth}{|l|X|L{2.4cm}|X|}
 	\hline
 	Modules
 	&Description
@@ -234,16 +234,16 @@ In this section we will collect the different modules of our prototype together 
 	&Result
 	\\ \hline 1
 	&The data stored is correct and in the format we wanted.
-	&
+	&The sensor data coming in is in raw data format and then was saved as json fomat.
 	\\ \hline 2
 	&When the new sensor set is updated correctly with correct data. And if we remove any sensors, the database will not update anything random and the whole system should not crash.
-	&
+	&The new sensor is working and treated by the system at the same level as any other sensors, the system and the database is also running without any problem.
 	\\ \hline 3
 	&The data is correctly shown both on the table and in the animation. The animation needs to be smooth (meaning at least 24 fps). The user interaction will not have any impact other than hiding or showing a certain data type.
-	&
+	&We cross check the data with table and what we see in the animation and they do match. The fps was stable 60 with drop down to 55 or so sometimes, we do belive thats a problem with the hardware it self. When user can only hide or show certain data type any other interraction is not possible.
 	\\ \hline 4
 	&Same as in test scenario 3, just that the system has to be able to run over the whole period of time without any failure that shuts down the system, in other words failure handling is a concern in this case.
-	&
+	&The long period of time went well, we did not ecounter any problem and the memory use was stable at 150MB all the way, thanks to java garbage collector.
 	\\ \hline 
 \end{tabularx}
 \end{table}
