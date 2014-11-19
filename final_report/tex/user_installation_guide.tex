@@ -137,7 +137,7 @@ To setup the central hub and the sensors, complete the steps outlined in the fig
 
 
 
-\subsection{Acquiring IP Addresses}\label{sec:acquiring_ip}
+\subsection{Acquiring IP Addresses}\label{subsec:acquiring_ip}
 In order to set up all the components of the system, it is necessary to know the IP addresses of the central hub and the database. As these addresses are assigned dynamically by the \gls{DHCP} server, it is not possible to known them in advance. This section goes into detail about how to acquire the IP addresses.
 
 For the central hub, the simplest way to discover the address is by trial and error. For this we need to know the address pool used by the \gls{DHCP} server, so take note of this when setting up the network. The idea is to test subsequent addresses from this pool until the address of the central hub is found. The central hub runs a \gls{REST}-based server, and the easiest way of testing an address is to type in the address in a browser. If the address is correct, this will open the configuration service of the central hub. It is likely that the central hub was leased an address in the lower end of the range, so it is a good idea to start there. For example, if the setup is performed on a local network, a typical lower end of the range address is 192.168.1.1.
@@ -181,7 +181,7 @@ wlan0  Link encap:Ethernet  HWaddr 00:18:de:01:f9:8c
 
 
 
-\subsection{Downloading the visualiser}\label{sec:downloading_the_visualiser}
+\subsection{Downloading the visualiser}\label{subsec:downloading_the_visualiser}
 This section describes how to download the visualiser component as an executable jar file. The executable jar file can be downloaded by visiting the url
 \url{https://github.com/audunx/tdt4290g10/raw/Prototype_C%2B%2B/visualiser-1.0-SNAPSHOT-jar-with-dependencies.jar}
 \noindent in a browser, and save the file to a suitable location.
@@ -241,12 +241,12 @@ $ scp root@<central hub ip>:/home/root/pull.sh .
 After copying, the script is executed with the same command used above when logging on to the \gls{Raspberry Pi}.
 
 \subsubsection{Starting the Visualiser}
-The visualiser is started by using java to execute the jar file downloaded in section \ref{sec:downloading_the_visualiser}. In most systems, double-clicking the file will execute it in java automatically.
+The visualiser is started by using java to execute the jar file downloaded in \subfullref{subsec:downloading_the_visualiser}. In most systems, double-clicking the file will execute it in java automatically.
 
 Executing the visualiser by double-clicking it is probably the easiest way to run it. However, there is another method that gives more control over the program by making the program output visible. In order to read program output, the jar file needs to be executed in a console window. The rest of this section goes briefly through the details of this process for Windows and Linux systems.
 
 \paragraph{Locating the visualiser jar using the Windows command prompt}
-First open a command prompt as described in section \ref{sec:acquiring_ip}. Then, use the command prompt to navigate to the folder where the jar file is located. The following command explains how you can navigate between folders using Windows command prompt:
+First open a command prompt as described in section \subfullref{subsec:acquiring_ip}. Then, use the command prompt to navigate to the folder where the jar file is located. The following command explains how you can navigate between folders using Windows command prompt:
 \lstset{style=custombash}
 \begin{lstlisting}[caption=Windows command to change current folder]
 > cd "<file path>"
@@ -259,6 +259,15 @@ $ java -jar visualiser-1.0-SNAPSHOT-jar-with-dependencies.jar
 \end{lstlisting}
 
 
+
+\section{Accessing the source code}
+This section goes through some different methods for accessing the project source code in the group's public GitHub repository.
+
+\subsection{Visiting GitHub.com in a browser}
+The easiest way to browse the project source code is to use a browser to open the url: \url{https://github.com/audunx/tdt4290g10}. GitHub makes the repository accessible in an ordered fashion, and provides useful statistics as an aside.
+
+\subsection{Cloning the repository with Git}
+In order to work with the source code, the project should be cloned with Git using the clone url \texttt{https://github.com/audunx/tdt4290g10.git}. Git installation instructions for major operating systems can be found at \url{http://git-scm.com/book/en/v2/Getting-Started-Installing-Git}. Git documentation is found at the same site.
 
 
 
