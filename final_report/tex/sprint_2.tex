@@ -17,7 +17,7 @@ The total planned working hours for the second sprint is 300 hours. Of that 220 
 The main goal of the second sprint is to create a fully functional prototype with an animated visualiser and an integrated database that can pull values from our sensors and store those values until we need to pull them in our visualiser. Our main goal can be split into five goals:
 \begin{enumerate}
 \item
-Learn the new database received from our customer, \gls{Altran} Norge AS.
+Learn the new database received from our customer, \gls{Altran} Norway AS.
 \item
 Integrate the said database and data updating with the visualiser.
 \item
@@ -42,12 +42,12 @@ Item
 &Estimated Hours
 &Actual Hours
 \\ \hline 1.1
-&Integrate Altrans database with client
+&Integrate Altran's database with client
 &H
 &10
 &6
 \\ \hline 1.2
-&Learn Altrans database
+&Familiarize with Altran's database
 &H
 &10
 &6
@@ -57,7 +57,7 @@ Item
 &10
 &6
 \\ \hline 1.4
-&Open connection to db
+&Open connection to database
 &H
 &10
 &6
@@ -72,12 +72,12 @@ Item
 &15
 &8
 \\ \hline 1.7
-&Integrate Altrans database with visualiser
+&Integrate Altran's database with visualiser
 &H
 &12
 &8
 \\ \hline 2.1
-&Make a teardrop in \gls{JavaFX}
+&Make a tear-drop in \gls{JavaFX}
 &H
 &16
 &10
@@ -146,7 +146,7 @@ The sprint plan above shows a general lack of hours. The explanation for this is
 
 For the visualiser module all planned features were implemented, but we overestimated the hours needed for implementation. The backlog shows 120 planned hours, with only 68 hours spent. One reason for this is that our estimate was influenced by the fact that we had estimated too few hours for the visualiser module in sprint 1, which probably caused us to add some extra hours as a buffer. Additionally, we did not take into account the knowledge we gained of \gls{JavaFX} during sprint 1, which reduced the actual implementation time needed. Together, these two factors should explain the difference in hours for the visualiser module. The work hours saved were spent writing documentation.
 
-For the database module, all planned features were implemented, except the high-priority item “Integrate \gls{Altran}'s database with client” (1.1). The backlog shows 67 planned hours, with only 48 hours spent. The estimates should be largely correct, and it is likely that the module would be finished had the planned number of work hours been invested. The imbalance between planned and spent hours is fully explained by the fact that we did not plan any overhead for the emerging high-priority tasks of writing documentation and finalizing the predelivery, which required 21.5 work hours in total of members of the database team.
+For the database module, all planned features were implemented, except the high-priority item “Integrate \gls{Altran}'s database with client” (1.1). The backlog shows 67 planned hours, with only 48 hours spent. The estimates should be largely correct, and it is likely that the module would be finished had the planned number of work hours been invested. The imbalance between planned and spent hours is fully explained by the fact that we did not plan any overhead for the emerging high-priority tasks of writing documentation and finalizing the pre-delivery, which required 21.5 work hours in total of members of the database team.
 
 \newpage
 \subsection{Sprint Testing}
@@ -157,12 +157,12 @@ This section covers the tests done on our system in this sprint.
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-Test nr
+Test no
 &1
 \\ \hline Requirements
 &4.2, 4.2.2
 \\ \hline Test name
-&Display the correct animation of the data in MapView
+&Display the correct data animation in the map view
 \\ \hline Environment
 &Runtime
 \\ \hline Description
@@ -174,7 +174,7 @@ Test nr
 \\ \hline Acceptance
 &All of the data needs to be visible and animation needs to be correct and smooth. The animation should be spotted within 5 seconds and there should be no visual glitches.
 \\ \hline Result
-&When the mapview is started, there is some lag where the system mixes up the sensorIDs. However, this is a mistake with the way our database is set up and has little to do with the actual visualiser. When the database is fully integrated, we expect this bug to be solved. Furthermore, the animation is very smooth and database updates change the values and trigger animation correctly.
+&When the map view is started, there is some lag where the system mixes up the sensor ids. However, this is a mistake with the way our database is set up and has little to do with the actual visualiser. When the database is fully integrated, we expect this bug to be solved. Furthermore, the animation is very smooth and database updates change the values and trigger animation correctly.
 \\ \hline 
 \end{tabularx}
 \end{table}
@@ -184,7 +184,7 @@ Test nr
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-Test nr
+Test no
 &2
 \\ \hline Requirements
 &1.1, 1.2
@@ -211,7 +211,7 @@ Test nr
 \centering
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-Test nr
+Test no
 &3
 \\ \hline Requirements
 &4.1
@@ -239,17 +239,17 @@ In this sprint we did fewer tests than in the previous sprint. This is due to th
 \subsection{Sprint Results}
 During this sprint the visualization part of our system has reached its goals, and we have completed the tasks. Changes to any data type is now reflected by an animation in the visualiser, and the animations are running in an orbit around the central hub. This is all we planned to do this sprint, and we managed to do it within the time limit of this period. 
 
-Under is the finished mapView for this sprint. All the sensors have four elements and they circle around the central hub in different speeds.
+The finished map view for this sprint is shown below. All the sensors have four elements and they circle around the central hub in different speeds.
 
 \begin{itemize}
 \item
 Lighting is represented by the inner circle with the sensor name in it. It goes through a transition from white (light) to black (dark).
 \item
-Temperature is represented by the color of the outer circle. It goes through a transition from red (warm) to green to blue (cold).
+Temperature is represented by the colour of the outer circle. It goes through a transition from red (warm) to green to blue (cold).
 \item
 Pressure is represented by the purple balloon. It fills up for higher pressure.
 \item
-Humidity is represented by the blue waterdrop. It fills up for higher humidity.
+Humidity is represented by the blue water drop. It fills up for higher humidity.
 \end{itemize}
 
 \begin{figure}[H]
@@ -264,12 +264,12 @@ Although the new database was not integrated with the rest of the system in this
 
 The \gls{Altran} database also uses Apache Lucene to implement query searches against an indexed document stored in memory, sort of like a cache. This makes it possible to pull more specific sensor data with from the database. Database queries are executed by sending \gls{HTTP} GET requests with query parameters in a Lucene-specific format. When providing the visualiser with the most recent data samples, our implementation should use Lucene queries in order to limit the amount of data that has to be sent. However, this part was not implemented, as we could not manage to query for sensor samples with timestamps in a specified time interval.
 
-Work started on integrating the new database with the visualiser, a process in which the controller class of the visualiser module went through a major refactoring. In this work it was necessary to reorganize the structure of the visualiser module to make it conformant to the style of a Maven project, a change that was largely completed.
+Work started on integrating the new database with the visualiser, a process in which the controller class of the visualiser module went through a major refactoring. In this work it was necessary to reorganize the structure of the visualiser module to make it follow the style of a Maven project, a change that was largely completed.
 
 A problem with the new database is that it is harder to insert sensor samples manually, making it somewhat less suited for testing the visualiser. This problem will be solved once our hardware person has managed to connect our sensor hardware up against a running \gls{Altran} database.
 
 \subsection{Customer Review}
-The customer is still located in Oslo, so all our meetings with the customer is done over skype. We showed him our progress and let him know our plans further. To do this we used the built in function for sharing screens. During this sprint we had a misunderstanding about when the customer meeting was supposed to be held, which led to there not being any meeting the first week of this sprint.
+The customer is still located in Oslo, so all our meetings with the customer is done over Skype. We showed him our progress and let him know our plans further. To do this we used the built in function for sharing screens. During this sprint we had a misunderstanding about when the customer meeting was supposed to be held, which led to there not being any meeting the first week of this sprint.
 
 In an email received from the customer at the beginning of the sprint, we were informed that \gls{Altran} had a working database solution with a restful \gls{API}, and that they used it to store data collected by their own sensors. It was required that we should use the same \gls{JSON} format as \gls{Altran}:
 
@@ -284,8 +284,8 @@ In the last meeting with the customer during this sprint the customer approved o
 \subsection{Sprint Evaluation}
 This sprint went better than sprint 1. Now we knew we would not get to integrate the hardware in time, so we focused on implementing the database and visualiser without the hardware. As we now had a better idea of what the customer actually wanted of the visualiser we could finish our suggestion. The customer was happy with our solution for visualisation, which makes this sprint a success, at least when it comes to the visualisation part. Excepting the database, we have reached all our goals, and we did not come over any major setbacks.
 
-As for the database implementation during this sprint, until now the visualiser has used the \gls{SQL}-database from sprint 1 as a backend for testing purposes. This has worked out fine, however when the new database is ready, it will allow a much cleaner integration with both the visualiser and the hardware. Note that as a result of the database delay, two tests were not conducted.
+As for the database implementation during this sprint, until now the visualiser has used the \gls{SQL}-database from sprint 1 as a back end for testing purposes. This has worked out fine, however when the new database is ready, it will allow a much cleaner integration with both the visualiser and the hardware. Note that as a result of the database delay, two tests were not conducted.
 
-During this sprint we have gained knowledge of Altran’s database implementation, and how it uses the Spring framework to setup a restful server for storing sensor samples, Lucene to implement queries, and an \gls{SQL}-database to store data through reboots. Another thing we have learned is how to make animations involving motions, orbital motions in particular.
+During this sprint we have gained knowledge of Altran’s database implementation, and how it uses the Spring framework to set up a restful server for storing sensor samples, Lucene to implement queries, and an \gls{SQL}-database to store data through reboots. Another thing we have learned is how to make animations involving motions, orbital motions in particular.
 
 \end{document}
