@@ -14,12 +14,12 @@
 \label{fig:ClassDiagramB}
 \end{figure}
 
-The class diagram for the hardware-based, or real time prototype, shown in \figref{fig:ClassDiagramB}, describes how the classes interact with each other and the main methods and fields for each class. It also shows how the client requests data from the central hub and how the central hub gets the data from the sensors. The client then pushes the data into the database. The Controller uses a Timer to request data using methods in the ObservationGetter, then based on the data it gets, the Controller then creates or updates a list of SensorModels stored in a RoomModel object. The MapView is the class that is actually creating the visualisation by using a canvas and an animation timer. The animation timer updates the screen sixty frames per seconds. This frame rate can be adjusted to anything the customer would be pleased with, but the higher the frame rate, the smoother the animation. The animation timer uses Interfaces and Renderer classes to draw on the canvas and animate everything. The animation is done through events; every single time a value is changed an event fires off and the difference between the new and old values are calculated. This difference then is played over the time frame between the data pulls and it makes a smooth animation. 
+The class diagram for the hardware-based, or real time prototype, shown in \figref{fig:ClassDiagramB}, describes how the classes interact with each other and the main methods and fields for each class. It also shows how the client requests data from the central hub and how the central hub gets the data from the sensors. The client then pushes the data into the database. The Controller uses a Timer to request data using methods in the ObservationGetter, then based on the data it gets, the Controller then creates or updates a list of SensorModel objects stored in a RoomModel object. MapView is the class that is actually creating the visualisation by using a canvas and an animation timer. The animation timer updates the screen sixty frames per seconds. This frame rate can be adjusted to anything the customer would be pleased with, but the higher the frame rate, the smoother the animation. The animation timer uses Interfaces and Renderer classes to draw on the canvas and animate everything. The animation is done through events; every single time a value is changed an event fires off and the difference between the new and old values are calculated. This difference then is played over the time frame between the data pulls and it makes a smooth animation. 
 
 Our class diagram has been scaled down, to make the image readable. Some fields and methods that are not really important are not included, and if a class has getters and setters, we have just indicated getters and setters, and did not mentioned them all. Constructors are not included as well, though many classes have a constructor method. In some methods there are xNr after the some parameters, this is because some method have many of the same parameter type. The Nr will indicate how many of the given parameter type there is in this method. String x3 means there are three String parameters. Another difference is the places where the data types have methods and fields and classes that are similar have been merged together. An example is the instruction classes which we have written as (data type)Instruction, where (data type) is to be switched to either Temperature, Humidity, Pressure or Lighting. This is done to make it an easier and smaller class diagram. In the (data type)Instruction class the field String text is not in the HumidityInstruction nor in the PressureInstruction. 
 
 \subsubsection{Visualiser Overview}
-\figref{fig:overview} gives an overview of the visualiser. The visualiser takes as input from the database using what we call a controller (referring as IP controller for where the data is gathered). This data is then sorted into models and then used to make an animation. We make the animation by sending a new instruction for each frame and then use the render class to put the picture onto the stage itself. If need be, we can also change the framerate of the animation, from the standard sixty frames to anything less than sixty.
+\figref{fig:overview} gives an overview of the visualiser. The visualiser takes as input from the database using what we call a controller (referring as IP controller for where the data is gathered). This data is then sorted into models and then used to make an animation. We make the animation by sending a new instruction for each frame and then use the render class to put the picture onto the stage itself. If need be, we can also change the frame rate of the animation, from the standard sixty frames to anything less than sixty.
 
 \begin{figure}[H]
 \centering
@@ -135,10 +135,10 @@ Our class diagram has been scaled down, to make the image readable. Some fields 
 	&Description
 	\\ \hline RMF1
 	&sensorModel List
-	&Room model will keep an arrayList of sensorModel in order to update each sensor
+	&Room model will keep an ArrayList of SensorModel objects in order to update each sensor
 	\\ \hline RMF2
 	&getSensorModel(int ID)
-	&A method to get a specific sensorModel using the sensorID
+	&A method to get a specific SensorModel using the sensor id
 	\\ \hline RMF3
 	&getSensorNumber()
 	&getSensorNumber() will return the total number of sensor, this is useful for scaling of animation, for loops and more
@@ -164,10 +164,10 @@ Our class diagram has been scaled down, to make the image readable. Some fields 
 	&Description
 	\\ \hline BVF1
 	&ObservableList <SensorModel> data
-	&Creates a new empty observable list that is backed by an arraylist to store data from the Sensor model.
+	&Creates a new empty observable list that is backed by an ArrayList to store data from the Sensor model.
 	\\ \hline BVF2
 	&start(Stage primaryStage)
-	&Creates a dataTable which is a table view that is filled with data from the data list. Also adds checkboxes for the columns and listeners to make it possible to choose which columns should be visible in the dataTable.
+	&Creates a dataTable which is a table view that is filled with data from the data list. Also adds check boxes for the columns and listeners to make it possible to choose which columns should be visible in the dataTable.
 	\\ \hline BVF3
 	&main(String[] args)
 	&This method starts the base view application.
@@ -249,7 +249,7 @@ The instructions vary for the different instruction classes but they all have mu
 	&Every instruction holds a canvas which is used to decide where the animation will be played.
 	\\ \hline IF5
 	&Check
-	&Nearly all (except the centralHub) instruction comes with a boolean check, which is for the checkboxes. If the checkbox is unchecked the boolean will be false and the animation will be hidden. If the checkbox is checked the animation will continue.
+	&Nearly all (except the centralHub) instruction comes with a boolean check, which is for the check boxes. If the check box is unchecked the boolean will be false and the animation will be hidden. If the check box is checked the animation will continue.
 	\\ \hline IF6
 	&Specific function
 	&Each instruction has some small differences that we will explain here.
@@ -319,7 +319,7 @@ Since the visualiser needed to pull from a working database while implementing t
 	&The target for all requests done with Jersey, set to client.target(domain).
 	\\ \hline DBM5
 	&List<String> getAllSensorIDs()
-	&Add “radiogateways” to the queryResource path, and split the returned \gls{DASH7} String so that only a list of radiosensorIDs remain, and return it.
+	&Add “radiogateways” to the queryResource path, and split the returned \gls{DASH7} String so that only a list of radiosensor ids remain, and return it.
 	\\ \hline DBM6
 	&String postD7data(String data)
 	&Take a \gls{DASH7} string and post it to the server. A separate script is used for upload from sensors, so this method is used for test using mock data.
@@ -328,7 +328,7 @@ Since the visualiser needed to pull from a working database while implementing t
 	&Used to parse a \gls{DASH7} String response to Observation Objects.
 	\\ \hline DBM8
 	&Observation getMostRecentObservation(String sensorID)
-	&Query the database for latest data for a sensorID using POST request with query parameter (“query”, “radiosensor:”) . Then return the observation with most recent Date value.
+	&Query the database for latest data for a sensor id using a POST request with query parameter (“query”, “radiosensor:”) . Then return the observation with most recent Date value.
 	\\ \hline DBM9
 	&List<Observation> getRecentObservations()
 	&Query the database adding “tail” to the path, to return most recent observations, uses toObservationList() to parse the result, and then return the observation with most recent Date value.
@@ -340,7 +340,7 @@ Since the visualiser needed to pull from a working database while implementing t
 \end{table}
 
 \subsubsection{Observation}
-A model class from our customers Iot-Service project, so that our data easily follow their wanted format.
+A model class from our customers IoT-Service project, so that our data easily follow their wanted format.
 
 \subsubsection{Gateway}
 In order to get the data from the sensors and push it into the database a few steps are needed to be done. First, data is retrieved from the sensors with a simple \gls{HTTP} GET request to the server that runs on the \gls{Raspberry Pi} and the data is received in a \gls{JSON}-like format. The response does not respect the protocol fully so we do not process the data, but we send it as we get it to the \gls{Altran} web service which does this and inserts the data into their database. The data transmission is done through an \gls{HTTP} POST request. 
@@ -353,7 +353,7 @@ This approach makes sure that even if the sensors are behind a network with a fi
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{detailed_implementation/classdiagramC++.png}
-\caption{Class Diagram for Mock-Up Data Based Prototypee}
+\caption{Class Diagram for Mock-Up Data Based Prototype}
 \label{fig:ClassDiagramC++}
 \end{figure}
 
@@ -363,7 +363,7 @@ There are two classes appended to the visualiser module: Constants and Calculati
 
 The calculation class is a helper class to the visualisation, which takes in the position of the gateways and the sensor numbers, and returns the position of the sensors on the screen as a 2D point. This is used to calculate the distance of the sensors from each gateway, using the formula method.
 
-In addition to the two classes in the visualiser, four classes were added to the database module: ManualAddDash7Data, Dash7Generator, WalledRoomGenerator and DefaultGenerator. The class ManualAddDash7Data is used to add mock-up data to a running database. It is executed as a stand-alone java program, and contains only static fields.
+In addition to the two classes in the visualiser, four classes were added to the database module: ManualAddDash7Data, Dash7Generator, WalledRoomGenerator and DefaultGenerator. The class ManualAddDash7Data is used to add mock-up data to a running database. It is executed as a stand-alone Java program, and contains only static fields.
 
 The class ManualAddDash7Data relies on the three generator classes. The relationship between the generator classes is that Dash7Generator is an interface realised by WalledRoomGenerator and DefaultGenerator. The Dash7Generator interface defines the type of an object that generates strings of sensor data ready to be posted to the database. The class WalledRoomGenerator defines a generator object for generating sensor data simulating an environment with several isolated rooms, while the class DefaultGenerator defines a similar generator object for one room only.
 
@@ -371,7 +371,7 @@ Like before, we have ignored getters and setters, constructors and other methods
 
 \subsubsection{Visualiser overview after sprint 4}
 
-The visualiser now uses the separate class Calculation to compute the screen position of gateways and sensors based on the link budget. In order to make the link budget calculation configurable, the calculation involves fields from the class Constants, which again initialises the fields from properties in the file “constants.txt”. The animation works the same way as before, using the class AnimationTimer and the interfaces Instruction and Renderer.
+The visualiser now uses the separate class Calculation to compute the screen position of gateways and sensors based on the link budget. In order to make the link budget calculation configurable, the calculation involves fields from the class Constants, which again initialises the fields from properties in the file “visualiser.properties”. The animation works the same way as before, using the class AnimationTimer and the interfaces Instruction and Renderer.
 
 \begin{figure}[H]
 \centering
@@ -423,7 +423,7 @@ The visualiser now uses the separate class Calculation to compute the screen pos
 \\ \hline 
 CC1
 &Constants
-&This method will read from a .txt file that contains maxLinkBudget and minLinkBudget and set those two fields.
+&This method will read from a text file that contains maxLinkBudget and minLinkBudget and set those two fields.
 \\ \hline 
 \end{tabularx}
 \end{table}
@@ -472,7 +472,7 @@ ID
 &Description
 \\ \hline DBM11
 &getAllGatewaysIDs()
-&Query the IoT Service database using radiogatways as path, and sort out the the gatewayIDs from the returned result.
+&Query the IoT Service database using radiogateways as path, and sort out the gateway ids from the returned result.
 \\ \hline DBM12
 &getMostRecentObservation(String sensorID, String gatewayID)
 &Returns the most recent Observation in the database for the sensor that is recorded by gateway.
