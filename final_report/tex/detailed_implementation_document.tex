@@ -116,6 +116,7 @@ Our class diagram has been scaled down, to make the image readable. Some fields 
 \end{tabularx}
 \end{table}
 
+\newpage
 \subsubsection{Room Model Function (RMF)}
 
 \begin{figure}[H]
@@ -214,16 +215,7 @@ Our class diagram has been scaled down, to make the image readable. Some fields 
 	\\ \hline MVF3
 	&(dataType) Check(ArrayList <Double> list, ArrayList<Double> oldList, int i, RoomModel roomModel)
 	&Inserts the data belonging to the data type from the roomModel into the list on position i. Also, adds the data belonging to the data type from the roomModel into the oldList on position i if there is no data on position i yet.
-	\\ \hline 
-\end{tabularx}
-\end{table}
-
-\begin{table}[H]
-\caption{Map View Description}
-\centering
-\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
-	\hline
-	MVF4
+	\\ \hline MVF4
 	&initialXPosition( ArrayList list, int i)
 	&Adds the initial X position of sensor number i to the list.
 	\\ \hline MVF5
@@ -270,17 +262,7 @@ The instructions vary for the different instruction classes but they all have mu
 	\\ \hline IF6.3
 	&Pressure
 	&The PressureInstruction comes with the pressure data in a double format.
-	\\ \hline 
-\end{tabularx}
-\end{table}
-
-
-\begin{table}[H]
-\caption{Instruction Function Description}
-\centering
-\begin{tabularx}{\textwidth}{|L{1.2cm}|L{3.5cm}|X|}
-	\hline
-	IF6.4
+	\\ \hline IF6.4
 	&Sensor
 	&The SensorInstruction contains the lighting data and a string that is the sensor number.
 	\\ \hline IF6.5
@@ -397,6 +379,7 @@ The visualiser now uses the separate class Calculation to compute the screen pos
 \caption{Structure overview for Visualiser after sprint 4}
 \end{figure}
 
+\newpage
 \subsubsection{Calculation class(C)}
 
 \begin{figure}[H]
@@ -445,6 +428,7 @@ CC1
 \end{tabularx}
 \end{table}
 
+\newpage
 \subsubsection{Controller function (CF)}
 The controller is capable of updating sensor positions using link budgets from more than one gateway. In order to make the link budgets available for calculation, they were placed in a list with a one to one correspondence to the list of gateway IDs.
 
@@ -474,6 +458,7 @@ The controller is capable of updating sensor positions using link budgets from m
 \end{tabularx}
 \end{table}
 
+\newpage
 \subsubsection{ObservationGetter (DBM)}
 The class ObservationGetter now has support for more specific observation queries based on gateway id. This makes it possible to reduce the flow of data between the database and the visualiser.
 
@@ -504,6 +489,7 @@ ID
 \end{tabularx}
 \end{table}
 
+\newpage
 \subsubsection{ManualAddDash7Data (MADD)}
 The class ManualAddDash7Data is a program used to manually add observation data to a running database. It can be used in several different modes. In each mode the user controls the program through a console; the difference is how observation data is generated and added to the database. The modes are implemented by the static methods outlined in the table below.
 
@@ -535,6 +521,7 @@ ID
 \end{tabularx}
 \end{table}
 
+\newpage
 \subsubsection{Dash7Generator (DG)}
 The interface Dash7Generator defines a type for objects that generates observations as strings in the \gls{DASH7} format. The observations are generated according to rules specified by the implementing class. The interface is currently implemented by the classes DefaultGenerator and WalledRoomGenerator.
 
