@@ -6,7 +6,7 @@
 \section{Architecture}
 \label{architecture}
 \subsection{Introduction}
-This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in \appendixfullref{retired_architecture}. The sensors and the rasberry pi were already connected together by \gls{Altran} so we will not write the architecture between the sensors and the \gls{Raspberry Pi}. The \gls{Raspberry Pi} and the database will use the \gls{REST} style to communicate and is implemented by one of us. The database will act as a client. The connection between the database and the user interface will follow Altrans framework for their database/GUI connection which uses the \gls{REST} style.
+This chapter gives an overview of the architectural structure of the system, including quality attributes, and architectural styles, constraints, tactics and views. This is the architecture we plan on following, and any changes made during the implementation will be documented and found in \appendixfullref{retired_architecture}. The sensors and the Rasberry Pi were already connected together by \gls{Altran} so we will not write the architecture between the sensors and the \gls{Raspberry Pi}. The \gls{Raspberry Pi} and the database will use the \gls{REST} style to communicate and is implemented by one of us. The database will act as a client. The connection between the database and the user interface will follow Altran's framework for their database/GUI connection which uses the \gls{REST} style.
 
 \subsection{Quality Attributes}
 \label{quality_attributes}
@@ -19,7 +19,7 @@ The system consists of multiple sensor devices, a central hub, and one or more c
 The system is a real time system, and changes in the environment is registered at the client within five seconds. Also, all transfer links in the system has sufficient throughput to avoid delay or lost packages.
 
 \subsubsection{Scalability}
-The system is scaleable to a large degree, and supports adding many sensor devices and central hubs.
+The system is scalable to a large degree, and supports adding many sensor devices and central hubs.
 
 \subsubsection{Modifiability of Components}
 The software is easy to alter or configure, to ease system modifications such as moving or removing components, or relocating the system.
@@ -35,7 +35,7 @@ We plan to make a system with a RESTful style \cite{REST} between the database a
 	\caption{Identified \gls{REST} elements}
 	\begin{tabularx}{\textwidth}{|X|X|}
 		\hline
-		\textbf{Components}		& The sensors, the central hub, the database and the UI.  \\ \hline
+		\textbf{Components}		& The sensors, the central hub, the database and the user interface.  \\ \hline
 		\textbf{Connectors}		& The database, which pulls the sensor data from the central hub.  \\ \hline
 		\textbf{Data elements}	& The information sent from the sensors through every component in the system until it reaches  the visualization.  \\ \hline
 	\end{tabularx}
@@ -47,7 +47,7 @@ We are using the \gls{REST} style as guidelines, and therefore it may be some in
 \gls{REST} has some formal constraints we have to follow. If the system does not follow these constraints the system does not have RESTful architecture. They are all written with an interest to our system and architecture.
 
 \subsubsection{Client-Server}
-The central hub will act as a server, and a database as the client. All the data is stored in a database that may be run externally. The central hub will not be worrying about the UI or any kind of user interference or status. This makes the central hub more scalable and it can be developed or changed without the database knowing if the interface between them are altered or not. 
+The central hub will act as a server, and a database as the client. All the data is stored in a database that may be run externally. The central hub will not be worrying about the user interface or any kind of user interference or status. This makes the central hub more scalable and it can be developed or changed without the database knowing if the interface between them are altered or not. 
 
 \subsubsection{Stateless}
 When the database asks for a data update from the central hub, all the information needed for the central hub to do what is requested is in the request sent from the database. All the states of the database is only for the database to see. The central hub should not be concerned with which state the database is in. The database have 4 different states which are state 1: send request, state 2: pull data, state 3: store data 4: send data.
@@ -118,7 +118,7 @@ Because the program code for both the central hub and the sensors is portable, t
 
 \subsection{Architectural Views}
 \subsubsection{Introduction}
-In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture \cite{view_model}. We chose this view model because it allows us to handle the functional and nonfunctional requirements separately, and also address the different concerns of the various stakeholders separately. The client and the database are the same in our system, however in the views we seperate them to see how the client side of the database works.
+In this section we will show the different views of our architecture. We will follow the structure of the 4+1 View Model of Software Architecture \cite{view_model}. We chose this view model because it allows us to handle the functional and non-functional requirements separately, and also address the different concerns of the various stakeholders separately. The client and the database are the same in our system, however in the views we separate them to see how the client side of the database works.
 
 
 \subsubsection{Logical View}		
@@ -155,7 +155,7 @@ The development view, shown in \figref{fig:DevelopmentView},  presents the syste
 \end{figure}
 
 \subsubsection{Process View}
-The process view, shown in \figref{fig:ProcessView}, considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behavior of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the checkboxes that decides which elements the user wants to see. 
+The process view, shown in \figref{fig:ProcessView}, considers the dynamic aspects of the system. It explains the system processes and how they communicate, and focuses on the runtime behaviour of the system. We use an activity diagram to present how the different parts in the system are connected. The parts include the check boxes that decides which elements the user wants to see. 
 
 \begin{figure}[H]
 	\centering
@@ -305,9 +305,9 @@ ID
 \\ \hline Environment
 &Configuration time
 \\ \hline Artifact
-&Constant.txt
+&visualiser.properties
 \\ \hline Response
-&The sensor movement will be scaled by the Constant.txt
+&The sensor movement will be scaled by the visualiser.properties file
 \\ \hline Response Measure
 &Accuracy \newline
 The scaling of the data will change upon the next boot up of the system, and this should be correctly reflected by the animation.
