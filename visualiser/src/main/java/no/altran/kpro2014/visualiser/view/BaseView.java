@@ -95,72 +95,24 @@ public class BaseView extends  Application{
             }
         }.start();
 
-
-        final CheckBox cBox1 = new CheckBox("Temperature");
-        final CheckBox cBox2 = new CheckBox("Lighting");
-        final CheckBox cBox3 = new CheckBox("Humidity");
-        final CheckBox cBox4 = new CheckBox("Pressure");
-        final CheckBox cBox5 = new CheckBox("Sound");
-        cBox1.setSelected(true);
-        cBox2.setSelected(true);
-        cBox3.setSelected(true);
-        cBox4.setSelected(true);
-        cBox5.setSelected(true);
-
         final double width = lightingColumn.getWidth();
         logger.info("" +width);
         final double units = dataTable.getColumns().size();
         System.out.println(units);
 
-        cBox1.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!cBox1.isSelected()) {
+        CheckBox[] checkBoxes = new CheckBox[]{
+                new CheckBox("Temperature"),
+                new CheckBox("Lighting"),
+                new CheckBox("Humidity"),
+                new CheckBox("Pressure"),
+                new CheckBox("Sound") };
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setSelected(true);
+            checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 dataTable.setPrefWidth(width*units);
-                temperatureColumn.setVisible(false);
-            } else {
-                dataTable.setPrefWidth(width*units);
-                temperatureColumn.setVisible(true);
-            }
-        });
-
-        cBox2.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!cBox2.isSelected()){
-                dataTable.setPrefWidth(width*units);
-                lightingColumn.setVisible(false);
-            } else {
-                dataTable.setPrefWidth(width*units);
-                lightingColumn.setVisible(true);
-            }
-        });
-
-        cBox3.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!cBox3.isSelected()){
-                dataTable.setPrefWidth(width*units);
-                humidityColumn.setVisible(false);
-            } else {
-                dataTable.setPrefWidth(width * units);
-                humidityColumn.setVisible(true);
-            }
-        });
-
-        cBox4.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!cBox4.isSelected()){
-                dataTable.setPrefWidth(width * units);
-                pressureColumn.setVisible(false);
-            } else {
-                dataTable.setPrefWidth(width*units);
-                pressureColumn.setVisible(true);
-            }
-        });
-
-        cBox5.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!cBox5.isSelected()){
-                dataTable.setPrefWidth(width * units);
-                soundColumn.setVisible(false);
-            } else {
-                dataTable.setPrefWidth(width*units);
-                soundColumn.setVisible(true);
-            }
-        });
+                temperatureColumn.setVisible(checkBox.isSelected());
+            });
+        }
 
         /*
         This is the clock.
@@ -177,7 +129,8 @@ public class BaseView extends  Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, cBox5, timeLabel);
+        vBox.getChildren().addAll(checkBoxes);
+        vBox.getChildren().add(timeLabel);
 
         final GridPane gPane = new GridPane();
         gPane.setHgap(5);
@@ -191,6 +144,7 @@ public class BaseView extends  Application{
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 
     /**
      * The main methode that starts the whole process
