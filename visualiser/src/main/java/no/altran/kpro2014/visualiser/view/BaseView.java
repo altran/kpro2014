@@ -8,12 +8,8 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -31,14 +29,13 @@ import java.util.Calendar;
  * This is the Table View. It is the view part of the model (room) and controller (controller).
  */
 public class BaseView extends  Application{
+    Logger logger = LoggerFactory.getLogger(BaseView.class);
 
     private ObservableList<SensorModel> data = FXCollections.observableArrayList();
 
     private RoomModel roomModel;
-    private Controller controller;
     private TableView dataTable;
     private TableColumn temperatureColumn;
-    private TableColumn sensorIDColumn;
     private TableColumn lightingColumn;
     private TableColumn humidityColumn;
     private TableColumn pressureColumn;
@@ -53,8 +50,7 @@ public class BaseView extends  Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        controller = new Controller();
-        roomModel = controller.getRoomModel();
+        roomModel = new Controller().getRoomModel();
         dataTable = new TableView();
         Scene scene = new Scene(new Group());
         primaryStage.setTitle("TableView test");
@@ -64,7 +60,7 @@ public class BaseView extends  Application{
         temperatureColumn = new TableColumn("Temperature");
         temperatureColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("temperature"));
 
-        sensorIDColumn = new TableColumn("ID");
+        TableColumn sensorIDColumn = new TableColumn("ID");
         sensorIDColumn.setCellValueFactory(new PropertyValueFactory<SensorModel, Double>("sensorID"));
 
         lightingColumn = new TableColumn("Lighting");
@@ -112,77 +108,57 @@ public class BaseView extends  Application{
         cBox5.setSelected(true);
 
         final double width = lightingColumn.getWidth();
-        System.out.println(width);
+        logger.info("" +width);
         final double units = dataTable.getColumns().size();
         System.out.println(units);
 
-        cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox1.isSelected() == false) {
-                    dataTable.setPrefWidth(width*units);
-                    temperatureColumn.setVisible(false);
-                }
-                if(cBox1.isSelected()){
-                    dataTable.setPrefWidth(width*units);
-                    temperatureColumn.setVisible(true);
-                }
+        cBox1.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!cBox1.isSelected()) {
+                dataTable.setPrefWidth(width*units);
+                temperatureColumn.setVisible(false);
+            } else {
+                dataTable.setPrefWidth(width*units);
+                temperatureColumn.setVisible(true);
             }
         });
 
-        cBox2.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox2.isSelected() == false){
-                    dataTable.setPrefWidth(width*units);
-                    lightingColumn.setVisible(false);
-                }
-                if(cBox2.isSelected()){
-                    dataTable.setPrefWidth(width*units);
-                    lightingColumn.setVisible(true);
-                }
+        cBox2.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!cBox2.isSelected()){
+                dataTable.setPrefWidth(width*units);
+                lightingColumn.setVisible(false);
+            } else {
+                dataTable.setPrefWidth(width*units);
+                lightingColumn.setVisible(true);
             }
         });
 
-        cBox3.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox3.isSelected() == false){
-                    dataTable.setPrefWidth(width*units);
-                    humidityColumn.setVisible(false);
-                }
-                if(cBox3.isSelected()) {
-                    dataTable.setPrefWidth(width * units);
-                    humidityColumn.setVisible(true);
-                }
+        cBox3.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!cBox3.isSelected()){
+                dataTable.setPrefWidth(width*units);
+                humidityColumn.setVisible(false);
+            } else {
+                dataTable.setPrefWidth(width * units);
+                humidityColumn.setVisible(true);
             }
         });
 
-        cBox4.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox4.isSelected() == false){
-                    dataTable.setPrefWidth(width * units);
-                    pressureColumn.setVisible(false);
-                }
-                if(cBox4.isSelected()){
-                    dataTable.setPrefWidth(width*units);
-                    pressureColumn.setVisible(true);
-                }
+        cBox4.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!cBox4.isSelected()){
+                dataTable.setPrefWidth(width * units);
+                pressureColumn.setVisible(false);
+            } else {
+                dataTable.setPrefWidth(width*units);
+                pressureColumn.setVisible(true);
             }
         });
 
-        cBox5.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox5.isSelected() == false){
-                    dataTable.setPrefWidth(width * units);
-                    soundColumn.setVisible(false);
-                }
-                if(cBox5.isSelected()){
-                    dataTable.setPrefWidth(width*units);
-                    soundColumn.setVisible(true);
-                }
+        cBox5.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!cBox5.isSelected()){
+                dataTable.setPrefWidth(width * units);
+                soundColumn.setVisible(false);
+            } else {
+                dataTable.setPrefWidth(width*units);
+                soundColumn.setVisible(true);
             }
         });
 
@@ -191,12 +167,9 @@ public class BaseView extends  Application{
          */
         final Label timeLabel = new Label();
         final DateFormat format = DateFormat.getInstance();
-        final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                final Calendar cal = Calendar.getInstance();
-                timeLabel.setText(format.format(cal.getTime()));
-            }
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            final Calendar cal = Calendar.getInstance();
+            timeLabel.setText(format.format(cal.getTime()));
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();

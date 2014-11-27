@@ -2,10 +2,7 @@ package no.altran.kpro2014.database;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
-import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,7 +149,7 @@ public class Observation {
             }
             o.setRadioGatewayId(gatewayIp);
 
-            // System.out.println("Sensorvalues = " + observations.get(key));
+            // logger.info("Sensorvalues = " + observations.get(key));
             Map sensorvalues = (Map) observations.get(key);
             Map<String, String> measurementsReceived = new HashMap<>();
             for (Object sensortype : sensorvalues.keySet()) {

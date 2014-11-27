@@ -4,12 +4,10 @@ import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.ws.rs.ServiceUnavailableException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.BufferedWriter;
@@ -19,33 +17,34 @@ import java.io.PrintWriter;
 import java.util.*;
 
 /**
- * Created by audun on 10/1/14.
+ * @author audun - 01.10.2014
+ * @author Stig@Lau.no - 27.11.2014
  */
 public class ObservationGetter {
-    private String domain;
     private String path;
-    private Client client;
     private WebTarget queryResource;
+    String url;
+
+    public static final String SENSOR_IDENTIER="sensor";
+    public static final String GATEWAY_IDENTIER="radiogateways";
 
     // Variables for comparing new observation to the last observation received.
     private Observation lastObservation;
     private Comparator<Observation> observationDateComparator;
+    private Logger logger = LoggerFactory.getLogger(ObservationGetter.class);
 
     public ObservationGetter(String domain, String path){
-        this.domain = domain;
+        this.url = domain;
         this.path = path;
-        client = ClientBuilder.newClient();
+        Client client = ClientBuilder.newClient();
         queryResource = client.target(domain);
 
         // initialize observation comparison variables
         lastObservation = null;
-        observationDateComparator = new Comparator<Observation>() {
-            @Override
-            public int compare(Observation obs1, Observation obs2) {
-                String time1 = obs1.getTimestampCreated();
-                String time2 = obs2.getTimestampCreated();
-                return time1.compareTo(time2);
-            }
+        observationDateComparator = (obs1, obs2) -> {
+            String time1 = obs1.getTimestampCreated();
+            String time2 = obs2.getTimestampCreated();
+            return time1.compareTo(time2);
         };
     }
 
@@ -55,41 +54,42 @@ public class ObservationGetter {
      * @return returns List<String> of sensor IDs currently in the database.
      */
     public List<String> getAllSensorIDs() {
-        List<String> idList = null;
         try {
+            logger.info("getAllSensorIDs {}", url + GATEWAY_IDENTIER);
             String response = queryResource
-                    .path(path).path("radiogateways")
+                    .path(path).path(GATEWAY_IDENTIER)
                     .request(MediaType.APPLICATION_JSON)
                     .get(String.class);
             Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
-            Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioSensorIds");
-            idList = new ArrayList<String>();
+            Map idObjectList = JsonPath.read(jsonDocument, "$.radioSensorIds");
+            List<String> idList = new ArrayList<>();
             idList.addAll(idObjectList.keySet());
+            return idList;
         } catch (ServiceUnavailableException e) {
             return null;
         }
-        return idList;
     }
 
     /**
      * Query the IoT Service database using radiogatways as path, and sort out the the gatewayIDs from the returned
      * result
      * @return returns List<String> of gatewayIDs currently in the database.
-     */    public List<String> getAllGatewaysIDs() {
-        List<String> idList = null;
+     */
+    public List<String> getAllGatewaysIDs() {
         try {
+            logger.info("getAllGatewaysIDs {}", url + GATEWAY_IDENTIER);
             String response = queryResource
-                    .path(path).path("radiogateways")
+                    .path(path).path(GATEWAY_IDENTIER)
                     .request(MediaType.APPLICATION_JSON)
                     .get(String.class);
-            Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(response);
-            Map idObjectList = (Map) JsonPath.read(jsonDocument, "$.radioGatewayIds");
-            idList = new ArrayList<String>();
+            Map jsonDocument = (Map) Configuration.defaultConfiguration().jsonProvider().parse(response);
+            Map idObjectList = JsonPath.read(jsonDocument, "$.radioGatewayIds");
+            List<String> idList = new ArrayList<>();
             idList.addAll(idObjectList.keySet());
+            return idList;
         } catch (ServiceUnavailableException e) {
             return null;
         }
-        return idList;
     }
 
     /**
@@ -97,9 +97,11 @@ public class ObservationGetter {
      */
     public String postD7data(String data){
         Response response;
+        logger.info("postD7data {}", url + SENSOR_IDENTIER);
+
         response = queryResource
                 .path(path)
-                .path("radiosensor")
+                .path(SENSOR_IDENTIER)
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(data, MediaType.APPLICATION_JSON));
         return  response.toString();
@@ -111,9 +113,11 @@ public class ObservationGetter {
      * @return Most recent Observation for the sensor.
      */
     public Observation getMostRecentObservation(String sensorID) {
+        logger.info("getMostRecentObservation {}?query=sensor:{}", url + SENSOR_IDENTIER, sensorID );
+
         String response = queryResource
-                .path(path).path("radiosensor")
-                .queryParam("query", "radiosensor:" + sensorID)
+                .path(path).path(SENSOR_IDENTIER)
+                .queryParam("query", "sensor:" + sensorID)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
         List<Observation> observationList = toObservationList(response);
@@ -136,9 +140,11 @@ public class ObservationGetter {
      * @return Return most recent observation for sensor, done by gateway.
      */
     public Observation getMostRecentObservation(String sensorID, String gatewayID) {
+        logger.info("getMostRecentObservation: {}?query=radiosensor:{} for gateway {}", url + SENSOR_IDENTIER, sensorID, gatewayID);
+
         String response = queryResource
-                .path(path).path("radiosensor")
-                .queryParam("query", "radiosensor:" + sensorID)
+                .path(path).path(SENSOR_IDENTIER)
+                .queryParam("query", "sensor:" + sensorID)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
         List<Observation> observationList = toObservationList(response);
@@ -173,9 +179,11 @@ public class ObservationGetter {
      * @return Return most recent observation for sensor, done by gateway.
      */
     public List<Observation> getMostRecentObservation(String sensorID, List<String> gatewayIDs) {
-        List<Observation> returnObservations = new ArrayList<Observation>();
+        logger.info("getMostRecentObservation: {}?query=radiosensor:{} gateways {}", url + SENSOR_IDENTIER, sensorID, gatewayIDs);
+
+        List<Observation> returnObservations = new ArrayList<>();
         String response = queryResource
-                .path(path).path("radiosensor")
+                .path(path).path(SENSOR_IDENTIER)
                 .queryParam("query", "radiosensor:" + sensorID)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
@@ -209,19 +217,22 @@ public class ObservationGetter {
      * @return Observations done by a sensor, stored in the database.
      */
     public List<Observation> getBacklogForSensor(String sensorID) {
+        logger.info("getBacklogForSensor: {}?query=radiosensor:{}", url + SENSOR_IDENTIER, sensorID);
         String response = queryResource
-                .path(path).path("radiosensor")
+                .path(path).path(SENSOR_IDENTIER)
                 .queryParam("query", "radiosensor:" + sensorID)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
-        List<Observation> observationList = toObservationList(response);
-        if(observationList.isEmpty()) {
-            return null;
+        try {
+            List<Observation> observationList = toObservationList(response);
+            if (!observationList.isEmpty()) {
+                Collections.reverse(observationList);
+                return observationList;
+            }
+        } catch (Exception e) {
+            logger.error("Error parsing {}", response, e);
         }
-        else{
-            Collections.reverse(observationList);
-            return observationList;
-        }
+        return Collections.emptyList();
     }
 
     /**
@@ -249,7 +260,7 @@ public class ObservationGetter {
 
         // Get observations from the server.
         String response = queryResource
-                .path(path).path("radiosensor")
+                .path(path).path(SENSOR_IDENTIER)
                 .request(MediaType.APPLICATION_JSON)
                 .get(String.class);
         List<Observation> result = toObservationList(response);
@@ -262,9 +273,8 @@ public class ObservationGetter {
 
         // Remove observations already received.
         Iterator<Observation> itr = result.iterator();
-        Observation obs;
         while(itr.hasNext()) {
-            obs = itr.next();
+            Observation obs = itr.next();
             if(observationDateComparator.compare(obs, lastObservation) <= 0) {
                 itr.remove();
             } else {
@@ -281,9 +291,9 @@ public class ObservationGetter {
      * @return List of Observations parsed from jsondata.
      */
     public static List<Observation> toObservationList(String jsondata) {
-        List<Observation> result = new ArrayList<Observation>();
+        List<Observation> result = new ArrayList<>();
         Object jsonDocument = Configuration.defaultConfiguration().jsonProvider().parse(jsondata);
-        List observationObjectList = (List) JsonPath.read(jsonDocument, "$.observations[*]");
+        List observationObjectList = JsonPath.read(jsonDocument, "$.observations[*]");
         String observationJson;
         Observation observation;
         for(Object observationObject : observationObjectList) {
@@ -292,12 +302,5 @@ public class ObservationGetter {
             result.add(observation);
         }
         return result;
-    }
-
-    public void getQueryResult(String luceneQuery){
-        String result = queryResource.queryParam("query", luceneQuery)
-                .request(MediaType.APPLICATION_JSON)
-                .get(String.class);
-
     }
 }

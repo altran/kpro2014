@@ -6,77 +6,66 @@ import no.altran.kpro2014.database.Observation;
 import no.altran.kpro2014.database.ObservationGetter;
 import no.altran.kpro2014.visualiser.model.RoomModel;
 import no.altran.kpro2014.visualiser.model.SensorModel;
-import no.altran.kpro2014.visualiser.view.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by shimin on 9/24/2014.
+ * @author shimin - 24.09.2014
+ * @author Stig@Lau.no - 27.11.2014
  */
 
 
 public class Controller {
 
+    private static final Logger logger = LoggerFactory.getLogger(Controller.class);
     private ObservationGetter getter;
     private RoomModel roomModel;
     private Timer timer;
     private TimerTask timerTask;
-//    private final String domain = "http://localhost:4901";
-    private final String domain;
- //   private final String domain = "http://iot.altrancloud.com/";
-    private final String path = "iot/observe";
+    //    private final String domain = "http://localhost:4901";
+    //domain = "http://" + new Constants().DATABASE_IP_ADDRESS + ":4901";
+    private final String domain = "http://iot.altrancloud.com/";
+    private final String path = "";
 
 
     public Controller(){
-        this.roomModel = new RoomModel();
-        domain = "http://" + new Constants().DATABASE_IP_ADDRESS + ":4901";
         this.getter = new ObservationGetter(domain, path);
-        addGateways();
-        addSensors();
+        List<String> gateways = getter.getAllGatewaysIDs();
+        this.roomModel = new RoomModel(gateways);
+
+        List<SensorModel> sensorModels = roomModel.addSensors(getter.getAllSensorIDs());
+        for (SensorModel sensorModel : sensorModels) {
+            updateBacklog(sensorModel, roomModel.getGatewayList(), getter);
+        }
         updateSensors();
         timer = new Timer();
         timerTask = new TimerTask() {
-            @Override
             public void run() {
-            addSensors();
-            updateSensors();
+                List<SensorModel> sensorModels = roomModel.addSensors(getter.getAllSensorIDs());
+                for (SensorModel sensorModel : sensorModels) {
+                    updateBacklog(sensorModel, roomModel.getGatewayList(), getter);
+                }
+                updateSensors();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    logger.error("Snuffed", e);
+                }
             }
         };
         passiveUpdate();
     }
 
     /**
-     * adds new sensors that is not currently in roomModel
-     */
-    private void addSensors() {
-        List<String> sensorIdList = getter.getAllSensorIDs();
-        List<SensorModel> sensorList = roomModel.getSensorList();
-        int listSizeDiff = sensorIdList.size() - sensorList.size();
-        if (listSizeDiff > 0){
-            List<String> sensorsToAdd;
-            if (sensorList.size() > 0){
-                sensorsToAdd = sensorIdList.subList(sensorList.size(),sensorIdList.size());
-            }
-            else{
-                sensorsToAdd = sensorIdList;
-            }
-            for (String sensorId : sensorsToAdd){
-                SensorModel sensor = new SensorModel();
-                sensor.setSensorID(sensorId);
-                sensorList.add(sensor);
-                updateBacklog(sensor);
-            }
-        }
-    }
-
-    /**
      * Adds all Observations done for a sensor, so that current values is more filled than just most recent observation.
      * @param sensor Sensor to update with backlog of observations.
      */
-    private void updateBacklog(SensorModel sensor) {
-        for (String gateway: getRoomModel().getGatewayList()){
+    private static void updateBacklog(SensorModel sensor, List<String> gatewayList, ObservationGetter getter) {
+        for (String gateway: gatewayList){
             sensor.getLinkbudget().put(gateway, new SimpleDoubleProperty(0.00));
         }
         List<Observation> obsList = getter.getBacklogForSensor(sensor.getSensorID());
@@ -110,13 +99,6 @@ public class Controller {
     }
 
     /**
-     * Adds all gateways currently in the database to roomModel.
-     */
-    private void addGateways() {
-        roomModel.getGatewayList().addAll(getter.getAllGatewaysIDs());
-    }
-
-    /**
      * Updates sensors with new observations from all gateways.
      */
     private  void updateSensors(){
@@ -127,7 +109,7 @@ public class Controller {
                 if (obs == null){
                     continue;
                 }
-//                System.out.println(obs.toString());
+//                logger.info(obs.toString());
                 String tempMeasure = obs.getMeasurements().get("hum");
                 if (tempMeasure != null){
                     sensor.setHumidity(Double.parseDouble(tempMeasure));
@@ -177,14 +159,13 @@ public class Controller {
         Thread.sleep(1000);
         for (SensorModel sensor : temp.getRoomModel().getSensorList()){
             for (String hei : temp.getRoomModel().getGatewayList()){
-                try{
-                    System.out.println(hei + ", " + sensor.getSensorID() + ", "+ sensor.getLinkbudget().get(hei));
+                try {
+                    logger.info(hei + ", " + sensor.getSensorID() + ", "+ sensor.getLinkbudget().get(hei));
                 }
-                catch(Exception e){
-                    System.out.println("fail");
+                catch (Exception e){
+                    logger.error("fail");
                 }
             }
         }
     }
-
 }
