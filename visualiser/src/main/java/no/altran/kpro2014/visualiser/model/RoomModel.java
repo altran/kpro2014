@@ -35,10 +35,11 @@ public class RoomModel {
         return sensorList;
     }
 
-    public List<SensorModel> addSensors(List<String> allSensorIDs) {
+    /**
+     * TODO Check if this code needs to be this complex!
+     */
+    public void addSensors(List<String> allSensorIDs) {
         int listSizeDiff = allSensorIDs.size() - sensorList.size();
-
-        List<SensorModel> newSensors = new ArrayList<>();
         if (listSizeDiff > 0){
             List<String> sensorsToAdd;
             if (sensorList.size() > 0){
@@ -51,9 +52,7 @@ public class RoomModel {
                 SensorModel sensor = new SensorModel();
                 sensor.setSensorID(sensorId);
                 sensorList.add(sensor);
-                newSensors.add(sensor);
             }
         }
-        return newSensors;
     }
 }
