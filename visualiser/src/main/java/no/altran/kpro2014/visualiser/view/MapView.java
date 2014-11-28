@@ -5,10 +5,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -28,12 +24,11 @@ import javafx.util.Duration;
 import no.altran.kpro2014.visualiser.controller.Controller;
 import no.altran.kpro2014.visualiser.instructions.*;
 import no.altran.kpro2014.visualiser.model.RoomModel;
-
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * The main class for the application, this is the map view where the data will be animated.
@@ -41,18 +36,15 @@ import java.util.Calendar;
 
 public class MapView extends Application{
 
-    /**controller and roomModel will gather the data we need, and update the data in time.*/
-    private Controller controller;
+    /*controller and roomModel will gather the data we need, and update the data in time.*/
     private RoomModel roomModel;
     private Calculation calculation;
-    private Constants constants;
 
     /**the central hub is in the middle and is a static image*/
     private Image circleImage = new Image("images/CentralHub.png");
 
     /**the canvases we use for the visualization*/
     private Canvas canvas;
-    private Canvas canvasHist;
 
     /**Instructions and Renderers, look over to interface folder for more info*/
     private CentralHubInstruction centralHubInstruction;
@@ -70,27 +62,27 @@ public class MapView extends Application{
      * between them. We use it to calculate the difference in between the old and new data divided by the
      * frames we have, so that it changes by difference every frame, thus making it smooth (pleasing for the eyes)
     */
-    private ArrayList<Double> oldLighting = new ArrayList<Double>();
-    private ArrayList<Double> newLighting = new ArrayList<Double>();
-    private ArrayList<Double> diffLighting = new ArrayList<Double>();
-    private ArrayList<Double> oldHumidity = new ArrayList<Double>();
-    private ArrayList<Double> newHumidity = new ArrayList<Double>();
-    private ArrayList<Double> diffHumidity = new ArrayList<Double>();
-    private ArrayList<Double> oldPressure = new ArrayList<Double>();
-    private ArrayList<Double> newPressure = new ArrayList<Double>();
-    private ArrayList<Double> diffPressure = new ArrayList<Double>();
-    private ArrayList<Double> oldTemperature = new ArrayList<Double>();
-    private ArrayList<Double> newTemperature = new ArrayList<Double>();
-    private ArrayList<Double> diffTemperature = new ArrayList<Double>();
-    private ArrayList<Double> oldPositionX = new ArrayList<Double>();
-    private ArrayList<Double> newPositionX = new ArrayList<Double>();
-    private ArrayList<Double> diffPositionX = new ArrayList<Double>();
-    private ArrayList<Double> oldPositionY = new ArrayList<Double>();
-    private ArrayList<Double> newPositionY = new ArrayList<Double>();
-    private ArrayList<Double> diffPositionY = new ArrayList<Double>();
-    private ArrayList<Double> inactiveSensor = new ArrayList<Double>();
-    private ArrayList<Double> linkBudgets = new ArrayList<Double>();
-    private ArrayList<Point2D> gateWayList = new ArrayList<Point2D>();
+    private ArrayList<Double> oldLighting = new ArrayList<>();
+    private ArrayList<Double> newLighting = new ArrayList<>();
+    private ArrayList<Double> diffLighting = new ArrayList<>();
+    private ArrayList<Double> oldHumidity = new ArrayList<>();
+    private ArrayList<Double> newHumidity = new ArrayList<>();
+    private ArrayList<Double> diffHumidity = new ArrayList<>();
+    private ArrayList<Double> oldPressure = new ArrayList<>();
+    private ArrayList<Double> newPressure = new ArrayList<>();
+    private ArrayList<Double> diffPressure = new ArrayList<>();
+    private ArrayList<Double> oldTemperature = new ArrayList<>();
+    private ArrayList<Double> newTemperature = new ArrayList<>();
+    private ArrayList<Double> diffTemperature = new ArrayList<>();
+    private ArrayList<Double> oldPositionX = new ArrayList<>();
+    private ArrayList<Double> newPositionX = new ArrayList<>();
+    private ArrayList<Double> diffPositionX = new ArrayList<>();
+    private ArrayList<Double> oldPositionY = new ArrayList<>();
+    private ArrayList<Double> newPositionY = new ArrayList<>();
+    private ArrayList<Double> diffPositionY = new ArrayList<>();
+    private ArrayList<Double> inactiveSensor = new ArrayList<>();
+    private ArrayList<Double> linkBudgets = new ArrayList<>();
+    private ArrayList<Point2D> gateWayList = new ArrayList<>();
     private int counter = 0;
 
     /**these are the checkboxes the user can interact with, this will turn off/on certain types of data  */
@@ -101,15 +93,14 @@ public class MapView extends Application{
 
     /**Initialises the central hub count variable*/
     private int TotalCHCount;
-    private Line line;
 
     /**start method for the system, it requires a stage which we set to the size of the computer window the user have*/
     public void start(Stage stage) {
         long now = System.currentTimeMillis();
         Scene scene = new Scene(new Group());
-        controller = new Controller();
+        Controller controller = new Controller();
         calculation = new Calculation();
-        constants = new Constants();
+        Constants constants = new Constants();
         roomModel = controller.getRoomModel();
         stage.setTitle("Map View");
         stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
@@ -118,7 +109,7 @@ public class MapView extends Application{
 
         /**canvas is set a little smaller than the actual stage in order for the checkboxes to fit*/
         canvas = new Canvas(stage.getWidth()-150,stage.getHeight());
-        line = new Line(canvas.getWidth(), 0 , 0, canvas.getHeight());
+        Line line = new Line(canvas.getWidth(), 0, 0, canvas.getHeight());
         line.setStrokeWidth(10);
         line.setStroke(Color.LIGHTSTEELBLUE);
         line.setFill(Color.LIGHTSTEELBLUE);
@@ -133,7 +124,7 @@ public class MapView extends Application{
 
         mainFX.setInput(mb);
         canvas.setEffect(mainFX);
-        canvasHist = new Canvas(150, 400);
+        Canvas canvasHist = new Canvas(150, 400);
 
 
         /**
@@ -171,22 +162,22 @@ public class MapView extends Application{
                         counter = 0;
                         }
                     else if (counter == 0) {
-                        if (newLighting.get(i) != oldLighting.get(i)) {
+                        if (!Objects.equals(newLighting.get(i), oldLighting.get(i))) {
                             diffLighting.set(i, (newLighting.get(i) - oldLighting.get(i)) / 300);
                         }
-                        if (newHumidity.get(i) != oldHumidity.get(i)) {
+                        if (!Objects.equals(newHumidity.get(i), oldHumidity.get(i))) {
                             diffHumidity.set(i, (newHumidity.get(i) - oldHumidity.get(i)) / 300);
                         }
-                        if (newPressure.get(i) != oldPressure.get(i)) {
+                        if (!Objects.equals(newPressure.get(i), oldPressure.get(i))) {
                             diffPressure.set(i, (newPressure.get(i) - oldPressure.get(i)) / 300);
                         }
-                        if (newTemperature.get(i) != oldTemperature.get(i)) {
+                        if (!Objects.equals(newTemperature.get(i), oldTemperature.get(i))) {
                             diffTemperature.set(i, (newTemperature.get(i) - oldTemperature.get(i)) / 300);
                         }
-                        if (newPositionX.get(i) != oldPositionX.get(i)) {
+                        if (!Objects.equals(newPositionX.get(i), oldPositionX.get(i))) {
                             diffPositionX.set(i, (newPositionX.get(i) - oldPositionX.get(i)) / 300);
                         }
-                        if (newPositionY.get(i) != oldPositionY.get(i)) {
+                        if (!Objects.equals(newPositionY.get(i), oldPositionY.get(i))) {
                             diffPositionY.set(i, (newPositionY.get(i) - oldPositionY.get(i)) / 300);
                         }
                         counter++;
@@ -258,80 +249,31 @@ public class MapView extends Application{
         /**
          * This part is considering checkboxes and how we hide the data if the box is not selected
          */
-        final CheckBox cBox1 = new CheckBox("Temperature");
-        final CheckBox cBox2 = new CheckBox("Lighting");
-        final CheckBox cBox3 = new CheckBox("Humidity");
-        final CheckBox cBox4 = new CheckBox("Pressure");
+
+        CheckBox[] checkBoxes = new CheckBox[]{
+                new CheckBox("Temperature"),
+                new CheckBox("Lighting"),
+                new CheckBox("Humidity"),
+                new CheckBox("Pressure"),
+                };
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setTextFill(Color.WHITE);
+            checkBox.setSelected(true);
+        }
+        checkBoxes[0].selectedProperty().addListener((observable, oldValue, newValue) -> checkTemperature = checkBoxes[0].isSelected());
+        checkBoxes[1].selectedProperty().addListener((observable, oldValue, newValue) -> checkLighting = checkBoxes[1].isSelected());
+        checkBoxes[2].selectedProperty().addListener((observable, oldValue, newValue) -> checkHumidity = checkBoxes[2].isSelected());
+        checkBoxes[3].selectedProperty().addListener((observable, oldValue, newValue) -> checkPressure = checkBoxes[3].isSelected());
+
         final Label linkBudgetLabel = new Label("link budget: " + constants.MIN_LINK_BUDGET + " - " + constants.MAX_LINK_BUDGET);
         linkBudgetLabel.setTextFill(Color.WHITE);
-        cBox1.setTextFill(Color.WHITE);
-        cBox2.setTextFill(Color.WHITE);
-        cBox3.setTextFill(Color.WHITE);
-        cBox4.setTextFill(Color.WHITE);
-        cBox1.setSelected(true);
-        cBox2.setSelected(true);
-        cBox3.setSelected(true);
-        cBox4.setSelected(true);
-
-        cBox1.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox1.isSelected() == false) {
-                    checkTemperature = false;
-                }
-                if(cBox1.isSelected()){
-                    checkTemperature = true;
-                }
-            }
-        });
-
-        cBox2.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox2.isSelected() == false){
-                    checkLighting = false;
-                }
-                if(cBox2.isSelected()){
-                    checkLighting = true;
-                }
-            }
-        });
-
-        cBox3.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox3.isSelected() == false){
-                    checkHumidity = false;
-                }
-                if(cBox3.isSelected()) {
-                    checkHumidity = true;
-                }
-            }
-        });
-
-        cBox4.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(cBox4.isSelected() == false){
-                    checkPressure = false;
-                }
-                if(cBox4.isSelected()) {
-                    checkPressure = true;
-                }
-            }
-        });
 
         /**A time is also added on the side*/
         final Label timeLabel = new Label();
         timeLabel.setTextFill(Color.WHITE);
         final DateFormat format = DateFormat.getInstance();
-        final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                final Calendar cal = Calendar.getInstance();
-                timeLabel.setText(format.format(cal.getTime()));
-            }
-        }));
+        final Calendar cal = Calendar.getInstance();
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> timeLabel.setText(format.format(cal.getTime()))));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
@@ -364,7 +306,8 @@ public class MapView extends Application{
         final VBox vBox = new VBox();
         vBox.setPadding(new Insets(0,10,10,10));
         vBox.setSpacing(10);
-        vBox.getChildren().addAll(cBox1, cBox2, cBox3, cBox4, timeLabel, canvasHist, linkBudgetLabel);
+        vBox.getChildren().addAll(checkBoxes);
+        vBox.getChildren().addAll(timeLabel, canvasHist, linkBudgetLabel);
 
 
         final GridPane gPane = new GridPane();
@@ -503,8 +446,7 @@ public class MapView extends Application{
         if(y == 0){
             y = 1;
         }
-        Point2D point = new Point2D(x, y);
-        return point;
+        return new Point2D(x, y);
     }
 
 

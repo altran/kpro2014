@@ -2,18 +2,14 @@ package no.altran.kpro2014.database;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.LoggerFactory;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -41,13 +37,13 @@ public class ManualAddDash7Data {
 
     public static void main(String[] args){
         logger.info("### DASH7 POST ###\n");
-        // Set up server connection
         logger.info("Enter target IP or empty for localhost: ");
         ip = new Scanner(System.in).nextLine();
         if(ip.equals("")) {
             ip = "localhost";
         }
-        queryResource = client.target("http://" + ip + ":4901/iot/observe/radiosensor");
+        //queryResource = client.target("http://" + ip + ":4901/iot/observe/radiosensor");
+        queryResource = client.target("http://" + ip + "/sensor");
 
         String input;
         logger.info("Assisted data post? (y/N): ");
@@ -126,15 +122,10 @@ public class ManualAddDash7Data {
                     objList.add((JSONObject) obj);
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        int batchSize = 6;
         int batchProgress = 6;
 
         for (JSONObject json : objList){
@@ -287,7 +278,7 @@ public class ManualAddDash7Data {
 
     public static String buildDash7Data(String sensorId, String gateway, String temp, String light, String humidity, String pressure, String lb) {
         long now = System.currentTimeMillis();
-        String result = "{\"ts\":" + now + ",\"data\":{\""+ sensorId + "\":{"
+        return "{\"ts\":" + now + ",\"data\":{\""+ sensorId + "\":{"
                 + "\"uid\":\"001" + "BC50C71000019\""
                 + ",\"ts\":" + now
                 + ",\"tmp\":" + temp
@@ -298,6 +289,5 @@ public class ManualAddDash7Data {
                 + ",\"sn\":190"
                 + ",\"rt\":0"
                 + "}},\"now\":" + now + "}" + gateway;
-        return result;
     }
 }
